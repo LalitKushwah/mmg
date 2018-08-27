@@ -8,6 +8,8 @@ import { ListPage } from '../pages/list/list';
 
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
+import {IonicStorageModule} from "@ionic/storage";
+import {HeaderColor} from "@ionic-native/header-color";
 
 @NgModule({
   declarations: [
@@ -18,6 +20,12 @@ import { SplashScreen } from '@ionic-native/splash-screen';
   imports: [
     BrowserModule,
     IonicModule.forRoot(MyApp),
+    IonicStorageModule.forRoot(
+      {
+        name: '__mydb',
+        driverOrder: ['localstorage', 'sqlite', 'indexeddb']
+      }
+    )
   ],
   bootstrap: [IonicApp],
   entryComponents: [
@@ -28,7 +36,8 @@ import { SplashScreen } from '@ionic-native/splash-screen';
   providers: [
     StatusBar,
     SplashScreen,
-    {provide: ErrorHandler, useClass: IonicErrorHandler}
+    {provide: ErrorHandler, useClass: IonicErrorHandler},
+    HeaderColor,
   ]
 })
 export class AppModule {}
