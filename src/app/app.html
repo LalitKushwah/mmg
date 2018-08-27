@@ -1,14 +1,19 @@
 <ion-menu [content]="content">
   <ion-header>
     <ion-toolbar>
-      <ion-title>Menu</ion-title>
+      <div style="background-color: #488aff !important">
+        <ion-avatar item-start>
+          <img src="./assets/imgs/avatar.png" style="width: 50px;height: 50px;margin-left: 5px">
+        </ion-avatar>
+      </div>
+      <ion-title>Hello, Welcome!</ion-title>
     </ion-toolbar>
   </ion-header>
 
-  <ion-content>
+  <ion-content class="full-background">
     <ion-list>
       <button menuClose ion-item *ngFor="let p of pages" (click)="openPage(p)">
-        {{p.title}}
+        <ion-icon md="{{p.icon}}" padding="16px" class="secondary-color-icon"></ion-icon> {{p.title}}
       </button>
     </ion-list>
   </ion-content>

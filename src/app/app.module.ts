@@ -10,6 +10,7 @@ import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
 import {IonicStorageModule} from "@ionic/storage";
 import {HeaderColor} from "@ionic-native/header-color";
+import {LoginPageModule} from "../pages/login/login.module";
 
 @NgModule({
   declarations: [
@@ -25,7 +26,8 @@ import {HeaderColor} from "@ionic-native/header-color";
         name: '__mydb',
         driverOrder: ['localstorage', 'sqlite', 'indexeddb']
       }
-    )
+    ),
+    LoginPageModule
   ],
   bootstrap: [IonicApp],
   entryComponents: [
