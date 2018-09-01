@@ -14,11 +14,11 @@
           <ion-row>
             <ion-col>
               <ion-item>
-                <ion-label floating>User Name</ion-label>
-                <ion-input type="email" formControlName="userNameLogin"></ion-input>
+                <ion-label floating>Login Id</ion-label>
+                <ion-input type="text" formControlName="userLoginId"></ion-input>
               </ion-item>
-              <ion-item *ngIf="userNameLogin.hasError('required') && userNameLogin.touched">
-                <p style="color: red">User Name is required*</p>
+              <ion-item *ngIf="userLoginId.hasError('required') && userLoginId.touched">
+                <p style="color: red">Login Id is required*</p>
               </ion-item>
               <ion-item>
                 <ion-label floating >Password</ion-label>
@@ -31,7 +31,7 @@
           </ion-row>
         </ion-grid>
         <ion-grid>
-          <button ion-button color="secondary" [disabled]="!(userLoginForm.valid)" (click)="login()">Login<ion-spinner name="dots" *ngIf="!loginDone"></ion-spinner></button>
+          <button ion-button color="secondary" [disabled]="!(userLoginForm.valid)" (click)="login();">Login<ion-spinner name="dots" *ngIf="showLoginLoader"></ion-spinner></button>
         </ion-grid>
       </form>
     </ion-card-content>

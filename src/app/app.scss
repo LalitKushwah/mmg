@@ -14,12 +14,12 @@ ion-card{
 
 ion-spinner {
   * {
-    stroke: #FD367E;
+    stroke: #1DE9B6;
   }
 
   &.spinner-circles circle,
   &.spinner-bubbles circle,
   &.spinner-dots circle {
-    fill: #FD367E;
+    fill: #1DE9B6;
   }
 }

@@ -1,6 +1,10 @@
+import { WidgetUtilService } from './../utils/widget-utils';
+import { StorageServiceProvider } from './../../providers/storage-service/storage-service';
+import { ApiServiceProvider } from './../../providers/api-service/api-service';
 import { Component, OnInit } from '@angular/core';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, MenuController } from 'ionic-angular';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
+import { CONSTANTS } from '../utils/constants';
 
 @IonicPage({
   name: 'LoginPage'
@@ -13,9 +17,12 @@ export class LoginPage implements OnInit {
 
   userLoginForm : FormGroup;
   passwordLogin: FormControl;
-  userNameLogin: FormControl;
+  userLoginId: FormControl;
+  showLoginLoader = false;
   
-  constructor(public navCtrl: NavController, public navParams: NavParams) {
+  constructor(public navCtrl: NavController, public navParams: NavParams, private apiService: ApiServiceProvider, private storageService: StorageServiceProvider
+  , private widgetUtil: WidgetUtilService, private menuController: MenuController) {
+    this.menuController.enable(false, 'main-menu')
   }
   
   ngOnInit(): void {
@@ -28,7 +35,7 @@ export class LoginPage implements OnInit {
   }
 
   createFormControls() {
-    this.userNameLogin = new FormControl('', [
+    this.userLoginId = new FormControl('', [
       Validators.required
     ]);
     this.passwordLogin = new FormControl('', [
@@ -38,9 +45,28 @@ export class LoginPage implements OnInit {
 
    createForm() {
     this.userLoginForm = new FormGroup({
-      userNameLogin: this.userNameLogin,
+      userLoginId: this.userLoginId,
       passwordLogin: this.passwordLogin
     });
    }
 
+
+   login() {
+    this.showLoginLoader = true;
+    this.apiService.login({
+      userLoginId: this.userLoginId.value,
+      password: this.passwordLogin.value
+    }).subscribe(async (result : any) => {
+      this.storageService.setToStorage('token', result.body[0].token)
+      this.storageService.setToStorage('profile', result.body[0])
+      this.showLoginLoader = false;
+    }, (error:any) => {
+      this.showLoginLoader = false;
+      if (error.statusText === 'Unknown Error'){
+        this.widgetUtil.showToast(CONSTANTS.INTERNET_ISSUE)
+      } else {
+        this.widgetUtil.showToast(CONSTANTS.AUTH_FAIL)
+      }
+    })
+   }
 }
