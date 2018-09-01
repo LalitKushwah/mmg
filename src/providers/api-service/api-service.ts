@@ -12,4 +12,12 @@ export class ApiServiceProvider {
   login(credentials: Object): any {
     return this.http.post(CONSTANTS.BASE_URL + 'api/user/authenticate', credentials)
   }
+  
+  getParentCategoryList(): any {
+    return this.http.get(CONSTANTS.BASE_URL + 'api/category/list/parent')
+  }
+  
+  getChildCategoryList(parentCategoryId: string): any {
+    return this.http.get(CONSTANTS.BASE_URL + 'api/category/list/child/' + parentCategoryId)
+  }
 }

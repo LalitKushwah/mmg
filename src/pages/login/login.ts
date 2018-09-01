@@ -59,12 +59,13 @@ export class LoginPage implements OnInit {
    login() {
     this.showLoginLoader = true;
     this.apiService.login({
-      userLoginId: this.userLoginId.value,
-      password: this.passwordLogin.value
+      userLoginId: this.userLoginId.value.trim(),
+      password: this.passwordLogin.value.trim()
     }).subscribe(async (result : any) => {
       this.storageService.setToStorage('token', result.body[0].token)
       this.storageService.setToStorage('profile', result.body[0])
       this.storageService.setToStorage('userType', result.body[0].userType)
+      localStorage.setItem('token', result.body[0].token)
       this.showLoginLoader = false;
       this.navCtrl.setRoot(MyApp)
     }, (error:any) => {

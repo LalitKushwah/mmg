@@ -1,10 +1,13 @@
 import { Injectable } from '@angular/core';
-import { AlertController, ToastController } from 'ionic-angular';
+import { AlertController, ToastController, PopoverController } from 'ionic-angular';
 
 @Injectable()
 export class WidgetUtilService {
 
-  constructor(public alertController: AlertController, public toastController: ToastController) {
+  popoverInstance : any = {}
+
+  constructor(public alertController: AlertController, public toastController: ToastController
+    , private popoverController: PopoverController) {
   }
 
   showAlert(title, subTitle) {
@@ -22,5 +25,16 @@ export class WidgetUtilService {
       position: 'top'
     });
     toast.present();
+  }
+
+  dismissPopover() {
+    this.popoverInstance.dismiss()
+  }
+
+  presentPopover(myEvent, page) {
+    this.popoverInstance = this.popoverController.create(page);
+    this.popoverInstance.present({
+      ev: myEvent
+    });
   }
 }

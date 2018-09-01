@@ -1,9 +1,12 @@
+import { AdminHomePage } from './../admin-home/admin-home';
+import { CustomerHomePage } from './../customer-home/customer-home';
 import { StorageServiceProvider } from './../../providers/storage-service/storage-service';
 import { WidgetUtilService } from './../utils/widget-utils';
 import { PopoverHomePage } from './../popover-home/popover-home';
 import { Component } from '@angular/core';
 import { NavController, MenuController, PopoverController } from 'ionic-angular';
 import { LoginPage } from '../login/login';
+import { MyApp } from '../../app/app.component';
 
 @Component({
   selector: 'page-home',
@@ -18,22 +21,33 @@ export class HomePage {
 
   async checkData() {
     try {
-      let token = await this.storageService.getFromStorage('token')
-      if(!token) {
-        this.menuController.swipeEnable(false, 'main_menu')
-        this.navCtrl.setRoot(LoginPage)
-      } else {
-        this.menuController.swipeEnable(true, 'main_menu')
+      let profile = await this.storageService.getFromStorage('profile')
+      console.log('profile', profile)
+      if(profile) {
+        if(!(profile['token'])) {
+          this.gotToLogin()
+        } else {
+          this.menuController.swipeEnable(true, 'main_menu')
+          if (profile['userType'] === 'admin') {
+            this.navCtrl.setRoot(AdminHomePage)
+          }else{
+            this.navCtrl.setRoot(CustomerHomePage)
+          }
+        }
+      }else {
+        this.gotToLogin()
       }
     } catch(err) {
       console.log('Error: Home Page Component:', err)
     }
   }
 
+  gotToLogin() {
+    this.menuController.swipeEnable(false, 'main_menu')
+    this.navCtrl.setRoot(LoginPage)
+  }
+
   presentPopover(myEvent) {
-    const popover = this.popoverController.create(PopoverHomePage);
-    popover.present({
-      ev: myEvent
-    });
+    this.widgetUtil.presentPopover(myEvent, PopoverHomePage)
   }
 }

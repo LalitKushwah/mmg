@@ -23,3 +23,10 @@ ion-spinner {
     fill: #ffeb3b;
   }
 }
+
+.search-spinner{
+  top:45%;
+  left: 45%;
+  position: fixed;
+  z-index: 1;
+}
