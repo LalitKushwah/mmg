@@ -1,3 +1,4 @@
+import { MyApp } from './../../app/app.component';
 import { HomePage } from './../home/home';
 import { WidgetUtilService } from './../utils/widget-utils';
 import { StorageServiceProvider } from './../../providers/storage-service/storage-service';
@@ -23,10 +24,12 @@ export class LoginPage implements OnInit {
   
   constructor(public navCtrl: NavController, public navParams: NavParams, private apiService: ApiServiceProvider, private storageService: StorageServiceProvider
   , private widgetUtil: WidgetUtilService, private menuController: MenuController) {
-    this.menuController.enable(false, 'main-menu')
+    this.checkData()
   }
-  
-  
+
+  async checkData() {
+  }
+
   ngOnInit(): void {
     this.createFormControls();
     this.createForm();
@@ -61,8 +64,9 @@ export class LoginPage implements OnInit {
     }).subscribe(async (result : any) => {
       this.storageService.setToStorage('token', result.body[0].token)
       this.storageService.setToStorage('profile', result.body[0])
+      this.storageService.setToStorage('userType', result.body[0].userType)
       this.showLoginLoader = false;
-      this.navCtrl.setRoot(HomePage)
+      this.navCtrl.setRoot(MyApp)
     }, (error:any) => {
       this.showLoginLoader = false;
       if (error.statusText === 'Unknown Error'){

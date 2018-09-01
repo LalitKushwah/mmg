@@ -20,11 +20,10 @@ export class HomePage {
     try {
       let token = await this.storageService.getFromStorage('token')
       if(!token) {
+        this.menuController.swipeEnable(false, 'main_menu')
         this.navCtrl.setRoot(LoginPage)
       } else {
-        console.log('enabling menu')
-        let result = this.menuController.enable(true, 'main-menu')
-        console.log('result***', result)
+        this.menuController.swipeEnable(true, 'main_menu')
       }
     } catch(err) {
       console.log('Error: Home Page Component:', err)

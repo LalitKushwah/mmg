@@ -16,9 +16,8 @@ export class PopoverHomePage {
   constructor(public navCtrl: NavController, public navParams: NavParams, private storageService: StorageServiceProvider) {
   }
 
-  logout() {
+  async logout() {
     this.storageService.clearStorage()
-    console.log('going to login page')
     this.navCtrl.setRoot(HomePage)
   }
 }

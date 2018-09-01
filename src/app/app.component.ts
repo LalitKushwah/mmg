@@ -1,5 +1,6 @@
+import { StorageServiceProvider } from './../providers/storage-service/storage-service';
 import { Component, ViewChild } from '@angular/core';
-import { Nav, Platform } from 'ionic-angular';
+import { Nav, Platform, MenuController } from 'ionic-angular';
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
 
@@ -19,7 +20,8 @@ export class MyApp {
   pages: Array<{title: string, component: any, icon : string}>;
 
   constructor(public platform: Platform, public statusBar: StatusBar, public splashScreen: SplashScreen
-  , private headerColor : HeaderColor) {
+  , private headerColor : HeaderColor, private menuController: MenuController, private storageService: StorageServiceProvider) {
+    this.menuController.swipeEnable(true)
     this.initializeApp();
     // used for an example of ngFor and navigation
     this.pages = [
