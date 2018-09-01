@@ -15,6 +15,7 @@ import {LoginPageModule} from "../pages/login/login.module";
 import { ApiServiceProvider } from '../providers/api-service/api-service';
 import { HttpClientModule } from '@angular/common/http';
 import { StorageServiceProvider } from '../providers/storage-service/storage-service';
+import { PopoverHomePageModule } from '../pages/popover-home/popover-home.module';
 
 @NgModule({
   declarations: [
@@ -32,7 +33,8 @@ import { StorageServiceProvider } from '../providers/storage-service/storage-ser
       }
     ),
     LoginPageModule,
-    HttpClientModule
+    HttpClientModule,
+    PopoverHomePageModule
   ],
   bootstrap: [IonicApp],
   entryComponents: [

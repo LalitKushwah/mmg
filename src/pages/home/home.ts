@@ -1,5 +1,9 @@
+import { StorageServiceProvider } from './../../providers/storage-service/storage-service';
+import { WidgetUtilService } from './../utils/widget-utils';
+import { PopoverHomePage } from './../popover-home/popover-home';
 import { Component } from '@angular/core';
-import { NavController } from 'ionic-angular';
+import { NavController, MenuController, PopoverController } from 'ionic-angular';
+import { LoginPage } from '../login/login';
 
 @Component({
   selector: 'page-home',
@@ -7,7 +11,30 @@ import { NavController } from 'ionic-angular';
 })
 export class HomePage {
   
-  constructor(public navCtrl: NavController) {
+  constructor(public navCtrl: NavController, private menuController: MenuController, private popoverController: PopoverController
+  ,private storageService: StorageServiceProvider, private widgetUtil: WidgetUtilService) {
+    this.checkData()
   }
 
+  async checkData() {
+    try {
+      let token = await this.storageService.getFromStorage('token')
+      if(!token) {
+        this.navCtrl.setRoot(LoginPage)
+      } else {
+        console.log('enabling menu')
+        let result = this.menuController.enable(true, 'main-menu')
+        console.log('result***', result)
+      }
+    } catch(err) {
+      console.log('Error: Home Page Component:', err)
+    }
+  }
+
+  presentPopover(myEvent) {
+    const popover = this.popoverController.create(PopoverHomePage);
+    popover.present({
+      ev: myEvent
+    });
+  }
 }

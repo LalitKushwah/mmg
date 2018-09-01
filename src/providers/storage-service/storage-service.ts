@@ -21,4 +21,19 @@ export class StorageServiceProvider {
   setToStorage(key, value) {
     return this.storage.set(key, value)
   }
+
+  removeFromStorage(key) {
+    return new Promise((resolve, reject) => {
+      this.storage.remove(key)
+      .then((result) => {
+        resolve(result)
+      }).catch((err) => {
+        reject(err)
+      })
+    })
+  }
+
+  clearStorage() {
+    this.storage.clear()
+  }
 }

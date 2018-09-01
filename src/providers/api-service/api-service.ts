@@ -9,7 +9,7 @@ export class ApiServiceProvider {
     console.log('Hello ApiServiceProvider Provider');
   }
 
-  login(credentials: Object): any{
+  login(credentials: Object): any {
     return this.http.post(CONSTANTS.BASE_URL + 'api/user/authenticate', credentials)
   }
 }

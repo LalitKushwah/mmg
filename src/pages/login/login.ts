@@ -1,3 +1,4 @@
+import { HomePage } from './../home/home';
 import { WidgetUtilService } from './../utils/widget-utils';
 import { StorageServiceProvider } from './../../providers/storage-service/storage-service';
 import { ApiServiceProvider } from './../../providers/api-service/api-service';
@@ -24,6 +25,7 @@ export class LoginPage implements OnInit {
   , private widgetUtil: WidgetUtilService, private menuController: MenuController) {
     this.menuController.enable(false, 'main-menu')
   }
+  
   
   ngOnInit(): void {
     this.createFormControls();
@@ -60,6 +62,7 @@ export class LoginPage implements OnInit {
       this.storageService.setToStorage('token', result.body[0].token)
       this.storageService.setToStorage('profile', result.body[0])
       this.showLoginLoader = false;
+      this.navCtrl.setRoot(HomePage)
     }, (error:any) => {
       this.showLoginLoader = false;
       if (error.statusText === 'Unknown Error'){
