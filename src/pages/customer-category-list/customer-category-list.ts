@@ -3,6 +3,7 @@ import { ApiServiceProvider } from './../../providers/api-service/api-service';
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { CONSTANTS } from '../utils/constants';
+import { CustomerListProductPage } from '../customer-list-product/customer-list-product';
 
 @IonicPage({
   name: 'CustomerCategoryListPage'
@@ -38,6 +39,13 @@ export class CustomerCategoryListPage {
       }
       this.categoryListAvailable = true
     })
+  }
+
+  getProducts(categoryId) {
+    const categoryObj = {
+      'categoryId' : categoryId
+    }
+    this.navCtrl.push(CustomerListProductPage, categoryObj)
   }
 
   doRefresh(refresher) : void {

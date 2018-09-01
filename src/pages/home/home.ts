@@ -34,7 +34,7 @@ export class HomePage {
             this.navCtrl.setRoot(CustomerHomePage)
           }
         }
-      }else {
+      } else {
         this.gotToLogin()
       }
     } catch(err) {

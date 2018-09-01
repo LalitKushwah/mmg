@@ -1,3 +1,5 @@
+import { CustomerListProductPageModule } from './../pages/customer-list-product/customer-list-product.module';
+import { CustomerListProductPage } from './../pages/customer-list-product/customer-list-product';
 import { CustomerCategoryListPageModule } from './../pages/customer-category-list/customer-category-list.module';
 import { AdminHomePageModule } from './../pages/admin-home/admin-home.module';
 import { CustomerHomePageModule } from './../pages/customer-home/customer-home.module';
@@ -43,7 +45,8 @@ import { CustomerCategoryListPage } from '../pages/customer-category-list/custom
     PopoverHomePageModule,
     CustomerHomePageModule,
     AdminHomePageModule,
-    CustomerCategoryListPageModule
+    CustomerCategoryListPageModule,
+    CustomerListProductPageModule
   ],
   bootstrap: [IonicApp],
   entryComponents: [
@@ -51,7 +54,8 @@ import { CustomerCategoryListPage } from '../pages/customer-category-list/custom
     HomePage,
     ListPage,
     CustomerCategoryListPage,
-    CustomerHomePage
+    CustomerHomePage,
+    CustomerListProductPage
   ],
   providers: [
     StatusBar,
