@@ -1,3 +1,4 @@
+import { CustomerReviewSubmitOrderPageModule } from './../pages/customer-review-submit-order/customer-review-submit-order.module';
 import { CustomerListProductPageModule } from './../pages/customer-list-product/customer-list-product.module';
 import { CustomerListProductPage } from './../pages/customer-list-product/customer-list-product';
 import { CustomerCategoryListPageModule } from './../pages/customer-category-list/customer-category-list.module';
@@ -24,6 +25,7 @@ import { PopoverHomePageModule } from '../pages/popover-home/popover-home.module
 import { TokenInterceptorServiceProvider } from '../providers/token-interceptor-service/token-interceptor-service';
 import { CustomerHomePage } from '../pages/customer-home/customer-home';
 import { CustomerCategoryListPage } from '../pages/customer-category-list/customer-category-list';
+import { CustomerReviewSubmitOrderPage } from '../pages/customer-review-submit-order/customer-review-submit-order';
 
 @NgModule({
   declarations: [
@@ -46,7 +48,8 @@ import { CustomerCategoryListPage } from '../pages/customer-category-list/custom
     CustomerHomePageModule,
     AdminHomePageModule,
     CustomerCategoryListPageModule,
-    CustomerListProductPageModule
+    CustomerListProductPageModule,
+    CustomerReviewSubmitOrderPageModule
   ],
   bootstrap: [IonicApp],
   entryComponents: [
@@ -55,7 +58,8 @@ import { CustomerCategoryListPage } from '../pages/customer-category-list/custom
     ListPage,
     CustomerCategoryListPage,
     CustomerHomePage,
-    CustomerListProductPage
+    CustomerListProductPage,
+    CustomerReviewSubmitOrderPage
   ],
   providers: [
     StatusBar,

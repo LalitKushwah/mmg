@@ -1,0 +1,37 @@
+<ion-header>
+  <ion-navbar>
+    <ion-title>Reivew and Submit</ion-title>
+  </ion-navbar>
+</ion-header>
+<ion-content class="full-background">
+    <ion-refresher (ionRefresh)="doRefresh($event)" spinner="crescent">
+        <ion-refresher-content></ion-refresher-content>
+    </ion-refresher>
+    <ion-card>
+      <table>
+          <tr>
+            <th>Name</th>
+            <th>Quantity</th>
+            <th>Price</th>
+            <th>Sub Total</th>
+          </tr>
+          <tr *ngFor="let item of cartItems">
+            <td>{{item.name}}</td>
+            <td>{{item.quantity}}</td>
+            <td>{{item.price}}</td>
+            <td>{{(item.price) * (item.quantity)}}</td>
+          </tr>
+        </table>
+        <ion-row>
+          <ion-col text-center>
+            <ion-icon name="cash"></ion-icon>
+            <span>Order Total: {{orderTotal}}</span>
+          </ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-col text-center>
+            <button ion-button color="secondary">Submit Order</button>
+          </ion-col>
+        </ion-row>
+    </ion-card>
+</ion-content>

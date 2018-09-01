@@ -1,6 +1,12 @@
 <ion-header>
     <ion-navbar>
       <ion-title>Product List</ion-title>
+      <ion-buttons end>
+        <button ion-button icon-only (click)="reviewAndSubmitOrder()">
+          <h4>{{cartQuantity}}</h4>
+          <ion-icon name="cart"></ion-icon>
+        </button>
+      </ion-buttons>
     </ion-navbar>
   </ion-header>
   <ion-content class="full-background">
@@ -11,55 +17,26 @@
       <ion-refresher-content></ion-refresher-content>
     </ion-refresher>
     <ion-list *ngIf="productListAvailable">
-      <!-- <button ion-item *ngFor="let product of productList">
-        <ion-avatar item-start>
-          <img src="./assets/imgs/product.png">
-        </ion-avatar>
-        <span>{{product.name}}</span>
-        <button ion-button clear item-end><h1><ion-icon md="md-arrow-round-forward"></ion-icon></h1></button>
-      </button> -->
-      <!-- <ion-card *ngFor="let product of productList">
-        <ion-row>
-          <ion-col col-3>
-            <ion-avatar>
-              <img src="./assets/imgs/product.png" style="width: 20px; height: 20px;">
-            </ion-avatar>
-          </ion-col>
-          <ion-col col-9>
-            <strong>{{product.name}}</strong>
-          </ion-col>
-        </ion-row>
-        <ion-row>
-          <ion-col col-6>
-            <ion-item>
-              <ion-input type="text"></ion-input>
-            </ion-item>
-          </ion-col>
-          <ion-col col-6 item-end>
-            <button ion-button color="secondary">Add</button>
-          </ion-col>
-          </ion-row>
-      </ion-card> -->
       <ion-card *ngFor="let product of productList">
-          <ion-card-header text-center>
-            <ion-icon name="cube"></ion-icon>
-            <strong>{{product.name}}</strong>
-          </ion-card-header>
-          <ion-card-content>
-            <ion-row>
-              <ion-col>
-                  <button ion-button color="accent" outline style="color: black!important;">
-                    <ion-input item-start type="text" placeholder="Qty"></ion-input>
-                  </button>
-              </ion-col>
-              <ion-col text-center>
-                <button end ion-button color="secondary" (click)="purchase()" style="color: white!important;">
-                  <strong><ion-icon name="cart"></ion-icon>Add</strong>
-                </button>
-              </ion-col>
-            </ion-row>
-          </ion-card-content>
-        </ion-card>
+        <ion-card-header text-center>
+          <ion-icon name="cube"></ion-icon>
+          <strong>{{product.name}}</strong>
+        </ion-card-header>
+        <ion-card-content>
+          <ion-row>
+            <ion-col text-center>
+              <button ion-button color="accent" outline style="color: black!important;">
+                <ion-input item-start type="text" placeholder="Qty" #qty></ion-input>
+              </button>
+            </ion-col>
+            <ion-col text-center>
+              <button end ion-button color="secondary" (click)="addToCart(product, qty.value)" style="color: white!important;">
+                <strong><ion-icon name="cart"></ion-icon>Add</strong>
+              </button>
+            </ion-col>
+          </ion-row>
+        </ion-card-content>
+      </ion-card>
     </ion-list>
   </ion-content>
   
