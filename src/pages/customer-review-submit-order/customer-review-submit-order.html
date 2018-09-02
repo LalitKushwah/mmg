@@ -1,6 +1,6 @@
 <ion-header>
   <ion-navbar>
-    <ion-title>Reivew and Submit</ion-title>
+    <ion-title>Review and Submit</ion-title>
   </ion-navbar>
 </ion-header>
 <ion-content class="full-background">
@@ -18,14 +18,14 @@
           <tr *ngFor="let item of cartItems">
             <td>{{item.name}}</td>
             <td>{{item.quantity}}</td>
-            <td>{{item.price}}</td>
-            <td>{{(item.price) * (item.quantity)}}</td>
+            <td>{{item.price}} ZK</td>
+            <td>{{(item.price) * (item.quantity)}} ZK</td>
           </tr>
         </table>
         <ion-row>
           <ion-col text-center>
             <ion-icon name="cash"></ion-icon>
-            <span>Order Total: {{orderTotal}}</span>
+            <span>Order Total: {{orderTotal}} ZK</span>
           </ion-col>
         </ion-row>
         <ion-row>

@@ -19,8 +19,18 @@
     <ion-list *ngIf="productListAvailable">
       <ion-card *ngFor="let product of productList">
         <ion-card-header text-center>
-          <ion-icon name="cube"></ion-icon>
-          <strong>{{product.name}}</strong>
+          <ion-row>
+            <ion-col text-center>
+              <ion-icon name="cube"></ion-icon>
+              <strong>{{product.name}}</strong>
+            </ion-col>
+          </ion-row>
+          <ion-row>
+            <ion-col text-center>
+              <ion-icon name="cash"></ion-icon>
+              <strong>{{product.price}} ZK</strong>
+            </ion-col>
+          </ion-row>
         </ion-card-header>
         <ion-card-content>
           <ion-row>

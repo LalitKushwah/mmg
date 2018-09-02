@@ -56,6 +56,4 @@ export class CustomerHomePage {
       refresher.complete();
     }, 1000);
   }
-
-
 }

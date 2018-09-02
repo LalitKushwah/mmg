@@ -16,6 +16,7 @@ export class MyApp {
   @ViewChild(Nav) nav: Nav;
 
   rootPage: any = HomePage;
+  partyName: string = ''
 
   pages: Array<{title: string, component: any, icon : string}>;
 
@@ -23,17 +24,28 @@ export class MyApp {
   , private headerColor : HeaderColor, private menuController: MenuController, private storageService: StorageServiceProvider) {
     this.menuController.swipeEnable(true)
     this.initializeApp();
-    // used for an example of ngFor and navigation
     this.pages = [
       { title: 'Home', component: HomePage, icon :'md-home'},
-      { title: 'List', component: ListPage, icon : 'md-information-circle'}
+      { title: 'Your Orders', component: ListPage, icon : 'cart'}
     ];
+  }
+
+  async getData() {
+    try {
+      let profile = await this.storageService.getFromStorage('profile')
+      if(profile) {
+        this.partyName = profile['name']
+      } 
+    } catch(err) {
+      console.log('Error: Home Page Component:', err)
+    }
   }
 
   initializeApp() {
     this.platform.ready().then(() => {
       // Okay, so the platform is ready and our plugins are available.
       // Here you can do any higher level native things you might need.
+      this.getData()
       this.statusBar.overlaysWebView(false);
       this.statusBar.backgroundColorByHexString('#488aff');
       this.headerColor.tint('#FD367E');
