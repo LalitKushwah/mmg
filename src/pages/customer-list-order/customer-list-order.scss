@@ -1,20 +1,11 @@
-page-customer-review-submit-order {
+page-customer-list-order {
     table, td, th {    
         text-align: left;
     }
-
-    tbody tr {
-        font-size: 15px;
-        color: #808080;
-        line-height: 1.2;
-        font-weight: unset;
-    }
-    
     table {
         border-collapse: collapse;
         width: 100%;
     }
-    
     th, td {
         padding: 5px;
     }
@@ -24,5 +15,12 @@ page-customer-review-submit-order {
         height: 50px;
         background: #36304a;
         color: white;
+    }
+    
+    tbody tr {
+        font-size: 15px;
+        color: #808080;
+        line-height: 1.2;
+        font-weight: unset;
     }
 }

@@ -1,0 +1,38 @@
+<ion-header>
+  <ion-navbar>
+    <button ion-button menuToggle>
+      <ion-icon name="menu"></ion-icon>
+    </button>
+    <ion-title>Order List</ion-title>
+  </ion-navbar>
+</ion-header>
+<ion-content class="full-background">
+  <div class="search-spinner">
+      <ion-spinner name="crescent" *ngIf="!orderListAvailable"></ion-spinner>
+    </div>
+    <ion-refresher (ionRefresh)="doRefresh($event)" spinner="crescent">
+      <ion-refresher-content></ion-refresher-content>
+    </ion-refresher>
+    <ion-card *ngIf="orderListAvailable" style="overflow-x:auto;">
+      <table>
+        <thead>
+          <tr>
+            <th>S.No</th>
+            <th>Date</th>
+            <th>Total (ZK)</th>
+            <th>Recieved</th>
+            <th>Detail</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let order of orderList; let i = index">
+            <td>{{(i+1)}}</td>
+            <td>1/1/2018</td>
+            <td>{{order.orderTotal}}</td>
+            <td>{{order.status}}</td>
+            <td><button ion-button clear color="secondary" item-end (click)="getOrderDetial(order)">view</button></td>
+          </tr>
+        </tbody>
+      </table>
+    </ion-card>
+</ion-content>

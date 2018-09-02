@@ -8,6 +8,7 @@ import { HomePage } from '../pages/home/home';
 import { ListPage } from '../pages/list/list';
 import {HeaderColor} from "@ionic-native/header-color";
 import { LoginPage } from '../pages/login/login';
+import { CustomerListOrderPage } from '../pages/customer-list-order/customer-list-order';
 
 @Component({
   templateUrl: 'app.html'
@@ -26,7 +27,7 @@ export class MyApp {
     this.initializeApp();
     this.pages = [
       { title: 'Home', component: HomePage, icon :'md-home'},
-      { title: 'Your Orders', component: ListPage, icon : 'cart'}
+      { title: 'Your Orders', component: CustomerListOrderPage, icon : 'cart'}
     ];
   }
 

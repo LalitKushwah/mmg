@@ -1,3 +1,7 @@
+import { CustomerOrderDetailPageModule } from './../pages/customer-order-detail/customer-order-detail.module';
+import { CustomerOrderDetailPage } from './../pages/customer-order-detail/customer-order-detail';
+import { CustomerListOrderPageModule } from './../pages/customer-list-order/customer-list-order.module';
+import { CustomerListOrderPage } from './../pages/customer-list-order/customer-list-order';
 import { CustomerReviewSubmitOrderPageModule } from './../pages/customer-review-submit-order/customer-review-submit-order.module';
 import { CustomerListProductPageModule } from './../pages/customer-list-product/customer-list-product.module';
 import { CustomerListProductPage } from './../pages/customer-list-product/customer-list-product';
@@ -49,7 +53,9 @@ import { CustomerReviewSubmitOrderPage } from '../pages/customer-review-submit-o
     AdminHomePageModule,
     CustomerCategoryListPageModule,
     CustomerListProductPageModule,
-    CustomerReviewSubmitOrderPageModule
+    CustomerReviewSubmitOrderPageModule,
+    CustomerListOrderPageModule,
+    CustomerOrderDetailPageModule
   ],
   bootstrap: [IonicApp],
   entryComponents: [
@@ -59,7 +65,9 @@ import { CustomerReviewSubmitOrderPage } from '../pages/customer-review-submit-o
     CustomerCategoryListPage,
     CustomerHomePage,
     CustomerListProductPage,
-    CustomerReviewSubmitOrderPage
+    CustomerReviewSubmitOrderPage,
+    CustomerListOrderPage,
+    CustomerOrderDetailPage
   ],
   providers: [
     StatusBar,

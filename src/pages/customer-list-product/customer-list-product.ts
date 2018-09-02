@@ -62,9 +62,13 @@ export class CustomerListProductPage {
   }
 
   reviewAndSubmitOrder() {
-    this.navCtrl.push(CustomerReviewSubmitOrderPage, {
-      'orderTotal' : this.orderTotal
-    })
+    if (this.cart.length <= 0) {
+      this.widgetUtil.showToast(CONSTANTS.CART_EMPTY)
+    }else {
+      this.navCtrl.push(CustomerReviewSubmitOrderPage, {
+        'orderTotal' : this.orderTotal
+      })
+    }
   }
 
   async addToCart(product, qty) {

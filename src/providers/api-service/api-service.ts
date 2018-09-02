@@ -28,4 +28,9 @@ export class ApiServiceProvider {
   submitOrder(orderDetails: Object): any {
     return this.http.post(CONSTANTS.BASE_URL + 'api/order/', orderDetails)
   }
+
+  getOrderListByUser(userId: string): any {
+    return this.http.get(CONSTANTS.BASE_URL + 'api/order/list/user/' + userId)
+  }
+
 }

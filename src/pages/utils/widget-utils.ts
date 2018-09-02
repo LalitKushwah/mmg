@@ -22,7 +22,7 @@ export class WidgetUtilService {
     let toast = this.toastController.create({
       message: message,
       duration: 3000,
-      position: 'top'
+      position: 'bottom'
     });
     toast.present();
   }
