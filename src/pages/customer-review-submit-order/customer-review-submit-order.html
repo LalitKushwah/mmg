@@ -30,7 +30,7 @@
         </ion-row>
         <ion-row>
           <ion-col text-center>
-            <button ion-button color="secondary">Submit Order</button>
+            <button ion-button (click)="submitOrder()" color="secondary">Submit Order <ion-spinner name="dots" *ngIf="showLoader"></ion-spinner></button>
           </ion-col>
         </ion-row>
     </ion-card>

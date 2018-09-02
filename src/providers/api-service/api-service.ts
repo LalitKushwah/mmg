@@ -24,4 +24,8 @@ export class ApiServiceProvider {
   getProductListByCategory(categoryId: string): any {
     return this.http.get(CONSTANTS.BASE_URL + 'api/product/list/category/' + categoryId)
   }
+
+  submitOrder(orderDetails: Object): any {
+    return this.http.post(CONSTANTS.BASE_URL + 'api/order/', orderDetails)
+  }
 }
