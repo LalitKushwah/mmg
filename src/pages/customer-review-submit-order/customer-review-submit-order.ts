@@ -50,7 +50,8 @@ export class CustomerReviewSubmitOrderPage {
       }),
       userId: (await this.storageService.getFromStorage('profile'))['_id'],
       orderTotal: this.orderTotal,
-      status: 'n'
+      status: CONSTANTS.ORDER_STATUS_PROGRESS,
+      lastUpdatedAt: Date.now()
     }
     this.apiService.submitOrder(orderObj).subscribe((result) => {
       this.showLoader = false

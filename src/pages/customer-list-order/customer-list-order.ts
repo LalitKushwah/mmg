@@ -1,3 +1,4 @@
+import { CONSTANTS } from './../utils/constants';
 import { CustomerOrderDetailPage } from './../customer-order-detail/customer-order-detail';
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
@@ -29,14 +30,21 @@ export class CustomerListOrderPage {
     this.apiService.getOrderListByUser(userId).subscribe((result) => {
       this.orderList = result.body
       this.orderList.map((value) => {
-        if(value.status === 'n') {
-          value.status = 'No'
-        } else {
-          value.status = 'Yes'
+        switch(value.status) {
+          case CONSTANTS.ORDER_STATUS_RECEIVED:
+            value.status = "Received"
+            break
+          case CONSTANTS.ORDER_STATUS_PROGRESS:
+            value.status = "In-Progress"
+            break
+          case CONSTANTS.ORDER_STATUS_CANCEL:
+            value.status = "Cancelled"
+            break
         }
+        value.lastUpdatedAt = this.formatDate(value.lastUpdatedAt)
       })
       this.orderListAvailable = true
-      console.log(this.orderList)
+      console.log("this.orderList", this.orderList)
     }, (error) => {
       this.orderListAvailable = true
       console.log('error', error)
@@ -57,4 +65,13 @@ export class CustomerListOrderPage {
     }, 1000);
   }
 
+  formatDate(date) {
+    let d = new Date(date),
+        month = '' + (d.getMonth() + 1),
+        day = '' + d.getDate(),
+        year = d.getFullYear()
+    if (month.length < 2) month = '0' + month
+    if (day.length < 2) day = '0' + day
+    return [year, month, day].join('-')
+  }
 }

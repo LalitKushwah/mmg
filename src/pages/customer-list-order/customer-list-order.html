@@ -20,14 +20,14 @@
             <th>S.No</th>
             <th>Date</th>
             <th>Total (ZK)</th>
-            <th>Recieved</th>
+            <th>Status</th>
             <th>Detail</th>
           </tr>
         </thead>
         <tbody>
           <tr *ngFor="let order of orderList; let i = index">
             <td>{{(i+1)}}</td>
-            <td>1/1/2018</td>
+            <td>{{order.lastUpdatedAt}}</td>
             <td>{{order.orderTotal}}</td>
             <td>{{order.status}}</td>
             <td><button ion-button clear color="secondary" item-end (click)="getOrderDetial(order)">view</button></td>
