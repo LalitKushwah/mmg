@@ -6,10 +6,12 @@ import { PopoverHomePage } from '../popover-home/popover-home';
 @IonicPage({
   name: 'AdminHomePage'
 })
+
 @Component({
   selector: 'page-admin-home',
   templateUrl: 'admin-home.html',
 })
+
 export class AdminHomePage {
 
   constructor(public navCtrl: NavController, public navParams: NavParams, private widgetUtil: WidgetUtilService) {

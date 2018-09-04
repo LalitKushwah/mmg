@@ -1,3 +1,6 @@
+import { AddUserPageModule } from './../pages/add-user/add-user.module';
+import { AddProductPageModule } from './../pages/add-product/add-product.module';
+import { AddCategoryPageModule } from './../pages/add-category/add-category.module';
 import { CustomerOrderDetailPageModule } from './../pages/customer-order-detail/customer-order-detail.module';
 import { CustomerOrderDetailPage } from './../pages/customer-order-detail/customer-order-detail';
 import { CustomerListOrderPageModule } from './../pages/customer-list-order/customer-list-order.module';
@@ -30,6 +33,9 @@ import { TokenInterceptorServiceProvider } from '../providers/token-interceptor-
 import { CustomerHomePage } from '../pages/customer-home/customer-home';
 import { CustomerCategoryListPage } from '../pages/customer-category-list/customer-category-list';
 import { CustomerReviewSubmitOrderPage } from '../pages/customer-review-submit-order/customer-review-submit-order';
+import { AddCategoryPage } from '../pages/add-category/add-category';
+import { AddUserPage } from '../pages/add-user/add-user';
+import { AddProductPage } from '../pages/add-product/add-product';
 
 @NgModule({
   declarations: [
@@ -55,7 +61,10 @@ import { CustomerReviewSubmitOrderPage } from '../pages/customer-review-submit-o
     CustomerListProductPageModule,
     CustomerReviewSubmitOrderPageModule,
     CustomerListOrderPageModule,
-    CustomerOrderDetailPageModule
+    CustomerOrderDetailPageModule,
+    AddCategoryPageModule,
+    AddProductPageModule,
+    AddUserPageModule
   ],
   bootstrap: [IonicApp],
   entryComponents: [
@@ -67,7 +76,10 @@ import { CustomerReviewSubmitOrderPage } from '../pages/customer-review-submit-o
     CustomerListProductPage,
     CustomerReviewSubmitOrderPage,
     CustomerListOrderPage,
-    CustomerOrderDetailPage
+    CustomerOrderDetailPage,
+    AddCategoryPage,
+    AddUserPage,
+    AddProductPage
   ],
   providers: [
     StatusBar,

@@ -1,6 +1,6 @@
-<ion-list>
-  <ion-item (click)="logout()">
-    <ion-icon name="log-out"></ion-icon>
-    <span>Logout</span>
+<ion-list *ngFor="let option of popoverOptions">
+  <ion-item (click)="openPage(option.name)" >
+    <ion-icon name="{{option.icon}}"></ion-icon>
+    <span>{{option.name}}</span>
   </ion-item>
 </ion-list>
