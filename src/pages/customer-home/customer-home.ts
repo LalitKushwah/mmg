@@ -18,16 +18,20 @@ export class CustomerHomePage {
 
   parentCategoryList: Array<any> = [];
   categoryListAvailable: Boolean = false
+  skipValue: number = 0
+  limit: number = 10
 
 
   constructor(public navCtrl: NavController, public navParams: NavParams, private widgetUtil: WidgetUtilService, private apiService: ApiServiceProvider) {
     this.categoryListAvailable = false
     this.parentCategoryList = []
+    this.skipValue = 0
+    this.limit = 10
     this.getList()
   }
 
   getList() {
-    this.apiService.getParentCategoryList().subscribe((result) => {
+    this.apiService.getParentCategoryList(this.skipValue, this.limit).subscribe((result) => {
       this.parentCategoryList = result.body
       this.categoryListAvailable = true
     }, (error) => {
@@ -55,5 +59,24 @@ export class CustomerHomePage {
     setTimeout(() => {
       refresher.complete();
     }, 1000);
+  }
+
+  doInfinite(infiniteScroll) {
+    this.skipValue = this.skipValue + this.limit
+    this.apiService.getParentCategoryList(this.skipValue, this.limit).subscribe((result) => {
+      if(result.body.length > 0) {
+        result.body.map( (value) => {
+          this.parentCategoryList.push(value)
+        }) 
+      }
+      infiniteScroll.complete();
+    }, (error) => {
+      infiniteScroll.complete();
+      if (error.statusText === 'Unknown Error') {
+        this.widgetUtil.showToast(CONSTANTS.INTERNET_ISSUE)
+      } else {
+        this.widgetUtil.showToast(CONSTANTS.SERVER_ERROR)
+      }
+    })
   }
 }

@@ -22,10 +22,14 @@ export class CustomerListProductPage {
   orderTotal: any = 0;
   cartDetail:any = []
   cart: any = []
+  skipValue: number = 0
+  limit: number = 10
 
   constructor(public navCtrl: NavController, public navParams: NavParams,
     private apiService: ApiServiceProvider, private widgetUtil: WidgetUtilService
   , private storageService: StorageServiceProvider) {
+    this.skipValue = 0
+    this.limit = 10
     this.categoryId = this.navParams.get("categoryId")
     this.productListAvailable = false
     this.productList = []
@@ -37,7 +41,7 @@ export class CustomerListProductPage {
   }
 
   getList() {
-    this.apiService.getProductListByCategory(this.categoryId).subscribe((result) => {
+    this.apiService.getProductListByCategory(this.categoryId, this.skipValue, this.limit).subscribe((result) => {
       this.productList = result.body
       console.log('this.productList', this.productList)
       this.productListAvailable = true
@@ -119,10 +123,30 @@ export class CustomerListProductPage {
     }
   }
 
+  doInfinite(infiniteScroll) {
+    this.skipValue = this.skipValue + this.limit
+    this.apiService.getProductListByCategory(this.categoryId, this.skipValue, this.limit).subscribe((result) => {
+      if(result.body.length > 0) {
+        result.body.map( (value) => {
+          this.productList.push(value)
+        }) 
+      }
+      infiniteScroll.complete();
+    }, (error) => {
+      infiniteScroll.complete();
+      if (error.statusText === 'Unknown Error') {
+        this.widgetUtil.showToast(CONSTANTS.INTERNET_ISSUE)
+      } else {
+        this.widgetUtil.showToast(CONSTANTS.SERVER_ERROR)
+      }
+    })
+  }
+
   doRefresh(refresher) : void {
     this.getCardItems()
     setTimeout(() => {
       refresher.complete();
     }, 1000);
   }
+
 }

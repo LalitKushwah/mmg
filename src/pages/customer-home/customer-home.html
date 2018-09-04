@@ -19,18 +19,6 @@
   <ion-refresher (ionRefresh)="doRefresh($event)" spinner="crescent">
     <ion-refresher-content></ion-refresher-content>
   </ion-refresher>
-  <!-- <ion-card *ngIf="categoryListAvailable">
-    <ion-card-header>Categories</ion-card-header>
-    <ion-list>
-        <button ion-item *ngFor="let category of parentCategoryList" (click)="getChildCategory(category['_id'])">
-          <ion-avatar item-start>
-            <img src="./assets/imgs/productcategory.png">
-          </ion-avatar>
-          <span>{{category.name}}</span>
-          <button ion-button clear item-end><h1><ion-icon md="md-arrow-round-forward"></ion-icon></h1></button>
-        </button>
-      </ion-list>
-  </ion-card> -->
   <ion-list *ngIf="categoryListAvailable">
     <button ion-item *ngFor="let category of parentCategoryList" (click)="getChildCategory(category['_id'])">
       <ion-avatar item-start>
@@ -40,4 +28,7 @@
       <button ion-button clear color="secondary" item-end><h1><ion-icon md="md-arrow-round-forward"></ion-icon></h1></button>
     </button>
   </ion-list>
+  <ion-infinite-scroll (ionInfinite)="doInfinite($event)">
+    <ion-infinite-scroll-content></ion-infinite-scroll-content>
+  </ion-infinite-scroll>
 </ion-content>

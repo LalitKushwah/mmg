@@ -17,17 +17,21 @@ export class CustomerCategoryListPage {
 
   parentCategoryId: string = ''
   categoryListAvailable: Boolean = false
-  childCategoryList: Array<any> = [];
+  childCategoryList: Array<any> = []
+  skipValue: number = 0
+  limit: number = 10
 
   constructor(public navCtrl: NavController, public navParams: NavParams, private apiService: ApiServiceProvider, private widgetUtil: WidgetUtilService) {
     this.parentCategoryId = this.navParams.get("parentCategoryId")
     this.categoryListAvailable = false
     this.childCategoryList = []
+    this.skipValue = 0
+    this.limit = 10
     this.getList()
   }
 
   getList() {
-    this.apiService.getChildCategoryList(this.parentCategoryId).subscribe((result) => {
+    this.apiService.getChildCategoryList(this.parentCategoryId, this.skipValue, this.limit).subscribe((result) => {
       this.childCategoryList = result.body
       console.log('this.childCategoryList', this.childCategoryList)
       this.categoryListAvailable = true
@@ -46,6 +50,25 @@ export class CustomerCategoryListPage {
       'categoryId' : categoryId
     }
     this.navCtrl.push(CustomerListProductPage, categoryObj)
+  }
+
+  doInfinite(infiniteScroll) {
+    this.skipValue = this.skipValue + this.limit
+    this.apiService.getChildCategoryList(this.parentCategoryId, this.skipValue, this.limit).subscribe((result) => {
+      if(result.body.length > 0) {
+        result.body.map( (value) => {
+          this.childCategoryList.push(value)
+        }) 
+      }
+      infiniteScroll.complete();
+    }, (error) => {
+      if (error.statusText === 'Unknown Error') {
+        this.widgetUtil.showToast(CONSTANTS.INTERNET_ISSUE)
+      } else {
+        this.widgetUtil.showToast(CONSTANTS.SERVER_ERROR)
+      }
+      infiniteScroll.complete();
+    })
   }
 
   doRefresh(refresher) : void {
