@@ -19,14 +19,14 @@ export class CustomerCategoryListPage {
   categoryListAvailable: Boolean = false
   childCategoryList: Array<any> = []
   skipValue: number = 0
-  limit: number = 10
+  limit: number = CONSTANTS.PAGINATION_LIMIT
 
   constructor(public navCtrl: NavController, public navParams: NavParams, private apiService: ApiServiceProvider, private widgetUtil: WidgetUtilService) {
     this.parentCategoryId = this.navParams.get("parentCategoryId")
     this.categoryListAvailable = false
     this.childCategoryList = []
     this.skipValue = 0
-    this.limit = 10
+    this.limit = CONSTANTS.PAGINATION_LIMIT
     this.getList()
   }
 
@@ -59,6 +59,8 @@ export class CustomerCategoryListPage {
         result.body.map( (value) => {
           this.childCategoryList.push(value)
         }) 
+      }else {
+        this.skipValue = this.limit
       }
       infiniteScroll.complete();
     }, (error) => {

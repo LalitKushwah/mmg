@@ -6,5 +6,6 @@ export const CONSTANTS = {
     CART_EMPTY: 'Cart is empty',
     ORDER_STATUS_PROGRESS: 'in-progress',
     ORDER_STATUS_RECEIVED: 'recieved',
-    ORDER_STATUS_CANCEL: 'cancel'
+    ORDER_STATUS_CANCEL: 'cancel',
+    PAGINATION_LIMIT: 20
 }

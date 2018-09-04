@@ -29,8 +29,8 @@ export class ApiServiceProvider {
     return this.http.post(CONSTANTS.BASE_URL + 'api/order/', orderDetails)
   }
 
-  getOrderListByUser(userId: string): any {
-    return this.http.get(CONSTANTS.BASE_URL + 'api/order/list/user/' + userId)
+  getOrderListByUser(userId: string, skip:number, limit:number): any {
+    return this.http.get(CONSTANTS.BASE_URL + 'api/order/list/user/' + userId + '?skip='+skip.toString() + "&limit="+ limit.toString())
   }
 
 }

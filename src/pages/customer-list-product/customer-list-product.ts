@@ -23,13 +23,13 @@ export class CustomerListProductPage {
   cartDetail:any = []
   cart: any = []
   skipValue: number = 0
-  limit: number = 10
+  limit: number = CONSTANTS.PAGINATION_LIMIT
 
   constructor(public navCtrl: NavController, public navParams: NavParams,
     private apiService: ApiServiceProvider, private widgetUtil: WidgetUtilService
   , private storageService: StorageServiceProvider) {
     this.skipValue = 0
-    this.limit = 10
+    this.limit = CONSTANTS.PAGINATION_LIMIT
     this.categoryId = this.navParams.get("categoryId")
     this.productListAvailable = false
     this.productList = []
@@ -130,6 +130,8 @@ export class CustomerListProductPage {
         result.body.map( (value) => {
           this.productList.push(value)
         }) 
+      } else {
+          this.skipValue = this.limit
       }
       infiniteScroll.complete();
     }, (error) => {
