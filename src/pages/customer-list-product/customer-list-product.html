@@ -1,4 +1,4 @@
-<ion-header>
+  <ion-header>
     <ion-navbar>
       <ion-title>Product List</ion-title>
       <ion-buttons end>
@@ -39,9 +39,14 @@
                 <ion-input item-start type="text" placeholder="Qty" #qty></ion-input>
               </button>
             </ion-col>
-            <ion-col text-center>
-              <button end ion-button color="secondary" (click)="addToCart(product, qty.value)" style="color: white!important;">
+            <ion-col text-right>
+              <button ion-button color="secondary" (click)="addToCart(product, qty.value)" style="color: white!important;">
                 <strong><ion-icon name="cart"></ion-icon>Add</strong>
+              </button>
+            </ion-col>
+            <ion-col text-right>
+              <button ion-button color="light" (click)="removeFromCart(product)">
+                <strong><ion-icon name="trash"></ion-icon></strong>
               </button>
             </ion-col>
           </ion-row>

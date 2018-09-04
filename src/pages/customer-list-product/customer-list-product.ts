@@ -30,6 +30,9 @@ export class CustomerListProductPage {
     this.productListAvailable = false
     this.productList = []
     this.getList()
+  }
+
+  ionViewDidEnter(){
     this.getCardItems()
   }
 
@@ -58,6 +61,9 @@ export class CustomerListProductPage {
       })
       this.orderTotal = updatedTotal
       this.cartQuantity = updatedQuantity
+    } else {
+      this.cartQuantity = 0
+      this.orderTotal = 0
     }
   }
 
@@ -72,6 +78,7 @@ export class CustomerListProductPage {
   }
 
   async addToCart(product, qty) {
+    this.widgetUtil.showToast(`${product.name} added to cart!`)
     delete product['categoryId']
     delete product['productCode']
     product['quantity'] = parseInt(qty)
@@ -98,7 +105,22 @@ export class CustomerListProductPage {
     this.cartQuantity = updatedQuantity
   }
 
+  removeFromCart(product) {
+    this.widgetUtil.showToast(`${product.name} removed from cart`)
+    console.log('this.cart' ,this.cart)
+    if (this.cart.length > 0) {
+      this.cart.map((value, index) => {
+        if(value['_id'] === product['_id']) {
+          this.cart.splice(index, 1)
+        }
+      })
+      this.storageService.setToStorage('cart', this.cart)
+      this.getCardItems()
+    }
+  }
+
   doRefresh(refresher) : void {
+    this.getCardItems()
     setTimeout(() => {
       refresher.complete();
     }, 1000);

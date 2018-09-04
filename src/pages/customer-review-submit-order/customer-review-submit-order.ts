@@ -18,20 +18,23 @@ export class CustomerReviewSubmitOrderPage {
   cartItems: any = []
   orderTotal: number = 0
   showLoader: boolean = false
+  showClearCartLoader: boolean = false
+  
 
   constructor(public navCtrl: NavController, public navParams: NavParams
   , private storageService: StorageServiceProvider, private apiService: ApiServiceProvider,
   private widgetUtil: WidgetUtilService) {
     this.showLoader = false
     this.orderTotal = this.navParams.get("orderTotal")
-    this.getCardItems()
+    this.getCartItems()
   }
 
-  async getCardItems() {
+  async getCartItems() {
     this.cartItems = await this.storageService.getFromStorage('cart')
   }
 
   doRefresh(refresher) : void {
+    this.getCartItems()
     setTimeout(() => {
       refresher.complete();
     }, 1000);
@@ -68,4 +71,14 @@ export class CustomerReviewSubmitOrderPage {
       }
     })
   }
+
+  async clearCart() {
+    this.showClearCartLoader = true
+    await this.storageService.setToStorage('cart', [])
+    this.orderTotal = 0
+    this.getCartItems()
+    this.showClearCartLoader = false
+    this.widgetUtil.showToast('All items removed from cart')
+  }
+
 }

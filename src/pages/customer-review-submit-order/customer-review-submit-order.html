@@ -33,7 +33,8 @@
         </ion-row>
         <ion-row>
           <ion-col text-center>
-            <button ion-button (click)="submitOrder()" color="secondary"><ion-icon name="cart"></ion-icon> Submit Order <ion-spinner name="dots" *ngIf="showLoader"></ion-spinner></button>
+            <button ion-button (click)="clearCart()" [disabled]="(cartItems.length < 1)" color="light"><ion-icon name="trash"></ion-icon> Clear Cart <ion-spinner name="dots" *ngIf="showClearCartLoader"></ion-spinner></button>
+            <button ion-button (click)="submitOrder()" [disabled]="(cartItems.length < 1)" color="secondary"><ion-icon name="cart"></ion-icon> Submit Order <ion-spinner name="dots" *ngIf="showLoader"></ion-spinner></button>
           </ion-col>
         </ion-row>
     </ion-card>
