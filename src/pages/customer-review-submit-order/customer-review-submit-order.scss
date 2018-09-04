@@ -1,28 +1,2 @@
 page-customer-review-submit-order {
-    table, td, th {    
-        text-align: left;
-    }
-
-    tbody tr {
-        font-size: 15px;
-        color: #808080;
-        line-height: 1.2;
-        font-weight: unset;
-    }
-    
-    table {
-        border-collapse: collapse;
-        width: 100%;
-    }
-    
-    th, td {
-        padding: 5px;
-    }
-    tr:nth-child(even){background-color: #f2f2f2}
-
-    table thead tr {
-        height: 50px;
-        background: #36304a;
-        color: white;
-    }
 }

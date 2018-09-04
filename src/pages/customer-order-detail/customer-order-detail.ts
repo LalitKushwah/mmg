@@ -11,7 +11,19 @@ import { IonicPage, NavController, NavParams } from 'ionic-angular';
 })
 export class CustomerOrderDetailPage {
 
+  orderItems: any = []
+  orderDetail: any = {}
+
   constructor(public navCtrl: NavController, public navParams: NavParams) {
+    this.orderDetail = this.navParams.get('order')
+    this.orderItems = this.orderDetail.productList
+    console.log(this.orderDetail)
+  }
+
+  doRefresh(refresher) : void {
+    setTimeout(() => {
+      refresher.complete();
+    }, 1000);
   }
 
 }

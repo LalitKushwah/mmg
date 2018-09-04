@@ -28,13 +28,12 @@
         </table>
         <ion-row>
           <ion-col text-center>
-            <ion-icon name="cash"></ion-icon>
-            <span>Order Total (ZK): {{orderTotal}}</span>
+              <button ion-button outline color="grey"><ion-icon name="cash"></ion-icon> Order Total (ZK): {{orderTotal}}</button>
           </ion-col>
         </ion-row>
         <ion-row>
           <ion-col text-center>
-            <button ion-button (click)="submitOrder()" color="secondary">Submit Order <ion-spinner name="dots" *ngIf="showLoader"></ion-spinner></button>
+            <button ion-button (click)="submitOrder()" color="secondary"><ion-icon name="cart"></ion-icon> Submit Order <ion-spinner name="dots" *ngIf="showLoader"></ion-spinner></button>
           </ion-col>
         </ion-row>
     </ion-card>

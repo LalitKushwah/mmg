@@ -5,5 +5,35 @@
 </ion-header>
 
 <ion-content class="full-background">
+  <ion-refresher (ionRefresh)="doRefresh($event)" spinner="crescent">
+    <ion-refresher-content></ion-refresher-content>
+  </ion-refresher>
+  <ion-card style="overflow-x:auto;">
+      <table>
+        <thead>
+          <tr>
+            <th>S.No</th>
+            <th>Name</th>
+            <th>Quantity</th>
+            <th>Price (ZK)</th>
+            <th>Sub Total (ZK)</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let item of orderItems; let i = index">
+            <td>{{(i+1)}}</td>
+            <td>{{item.name}}</td>
+            <td>{{item.quantity}}</td>
+            <td>{{item.price}}</td>
+            <td>{{(item.quantity) * (item.price)}}</td>
+          </tr>
+        </tbody>
+      </table>
+      <ion-row>
+        <ion-col text-center>
+          <button ion-button outline color="grey"><ion-icon name="cash"></ion-icon> Order Total (ZK): {{orderDetail.orderTotal}}</button>
+        </ion-col>
+      </ion-row>
+    </ion-card>
 
 </ion-content>
