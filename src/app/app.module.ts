@@ -36,6 +36,8 @@ import { CustomerReviewSubmitOrderPage } from '../pages/customer-review-submit-o
 import { AddCategoryPage } from '../pages/add-category/add-category';
 import { AddUserPage } from '../pages/add-user/add-user';
 import { AddProductPage } from '../pages/add-product/add-product';
+import { File } from '@ionic-native/file';
+import { FileTransfer, FileUploadOptions, FileTransferObject } from '@ionic-native/file-transfer';
 
 @NgModule({
   declarations: [
@@ -93,7 +95,10 @@ import { AddProductPage } from '../pages/add-product/add-product';
       provide : HTTP_INTERCEPTORS,
       useClass : TokenInterceptorServiceProvider,
       multi : true
-    }
+    },
+    File,
+    FileTransfer,
+    FileTransferObject
   ]
 })
 export class AppModule {}

@@ -4,6 +4,9 @@ import { StorageServiceProvider } from './../../providers/storage-service/storag
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams, FabButton } from 'ionic-angular';
 import { WidgetUtilService } from '../utils/widget-utils';
+import { File } from '@ionic-native/file';
+import * as papa from 'papaparse'
+import { FileTransfer, FileTransferObject } from '@ionic-native/file-transfer';
 
 @IonicPage({
   name: 'CustomerOrderDetailPage'
@@ -19,13 +22,19 @@ export class CustomerOrderDetailPage {
   orderDetail: any = {}
   showImportOrder = false
   showLoader = false
+  showCsvButton = false
+  csvData: any[] = [];
+  headerRow: any[] = [];
+  fileTransfer: FileTransferObject = this.transfer.create();
 
   constructor(public navCtrl: NavController, public navParams: NavParams
   , private storageService: StorageServiceProvider, private apiService: ApiServiceProvider,
-  private widgetUtil: WidgetUtilService) {
+    private widgetUtil: WidgetUtilService, private file: File, 
+    private transfer: FileTransfer) {
     this.orderDetail = this.navParams.get('order')
     this.orderItems = this.orderDetail.productList
     this.showImportOrder = false
+    this.showCsvButton = false 
     console.log(this.orderDetail)
   }
 
@@ -35,6 +44,9 @@ export class CustomerOrderDetailPage {
 
   async checkData() {
     let profile = await this.storageService.getFromStorage('profile')
+    if ((profile['userType'] === 'admin')) {
+      this.showCsvButton = true
+    }
     if ((profile['userType'] === 'admin') && (this.orderDetail.status != CONSTANTS.ORDER_STATUS_RECEIVED) && (this.orderDetail.status != CONSTANTS.ORDER_STATUS_CANCEL)) {
       this.showImportOrder = true
     }else{
@@ -72,6 +84,20 @@ export class CustomerOrderDetailPage {
       }
       this.showLoader = false
     })
+  }
+
+  exportToCsv() {
+    let csv = papa.unparse(this.orderDetail)
+ 
+    // Dummy implementation for Desktop download purpose
+    var blob = new Blob([csv]);
+   /*  var a = window.document.createElement("a");
+    a.href = window.URL.createObjectURL(blob);
+    a.download = "newdata.csv";
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a); */
+    this.file.writeFile(this.file.dataDirectory, 'tradekings.csv', blob)
   }
 
   doRefresh(refresher) : void {
