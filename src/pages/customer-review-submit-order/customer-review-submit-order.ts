@@ -46,9 +46,7 @@ export class CustomerReviewSubmitOrderPage {
       productList : this.cartItems.map((value) => {
         return {
           productId: value['_id'],
-          quantity: value['quantity'],
-          name: value['name'],
-          price: value['price']
+          quantity: value['quantity']
         }
       }),
       userId: (await this.storageService.getFromStorage('profile'))['_id'],
@@ -59,7 +57,7 @@ export class CustomerReviewSubmitOrderPage {
     this.apiService.submitOrder(orderObj).subscribe((result) => {
       this.showLoader = false
       this.storageService.setToStorage('cart', [])
-      this.widgetUtil.showToast('Congrats! Order Placed Successfully!')
+      this.widgetUtil.showToast(CONSTANTS.ORDER_PLACED)
       this.navCtrl.setRoot(HomePage)
     }, (error) => {
       this.showLoader = false
@@ -80,5 +78,4 @@ export class CustomerReviewSubmitOrderPage {
     this.showClearCartLoader = false
     this.widgetUtil.showToast('All items removed from cart')
   }
-
 }

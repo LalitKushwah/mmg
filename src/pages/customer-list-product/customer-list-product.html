@@ -16,7 +16,7 @@
     <ion-refresher (ionRefresh)="doRefresh($event)" spinner="crescent">
       <ion-refresher-content></ion-refresher-content>
     </ion-refresher>
-    <ion-list *ngIf="productListAvailable">
+    <ion-list *ngIf="productListAvailable &&  (productList.length > 0)">
       <ion-card *ngFor="let product of productList">
         <ion-card-header text-center>
           <ion-row>
@@ -28,7 +28,7 @@
           <ion-row>
             <ion-col text-center>
               <ion-icon name="cash" color="grey"></ion-icon>
-              Price (ZK): <span>{{product.price}}</span>
+              Price (ZMW): <span>{{product.price}}</span>
             </ion-col>
           </ion-row>
         </ion-card-header>
@@ -56,5 +56,10 @@
         <ion-infinite-scroll-content></ion-infinite-scroll-content>
       </ion-infinite-scroll>
     </ion-list>
+    <ion-card *ngIf="productListAvailable && (productList.length < 1)">
+      <ion-card-header text-center>
+        <h4>No record found</h4>
+      </ion-card-header>
+    </ion-card>
   </ion-content>
   
