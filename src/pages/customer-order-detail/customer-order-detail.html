@@ -34,11 +34,10 @@
           <button ion-button outline color="grey"><ion-icon name="cash"></ion-icon> Order Total (ZMW): {{orderDetail.orderTotal}}</button>
         </ion-col>
       </ion-row>
-      <ion-row>
-          <ion-col text-center>
-            <button ion-button primary color="secondary" (click)="importOrder()"><ion-icon name="arrow-dropdown-circle"></ion-icon> Import Order<ion-spinner name="dots" *ngIf="showLoginLoader"></ion-spinner></button>
-          </ion-col>
-        </ion-row>
+      <ion-row *ngIf="showImportOrder">
+        <ion-col text-center>
+          <button ion-button primary color="secondary" (click)="importOrder()"><ion-icon name="arrow-dropdown-circle"></ion-icon> Import Order<ion-spinner name="dots" *ngIf="showLoader"></ion-spinner></button>
+        </ion-col>
+      </ion-row>
     </ion-card>
-
 </ion-content>

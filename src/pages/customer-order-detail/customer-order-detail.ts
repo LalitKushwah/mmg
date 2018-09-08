@@ -40,6 +40,7 @@ export class CustomerOrderDetailPage {
     }else{
       this.showImportOrder = false
     }
+    console.log('showImportOrder', this.showImportOrder)
   }
 
   importOrder() {
@@ -59,7 +60,7 @@ export class CustomerOrderDetailPage {
 
   getOrderDetail() {
     this.apiService.getOrderDetail(this.orderDetail['_id']).subscribe((result) => {
-      this.orderDetail = result.body
+      this.orderDetail = result.body[0]
       this.checkData()
       this.widgetUtil.showToast(CONSTANTS.ORDER_IMPORTED)
       this.showLoader = false

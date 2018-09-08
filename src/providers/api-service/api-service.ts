@@ -58,7 +58,7 @@ export class ApiServiceProvider {
   }
 
   importOrder(orderId: string, statusObj: Object): any {
-    return this.http.put(CONSTANTS.BASE_URL + 'api/order/status/' + orderId, statusObj)
+    return this.http.post(CONSTANTS.BASE_URL + 'api/order/status/' + orderId, statusObj)
   }
 
 }

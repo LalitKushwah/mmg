@@ -35,7 +35,7 @@ export class CustomerListOrderPage {
     this.apiService.getOrderListByUser(this.userId, this.skipValue, this.limit).subscribe((result) => {
       this.orderList = result.body
       this.orderList.map((value) => {
-        switch(value.status) {
+       /*  switch(value.status) {
           case CONSTANTS.ORDER_STATUS_RECEIVED:
             value.status = "Received"
             break
@@ -45,7 +45,7 @@ export class CustomerListOrderPage {
           case CONSTANTS.ORDER_STATUS_CANCEL:
             value.status = "Cancelled"
             break
-        }
+        } */
         value.lastUpdatedAt = this.formatDate(value.lastUpdatedAt)
       })
       this.orderListAvailable = true
