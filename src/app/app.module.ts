@@ -1,3 +1,6 @@
+import { AdminListProductPageModule } from './../pages/admin-list-product/admin-list-product.module';
+import { AdminListCategoryPageModule } from './../pages/admin-list-category/admin-list-category.module';
+import { AdminListUserPageModule } from './../pages/admin-list-user/admin-list-user.module';
 import { AddUserPageModule } from './../pages/add-user/add-user.module';
 import { AddProductPageModule } from './../pages/add-product/add-product.module';
 import { AddCategoryPageModule } from './../pages/add-category/add-category.module';
@@ -38,6 +41,9 @@ import { AddUserPage } from '../pages/add-user/add-user';
 import { AddProductPage } from '../pages/add-product/add-product';
 import { File } from '@ionic-native/file';
 import { FileTransfer, FileUploadOptions, FileTransferObject } from '@ionic-native/file-transfer';
+import { AdminListCategoryPage } from '../pages/admin-list-category/admin-list-category';
+import { AdminListProductPage } from '../pages/admin-list-product/admin-list-product';
+import { AdminListUserPage } from '../pages/admin-list-user/admin-list-user';
 
 @NgModule({
   declarations: [
@@ -50,7 +56,7 @@ import { FileTransfer, FileUploadOptions, FileTransferObject } from '@ionic-nati
     IonicModule.forRoot(MyApp),
     IonicStorageModule.forRoot(
       {
-        name: '__tradeking',
+        name: '__tradekings',
         driverOrder: ['localstorage', 'sqlite', 'indexeddb']
       }
     ),
@@ -66,7 +72,10 @@ import { FileTransfer, FileUploadOptions, FileTransferObject } from '@ionic-nati
     CustomerOrderDetailPageModule,
     AddCategoryPageModule,
     AddProductPageModule,
-    AddUserPageModule
+    AddUserPageModule,
+    AdminListUserPageModule,
+    AdminListCategoryPageModule,
+    AdminListProductPageModule
   ],
   bootstrap: [IonicApp],
   entryComponents: [
@@ -81,7 +90,10 @@ import { FileTransfer, FileUploadOptions, FileTransferObject } from '@ionic-nati
     CustomerOrderDetailPage,
     AddCategoryPage,
     AddUserPage,
-    AddProductPage
+    AddProductPage,
+    AdminListCategoryPage,
+    AdminListProductPage,
+    AdminListUserPage
   ],
   providers: [
     StatusBar,

@@ -1,4 +1,4 @@
-<ion-menu [content]="content" id="main_menu" type="overlay" persistent="true">
+<ion-menu [content]="content" id="main_menu" (ionOpen)="getData()" (ionClose)="getData()" type="overlay" persistent="true">
   <ion-header>
     <ion-toolbar>
       <div style="background-color: #488aff !important">
@@ -9,7 +9,6 @@
       <ion-title>Welcome, {{partyName}}</ion-title>
     </ion-toolbar>
   </ion-header>
-
   <ion-content class="full-background">
     <ion-list>
       <button menuClose ion-item *ngFor="let p of pages" (click)="openPage(p)">

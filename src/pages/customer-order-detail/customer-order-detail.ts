@@ -2,7 +2,7 @@ import { ApiServiceProvider } from './../../providers/api-service/api-service';
 import { CONSTANTS } from './../utils/constants';
 import { StorageServiceProvider } from './../../providers/storage-service/storage-service';
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams, FabButton } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, FabButton, Platform } from 'ionic-angular';
 import { WidgetUtilService } from '../utils/widget-utils';
 import { File } from '@ionic-native/file';
 import * as papa from 'papaparse'
@@ -30,7 +30,7 @@ export class CustomerOrderDetailPage {
   constructor(public navCtrl: NavController, public navParams: NavParams
   , private storageService: StorageServiceProvider, private apiService: ApiServiceProvider,
     private widgetUtil: WidgetUtilService, private file: File, 
-    private transfer: FileTransfer) {
+    private transfer: FileTransfer, private platform: Platform) {
     this.orderDetail = this.navParams.get('order')
     this.orderItems = this.orderDetail.productList
     this.showImportOrder = false
@@ -44,13 +44,13 @@ export class CustomerOrderDetailPage {
 
   async checkData() {
     let profile = await this.storageService.getFromStorage('profile')
-    if ((profile['userType'] === 'admin')) {
+    if(!(window['cordova']) && (profile['userType'] === 'admin')) {
       this.showCsvButton = true
+    }else{
+      this.showCsvButton = false
     }
     if ((profile['userType'] === 'admin') && (this.orderDetail.status != CONSTANTS.ORDER_STATUS_RECEIVED) && (this.orderDetail.status != CONSTANTS.ORDER_STATUS_CANCEL)) {
       this.showImportOrder = true
-    }else{
-      this.showImportOrder = false
     }
     console.log('showImportOrder', this.showImportOrder)
   }
