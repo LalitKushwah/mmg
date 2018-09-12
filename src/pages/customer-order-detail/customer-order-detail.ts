@@ -91,13 +91,13 @@ export class CustomerOrderDetailPage {
  
     // Dummy implementation for Desktop download purpose
     var blob = new Blob([csv]);
-   /*  var a = window.document.createElement("a");
+    var a = window.document.createElement("a");
     a.href = window.URL.createObjectURL(blob);
     a.download = "newdata.csv";
     document.body.appendChild(a);
     a.click();
-    document.body.removeChild(a); */
-    this.file.writeFile(this.file.dataDirectory, 'tradekings.csv', blob)
+    document.body.removeChild(a);
+    /* this.file.writeFile(this.file.dataDirectory, 'tradekings.csv', blob) */
   }
 
   doRefresh(refresher) : void {

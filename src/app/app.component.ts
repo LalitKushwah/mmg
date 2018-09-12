@@ -27,11 +27,12 @@ export class MyApp {
   constructor(public platform: Platform, public statusBar: StatusBar, public splashScreen: SplashScreen
   , private headerColor : HeaderColor, private menuController: MenuController, private storageService: StorageServiceProvider,
   private zone: NgZone,  public events: Events,) {
+    this.pages = [{ title: 'Home', component: HomePage, icon :'md-home'}]
     this.menuController.swipeEnable(true)
     this.initializeApp();
     this.events.subscribe('updateScreen', () => {
-      this.zone.run(() => {});
-    });
+      this.zone.run(() => {})
+    })
   }
 
   ionViewDidEnter() {
@@ -39,7 +40,6 @@ export class MyApp {
   }
 
   async getData() {
-    console.log('this.pages*1**', this.pages) 
     try {
       let profile = await this.storageService.getFromStorage('profile')
       if ((profile['userType'] === 'admin')) {
@@ -58,11 +58,10 @@ export class MyApp {
       if(profile) {
         this.partyName = profile['name']
       }
-      console.log('this.pages*2**', this.pages) 
     } catch(err) {
       console.log('Error: Home Page Component:', err)
     }
-    this.events.publish('updateScreen');
+    this.events.publish('updateScreen')
   }
 
   initializeApp() {

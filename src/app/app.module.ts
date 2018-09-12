@@ -1,3 +1,5 @@
+import { ResetUserPasswordPageModule } from './../pages/reset-user-password/reset-user-password.module';
+import { ResetUserPasswordPage } from './../pages/reset-user-password/reset-user-password';
 import { AdminListProductPageModule } from './../pages/admin-list-product/admin-list-product.module';
 import { AdminListCategoryPageModule } from './../pages/admin-list-category/admin-list-category.module';
 import { AdminListUserPageModule } from './../pages/admin-list-user/admin-list-user.module';
@@ -75,7 +77,8 @@ import { AdminListUserPage } from '../pages/admin-list-user/admin-list-user';
     AddUserPageModule,
     AdminListUserPageModule,
     AdminListCategoryPageModule,
-    AdminListProductPageModule
+    AdminListProductPageModule,
+    ResetUserPasswordPageModule
   ],
   bootstrap: [IonicApp],
   entryComponents: [
@@ -93,7 +96,8 @@ import { AdminListUserPage } from '../pages/admin-list-user/admin-list-user';
     AddProductPage,
     AdminListCategoryPage,
     AdminListProductPage,
-    AdminListUserPage
+    AdminListUserPage,
+    ResetUserPasswordPage
   ],
   providers: [
     StatusBar,

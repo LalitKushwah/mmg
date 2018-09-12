@@ -1,3 +1,4 @@
+import { ResetUserPasswordPage } from './../reset-user-password/reset-user-password';
 import { AddProductPage } from './../add-product/add-product';
 import { AddCategoryPage } from './../add-category/add-category';
 import { AddUserPage } from './../add-user/add-user';
@@ -41,15 +42,25 @@ export class PopoverHomePage {
           icon: 'add-circle',
         },
         {
+          name: 'Reset Password',
+          icon: 'key',
+        },
+        {
           name: 'Logout',
           icon: 'log-out',
         }
     ]
     } else{
-      this.popoverOptions = [{
-        name: 'Logout',
-        icon: 'log-out'
-      }]
+      this.popoverOptions = [
+        {
+          name: 'Reset Password',
+          icon: 'key',
+        },
+        {
+          name: 'Logout',
+          icon: 'log-out'
+        }
+      ]
     }
   }
 
@@ -67,6 +78,9 @@ export class PopoverHomePage {
       case 'Logout':
       this.logout()
       break
+      case 'Reset Password':
+      this.resetPassword()
+      break
     }
   }
 
@@ -80,6 +94,10 @@ export class PopoverHomePage {
 
   addProduct() {
     this.navCtrl.push(AddProductPage)
+  }
+
+  resetPassword() {
+    this.navCtrl.push(ResetUserPasswordPage)
   }
 
   async logout() {
