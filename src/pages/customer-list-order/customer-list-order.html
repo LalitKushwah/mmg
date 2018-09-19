@@ -17,7 +17,7 @@
       <table>
         <thead>
           <tr>
-            <th>S.No</th>
+            <th>Order Id</th>
             <th>Date</th>
             <th>Total (ZMW)</th>
             <th>Status</th>
@@ -26,7 +26,7 @@
         </thead>
         <tbody>
           <tr *ngFor="let order of orderList; let i = index">
-            <td>{{(i+1)}}</td>
+            <td>{{(order.orderId)}}</td>
             <td>{{order.lastUpdatedAt}}</td>
             <td>{{order.orderTotal}}</td>
             <td>{{order.status}}</td>

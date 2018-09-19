@@ -22,13 +22,14 @@
               <td>{{item.name}}</td>
               <td>{{item.quantity}}</td>
               <td>{{item.price}}</td>
-              <td>{{(item.price) * (item.quantity)}}</td>
+              <td>{{(item.subTotal)}}</td>
             </tr>
           </tbody>
         </table>
         <ion-row>
           <ion-col text-center>
-              <button ion-button outline color="grey"><ion-icon name="cash"></ion-icon> Order Total (ZMW): {{orderTotal}}</button>
+              <!-- <button ion-button outline color="grey"><ion-icon name="cash"></ion-icon> Order Total (ZMW): {{orderTotal}}</button> -->
+              <strong><ion-icon name="cash"></ion-icon> Order Total: {{orderTotal}} ZMW</strong>
           </ion-col>
         </ion-row>
         <ion-row>

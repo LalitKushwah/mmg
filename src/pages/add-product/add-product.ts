@@ -21,10 +21,8 @@ export class AddProductPage {
   price: FormControl;
   productCode: FormControl;
   priceType: FormControl;
-  packQty: FormControl;
-  netWeight: FormControl;
+  packType: FormControl;
   currentCaseSize: FormControl;
-  unit: FormControl
   showLoader = false;
   categoryList: Array<any> =  []
   categoryListAvailable = false
@@ -72,16 +70,10 @@ export class AddProductPage {
     this.priceType = new FormControl('', [
       Validators.required
     ]);
-    this.packQty = new FormControl('', [
-      Validators.required
-    ]);
-    this.netWeight = new FormControl('', [
+    this.packType = new FormControl('', [
       Validators.required
     ]);
     this.currentCaseSize = new FormControl('', [
-      Validators.required
-    ]);
-    this.unit = new FormControl('', [
       Validators.required
     ]);
   }
@@ -92,23 +84,19 @@ export class AddProductPage {
       price: this.price,
       productCode: this.productCode,
       priceType: this.priceType,
-      packQty: this.packQty,
-      netWeight: this.netWeight,
-      currentCaseSize: this.currentCaseSize,
-      unit: this.unit
+      packType: this.packType,
+      currentCaseSize: this.currentCaseSize
     });
   }
 
   addProduct() {
     let productDetail = {}
     productDetail['name'] = this.name.value.trim()
-    productDetail['price'] = parseInt(this.price.value.trim())
+    productDetail['price'] = parseFloat(this.price.value.trim())
     productDetail['productCode'] = this.productCode.value.trim()
     productDetail['priceType'] = this.priceType.value.trim()
-    productDetail['packQty'] = this.packQty.value.trim()
-    productDetail['netWeight'] = parseInt(this.netWeight.value.trim())
+    productDetail['packType'] = this.packType.value.trim()
     productDetail['currentCaseSize'] = this.currentCaseSize.value.trim()
-    productDetail['unit'] = this.unit.value.trim()
     productDetail['categoryId'] = this.selectedCategory['_id']
     productDetail['lastUpdatedAt'] = Date.now()
     this.showLoader = true

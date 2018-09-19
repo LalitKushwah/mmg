@@ -8,7 +8,10 @@
   <ion-refresher (ionRefresh)="doRefresh($event)" spinner="crescent">
     <ion-refresher-content></ion-refresher-content>
   </ion-refresher>
-  <ion-card style="overflow-x:auto;">
+  <div class="search-spinner">
+    <ion-spinner name="crescent" *ngIf="!orderItemsAvailable"></ion-spinner>
+  </div>
+  <ion-card style="overflow-x:auto;" *ngIf="orderItemsAvailable">
       <table>
         <thead>
           <tr>
@@ -25,13 +28,14 @@
             <td>{{item.productDetail.name}} [{{item.productDetail.productCode}}]</td>
             <td>{{item.quantity}}</td>
             <td>{{item.productDetail.price}}</td>
-            <td>{{(item.quantity) * (item.productDetail.price)}}</td>
+            <td>{{(item.subTotal)}}</td>
           </tr>
         </tbody>
       </table>
       <ion-row>
         <ion-col text-center>
-          <button ion-button outline color="grey"><ion-icon name="cash"></ion-icon> Order Total (ZMW): {{orderDetail.orderTotal}}</button>
+          <!-- <button ion-button outline color="grey"><ion-icon name="cash"></ion-icon> Order Total (ZMW): {{orderDetail.orderTotal}}</button> -->
+          <strong><ion-icon name="cash"></ion-icon> Order Total: {{orderDetail.orderTotal}} ZMW</strong>
         </ion-col>
       </ion-row>
       <ion-row *ngIf="showImportOrder">

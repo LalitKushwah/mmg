@@ -43,6 +43,10 @@ export class CustomerListProductPage {
   getList() {
     this.apiService.getProductListByCategory(this.categoryId, this.skipValue, this.limit).subscribe((result) => {
       this.productList = result.body
+      this.productList.map(value => {
+        value.quantity = 0
+        value.price = (parseFloat((Math.round(value.price * 100) / 100).toString()).toFixed(2))
+      })
       console.log('this.productList', this.productList)
       this.productListAvailable = true
     }, (error) => {
@@ -102,7 +106,8 @@ export class CustomerListProductPage {
     this.cartDetail = await this.storageService.setToStorage('cart', this.cart)
     let updatedTotal = 0, updatedQuantity = 0;
     this.cartDetail.map((value) => {
-      updatedTotal = updatedTotal + (value.price * parseInt(value.quantity))
+      console.log('value.price', value)
+      updatedTotal = updatedTotal + (parseFloat(value.price) * parseInt(value.quantity))
       updatedQuantity = updatedQuantity + parseInt(value.quantity)
     })
     this.orderTotal = updatedTotal
@@ -123,11 +128,20 @@ export class CustomerListProductPage {
     }
   }
 
+  decrementQty(qty) {
+    return (parseInt(qty) - 1)
+  }
+
+  incrementQty(qty) {
+    return (parseInt(qty) + 1)
+  }
+
   doInfinite(infiniteScroll) {
     this.skipValue = this.skipValue + this.limit
     this.apiService.getProductListByCategory(this.categoryId, this.skipValue, this.limit).subscribe((result) => {
       if(result.body.length > 0) {
         result.body.map( (value) => {
+          value.quantity = 0
           this.productList.push(value)
         }) 
       } else {

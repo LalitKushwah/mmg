@@ -86,24 +86,32 @@ export class PopoverHomePage {
 
   addUser(){
     this.navCtrl.push(AddUserPage)
+    this.dismissPopover()
   }
   
   addCategory() {
     this.navCtrl.push(AddCategoryPage)
+    this.dismissPopover()
   }
 
   addProduct() {
     this.navCtrl.push(AddProductPage)
+    this.dismissPopover()
   }
 
   resetPassword() {
     this.navCtrl.push(ResetUserPasswordPage)
+    this.dismissPopover()
   }
 
   async logout() {
     this.storageService.clearStorage()
     localStorage.clear()
-    this.widgetUtil.dismissPopover()
     this.appCtrl.getRootNav().push(HomePage)
+    this.widgetUtil.dismissPopover()
+  }
+
+  dismissPopover() {
+    this.widgetUtil.dismissPopover()
   }
 }

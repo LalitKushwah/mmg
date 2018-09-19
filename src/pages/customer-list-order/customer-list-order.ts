@@ -46,6 +46,7 @@ export class CustomerListOrderPage {
             value.status = "Cancelled"
             break
         } */
+        value.orderTotal = parseFloat(Math.round(value.orderTotal * 100) / 100).toFixed(2)
         value.lastUpdatedAt = this.formatDate(value.lastUpdatedAt)
       })
       this.orderListAvailable = true

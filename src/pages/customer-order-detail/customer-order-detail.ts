@@ -23,6 +23,7 @@ export class CustomerOrderDetailPage {
   showImportOrder = false
   showLoader = false
   showCsvButton = false
+  orderItemsAvailable =false
   csvData: any[] = [];
   headerRow: any[] = [];
   fileTransfer: FileTransferObject = this.transfer.create();
@@ -33,6 +34,12 @@ export class CustomerOrderDetailPage {
     private transfer: FileTransfer, private platform: Platform) {
     this.orderDetail = this.navParams.get('order')
     this.orderItems = this.orderDetail.productList
+    this.orderItems.map((value) => {
+      value['subTotal'] = (parseFloat((Math.round((value.quantity * parseFloat(value.price.toString())) * 100) / 100).toString()).toFixed(2))
+      value['price'] = (parseFloat((Math.round(value.price * 100) / 100).toString()).toFixed(2))
+    })
+    this.orderItemsAvailable = true
+    console.log(this.orderItems)
     this.showImportOrder = false
     this.showCsvButton = false 
     console.log(this.orderDetail)
@@ -73,6 +80,7 @@ export class CustomerOrderDetailPage {
   getOrderDetail() {
     this.apiService.getOrderDetail(this.orderDetail['_id']).subscribe((result) => {
       this.orderDetail = result.body[0]
+      console.log('this.orderDetail**', this.orderDetail)
       this.checkData()
       this.widgetUtil.showToast(CONSTANTS.ORDER_IMPORTED)
       this.showLoader = false

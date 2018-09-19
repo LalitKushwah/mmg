@@ -88,7 +88,7 @@
     <plugin name="cordova-plugin-navigationbar" spec="^1.0.31" />
     <plugin name="cordova-plugin-statusbar" spec="^2.4.2" />
     <plugin name="cordova-plugin-headercolor" spec="^1.0.0" />
-    <engine name="android" spec="7.0.0" />
     <plugin name="cordova-plugin-file" spec="^6.0.1" />
     <plugin name="cordova-plugin-file-transfer" spec="^1.7.1" />
+    <engine name="android" spec="7.0.0" />
 </widget>

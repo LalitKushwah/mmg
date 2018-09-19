@@ -16,7 +16,7 @@ import { CONSTANTS } from '../utils/constants';
 export class CustomerReviewSubmitOrderPage {
 
   cartItems: any = []
-  orderTotal: number = 0
+  orderTotal: any = 0
   showLoader: boolean = false
   showClearCartLoader: boolean = false
   
@@ -25,12 +25,18 @@ export class CustomerReviewSubmitOrderPage {
   , private storageService: StorageServiceProvider, private apiService: ApiServiceProvider,
   private widgetUtil: WidgetUtilService) {
     this.showLoader = false
-    this.orderTotal = this.navParams.get("orderTotal")
+    this.orderTotal = (parseFloat((Math.round(this.navParams.get("orderTotal") * 100) / 100).toString()).toFixed(2))
     this.getCartItems()
   }
 
   async getCartItems() {
     this.cartItems = await this.storageService.getFromStorage('cart')
+    this.cartItems.map((value) => {
+      value.price = (parseFloat((Math.round(value.price * 100) / 100).toString()).toFixed(2))
+      value['subTotal'] = (parseFloat((Math.round((value.quantity * parseFloat(value.price) * 100) / 100)).toString()).toFixed(2))
+    })
+    console.log(this.cartItems)
+    console.log(this.orderTotal)
   }
 
   doRefresh(refresher) : void {
@@ -46,11 +52,13 @@ export class CustomerReviewSubmitOrderPage {
       productList : this.cartItems.map((value) => {
         return {
           productId: value['_id'],
-          quantity: value['quantity']
+          quantity: value['quantity'],
+          price: parseFloat(value['price'])
         }
       }),
       userId: (await this.storageService.getFromStorage('profile'))['_id'],
-      orderTotal: this.orderTotal,
+      orderId: 'ORD' + Math.floor(Math.random()*90000) + 10000,
+      orderTotal: parseFloat(this.orderTotal.toString()),
       status: CONSTANTS.ORDER_STATUS_PROGRESS,
       lastUpdatedAt: Date.now()
     }
