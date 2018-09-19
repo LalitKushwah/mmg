@@ -9,6 +9,7 @@ import { CONSTANTS } from '../utils/constants';
 @IonicPage({
   name: 'CustomerReviewSubmitOrderPage'
 })
+
 @Component({
   selector: 'page-customer-review-submit-order',
   templateUrl: 'customer-review-submit-order.html',
@@ -85,5 +86,19 @@ export class CustomerReviewSubmitOrderPage {
     this.getCartItems()
     this.showClearCartLoader = false
     this.widgetUtil.showToast('All items removed from cart')
+  }
+  
+  removeFromCart(product) {
+    this.widgetUtil.showToast(`${product.name} removed from cart`)
+    console.log('this.cart' ,this.cartItems)
+    if (this.cartItems.length > 0) {
+      this.cartItems.map((value, index) => {
+        if(value['_id'] === product['_id']) {
+          this.cartItems.splice(index, 1)
+        }
+      })
+      this.storageService.setToStorage('cart', this.cartItems)
+      this.getCartItems()
+    }
   }
 }
