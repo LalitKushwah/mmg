@@ -86,32 +86,36 @@ export class CustomerListProductPage {
   }
 
   async addToCart(product, qty) {
-    this.widgetUtil.showToast(`${product.name} added to cart!`)
-    delete product['categoryId']
-    delete product['productCode']
-    product['quantity'] = parseInt(qty)
-    let presentInCart = false;
-    const productsInCart = this.cart.map((value)=> {
-      if (value['_id'] === product['_id']) {
-        presentInCart = true
-        value.quantity = value.quantity + product.quantity
+    if(parseInt(qty) > 0) {
+      this.widgetUtil.showToast(`${product.name} added to cart!`)
+      delete product['categoryId']
+      delete product['productCode']
+      product['quantity'] = parseInt(qty)
+      let presentInCart = false;
+      const productsInCart = this.cart.map((value)=> {
+        if (value['_id'] === product['_id']) {
+          presentInCart = true
+          value.quantity = value.quantity + product.quantity
+        }
+        return value
+      })
+      if(!presentInCart) {
+        this.cart.push(product)
+      } else {
+        this.cart = productsInCart
       }
-      return value
-    })
-    if(!presentInCart) {
-      this.cart.push(product)
+      this.cartDetail = await this.storageService.setToStorage('cart', this.cart)
+      let updatedTotal = 0, updatedQuantity = 0;
+      this.cartDetail.map((value) => {
+        console.log('value.price', value)
+        updatedTotal = updatedTotal + (parseFloat(value.price) * parseInt(value.quantity))
+        updatedQuantity = updatedQuantity + parseInt(value.quantity)
+      })
+      this.orderTotal = updatedTotal
+      this.cartQuantity = updatedQuantity
     } else {
-      this.cart = productsInCart
+      this.widgetUtil.showToast(`Atleast 1 quantity is required!`)
     }
-    this.cartDetail = await this.storageService.setToStorage('cart', this.cart)
-    let updatedTotal = 0, updatedQuantity = 0;
-    this.cartDetail.map((value) => {
-      console.log('value.price', value)
-      updatedTotal = updatedTotal + (parseFloat(value.price) * parseInt(value.quantity))
-      updatedQuantity = updatedQuantity + parseInt(value.quantity)
-    })
-    this.orderTotal = updatedTotal
-    this.cartQuantity = updatedQuantity
   }
 
   removeFromCart(product) {
