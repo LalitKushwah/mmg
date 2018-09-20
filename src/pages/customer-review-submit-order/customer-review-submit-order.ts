@@ -99,6 +99,50 @@ export class CustomerReviewSubmitOrderPage {
       })
       this.storageService.setToStorage('cart', this.cartItems)
       this.getCartItems()
+      this.calculateOrderTotal()
+    }
+  }
+
+  decrementQty(product) {
+    this.cartItems.map((value) => {
+      if(value['_id'] === product['_id']) {
+        let qty =  parseInt(value.quantity) - 1
+        if(qty >= 0) {
+          value.quantity = qty
+          value['subTotal'] = (parseFloat((Math.round((value.quantity * parseFloat(value.price) * 100) / 100)).toString()).toFixed(2))
+        }
+        return (qty)
+      }
+    })
+    this.calculateOrderTotal()
+    this.storageService.setToStorage('cart', this.cartItems)
+    return (product.quantity)
+  }
+
+  incrementQty(product) {
+    this.cartItems.map((value) => {
+      if(value['_id'] === product['_id']) {
+        let qty =  parseInt(value.quantity) + 1
+        value.quantity = qty
+        value['subTotal'] = (parseFloat((Math.round((value.quantity * parseFloat(value.price) * 100) / 100)).toString()).toFixed(2))
+        return (qty)
+      }
+    })
+    this.calculateOrderTotal()
+    console.log("this.cartItems", this.cartItems)
+    this.storageService.setToStorage('cart', this.cartItems)
+    return (product.quantity)
+  }
+
+  calculateOrderTotal() {
+    if(this.cartItems.length > 0) {
+      let updatedTotal = 0
+      this.cartItems.map((value) => {
+        updatedTotal = updatedTotal + (parseFloat(value.price) * parseInt(value.quantity))
+      })
+      this.orderTotal = parseFloat((Math.round(updatedTotal * 100) / 100).toString()).toFixed(2)
+    } else {
+      this.orderTotal = 0
     }
   }
 }

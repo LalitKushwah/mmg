@@ -36,6 +36,13 @@ ion-icon {
   z-index: 1;
 }
 
+.sticky-custom {
+  position: -webkit-sticky !important;
+  position: sticky !important;
+  top:0 !important;
+  z-index: 1 !important;
+}
+
 //table
 
 table, td, th {    

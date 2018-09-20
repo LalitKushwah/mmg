@@ -7,7 +7,7 @@
     <ion-refresher (ionRefresh)="doRefresh($event)" spinner="crescent">
         <ion-refresher-content></ion-refresher-content>
     </ion-refresher>
-    <ion-card style="overflow-x:auto;">
+    <!-- <ion-card style="overflow-x:auto;">
       <table>
           <thead>
             <tr>
@@ -21,7 +21,19 @@
           <tbody>
             <tr *ngFor="let item of cartItems">
               <td>{{item.name}}</td>
-              <td>{{item.quantity}}</td>
+              <td>
+                <ion-row>
+                  <ion-col col-2 text-left>
+                    <button ion-button clear icon-only (click)="(item.quantity = decrementQty(item.quantity))"><ion-icon name="remove-circle" ></ion-icon></button>
+                  </ion-col>
+                  <ion-col col-2>
+                    <ion-input item-start type="text" placeholder="Quantity" [(ngModel)]="item.quantity" #qty></ion-input>
+                  </ion-col>
+                  <ion-col col-2 text-left>
+                    <button ion-button clear icon-only (click)="(item.quantity = incrementQty(item.quantity))"><ion-icon name="add-circle" ></ion-icon></button>
+                  </ion-col>
+                </ion-row>
+              </td>
               <td>{{item.price}}</td>
               <td>{{(item.subTotal)}}</td>
               <td>
@@ -34,7 +46,7 @@
         </table>
         <ion-row>
           <ion-col text-center>
-              <!-- <button ion-button outline color="grey"><ion-icon name="cash"></ion-icon> Order Total (ZMW): {{orderTotal}}</button> -->
+               <button ion-button outline color="grey"><ion-icon name="cash"></ion-icon> Order Total (ZMW): {{orderTotal}}</button> 
               <strong><ion-icon name="cash"></ion-icon> Order Total: {{orderTotal}} ZMW</strong>
           </ion-col>
         </ion-row>
@@ -44,5 +56,62 @@
             <button ion-button (click)="submitOrder()" [disabled]="(cartItems.length < 1)" color="secondary"><ion-icon name="cart"></ion-icon> Submit Order <ion-spinner name="dots" *ngIf="showLoader"></ion-spinner></button>
           </ion-col>
         </ion-row>
-    </ion-card>
+    </ion-card> -->
+    <ion-list>
+      <ion-card class="sticky-custom">
+        <ion-card-header text-center>
+          <strong><ion-icon name="cash"></ion-icon> Order Total: {{orderTotal}} ZMW</strong>
+        </ion-card-header>
+      </ion-card>
+      <ion-card *ngFor="let product of cartItems">
+          <ion-card-content>
+          <ion-row>
+              <ion-col text-center>
+                <strong>{{product.name}}</strong>
+              </ion-col>
+            </ion-row>
+            <ion-row>
+              <ion-col text-center>
+                <strong>Price: {{product.price}} ZMW</strong>
+              </ion-col>
+            </ion-row>
+            <ion-row>
+              <ion-col col-12>
+                <ion-row>
+                  <ion-col col-4 text-left style="padding-top: 7%">
+                    <strong>Quantity: </strong>
+                  </ion-col>
+                  <ion-col col-2 text-left>
+                    <button ion-button clear icon-only (click)="(product.quantity = decrementQty(product))"><ion-icon name="remove-circle" ></ion-icon></button>
+                  </ion-col>
+                  <ion-col col-2>
+                    <ion-input item-start type="text" placeholder="Quantity" [(ngModel)]="product.quantity" #qty></ion-input>
+                  </ion-col>
+                  <ion-col col-2 text-left>
+                    <button ion-button clear icon-only (click)="(product.quantity = incrementQty(product))"><ion-icon name="add-circle" ></ion-icon></button>
+                  </ion-col>
+                </ion-row>
+              </ion-col>
+            </ion-row>
+            <ion-row>
+              <ion-col col-6>
+                <strong>SubTotal: {{product.subTotal}} ZMW</strong>
+              </ion-col>
+              <ion-col col-6>
+                <button ion-button color="light" (click)="removeFromCart(product)">
+                  <strong><ion-icon name="trash"></ion-icon></strong>Remove
+                </button>
+              </ion-col>
+            </ion-row>
+        </ion-card-content>
+      </ion-card>
+    </ion-list>
 </ion-content>
+<ion-footer>
+  <ion-row>
+    <ion-col text-center>
+      <button ion-button (click)="clearCart()" [disabled]="(cartItems.length < 1)" color="light"><ion-icon name="trash"></ion-icon> Clear Cart <ion-spinner name="dots" *ngIf="showClearCartLoader"></ion-spinner></button>
+      <button ion-button (click)="submitOrder()" [disabled]="(cartItems.length < 1)" color="secondary"><ion-icon name="cart"></ion-icon> Submit Order <ion-spinner name="dots" *ngIf="showLoader"></ion-spinner></button>
+    </ion-col>
+  </ion-row>
+</ion-footer>
