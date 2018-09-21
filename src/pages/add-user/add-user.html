@@ -30,6 +30,15 @@
                   <ion-item *ngIf="name.hasError('required') && name.touched">
                   <p style="color: red">name is required*</p>
                 </ion-item>
+
+                <ion-item>
+                    <ion-label floating>Customer Code</ion-label>
+                    <ion-input type="text" formControlName="externalId"></ion-input>
+                  </ion-item>
+                    <ion-item *ngIf="externalId.hasError('required') && externalId.touched">
+                    <p style="color: red">customer code is required*</p>
+                  </ion-item>
+
                 <ion-item>
                   <ion-label floating>User Login Id</ion-label>
                   <ion-input type="text" formControlName="userLoginId"></ion-input>
@@ -37,6 +46,7 @@
                 <ion-item *ngIf="userLoginId.hasError('required') && userLoginId.touched">
                   <p style="color: red">User Login Id is required*</p>
                 </ion-item>
+
                 <ion-item>
                   <ion-label floating>Password</ion-label>
                   <ion-input type="text" formControlName="password"></ion-input>
@@ -44,6 +54,7 @@
                   <ion-item *ngIf="password.hasError('required') && password.touched">
                   <p style="color: red">password  is required*</p>
                 </ion-item>
+
                 <ion-item>
                   <ion-label floating>Country</ion-label>
                   <ion-input type="text" formControlName="country"></ion-input>
@@ -51,6 +62,7 @@
                 <ion-item *ngIf="country.hasError('required') && country.touched">
                   <p style="color: red">country is required*</p>
                 </ion-item>
+
                 <ion-item>
                   <ion-label floating>Channel</ion-label>
                   <ion-input type="text" formControlName="channel"></ion-input>
@@ -58,19 +70,13 @@
                 <ion-item *ngIf="channel.hasError('required') && channel.touched">
                   <p style="color: red">channel is required*</p>
                 </ion-item>
+
                 <ion-item>
                   <ion-label floating>Province</ion-label>
                   <ion-input type="text" formControlName="province"></ion-input>
                 </ion-item>
                 <ion-item *ngIf="province.hasError('required') && province.touched">
                   <p style="color: red">province is required*</p>
-                </ion-item>
-                <ion-item>
-                  <ion-label floating>Customer Code</ion-label>
-                  <ion-input type="text" formControlName="externalId"></ion-input>
-                </ion-item>
-                  <ion-item *ngIf="externalId.hasError('required') && externalId.touched">
-                  <p style="color: red">customer code is required*</p>
                 </ion-item>
                 <ion-grid>
                   <button ion-button color="secondary" [disabled]="!(addCustomerForm.valid)" (click)="createUser('customer');">Add Customer<ion-spinner name="dots" *ngIf="showLoader"></ion-spinner></button>

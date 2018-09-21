@@ -60,4 +60,8 @@ export class ApiServiceProvider {
     return this.http.post(CONSTANTS.BASE_URL + 'api/order/status/' + orderId, statusObj)
   }
 
+  getCustomerList(skip: number, limit:number): any {
+    return this.http.get(CONSTANTS.BASE_URL + 'api/user/list/customer?skip='+skip.toString() + "&limit="+ limit.toString())
+  }
+
 }
