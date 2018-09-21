@@ -6,7 +6,6 @@ import { Injectable } from '@angular/core';
 export class ApiServiceProvider {
 
   constructor(public http: HttpClient) {
-    console.log('Hello ApiServiceProvider Provider');
   }
 
   login(credentials: Object): any {

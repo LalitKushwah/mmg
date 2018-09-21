@@ -22,7 +22,6 @@ export class HomePage {
   async checkData() {
     try {
       let profile = await this.storageService.getFromStorage('profile')
-      console.log('profildddde', profile)
       if(profile) {
         if(!(profile['token'])) {
           this.gotToLogin()
