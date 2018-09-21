@@ -14,5 +14,6 @@ export const CONSTANTS = {
     CATEGORY_CREATED: 'Category added successfully',
     ORDER_PLACED: 'Your order has been placed successfully',
     ORDER_IMPORTED: 'Order imported successfully',
+    ORDER_CANCELLED: 'Order cancelled successfully',
     PASSWORD_MISMTACH: 'Current Password and Re enter password dont match !'
 }

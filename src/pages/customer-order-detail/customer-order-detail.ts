@@ -23,6 +23,7 @@ export class CustomerOrderDetailPage {
   showImportOrder = false
   showLoader = false
   showCsvButton = false
+  showCancelOrder = false
   orderItemsAvailable =false
   csvData: any[] = [];
   headerRow: any[] = [];
@@ -39,10 +40,9 @@ export class CustomerOrderDetailPage {
       value['price'] = (parseFloat((Math.round(value.price * 100) / 100).toString()).toFixed(2))
     })
     this.orderItemsAvailable = true
-    console.log(this.orderItems)
     this.showImportOrder = false
     this.showCsvButton = false 
-    console.log(this.orderDetail)
+    this.showCancelOrder= false 
   }
 
   ionViewDidEnter(){
@@ -58,14 +58,31 @@ export class CustomerOrderDetailPage {
     }
     if ((profile['userType'] === 'admin') && (this.orderDetail.status != CONSTANTS.ORDER_STATUS_RECEIVED) && (this.orderDetail.status != CONSTANTS.ORDER_STATUS_CANCEL)) {
       this.showImportOrder = true
+    } else {
+      this.showImportOrder = false
     }
-    console.log('showImportOrder', this.showImportOrder)
+    if ((profile['userType'] === 'customer') && (this.orderDetail.status != CONSTANTS.ORDER_STATUS_RECEIVED) && (this.orderDetail.status != CONSTANTS.ORDER_STATUS_CANCEL)) {
+      console.log('heyyyyyy')
+      this.showCancelOrder = true
+    } else {
+      this.showCancelOrder = false
+    }
+    console.log(this.orderDetail, this.showCancelOrder)
   }
 
   importOrder() {
+    this.changeOrderStatus(CONSTANTS.ORDER_STATUS_RECEIVED, CONSTANTS.ORDER_IMPORTED)
+  }
+
+  cancelOrder() {
+    this.changeOrderStatus(CONSTANTS.ORDER_STATUS_CANCEL, CONSTANTS.ORDER_CANCELLED)
+  }
+
+  changeOrderStatus(newStatus, message) {
     this.showLoader = true
-    this.apiService.importOrder(this.orderDetail['_id'], {status: CONSTANTS.ORDER_STATUS_RECEIVED}).subscribe((result) => {
+    this.apiService.changeOrderStatus(this.orderDetail['_id'], {status: newStatus}).subscribe((result) => {
       this.getOrderDetail()
+      this.widgetUtil.showToast(message)
       this.showLoader = true
     }, (error) => {
       if (error.statusText === 'Unknown Error') {
@@ -79,10 +96,9 @@ export class CustomerOrderDetailPage {
 
   getOrderDetail() {
     this.apiService.getOrderDetail(this.orderDetail['_id']).subscribe((result) => {
+      console.log('ordedeails', result.body[0])
       this.orderDetail = result.body[0]
-      console.log('this.orderDetail**', this.orderDetail)
       this.checkData()
-      this.widgetUtil.showToast(CONSTANTS.ORDER_IMPORTED)
       this.showLoader = false
     }, (error) => {
       if (error.statusText === 'Unknown Error') {
@@ -91,6 +107,7 @@ export class CustomerOrderDetailPage {
         this.widgetUtil.showToast(CONSTANTS.SERVER_ERROR)
       }
       this.showLoader = false
+      this.checkData()
     })
   }
 
