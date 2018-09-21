@@ -67,19 +67,21 @@
           <ion-card-content>
           <ion-row>
               <ion-col text-center>
-                <strong>{{product.name}}</strong>
+                <ion-icon name="cube" color="grey"></ion-icon>
+                <span>{{product.name}}</span>
               </ion-col>
             </ion-row>
             <ion-row>
               <ion-col text-center>
-                <strong>Price: {{product.price}} ZMW</strong>
+                <ion-icon name="cash" color="grey"></ion-icon>
+                <span>Price: {{product.price}} ZMW</span>
               </ion-col>
             </ion-row>
             <ion-row>
               <ion-col col-12>
                 <ion-row>
                   <ion-col col-4 text-left style="padding-top: 7%">
-                    <strong>Quantity: </strong>
+                    <span>Quantity: </span>
                   </ion-col>
                   <ion-col col-2 text-left>
                     <button ion-button clear icon-only (click)="(product.quantity = decrementQty(product))"><ion-icon name="remove-circle" ></ion-icon></button>
@@ -94,12 +96,13 @@
               </ion-col>
             </ion-row>
             <ion-row>
-              <ion-col col-6>
-                <strong>SubTotal: {{product.subTotal}} ZMW</strong>
+              <ion-col col-10>
+                <ion-icon name="cash" color="grey"></ion-icon>
+                <span>SubTotal: {{product.subTotal}} ZMW</span>
               </ion-col>
-              <ion-col col-6>
-                <button ion-button color="light" (click)="removeFromCart(product)">
-                  <strong><ion-icon name="trash"></ion-icon></strong>Remove
+              <ion-col col-2 text-right>
+                <button ion-button clear icon-only color="grey" (click)="removeFromCart(product)">
+                  <ion-icon name="trash"></ion-icon>
                 </button>
               </ion-col>
             </ion-row>
