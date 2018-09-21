@@ -18,7 +18,7 @@
   <ion-refresher (ionRefresh)="doRefresh($event)" spinner="crescent">
     <ion-refresher-content></ion-refresher-content>
   </ion-refresher>
-  <ion-card *ngIf="orderListAvailable && (orderList.length > 0)" style="overflow-x:auto;">
+  <!-- <ion-card *ngIf="orderListAvailable && (orderList.length > 0)" style="overflow-x:auto;">
     <table>
       <thead>
         <tr>
@@ -42,7 +42,44 @@
     <ion-infinite-scroll (ionInfinite)="doInfinite($event)">
       <ion-infinite-scroll-content></ion-infinite-scroll-content>
     </ion-infinite-scroll>
+  </ion-card> -->
+  <ion-card *ngFor="let order of orderList">
+    <ion-card-content>
+      <ion-row>
+        <ion-col text-center>
+            <ion-icon color="grey" name="cart"></ion-icon> Order Id: {{order.orderId}}
+        </ion-col>
+      </ion-row>
+        <ion-row>
+          <ion-col text-center>
+              <ion-icon color="grey" name="happy"></ion-icon>
+              Customer: {{order.userDetail.name}}
+          </ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-col text-center>
+              <ion-icon color="grey" name="calendar"></ion-icon>
+              Date: {{order.lastUpdatedAt}}
+          </ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-col text-center>
+              <ion-icon color="grey" name="cash"></ion-icon> Total: {{order.orderTotal}} ZMW
+          </ion-col>
+          <ion-col text-center> 
+              <ion-icon color="grey" name="podium"></ion-icon>Status: {{order.status}}
+          </ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-col col-12 text-center>
+            <button ion-button outline color="secondary" item-end (click)="getOrderDetial(order)">view order</button>
+          </ion-col>
+        </ion-row>
+    </ion-card-content>
   </ion-card>
+  <ion-infinite-scroll (ionInfinite)="doInfinite($event)">
+    <ion-infinite-scroll-content></ion-infinite-scroll-content>
+  </ion-infinite-scroll>
   <ion-card *ngIf="orderListAvailable && (orderList.length < 1)">
     <ion-card-header text-center>
       <h4>No record found</h4>
