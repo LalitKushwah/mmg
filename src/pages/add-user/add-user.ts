@@ -43,7 +43,7 @@ export class AddUserPage implements OnInit {
     this.userLoginId = new FormControl('', [
       Validators.required
     ]);
-    this.password = new FormControl('', [
+    this.password = new FormControl(CONSTANTS.DEFUALT_PASSWORD, [
       Validators.required
     ]);
     this.name = new FormControl('', [

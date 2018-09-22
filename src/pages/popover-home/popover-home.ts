@@ -42,7 +42,7 @@ export class PopoverHomePage {
           icon: 'add-circle',
         },
         {
-          name: 'Reset Password',
+          name: 'Change Password',
           icon: 'key',
         },
         {
@@ -53,7 +53,7 @@ export class PopoverHomePage {
     } else{
       this.popoverOptions = [
         {
-          name: 'Reset Password',
+          name: 'Change Password',
           icon: 'key',
         },
         {
@@ -78,7 +78,7 @@ export class PopoverHomePage {
       case 'Logout':
       this.logout()
       break
-      case 'Reset Password':
+      case 'Change Password':
       this.resetPassword()
       break
     }

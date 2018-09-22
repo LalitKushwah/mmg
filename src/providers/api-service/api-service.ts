@@ -75,4 +75,9 @@ export class ApiServiceProvider {
   resetUserPassowrd(userId: string): any {
     return this.http.post(CONSTANTS.BASE_URL + 'api/user/resetPassword/' + userId, {})
   }
+
+  changePassword(data: Object): any {
+    return this.http.post(CONSTANTS.BASE_URL + 'api/user/changePassword', data)
+  }
+  
 }

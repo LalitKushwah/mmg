@@ -15,6 +15,8 @@ export const CONSTANTS = {
     ORDER_PLACED: 'Your order has been placed successfully',
     ORDER_IMPORTED: 'Order imported successfully',
     ORDER_CANCELLED: 'Order cancelled successfully',
-    PASSWORD_MISMTACH: 'Current Password and Re enter password dont match !',
-    DEFUALT_PASSWORD: 'tradekings@123'
+    PASSWORD_MISMTACH: "Current Password and Re enter password don't match !",
+    DEFUALT_PASSWORD: 'tradekings@123',
+    INCORRECT_PASSWORD: 'Incorrect current password',
+    PASSWORD_CHANGE_SUCCESS: 'Password changed successfully'
 }

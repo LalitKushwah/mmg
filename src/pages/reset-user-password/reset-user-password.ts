@@ -1,3 +1,4 @@
+import { StorageServiceProvider } from './../../providers/storage-service/storage-service';
 import { CONSTANTS } from './../utils/constants';
 import { Component, OnInit } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
@@ -21,20 +22,16 @@ export class ResetUserPasswordPage implements OnInit {
   oldPassword: FormControl;
   newPasssword: FormControl;
   reEnterPassword: FormControl;
+  showLoader = false
 
   constructor(public navCtrl: NavController, public navParams: NavParams
-  , private apiService: ApiServiceProvider, private widgetUtil: WidgetUtilService) {
+  , private apiService: ApiServiceProvider, private widgetUtil: WidgetUtilService
+, private storageService: StorageServiceProvider) {
   }
 
   ngOnInit(): void {
     this.createFormControls();
     this.createForm();
-  }
-
-  reset() {
-    if(this.newPasssword.value.trim() != this.reEnterPassword.value.trim()) {
-      this.widgetUtil.showToast(CONSTANTS.PASSWORD_MISMTACH)
-    }
   }
 
   createFormControls() {
@@ -57,4 +54,30 @@ export class ResetUserPasswordPage implements OnInit {
     });
    }
 
+   async changePassword() {
+     if(this.reEnterPassword.value.trim() === this.newPasssword.value.trim()) {
+        let user = await this.storageService.getFromStorage('profile')
+        this.showLoader = true
+        let data = {
+          currentPassword: this.oldPassword.value.trim(),
+          newPassword: this.newPasssword.value.trim(),
+          userId:  user['_id']
+        }
+        console.log('data!!!', data)
+        this.apiService.changePassword(data).subscribe((result) => {
+        console.log('result!!!', result)
+        this.widgetUtil.showToast(CONSTANTS.PASSWORD_CHANGE_SUCCESS)
+        this.showLoader = false
+      }, (error) => {
+        if (error.statusText === 'Unknown Error') {
+          this.widgetUtil.showToast(CONSTANTS.INTERNET_ISSUE)
+        } else {
+          this.widgetUtil.showToast(CONSTANTS.INCORRECT_PASSWORD)
+        }
+        this.showLoader = false
+      })
+    } else {
+        this.widgetUtil.showToast(CONSTANTS.PASSWORD_MISMTACH)
+     }
+   }
 }
