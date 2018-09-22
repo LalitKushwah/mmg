@@ -22,6 +22,12 @@
                 </ion-list>
             </ion-col>  
             <ion-col *ngIf="showCustomerForm">
+              <ion-item>
+                  <ion-label><ion-icon class="pin" padding-right class="primary-color-icon"></ion-icon>Country</ion-label>
+                  <ion-select [(ngModel)]="selectedCountry" interface="popover" (ngModelChange)="onUserTypeSelect()">
+                    <ion-option *ngFor="let country of countryList" [value]="country">{{country}}</ion-option>
+                  </ion-select>
+                </ion-item>
               <form [formGroup]="addCustomerForm">
                 <ion-item>
                     <ion-label floating>Name</ion-label>
@@ -53,14 +59,6 @@
                 </ion-item>
                   <ion-item *ngIf="password.hasError('required') && password.touched">
                   <p style="color: red">password  is required*</p>
-                </ion-item>
-
-                <ion-item>
-                  <ion-label floating>Country</ion-label>
-                  <ion-input type="text" formControlName="country"></ion-input>
-                </ion-item>
-                <ion-item *ngIf="country.hasError('required') && country.touched">
-                  <p style="color: red">country is required*</p>
                 </ion-item>
 
                 <ion-item>

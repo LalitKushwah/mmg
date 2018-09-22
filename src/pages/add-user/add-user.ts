@@ -25,7 +25,9 @@ export class AddUserPage implements OnInit {
   province: FormControl;
   showLoader = false;
   userTypeList: Array<any> =  [ 'customer', 'admin']
+  countryList: Array<any> =  [ 'ZAMBIA']
   selectedUserType : string = 'customer'
+  selectedCountry : string = 'ZAMBIA'
   showCustomerForm: boolean = true
 
   constructor(public navCtrl: NavController, public navParams: NavParams
@@ -80,7 +82,6 @@ export class AddUserPage implements OnInit {
       userLoginId: this.userLoginId,
       password: this.password,
       externalId: this.externalId,
-      country: this.country,
       channel: this.channel,
       province: this.province
     });
@@ -107,7 +108,7 @@ export class AddUserPage implements OnInit {
       userDetails['userLoginId'] = this.userLoginId.value.trim()
       userDetails['password'] = this.password.value.trim()
       userDetails['userType'] = this.selectedUserType
-      userDetails['country'] = this.country.value.trim()
+      userDetails['country'] = this.selectedCountry.trim()
       userDetails['channel'] = this.channel.value.trim()
       userDetails['province'] = this.province.value.trim()
       userDetails['externalId'] = this.externalId.value.trim()

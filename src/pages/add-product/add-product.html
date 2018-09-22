@@ -23,6 +23,12 @@
                 </ion-list>
               </ion-col>  
               <ion-col>
+                <ion-item>
+                  <ion-label><ion-icon class="pin" padding-right class="primary-color-icon"></ion-icon>Price Type</ion-label>
+                    <ion-select [(ngModel)]="selectedPriceType" interface="popover">
+                      <ion-option *ngFor="let priceType of priceTypeList" [value]="priceType">{{priceType}}</ion-option>
+                    </ion-select>
+                  </ion-item>
                 <form [formGroup]="addProductForm">
                   <ion-item>
                     <ion-label floating>Name</ion-label>
@@ -48,13 +54,13 @@
                     <p style="color: red">price is required*</p>
                   </ion-item>
 
-                  <ion-item>
+                 <!--  <ion-item>
                     <ion-label floating>Price Type</ion-label>
                     <ion-input type="text" formControlName="priceType"></ion-input>
                   </ion-item>
                   <ion-item *ngIf="priceType.hasError('required') && priceType.touched">
                     <p style="color: red">Price Type is required*</p>
-                  </ion-item>
+                  </ion-item> -->
 
                   <ion-item>
                     <ion-label floating>Pack Type</ion-label>

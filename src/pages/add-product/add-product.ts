@@ -27,6 +27,8 @@ export class AddProductPage {
   categoryList: Array<any> =  []
   categoryListAvailable = false
   selectedCategory : any = {};
+  priceTypeList: Array<any> =  [ 'Standard Price']
+  selectedPriceType = 'Standard Price'
 
   constructor(public navCtrl: NavController, public navParams: NavParams
   , private apiService: ApiServiceProvider, private widgetUtil: WidgetUtilService) {
@@ -65,9 +67,6 @@ export class AddProductPage {
     this.productCode = new FormControl('', [
       Validators.required
     ]);
-    this.priceType = new FormControl('', [
-      Validators.required
-    ]);
     this.packType = new FormControl('', [
       Validators.required
     ]);
@@ -81,7 +80,6 @@ export class AddProductPage {
       name: this.name,
       price: this.price,
       productCode: this.productCode,
-      priceType: this.priceType,
       packType: this.packType,
       currentCaseSize: this.currentCaseSize
     });
@@ -92,7 +90,7 @@ export class AddProductPage {
     productDetail['name'] = this.name.value.trim()
     productDetail['price'] = parseFloat(this.price.value.trim())
     productDetail['productCode'] = this.productCode.value.trim()
-    productDetail['priceType'] = this.priceType.value.trim()
+    productDetail['priceType'] = this.selectedPriceType.trim()
     productDetail['packType'] = this.packType.value.trim()
     productDetail['currentCaseSize'] = this.currentCaseSize.value.trim()
     productDetail['categoryId'] = this.selectedCategory['_id']
