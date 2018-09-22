@@ -73,6 +73,6 @@ export class ApiServiceProvider {
   }
 
   resetUserPassowrd(userId: string): any {
-    return this.http.put(CONSTANTS.BASE_URL + 'api/user/resetPassword/' + userId, {})
+    return this.http.post(CONSTANTS.BASE_URL + 'api/user/resetPassword/' + userId, {})
   }
 }

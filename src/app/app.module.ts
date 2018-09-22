@@ -1,3 +1,4 @@
+import { ResetPasswordModelPage } from './../pages/reset-password-model/reset-password-model';
 import { ResetUserPasswordPageModule } from './../pages/reset-user-password/reset-user-password.module';
 import { ResetUserPasswordPage } from './../pages/reset-user-password/reset-user-password';
 import { AdminListProductPageModule } from './../pages/admin-list-product/admin-list-product.module';
@@ -46,6 +47,7 @@ import { FileTransfer, FileUploadOptions, FileTransferObject } from '@ionic-nati
 import { AdminListCategoryPage } from '../pages/admin-list-category/admin-list-category';
 import { AdminListProductPage } from '../pages/admin-list-product/admin-list-product';
 import { AdminListUserPage } from '../pages/admin-list-user/admin-list-user';
+import { ResetPasswordModelPageModule } from '../pages/reset-password-model/reset-password-model.module';
 
 @NgModule({
   declarations: [
@@ -78,7 +80,8 @@ import { AdminListUserPage } from '../pages/admin-list-user/admin-list-user';
     AdminListUserPageModule,
     AdminListCategoryPageModule,
     AdminListProductPageModule,
-    ResetUserPasswordPageModule
+    ResetUserPasswordPageModule,
+    ResetPasswordModelPageModule
   ],
   bootstrap: [IonicApp],
   entryComponents: [
@@ -97,7 +100,8 @@ import { AdminListUserPage } from '../pages/admin-list-user/admin-list-user';
     AdminListCategoryPage,
     AdminListProductPage,
     AdminListUserPage,
-    ResetUserPasswordPage
+    ResetUserPasswordPage,
+    ResetPasswordModelPage
   ],
   providers: [
     StatusBar,

@@ -95,7 +95,7 @@ export class AdminListUserPage {
     console.log(user)
     this.apiService.resetUserPassowrd(user['_id']).subscribe((result) => {
       console.log(result)
-      this.widgetUtil.showToast(`New passowrd for user ${user.name} is : ${CONSTANTS.DEFUALT_PASSWORD}`)
+      this.widgetUtil.showToast(`Password reset successfully. New password: ${CONSTANTS.DEFUALT_PASSWORD}`)
     }, (error) => {
       if (error.statusText === 'Unknown Error') {
         this.widgetUtil.showToast(CONSTANTS.INTERNET_ISSUE)
