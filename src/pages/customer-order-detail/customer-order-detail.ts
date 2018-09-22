@@ -67,7 +67,6 @@ export class CustomerOrderDetailPage {
     } else {
       this.showCancelOrder = false
     }
-    console.log(this.orderDetail, this.showCancelOrder)
   }
 
   importOrder() {
