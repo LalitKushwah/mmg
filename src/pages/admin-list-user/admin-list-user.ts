@@ -24,12 +24,7 @@ export class AdminListUserPage {
     this.getUserList()
   }
 
-  ionViewDidEnter(){
-    this.getUserList()
-  }
-
   getUserList() {
-    console.log('****************')
     this.apiService.getCustomerList(this.skipValue, this.limit).subscribe((result) => {
       this.userList = result.body
       this.userListAvailable = true

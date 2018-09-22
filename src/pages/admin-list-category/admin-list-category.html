@@ -6,7 +6,7 @@
 
 <ion-content class="full-background">
   <div class="search-spinner">
-    <ion-spinner name="crescent" *ngIf="!userListAvailable"></ion-spinner>
+    <ion-spinner name="crescent" *ngIf="!categoryListAvailable"></ion-spinner>
   </div>
   <ion-refresher (ionRefresh)="doRefresh($event)" spinner="crescent">
     <ion-refresher-content></ion-refresher-content>

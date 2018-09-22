@@ -68,4 +68,7 @@ export class ApiServiceProvider {
     return this.http.get(CONSTANTS.BASE_URL + 'api/category/list?skip='+skip.toString() + "&limit="+ limit.toString())
   }
 
+  getAllProductList(skip: number, limit:number): any {
+    return this.http.get(CONSTANTS.BASE_URL + 'api/product/list?skip='+skip.toString() + "&limit="+ limit.toString())
+  }
 }
