@@ -24,6 +24,7 @@ export class AddCategoryPage implements OnInit {
   categoryTypeList: Array<any> =  ['parent', 'child']
   selectedCategoryType: string = 'parent'
   showParentList = false
+  allowAddingCategory = true
 
   constructor(public navCtrl: NavController, public navParams: NavParams
   , private apiService: ApiServiceProvider, private widgetUtil: WidgetUtilService) {
@@ -93,7 +94,12 @@ export class AddCategoryPage implements OnInit {
 
   onCategoryTypeSelect() {
     if (this.selectedCategoryType != 'parent') {
-      this.showParentList = true
+      if(this.categoryList.length > 0) {
+        this.showParentList = true
+      } else {
+        this.widgetUtil.showToast(CONSTANTS.PARENT_CATEGORY_NOT_FOUND)
+        this.showParentList = false
+      }
     } else {
       this.showParentList = false
     }
