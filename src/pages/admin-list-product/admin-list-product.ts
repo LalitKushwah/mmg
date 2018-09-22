@@ -20,10 +20,10 @@ export class AdminListProductPage {
   constructor(public navCtrl: NavController, public navParams: NavParams, private apiService: ApiServiceProvider, private widgetUtil: WidgetUtilService) {
     this.skipValue = 0
     this.limit = CONSTANTS.PAGINATION_LIMIT
-    this.getCategoryList()
+    this.getProducList()
   }
 
-  getCategoryList() {
+  getProducList() {
     this.apiService.getAllProductList(this.skipValue, this.limit).subscribe((result) => {
       this.productList = result.body
       this.productListAvailable = true
@@ -59,6 +59,7 @@ export class AdminListProductPage {
   }
 
   doRefresh(refresher) : void {
+    this.getProducList()
     setTimeout(() => {
       refresher.complete();
     }, 1000);

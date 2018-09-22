@@ -73,6 +73,7 @@ export class CustomerCategoryListPage {
   }
 
   doRefresh(refresher) : void {
+    this.getList()
     setTimeout(() => {
       refresher.complete();
     }, 1000);

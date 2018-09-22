@@ -33,17 +33,6 @@ export class AdminHomePage {
     this.apiService.getOrderList(this.skipValue, this.limit).subscribe((result) => {
       this.orderList = result.body
       this.orderList.map((value) => {
-        /* switch(value.status) {
-          case CONSTANTS.ORDER_STATUS_RECEIVED:
-            value.status = "Received"
-            break
-          case CONSTANTS.ORDER_STATUS_PROGRESS:
-            value.status = "In-Progress"
-            break
-          case CONSTANTS.ORDER_STATUS_CANCEL:
-            value.status = "Cancelled"
-            break
-        } */
         value.lastUpdatedAt = this.formatDate(value.lastUpdatedAt)
       })
       this.orderListAvailable = true

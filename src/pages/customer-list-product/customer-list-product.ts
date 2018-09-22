@@ -161,6 +161,7 @@ export class CustomerListProductPage {
   }
 
   doRefresh(refresher) : void {
+    this.getList()
     this.getCardItems()
     setTimeout(() => {
       refresher.complete();

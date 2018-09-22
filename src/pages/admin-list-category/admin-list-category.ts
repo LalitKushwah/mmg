@@ -60,6 +60,7 @@ export class AdminListCategoryPage {
   }
 
   doRefresh(refresher) : void {
+    this.getCategoryList()
     setTimeout(() => {
       refresher.complete();
     }, 1000);

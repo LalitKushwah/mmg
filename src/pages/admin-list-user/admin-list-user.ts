@@ -62,6 +62,7 @@ export class AdminListUserPage {
   }
 
   doRefresh(refresher) : void {
+    this.getUserList()
     setTimeout(() => {
       refresher.complete();
     }, 1000);
