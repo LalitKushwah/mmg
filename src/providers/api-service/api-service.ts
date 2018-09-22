@@ -64,4 +64,8 @@ export class ApiServiceProvider {
     return this.http.get(CONSTANTS.BASE_URL + 'api/user/list/customer?skip='+skip.toString() + "&limit="+ limit.toString())
   }
 
+  getAllCategoryList(skip: number, limit:number): any {
+    return this.http.get(CONSTANTS.BASE_URL + 'api/category/list?skip='+skip.toString() + "&limit="+ limit.toString())
+  }
+
 }

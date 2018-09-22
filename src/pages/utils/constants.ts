@@ -1,5 +1,5 @@
 export const CONSTANTS = {
-    BASE_URL : 'https://5d3171cb.ngrok.io/',
+    BASE_URL : 'http://localhost:3000/',
     INTERNET_ISSUE : 'oops! You are not connected to the internet!',
     AUTH_FAIL : 'LoginId or password incorrect',
     SERVER_ERROR: 'Something went wrong',

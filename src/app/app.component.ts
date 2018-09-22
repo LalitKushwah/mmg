@@ -3,7 +3,7 @@ import { AdminListCategoryPage } from './../pages/admin-list-category/admin-list
 import { AdminListUserPage } from './../pages/admin-list-user/admin-list-user';
 import { StorageServiceProvider } from './../providers/storage-service/storage-service';
 import { Component, ViewChild, NgZone } from '@angular/core';
-import { Nav, Platform, MenuController, Events } from 'ionic-angular';
+import { Nav, Platform, MenuController, Events, App } from 'ionic-angular';
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
 
@@ -26,7 +26,7 @@ export class MyApp {
 
   constructor(public platform: Platform, public statusBar: StatusBar, public splashScreen: SplashScreen
   , private headerColor : HeaderColor, private menuController: MenuController, private storageService: StorageServiceProvider,
-  private zone: NgZone,  public events: Events,) {
+  private zone: NgZone,  public events: Events, private app: App) {
     this.pages = [{ title: 'Home', component: HomePage, icon :'md-home'}]
     this.menuController.swipeEnable(true)
     this.initializeApp();
@@ -76,8 +76,10 @@ export class MyApp {
   }
 
   openPage(page) {
-    // Reset the content nav to have just this page
-    // we wouldn't want the back button to show in this scenario
-    this.nav.setRoot(page.component);
+    if(page.component.name === 'HomePage') {
+      this.app.getRootNav().setRoot(page.component)
+    } else {
+      this.nav.push(page.component)
+    }
   }
 }
