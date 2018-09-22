@@ -3,7 +3,7 @@
     <!-- <button ion-button menuToggle>
       <ion-icon name="menu"></ion-icon>
     </button> -->
-    <ion-title>User List</ion-title>
+    <ion-title>Customer List</ion-title>
   </ion-navbar>
 </ion-header>
 
@@ -15,13 +15,13 @@
     <ion-refresher-content></ion-refresher-content>
   </ion-refresher>
   <ion-list *ngIf="userListAvailable && (userList.length > 0)">
-    <button ion-item *ngFor="let user of userList" (click)="getCustomerDetail()">
+    <button ion-item *ngFor="let user of userList">
       <ion-avatar item-start>
         <img src="./assets/imgs/avatar.png">
       </ion-avatar>
       <span>[{{user.externalId}}] {{user.name}}</span>
       <!-- <button ion-button clear color="secondary" item-end><h1><ion-icon md="md-arrow-round-forward"></ion-icon></h1></button> -->
-      <button ion-button clear color="secondary" item-end>
+      <button ion-button clear color="secondary" item-end (click)="resetPasswordModel(user)">
         <ion-icon name="md-key"></ion-icon>Reset
       </button>
     </button>

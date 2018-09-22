@@ -45,7 +45,7 @@ export class MyApp {
       if ((profile['userType'] === 'admin')) {
         this.pages = [
           { title: 'Home', component: HomePage, icon :'md-home'},
-          { title: 'Users', component: AdminListUserPage, icon :'md-happy'},
+          { title: 'Customers', component: AdminListUserPage, icon :'md-happy'},
           { title: 'Categories', component: AdminListCategoryPage, icon :'list-box'},
           { title: 'Products', component: AdminListProductPage, icon :'list-box'},
         ]

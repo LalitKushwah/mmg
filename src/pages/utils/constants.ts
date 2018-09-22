@@ -1,5 +1,5 @@
 export const CONSTANTS = {
-    BASE_URL : 'http://localhost:3000/',
+    BASE_URL : 'http://d44f77d3.ngrok.io/',
     INTERNET_ISSUE : 'oops! You are not connected to the internet!',
     AUTH_FAIL : 'LoginId or password incorrect',
     SERVER_ERROR: 'Something went wrong',
@@ -15,5 +15,6 @@ export const CONSTANTS = {
     ORDER_PLACED: 'Your order has been placed successfully',
     ORDER_IMPORTED: 'Order imported successfully',
     ORDER_CANCELLED: 'Order cancelled successfully',
-    PASSWORD_MISMTACH: 'Current Password and Re enter password dont match !'
+    PASSWORD_MISMTACH: 'Current Password and Re enter password dont match !',
+    DEFUALT_PASSWORD: 'tradekings@123'
 }

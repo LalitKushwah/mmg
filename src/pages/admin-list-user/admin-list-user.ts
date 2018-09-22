@@ -1,5 +1,6 @@
+import { ResetPasswordModelPage } from './../reset-password-model/reset-password-model';
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, ModalController, Alert, AlertController } from 'ionic-angular';
 import { ApiServiceProvider } from '../../providers/api-service/api-service';
 import { WidgetUtilService } from '../utils/widget-utils';
 import { CONSTANTS } from '../utils/constants';
@@ -18,7 +19,8 @@ export class AdminListUserPage {
   userList: Array<any> = [];
   userListAvailable: Boolean = false
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, private apiService: ApiServiceProvider, private widgetUtil: WidgetUtilService) {
+  constructor(public navCtrl: NavController, public navParams: NavParams, private apiService: ApiServiceProvider, private widgetUtil: WidgetUtilService
+  , private modal: ModalController, private alertCtrl: AlertController) {
     this.skipValue = 0
     this.limit = CONSTANTS.PAGINATION_LIMIT
     this.getUserList()
@@ -65,8 +67,41 @@ export class AdminListUserPage {
     }, 1000);
   }
   
-  getCustomerDetail() {
-
+  resetPasswordModel(user) {
+    /* const resetPasswordConfirm = this.modal.create('ResetPasswordModelPage', {message: 'Are you sure you want to reset password for ' +  customerName})
+    resetPasswordConfirm.present()
+    resetPasswordConfirm.onDidDismiss((result) => {
+      console.log('result', result)
+    }) */
+    let alert = this.alertCtrl.create();
+    alert.setTitle('Reset Password!')
+    alert.setMessage('Are you sure you want to reset password for ' +  user.name)
+    alert.addButton({
+      text: 'No',
+      role: 'cancel',
+      handler: () => {}
+    });
+    alert.addButton({
+      text: 'Yes',
+      cssClass: 'secondary',
+      handler: () => {
+        this.resetPassword(user)
+      }
+    })
+    alert.present(alert)
   }
 
+  resetPassword(user) {
+    console.log(user)
+    this.apiService.resetUserPassowrd(user['_id']).subscribe((result) => {
+      console.log(result)
+      this.widgetUtil.showToast(`New passowrd for user ${user.name} is : ${CONSTANTS.DEFUALT_PASSWORD}`)
+    }, (error) => {
+      if (error.statusText === 'Unknown Error') {
+        this.widgetUtil.showToast(CONSTANTS.INTERNET_ISSUE)
+      } else {
+        this.widgetUtil.showToast(CONSTANTS.SERVER_ERROR)
+      }
+    })
+  }
 }

@@ -71,4 +71,8 @@ export class ApiServiceProvider {
   getAllProductList(skip: number, limit:number): any {
     return this.http.get(CONSTANTS.BASE_URL + 'api/product/list?skip='+skip.toString() + "&limit="+ limit.toString())
   }
+
+  resetUserPassowrd(userId: string): any {
+    return this.http.put(CONSTANTS.BASE_URL + 'api/user/resetPassword/' + userId, {})
+  }
 }
