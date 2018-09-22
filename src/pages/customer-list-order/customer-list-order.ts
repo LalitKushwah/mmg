@@ -50,7 +50,6 @@ export class CustomerListOrderPage {
         value.lastUpdatedAt = this.formatDate(value.lastUpdatedAt)
       })
       this.orderListAvailable = true
-      console.log("this.orderList", this.orderList)
     }, (error) => {
       this.orderListAvailable = true
       console.log('error', error)

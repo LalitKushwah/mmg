@@ -36,10 +36,8 @@ export class AddProductPage {
 
   getCategoryList() {
     this.apiService.getCategoryListForProduct().subscribe((result: any) => {
-      console.log(result)
       this.categoryList = result.body
       this.selectedCategory = result.body[0]
-      console.log('this.selectedCategory', this.selectedCategory)
       this.categoryListAvailable = true
     }, (error) => {
       this.showLoader = false;

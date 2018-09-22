@@ -36,8 +36,6 @@ export class CustomerReviewSubmitOrderPage {
       value.price = (parseFloat((Math.round(value.price * 100) / 100).toString()).toFixed(2))
       value['subTotal'] = (parseFloat((Math.round((value.quantity * parseFloat(value.price) * 100) / 100)).toString()).toFixed(2))
     })
-    console.log(this.cartItems)
-    console.log(this.orderTotal)
   }
 
   doRefresh(refresher) : void {
@@ -90,7 +88,6 @@ export class CustomerReviewSubmitOrderPage {
   
   removeFromCart(product) {
     this.widgetUtil.showToast(`${product.name} removed from cart`)
-    console.log('this.cart' ,this.cartItems)
     if (this.cartItems.length > 0) {
       this.cartItems.map((value, index) => {
         if(value['_id'] === product['_id']) {
@@ -129,7 +126,6 @@ export class CustomerReviewSubmitOrderPage {
       }
     })
     this.calculateOrderTotal()
-    console.log("this.cartItems", this.cartItems)
     this.storageService.setToStorage('cart', this.cartItems)
     return (product.quantity)
   }

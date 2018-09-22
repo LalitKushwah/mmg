@@ -107,7 +107,6 @@ export class CustomerListProductPage {
       this.cartDetail = await this.storageService.setToStorage('cart', this.cart)
       let updatedTotal = 0, updatedQuantity = 0;
       this.cartDetail.map((value) => {
-        console.log('value.price', value)
         updatedTotal = updatedTotal + (parseFloat(value.price) * parseInt(value.quantity))
         updatedQuantity = updatedQuantity + parseInt(value.quantity)
       })
@@ -120,7 +119,6 @@ export class CustomerListProductPage {
 
   removeFromCart(product) {
     this.widgetUtil.showToast(`${product.name} removed from cart`)
-    console.log('this.cart' ,this.cart)
     if (this.cart.length > 0) {
       this.cart.map((value, index) => {
         if(value['_id'] === product['_id']) {

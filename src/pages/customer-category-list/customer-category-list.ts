@@ -33,7 +33,6 @@ export class CustomerCategoryListPage {
   getList() {
     this.apiService.getChildCategoryList(this.parentCategoryId, this.skipValue, this.limit).subscribe((result) => {
       this.childCategoryList = result.body
-      console.log('this.childCategoryList', this.childCategoryList)
       this.categoryListAvailable = true
     }, (error) => {
       if (error.statusText === 'Unknown Error') {

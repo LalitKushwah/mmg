@@ -34,10 +34,8 @@ export class AddCategoryPage implements OnInit {
 
   getCategoryList() {
     this.apiService.getParentCategoryList(0 , 50).subscribe((result: any) => {
-      console.log(result)
       this.categoryList = result.body
       this.selectedCategory = result.body[0]
-      console.log('this.selectedCategory', this.selectedCategory)
       this.categoryListAvailable = true
     }, (error) => {
       this.showLoader = false;
@@ -78,7 +76,6 @@ export class AddCategoryPage implements OnInit {
       categoryDetail['parentCategoryId'] = ''
       categoryDetail['type'] = 'parent'
     }
-    console.log('categoryDetail', categoryDetail)
     this.showLoader = true
     this.apiService.addCategory(categoryDetail).subscribe((result) => {
       this.widgetUtil.showToast(CONSTANTS.CATEGORY_CREATED)
