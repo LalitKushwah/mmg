@@ -38,7 +38,7 @@
                     <p style="color: red">name is required*</p>
                   </ion-item>
                   <ion-grid>
-                    <button ion-button color="secondary" [disabled]="!(addCategoryForm.valid) && allowAddingCategory" (click)="addCategory();">Add Category<ion-spinner name="dots" *ngIf="showLoader"></ion-spinner></button>
+                    <button ion-button color="secondary" [disabled]="!(addCategoryForm.valid && allowAddingCategory)" (click)="addCategory();">Add Category<ion-spinner name="dots" *ngIf="showLoader"></ion-spinner></button>
                   </ion-grid>
                 </form>
               </ion-col>

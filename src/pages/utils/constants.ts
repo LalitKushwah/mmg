@@ -19,5 +19,5 @@ export const CONSTANTS = {
     DEFUALT_PASSWORD: 'tradekings@123',
     INCORRECT_PASSWORD: 'Incorrect current password',
     PASSWORD_CHANGE_SUCCESS: 'Password changed successfully',
-    CHILD_CATEGORY_NOT_FOUND: 'No parent category found! First add a parent category'
+    PARENT_CATEGORY_NOT_FOUND: 'No parent category found! First add a parent category'
 }
