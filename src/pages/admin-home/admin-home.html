@@ -86,3 +86,10 @@
     </ion-card-header>
   </ion-card>
 </ion-content>
+<ion-footer *ngIf="orderList.length">
+  <ion-row>
+    <ion-col text-center>
+      <button  ion-button primary color="light" (click)="exportToCsv()"><ion-icon name="arrow-dropdown-circle"></ion-icon> Export to csv</button>
+    </ion-col>
+  </ion-row>
+</ion-footer>

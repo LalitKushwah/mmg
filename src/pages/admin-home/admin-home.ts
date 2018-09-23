@@ -5,6 +5,8 @@ import { PopoverHomePage } from '../popover-home/popover-home';
 import { CONSTANTS } from '../utils/constants';
 import { ApiServiceProvider } from '../../providers/api-service/api-service';
 import { CustomerOrderDetailPage } from '../customer-order-detail/customer-order-detail';
+import { File } from '@ionic-native/file'
+import * as json2Csv from 'json2csv'
 
 @IonicPage({
   name: 'AdminHomePage'
@@ -23,7 +25,7 @@ export class AdminHomePage {
   limit: number = CONSTANTS.PAGINATION_LIMIT
 
   constructor(public navCtrl: NavController, public navParams: NavParams, private widgetUtil: WidgetUtilService
-  , private apiService: ApiServiceProvider) {
+  , private apiService: ApiServiceProvider, private file: File) {
     this.skipValue = 0
     this.limit = CONSTANTS.PAGINATION_LIMIT
     this.getList()
@@ -97,4 +99,22 @@ export class AdminHomePage {
     this.widgetUtil.presentPopover(myEvent, PopoverHomePage)
   }
 
+  exportToCsv() {
+    const fields = ['orderId', 'orderTotal', 'userDetail'];
+    const opts = { fields };
+    let Json2csvParser  = json2Csv.Parser
+    const parser = new Json2csvParser (opts);
+    const csv = parser.parse(this.orderList);
+    let fileName =  'CSV' + Math.floor(Math.random()*90000) + '.csv'
+    this.file.writeFile(this.file.externalRootDirectory, fileName, csv)
+      .then(() => {
+        this.widgetUtil.showToast(CONSTANTS.CSV_DOWNLOADED)
+      }).catch(err => {
+          this.file.writeExistingFile(this.file.externalRootDirectory, fileName, csv).then(() => {
+            this.widgetUtil.showToast(CONSTANTS.CSV_DOWNLOADED)
+          }).catch(err => {
+            this.widgetUtil.showToast(CONSTANTS.CSV_DOWNLOAD_FAIL)
+          })
+      })
+  }
 }

@@ -6,6 +6,7 @@ import { IonicPage, NavController, NavParams, FabButton, Platform } from 'ionic-
 import { WidgetUtilService } from '../utils/widget-utils';
 import { File } from '@ionic-native/file';
 import * as papa from 'papaparse'
+import * as json2Csv from 'json2csv'
 import { FileTransfer, FileTransferObject } from '@ionic-native/file-transfer';
 
 @IonicPage({
@@ -51,18 +52,17 @@ export class CustomerOrderDetailPage {
 
   async checkData() {
     let profile = await this.storageService.getFromStorage('profile')
-    if(!(window['cordova']) && (profile['userType'] === 'admin')) {
+    /* if(!(window['cordova']) && (profile['userType'] === 'admin')) {
       this.showCsvButton = true
     }else{
       this.showCsvButton = false
-    }
+    } */
     if ((profile['userType'] === 'admin') && (this.orderDetail.status != CONSTANTS.ORDER_STATUS_RECEIVED) && (this.orderDetail.status != CONSTANTS.ORDER_STATUS_CANCEL)) {
       this.showImportOrder = true
     } else {
       this.showImportOrder = false
     }
     if ((profile['userType'] === 'customer') && (this.orderDetail.status != CONSTANTS.ORDER_STATUS_RECEIVED) && (this.orderDetail.status != CONSTANTS.ORDER_STATUS_CANCEL)) {
-      console.log('heyyyyyy')
       this.showCancelOrder = true
     } else {
       this.showCancelOrder = false
@@ -111,17 +111,62 @@ export class CustomerOrderDetailPage {
   }
 
   exportToCsv() {
-    let csv = papa.unparse(this.orderDetail)
+    const csv = ''
+    this.saveAsCsv()
+    /* try {
+      const fields = ['orderId', 'orderTotal', 'userDetail'];
+      const opts = { fields };
+      let Json2csvParser  = json2Csv.Parser
+      const parser = new Json2csvParser (opts);
+      const csv = parser.parse(this.orderDetail);
+      console.log('csv', csv);
+    } catch (err) {
+      console.error(err);
+    }
+ */    
  
-    // Dummy implementation for Desktop download purpose
+    /* // Dummy implementation for Desktop download purpose
     var blob = new Blob([csv]);
     var a = window.document.createElement("a");
     a.href = window.URL.createObjectURL(blob);
     a.download = "newdata.csv";
     document.body.appendChild(a);
     a.click();
-    document.body.removeChild(a);
+    document.body.removeChild(a); */
     /* this.file.writeFile(this.file.dataDirectory, 'tradekings.csv', blob) */
+  }
+
+  saveAsCsv() {
+    const fields = ['orderId', 'orderTotal', 'userDetail'];
+        const opts = { fields };
+        let Json2csvParser  = json2Csv.Parser
+        const parser = new Json2csvParser (opts);
+        const csv = parser.parse(this.orderDetail);
+  
+    var fileName: any = "team.csv"
+    this.file.writeFile(this.file.externalRootDirectory, fileName, csv)
+      .then(
+      _ => {
+        alert('Success ;-)')
+      }
+      )
+      .catch(
+      err => {
+  
+           this.file.writeExistingFile(this.file.externalRootDirectory, fileName, csv)
+          .then(
+          _ => {
+        alert('Success ;-)')
+          }
+          )
+          .catch(
+          err => {
+            alert('Failure')
+          }
+          )
+      }
+      )
+  
   }
 
   doRefresh(refresher) : void {
