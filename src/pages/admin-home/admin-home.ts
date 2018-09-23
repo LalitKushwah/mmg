@@ -50,7 +50,6 @@ export class AdminHomePage {
   }
 
   getOrderDetial(order) {
-    console.log('Tradkings_' + this.getDateForCSV() + '.csv')
     let orderObj = {
       order: order
     }
