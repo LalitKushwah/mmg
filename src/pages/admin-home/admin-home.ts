@@ -145,7 +145,6 @@ export class AdminHomePage {
         csvList.push(lineItem)
       })
     })
-    console.log(csvList)
     const fields = ['OrderId', 'OrderDate', 'customerName', 'CustomerCode', 'Country(Province)', 'ProductName', 'ProductCode', 'ProductSysCode', 'Price', 'Quantity', 'SubTotal', 'OrderTotal'];
     const opts = { fields };
     let Json2csvParser  = json2Csv.Parser
@@ -153,7 +152,6 @@ export class AdminHomePage {
     const csv = parser.parse(csvList)
     /* let fileName =  'Tradkings-'+ Math.floor(Math.random()*90000) + '.csv' */
     let fileName =  'TradkingsOrder-'+ this.getDateForCSV().trim() + '.csv'
-    alert(fileName)
     this.file.writeFile(this.file.externalRootDirectory, fileName, csv)
       .then(() => {
         this.widgetUtil.showToast(CONSTANTS.CSV_DOWNLOADED + '! FileName: ' + fileName)
