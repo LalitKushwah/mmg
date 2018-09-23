@@ -50,6 +50,7 @@ export class AdminHomePage {
   }
 
   getOrderDetial(order) {
+    console.log('Tradkings_' + this.getDateForCSV() + '.csv')
     let orderObj = {
       order: order
     }
@@ -96,6 +97,17 @@ export class AdminHomePage {
     return [year, month, day].join('-')
   }
 
+  getDateForCSV() {
+    var d = new Date,
+    dformat = [d.getMonth()+1,
+      d.getDate(),
+      d.getFullYear()].join('-')+'-'+
+     [d.getHours(),
+      d.getMinutes(),
+      d.getSeconds()].join('-');
+      return dformat
+  }
+
   presentPopover(myEvent) {
     this.widgetUtil.presentPopover(myEvent, PopoverHomePage)
   }
@@ -109,14 +121,16 @@ export class AdminHomePage {
           lineItem =  {
             OrderId: value.orderId,
             OrderDate: this.formatDate(value.lastUpdatedAt),
+            customerName: value.userDetail.name,
             CustomerCode: value.userDetail.externalId,
-            'Country(Province)': '',
+            'Country(Province)': value.userDetail.country + "(" + value.userDetail.province  + ")",
             OrderTotal: value.orderTotal
           }
         } else {
           lineItem =  {
             OrderId: '*',
             OrderDate: '*',
+            customerName: '*',
             CustomerCode: '*',
             'Country(Province)': '*',
             OrderTotal: '*'
@@ -131,12 +145,15 @@ export class AdminHomePage {
         csvList.push(lineItem)
       })
     })
-    const fields = ['OrderId', 'OrderDate', 'CustomerCode', 'OrderTotal', 'ProductName', 'ProductCode', 'ProductSysCode', 'Price', 'Quantity', 'SubTotal'];
+    console.log(csvList)
+    const fields = ['OrderId', 'OrderDate', 'customerName', 'CustomerCode', 'Country(Province)', 'ProductName', 'ProductCode', 'ProductSysCode', 'Price', 'Quantity', 'SubTotal', 'OrderTotal'];
     const opts = { fields };
     let Json2csvParser  = json2Csv.Parser
     const parser = new Json2csvParser (opts)
     const csv = parser.parse(csvList)
-    let fileName =  'CSV' + Math.floor(Math.random()*90000) + '.csv'
+    /* let fileName =  'Tradkings-'+ Math.floor(Math.random()*90000) + '.csv' */
+    let fileName =  'TradkingsOrder-'+ this.getDateForCSV().trim() + '.csv'
+    alert(fileName)
     this.file.writeFile(this.file.externalRootDirectory, fileName, csv)
       .then(() => {
         this.widgetUtil.showToast(CONSTANTS.CSV_DOWNLOADED + '! FileName: ' + fileName)
