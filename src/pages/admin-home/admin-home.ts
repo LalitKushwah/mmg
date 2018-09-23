@@ -36,6 +36,7 @@ export class AdminHomePage {
       this.orderList = result.body
       this.orderList.map((value) => {
         value.lastUpdatedAt = this.formatDate(value.lastUpdatedAt)
+        value.orderTotal = parseFloat((Math.round(value.orderTotal * 100) / 100).toString()).toFixed(2)
       })
       this.orderListAvailable = true
     }, (error) => {

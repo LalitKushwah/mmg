@@ -44,7 +44,7 @@ export class CustomerListProductPage {
     this.apiService.getProductListByCategory(this.categoryId, this.skipValue, this.limit).subscribe((result) => {
       this.productList = result.body
       this.productList.map(value => {
-        value.quantity = 0
+        value.quantity = 1
         value.price = (parseFloat((Math.round(value.price * 100) / 100).toString()).toFixed(2))
       })
       console.log('this.productList', this.productList)
@@ -131,7 +131,10 @@ export class CustomerListProductPage {
   }
 
   decrementQty(qty) {
-    return (parseInt(qty) - 1)
+    if(parseInt(qty) > 1) {
+      return (parseInt(qty) - 1)
+    }
+    return parseInt(qty)
   }
 
   incrementQty(qty) {
