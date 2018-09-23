@@ -93,7 +93,6 @@ export class AddCategoryPage implements OnInit {
   }
 
   onCategoryTypeSelect() {
-    this.categoryList = []
     if (this.selectedCategoryType != 'parent') {
       if(this.categoryList.length > 0) {
         this.showParentList = true
