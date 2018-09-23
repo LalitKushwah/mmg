@@ -22,6 +22,7 @@ export class AddProductPage {
   productCode: FormControl;
   priceType: FormControl;
   packType: FormControl;
+  productSysCode: FormControl;
   currentCaseSize: FormControl;
   showLoader = false;
   categoryList: Array<any> =  []
@@ -67,6 +68,9 @@ export class AddProductPage {
     this.productCode = new FormControl('', [
       Validators.required
     ]);
+    this.productSysCode = new FormControl('', [
+      Validators.required
+    ]);
     this.packType = new FormControl('', [
       Validators.required
     ]);
@@ -81,6 +85,7 @@ export class AddProductPage {
       price: this.price,
       productCode: this.productCode,
       packType: this.packType,
+      productSysCode: this.productSysCode,
       currentCaseSize: this.currentCaseSize
     });
   }
@@ -92,6 +97,7 @@ export class AddProductPage {
     productDetail['productCode'] = this.productCode.value.trim()
     productDetail['priceType'] = this.selectedPriceType.trim()
     productDetail['packType'] = this.packType.value.trim()
+    productDetail['productSysCode'] = this.productSysCode.value.trim()
     productDetail['currentCaseSize'] = this.currentCaseSize.value.trim()
     productDetail['categoryId'] = this.selectedCategory['_id']
     productDetail['lastUpdatedAt'] = Date.now()

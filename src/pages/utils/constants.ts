@@ -1,5 +1,5 @@
 export const CONSTANTS = {
-    BASE_URL : 'http://63c0ea88.ngrok.io/',
+    BASE_URL : 'http://edb36cd0.ngrok.io/',
     INTERNET_ISSUE : 'oops! You are not connected to the internet!',
     AUTH_FAIL : 'LoginId or password incorrect',
     SERVER_ERROR: 'Something went wrong',
@@ -19,5 +19,7 @@ export const CONSTANTS = {
     DEFUALT_PASSWORD: 'tradekings@123',
     INCORRECT_PASSWORD: 'Incorrect current password',
     PASSWORD_CHANGE_SUCCESS: 'Password changed successfully',
-    PARENT_CATEGORY_NOT_FOUND: 'No parent category found! First add a parent category'
+    PARENT_CATEGORY_NOT_FOUND: 'No parent category found! First add a parent category',
+    CSV_DOWNLOADED: 'CSV Downloaded Successfully',
+    CSV_DOWNLOAD_FAIL: 'Failed to download CSV'
 }

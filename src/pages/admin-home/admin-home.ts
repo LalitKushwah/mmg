@@ -100,18 +100,48 @@ export class AdminHomePage {
   }
 
   exportToCsv() {
-    const fields = ['orderId', 'orderTotal', 'userDetail'];
+    let csvList =  []
+    this.orderList.map((value) => {
+      value.productList.map((product, index) => {
+        let lineItem = {}
+        if(index === 0) {
+          lineItem =  {
+            OrderId: value.orderId,
+            OrderDate: this.formatDate(value.lastUpdatedAt),
+            CustomerCode: value.userDetail.externalId,
+            'Country(Province)': '',
+            OrderTotal: value.orderTotal
+          }
+        } else {
+          lineItem =  {
+            OrderId: '*',
+            OrderDate: '*',
+            CustomerCode: '*',
+            'Country(Province)': '*',
+            OrderTotal: '*'
+          }
+        }
+        lineItem['Price'] = product.price
+        lineItem['Quantity'] = product.quantity
+        lineItem['SubTotal'] = (parseFloat(product.price) * parseInt(product.quantity))
+        lineItem['ProductName'] = product.productDetail.name
+        lineItem['ProductCode'] = product.productDetail.productCode
+        lineItem['ProductSysCode'] = product.productDetail.productSysCode
+        csvList.push(lineItem)
+      })
+    })
+    const fields = ['OrderId', 'OrderDate', 'CustomerCode', 'OrderTotal', 'ProductName', 'ProductCode', 'ProductSysCode', 'Price', 'Quantity', 'SubTotal'];
     const opts = { fields };
     let Json2csvParser  = json2Csv.Parser
-    const parser = new Json2csvParser (opts);
-    const csv = parser.parse(this.orderList);
+    const parser = new Json2csvParser (opts)
+    const csv = parser.parse(csvList)
     let fileName =  'CSV' + Math.floor(Math.random()*90000) + '.csv'
     this.file.writeFile(this.file.externalRootDirectory, fileName, csv)
       .then(() => {
-        this.widgetUtil.showToast(CONSTANTS.CSV_DOWNLOADED)
+        this.widgetUtil.showToast(CONSTANTS.CSV_DOWNLOADED + '! FileName: ' + fileName)
       }).catch(err => {
           this.file.writeExistingFile(this.file.externalRootDirectory, fileName, csv).then(() => {
-            this.widgetUtil.showToast(CONSTANTS.CSV_DOWNLOADED)
+            this.widgetUtil.showToast(CONSTANTS.CSV_DOWNLOADED + '! FileName: ' + fileName)
           }).catch(err => {
             this.widgetUtil.showToast(CONSTANTS.CSV_DOWNLOAD_FAIL)
           })
