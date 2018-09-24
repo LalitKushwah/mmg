@@ -1,10 +1,11 @@
 import { StorageServiceProvider } from './../../providers/storage-service/storage-service';
 import { CONSTANTS } from './../utils/constants';
 import { Component, OnInit } from '@angular/core';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, App } from 'ionic-angular';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { WidgetUtilService } from '../utils/widget-utils';
 import { ApiServiceProvider } from '../../providers/api-service/api-service';
+import { HomePage } from '../home/home';
 
 @IonicPage({
   name: 'ResetUserPasswordPage'
@@ -26,7 +27,7 @@ export class ResetUserPasswordPage implements OnInit {
 
   constructor(public navCtrl: NavController, public navParams: NavParams
   , private apiService: ApiServiceProvider, private widgetUtil: WidgetUtilService
-, private storageService: StorageServiceProvider) {
+, private storageService: StorageServiceProvider, public appCtrl: App) {
   }
 
   ngOnInit(): void {
@@ -63,10 +64,9 @@ export class ResetUserPasswordPage implements OnInit {
           newPassword: this.newPasssword.value.trim(),
           userId:  user['_id']
         }
-        console.log('data!!!', data)
         this.apiService.changePassword(data).subscribe((result) => {
-        console.log('result!!!', result)
         this.widgetUtil.showToast(CONSTANTS.PASSWORD_CHANGE_SUCCESS)
+        this.logout()
         this.showLoader = false
       }, (error) => {
         if (error.statusText === 'Unknown Error') {
@@ -80,4 +80,11 @@ export class ResetUserPasswordPage implements OnInit {
         this.widgetUtil.showToast(CONSTANTS.PASSWORD_MISMTACH)
      }
    }
+
+   async logout() {
+    this.storageService.clearStorage()
+    localStorage.clear()
+    this.appCtrl.getRootNav().push(HomePage)
+    this.widgetUtil.dismissPopover()
+  }
 }
