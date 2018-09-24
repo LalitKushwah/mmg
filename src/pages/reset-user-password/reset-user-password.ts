@@ -1,11 +1,12 @@
 import { StorageServiceProvider } from './../../providers/storage-service/storage-service';
 import { CONSTANTS } from './../utils/constants';
 import { Component, OnInit } from '@angular/core';
-import { IonicPage, NavController, NavParams, App } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, App, ViewController } from 'ionic-angular';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { WidgetUtilService } from '../utils/widget-utils';
 import { ApiServiceProvider } from '../../providers/api-service/api-service';
 import { HomePage } from '../home/home';
+import { ViewCompiler } from '@angular/compiler';
 
 @IonicPage({
   name: 'ResetUserPasswordPage'
@@ -27,7 +28,7 @@ export class ResetUserPasswordPage implements OnInit {
 
   constructor(public navCtrl: NavController, public navParams: NavParams
   , private apiService: ApiServiceProvider, private widgetUtil: WidgetUtilService
-, private storageService: StorageServiceProvider, public appCtrl: App) {
+, private storageService: StorageServiceProvider, public appCtrl: App, private viewController: ViewController) {
   }
 
   ngOnInit(): void {
@@ -88,5 +89,6 @@ export class ResetUserPasswordPage implements OnInit {
     localStorage.clear()
     this.widgetUtil.dismissPopover()
     this.appCtrl.getRootNav().push(HomePage)
+    this.viewController.dismiss()
   }
 }
