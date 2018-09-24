@@ -123,7 +123,7 @@ export class AdminHomePage {
             customerName: value.userDetail.name,
             CustomerCode: value.userDetail.externalId,
             'Country(Province)': value.userDetail.country + "(" + value.userDetail.province  + ")",
-            OrderTotal: value.orderTotal
+            OrderTotal: (parseFloat((value.orderTotal).toString()).toFixed(2))
           }
         } else {
           lineItem =  {

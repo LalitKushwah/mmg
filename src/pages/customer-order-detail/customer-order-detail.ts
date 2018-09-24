@@ -5,8 +5,6 @@ import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams, FabButton, Platform } from 'ionic-angular';
 import { WidgetUtilService } from '../utils/widget-utils';
 import { File } from '@ionic-native/file';
-import * as papa from 'papaparse'
-import * as json2Csv from 'json2csv'
 import { FileTransfer, FileTransferObject } from '@ionic-native/file-transfer';
 
 @IonicPage({
@@ -109,32 +107,6 @@ export class CustomerOrderDetailPage {
       this.checkData()
     })
   }
-
-  exportToCsv() {
-    const csv = ''
-    /* try {
-      const fields = ['orderId', 'orderTotal', 'userDetail'];
-      const opts = { fields };
-      let Json2csvParser  = json2Csv.Parser
-      const parser = new Json2csvParser (opts);
-      const csv = parser.parse(this.orderDetail);
-      console.log('csv', csv);
-    } catch (err) {
-      console.error(err);
-    }
- */    
- 
-    /* // Dummy implementation for Desktop download purpose
-    var blob = new Blob([csv]);
-    var a = window.document.createElement("a");
-    a.href = window.URL.createObjectURL(blob);
-    a.download = "newdata.csv";
-    document.body.appendChild(a);
-    a.click();
-    document.body.removeChild(a); */
-    /* this.file.writeFile(this.file.dataDirectory, 'tradekings.csv', blob) */
-  }
-
 
   doRefresh(refresher) : void {
     setTimeout(() => {
