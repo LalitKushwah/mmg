@@ -25,6 +25,9 @@ export class AdminListProductPage {
 
   getProducList() {
     this.apiService.getAllProductList(this.skipValue, this.limit).subscribe((result) => {
+      result.body.map((value) => {
+        value.price = parseFloat((Math.round(value.price * 100) / 100).toString()).toFixed(2)
+      })
       this.productList = result.body
       this.productListAvailable = true
     }, (error) => {

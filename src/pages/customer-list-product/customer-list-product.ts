@@ -90,7 +90,7 @@ export class CustomerListProductPage {
       this.widgetUtil.showToast(`${product.name} added to cart!`)
       delete product['categoryId']
       delete product['productCode']
-      product['quantity'] = parseInt(qty)
+      /* product['quantity'] = parseInt(qty) */
       let presentInCart = false;
       const productsInCart = this.cart.map((value)=> {
         if (value['_id'] === product['_id']) {
@@ -100,7 +100,10 @@ export class CustomerListProductPage {
         return value
       })
       if(!presentInCart) {
-        this.cart.push(product)
+        let obj ={}
+        Object.assign(obj, product)
+        obj['quantity'] = parseInt(qty)
+        this.cart.push(obj)
       } else {
         this.cart = productsInCart
       }

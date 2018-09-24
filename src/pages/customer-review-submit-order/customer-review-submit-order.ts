@@ -56,7 +56,7 @@ export class CustomerReviewSubmitOrderPage {
         }
       }),
       userId: (await this.storageService.getFromStorage('profile'))['_id'],
-      orderId: 'ORD' + Math.floor(Math.random()*90000) + 10000,
+      orderId: 'ORD' + Math.floor(Math.random()*90000) + Math.floor(Math.random()*90000),
       orderTotal: parseFloat(this.orderTotal.toString()),
       status: CONSTANTS.ORDER_STATUS_PROGRESS,
       lastUpdatedAt: Date.now()

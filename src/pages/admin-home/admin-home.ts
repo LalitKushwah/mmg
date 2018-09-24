@@ -135,9 +135,9 @@ export class AdminHomePage {
             OrderTotal: '*'
           }
         }
-        lineItem['Price'] = product.price
+        lineItem['Price'] = (parseFloat((product.price).toString()).toFixed(2))
         lineItem['Quantity'] = product.quantity
-        lineItem['SubTotal'] = (parseFloat(product.price) * parseInt(product.quantity))
+        lineItem['SubTotal'] = (parseFloat((Math.round((parseFloat(product.price) * parseInt(product.quantity) * 100) / 100)).toString()).toFixed(2))
         lineItem['ProductName'] = product.productDetail.name
         lineItem['ProductCode'] = product.productDetail.productCode
         lineItem['ProductSysCode'] = product.productDetail.productSysCode
