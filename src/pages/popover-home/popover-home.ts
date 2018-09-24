@@ -107,8 +107,8 @@ export class PopoverHomePage {
   async logout() {
     this.storageService.clearStorage()
     localStorage.clear()
-    this.appCtrl.getRootNav().push(HomePage)
     this.widgetUtil.dismissPopover()
+    this.navCtrl.setRoot(HomePage)
   }
 
   dismissPopover() {

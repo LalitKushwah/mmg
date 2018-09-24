@@ -66,7 +66,9 @@ export class ResetUserPasswordPage implements OnInit {
         }
         this.apiService.changePassword(data).subscribe((result) => {
         this.widgetUtil.showToast(CONSTANTS.PASSWORD_CHANGE_SUCCESS)
-        this.logout()
+        setTimeout(()=> {
+          this.logout()
+        }, 1500)
         this.showLoader = false
       }, (error) => {
         if (error.statusText === 'Unknown Error') {
@@ -84,7 +86,7 @@ export class ResetUserPasswordPage implements OnInit {
    async logout() {
     this.storageService.clearStorage()
     localStorage.clear()
-    this.appCtrl.getRootNav().push(HomePage)
     this.widgetUtil.dismissPopover()
+    this.navCtrl.setRoot(HomePage)
   }
 }
