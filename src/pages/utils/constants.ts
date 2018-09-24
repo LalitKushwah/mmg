@@ -21,5 +21,6 @@ export const CONSTANTS = {
     PASSWORD_CHANGE_SUCCESS: 'Password changed successfully',
     PARENT_CATEGORY_NOT_FOUND: 'No parent category found! First add a parent category',
     CSV_DOWNLOADED: 'CSV Downloaded Successfully',
-    CSV_DOWNLOAD_FAIL: 'Failed to download CSV'
+    CSV_DOWNLOAD_FAIL: 'Failed to download CSV',
+    USER_LOGIN_ID_ALREADY_EXIST: 'Entered UserLoginId already exist! Please enter a different one'
 }

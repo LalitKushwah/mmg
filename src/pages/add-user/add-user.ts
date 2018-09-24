@@ -126,9 +126,12 @@ export class AddUserPage implements OnInit {
       this.addCustomerForm.reset()
     }, (error) => {
       this.showLoader = false;
+      console.log('error.error.body.message', error.error.body.message)
       if (error.statusText === 'Unknown Error'){
         this.widgetUtil.showToast(CONSTANTS.INTERNET_ISSUE)
-      } else {
+      } else if(error.error.body.message === 'UserLoginId already exist') {
+        this.widgetUtil.showToast(CONSTANTS.USER_LOGIN_ID_ALREADY_EXIST)
+      }else {
         this.widgetUtil.showToast(CONSTANTS.SERVER_ERROR)
       }
     })
