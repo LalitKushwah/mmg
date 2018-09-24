@@ -112,7 +112,6 @@ export class CustomerOrderDetailPage {
 
   exportToCsv() {
     const csv = ''
-    this.saveAsCsv()
     /* try {
       const fields = ['orderId', 'orderTotal', 'userDetail'];
       const opts = { fields };
@@ -136,38 +135,6 @@ export class CustomerOrderDetailPage {
     /* this.file.writeFile(this.file.dataDirectory, 'tradekings.csv', blob) */
   }
 
-  saveAsCsv() {
-    const fields = ['orderId', 'orderTotal', 'userDetail'];
-        const opts = { fields };
-        let Json2csvParser  = json2Csv.Parser
-        const parser = new Json2csvParser (opts);
-        const csv = parser.parse(this.orderDetail);
-  
-    var fileName: any = "team.csv"
-    this.file.writeFile(this.file.externalRootDirectory, fileName, csv)
-      .then(
-      _ => {
-        alert('Success ;-)')
-      }
-      )
-      .catch(
-      err => {
-  
-           this.file.writeExistingFile(this.file.externalRootDirectory, fileName, csv)
-          .then(
-          _ => {
-        alert('Success ;-)')
-          }
-          )
-          .catch(
-          err => {
-            alert('Failure')
-          }
-          )
-      }
-      )
-  
-  }
 
   doRefresh(refresher) : void {
     setTimeout(() => {

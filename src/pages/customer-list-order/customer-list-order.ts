@@ -35,17 +35,6 @@ export class CustomerListOrderPage {
     this.apiService.getOrderListByUser(this.userId, this.skipValue, this.limit).subscribe((result) => {
       this.orderList = result.body
       this.orderList.map((value) => {
-       /*  switch(value.status) {
-          case CONSTANTS.ORDER_STATUS_RECEIVED:
-            value.status = "Received"
-            break
-          case CONSTANTS.ORDER_STATUS_PROGRESS:
-            value.status = "In-Progress"
-            break
-          case CONSTANTS.ORDER_STATUS_CANCEL:
-            value.status = "Cancelled"
-            break
-        } */
         value.orderTotal = parseFloat((Math.round(value.orderTotal * 100) / 100).toString()).toFixed(2)
         value.lastUpdatedAt = this.formatDate(value.lastUpdatedAt)
       })

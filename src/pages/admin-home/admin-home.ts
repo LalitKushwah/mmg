@@ -151,7 +151,9 @@ export class AdminHomePage {
     const csv = parser.parse(csvList)
     /* let fileName =  'Tradkings-'+ Math.floor(Math.random()*90000) + '.csv' */
     let fileName =  'TradkingsOrder-'+ this.getDateForCSV().trim() + '.csv'
-    this.file.writeFile(this.file.externalRootDirectory, fileName, csv)
+
+    if((window['cordova'])) {
+      this.file.writeFile(this.file.externalRootDirectory, fileName, csv)
       .then(() => {
         this.widgetUtil.showToast(CONSTANTS.CSV_DOWNLOADED + '! FileName: ' + fileName)
       }).catch(err => {
@@ -161,5 +163,14 @@ export class AdminHomePage {
             this.widgetUtil.showToast(CONSTANTS.CSV_DOWNLOAD_FAIL)
           })
       })
+    } else{
+      var blob = new Blob([csv]);
+      var a = window.document.createElement("a");
+      a.href = window.URL.createObjectURL(blob);
+      a.download = fileName;
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+    }
   }
 }
