@@ -87,6 +87,6 @@ export class ResetUserPasswordPage implements OnInit {
     this.storageService.clearStorage()
     localStorage.clear()
     this.widgetUtil.dismissPopover()
-    this.navCtrl.setRoot(HomePage)
+    this.appCtrl.getRootNav().push(HomePage)
   }
 }
