@@ -30,10 +30,17 @@
         </ion-row>
         <ion-row>
           <ion-col text-center>
-              SysCode: <span>{{product.productSysCode}}</span>
-            </ion-col>
+            SysCode: <span>{{product.productSysCode}}</span>
+          </ion-col>
           <ion-col text-center>
             CaseSize: <span>{{product.currentCaseSize}}</span>
+          </ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-col text-center>
+            <button color="secondary" ion-button outline (click)="editProduct()">
+              <ion-icon name="create"></ion-icon>Edit
+            </button>
           </ion-col>
         </ion-row>
       </ion-card-content>
