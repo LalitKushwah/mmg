@@ -87,7 +87,8 @@
                     <button ion-button clear icon-only (click)="(product.quantity = decrementQty(product))"><ion-icon name="remove-circle" ></ion-icon></button>
                   </ion-col>
                   <ion-col col-2>
-                    <ion-input item-start type="text" placeholder="Quantity" [(ngModel)]="product.quantity" #qty></ion-input>
+                    <input type='text' name='quantity' [(ngModel)]="product.quantity" value='0' class='qty' style="width: 40px;height: 25px;text-align: center;margin-top: 10px;margin-left: 10px;" />
+                    <!-- <ion-input item-start type="text" placeholder="Quantity" [(ngModel)]="product.quantity" #qty></ion-input> -->
                   </ion-col>
                   <ion-col col-2 text-left>
                     <button ion-button clear icon-only (click)="(product.quantity = incrementQty(product))"><ion-icon name="add-circle" ></ion-icon></button>
