@@ -41,13 +41,13 @@ export class MyApp {
 
   async getData() {
     try {
+      /* { title: 'Categories', component: AdminListCategoryPage, icon :'list-box'},
+          { title: 'Products', component: AdminListProductPage, icon :'list-box'}, */
       let profile = await this.storageService.getFromStorage('profile')
       if ((profile['userType'] === 'admin')) {
         this.pages = [
           { title: 'Home', component: HomePage, icon :'md-home'},
           { title: 'Customers', component: AdminListUserPage, icon :'md-happy'},
-          { title: 'Categories', component: AdminListCategoryPage, icon :'list-box'},
-          { title: 'Products', component: AdminListProductPage, icon :'list-box'},
         ]
       } else {
         this.pages = [

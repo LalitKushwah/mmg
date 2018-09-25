@@ -120,7 +120,7 @@ export class AdminHomePage {
           lineItem =  {
             OrderId: value.orderId,
             OrderDate: this.formatDate(value.lastUpdatedAt),
-            customerName: value.userDetail.name,
+            CustomerName: value.userDetail.name,
             CustomerCode: value.userDetail.externalId,
             'Country(Province)': value.userDetail.country + "(" + value.userDetail.province  + ")",
             OrderTotal: (parseFloat((value.orderTotal).toString()).toFixed(2))
@@ -129,7 +129,7 @@ export class AdminHomePage {
           lineItem =  {
             OrderId: '*',
             OrderDate: '*',
-            customerName: '*',
+            CustomerName: '*',
             CustomerCode: '*',
             'Country(Province)': '*',
             OrderTotal: '*'
@@ -144,8 +144,8 @@ export class AdminHomePage {
         csvList.push(lineItem)
       })
     })
-    const fields = ['OrderId', 'OrderDate', 'customerName', 'CustomerCode', 'Country(Province)', 'ProductName', 'ProductCode', 'ProductSysCode', 'Price', 'Quantity', 'SubTotal', 'OrderTotal'];
-    const opts = { fields };
+    const fields = ['OrderId', 'OrderDate', 'CustomerName', 'CustomerCode', 'Country(Province)', 'ProductName', 'ProductCode', 'ProductSysCode', 'Price', 'Quantity', 'SubTotal', 'OrderTotal']
+    const opts = { fields }
     let Json2csvParser  = json2Csv.Parser
     const parser = new Json2csvParser (opts)
     const csv = parser.parse(csvList)
