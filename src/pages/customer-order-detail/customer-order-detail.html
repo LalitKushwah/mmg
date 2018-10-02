@@ -51,14 +51,23 @@
     </ion-card> -->
     <ion-list>
       <ion-card>
-        <ion-card-header text-center>
-          <ion-icon name="podium" color="grey"></ion-icon> Order Status: <strong class="{{orderDetail.status}}" text-uppercase>{{orderDetail.status}}</strong>
-        </ion-card-header>
-      </ion-card>
-      <ion-card class="sticky-custom">
-        <ion-card-header text-center>
-          <strong><ion-icon name="cash" color="grey"></ion-icon> Order Total: {{orderDetail.orderTotal}} ZMW</strong>
-        </ion-card-header>
+        <ion-card-content>
+          <ion-row>
+            <ion-col col-12 text-center>
+              <ion-icon name="happy" color="grey"></ion-icon> Customer Name: <span>{{orderDetail.userDetail.name}}</span>
+            </ion-col>
+            <ion-col col-12 text-center>
+              <ion-icon color="grey" name="calendar"></ion-icon>
+              <span>Date: {{orderDetail.lastUpdatedAt}}</span>
+            </ion-col>
+            <ion-col col-12 text-center>
+              <ion-icon name="podium" color="grey"></ion-icon> Order Status: <strong class="{{orderDetail.status}}" text-uppercase>{{orderDetail.status}}</strong>
+            </ion-col>
+            <ion-col col-12 text-center>
+              <ion-icon name="cash" color="grey"></ion-icon> <span>Order Total: {{orderDetail.orderTotal}} ZMW</span>
+            </ion-col>
+          </ion-row>
+        </ion-card-content>
       </ion-card>
       <ion-card *ngFor="let item of orderItems">
         <ion-card-content>

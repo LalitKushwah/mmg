@@ -17,15 +17,17 @@ export class AdminListProductPage {
   limit: number = CONSTANTS.PAGINATION_LIMIT
   productList: Array<any> = [];
   productListAvailable: Boolean = false
+  categoryId: string = ''
 
   constructor(public navCtrl: NavController, public navParams: NavParams, private apiService: ApiServiceProvider, private widgetUtil: WidgetUtilService) {
     this.skipValue = 0
     this.limit = CONSTANTS.PAGINATION_LIMIT
+    this.categoryId = this.navParams.get("categoryId")
     this.getProducList()
   }
 
   getProducList() {
-    this.apiService.getAllProductList(this.skipValue, this.limit).subscribe((result) => {
+    this.apiService.getProductListByCategory(this.categoryId, this.skipValue, this.limit).subscribe((result) => {
       result.body.map((value) => {
         value.price = parseFloat((Math.round(value.price * 100) / 100).toString()).toFixed(2)
       })
