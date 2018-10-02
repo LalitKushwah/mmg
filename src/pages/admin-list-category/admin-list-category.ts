@@ -1,8 +1,10 @@
+import { AdminListSubCategoryPage } from './../admin-list-sub-category/admin-list-sub-category';
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { CONSTANTS } from '../utils/constants';
 import { WidgetUtilService } from '../utils/widget-utils';
 import { ApiServiceProvider } from '../../providers/api-service/api-service';
+import { PopoverHomePage } from '../popover-home/popover-home';
 
 @IonicPage({
   name: 'AdminListCategoryPage'
@@ -12,21 +14,23 @@ import { ApiServiceProvider } from '../../providers/api-service/api-service';
   templateUrl: 'admin-list-category.html',
 })
 export class AdminListCategoryPage {
-
+  parentCategoryList: Array<any> = [];
+  categoryListAvailable: Boolean = false
   skipValue: number = 0
   limit: number = CONSTANTS.PAGINATION_LIMIT
-  categoryList: Array<any> = [];
-  categoryListAvailable: Boolean = false
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, private apiService: ApiServiceProvider, private widgetUtil: WidgetUtilService) {
+
+  constructor(public navCtrl: NavController, public navParams: NavParams, private widgetUtil: WidgetUtilService, private apiService: ApiServiceProvider) {
+    this.categoryListAvailable = false
+    this.parentCategoryList = []
     this.skipValue = 0
     this.limit = CONSTANTS.PAGINATION_LIMIT
-    this.getCategoryList()
+    this.getList()
   }
 
-  getCategoryList() {
-    this.apiService.getAllCategoryList(this.skipValue, this.limit).subscribe((result) => {
-      this.categoryList = result.body
+  getList() {
+    this.apiService.getParentCategoryList(this.skipValue, this.limit).subscribe((result) => {
+      this.parentCategoryList = result.body
       this.categoryListAvailable = true
     }, (error) => {
       if (error.statusText === 'Unknown Error') {
@@ -38,12 +42,29 @@ export class AdminListCategoryPage {
     })
   }
 
+  getChildCategory(parentCategoryId) {
+    const categoryObj = {
+      'parentCategoryId' : parentCategoryId
+    }
+    this.navCtrl.push(AdminListSubCategoryPage, categoryObj)
+  }
+
+  presentPopover(myEvent) {
+    this.widgetUtil.presentPopover(myEvent, PopoverHomePage)
+  }
+
+  doRefresh(refresher) : void {
+    setTimeout(() => {
+      refresher.complete();
+    }, 1000);
+  }
+
   doInfinite(infiniteScroll) {
     this.skipValue = this.skipValue + this.limit
-    this.apiService.getAllCategoryList(this.skipValue, this.limit).subscribe((result) => {
+    this.apiService.getParentCategoryList(this.skipValue, this.limit).subscribe((result) => {
       if(result.body.length > 0) {
         result.body.map( (value) => {
-          this.categoryList.push(value)
+          this.parentCategoryList.push(value)
         }) 
       } else {
         this.skipValue = this.limit
@@ -57,12 +78,5 @@ export class AdminListCategoryPage {
         this.widgetUtil.showToast(CONSTANTS.SERVER_ERROR)
       }
     })
-  }
-
-  doRefresh(refresher) : void {
-    this.getCategoryList()
-    setTimeout(() => {
-      refresher.complete();
-    }, 1000);
   }
 }

@@ -1,3 +1,5 @@
+import { AdminEditProductPageModule } from './../pages/admin-edit-product/admin-edit-product.module';
+import { AdminListSubCategoryPageModule } from './../pages/admin-list-sub-category/admin-list-sub-category.module';
 import { ResetPasswordModelPage } from './../pages/reset-password-model/reset-password-model';
 import { ResetUserPasswordPageModule } from './../pages/reset-user-password/reset-user-password.module';
 import { ResetUserPasswordPage } from './../pages/reset-user-password/reset-user-password';
@@ -48,6 +50,8 @@ import { AdminListCategoryPage } from '../pages/admin-list-category/admin-list-c
 import { AdminListProductPage } from '../pages/admin-list-product/admin-list-product';
 import { AdminListUserPage } from '../pages/admin-list-user/admin-list-user';
 import { ResetPasswordModelPageModule } from '../pages/reset-password-model/reset-password-model.module';
+import { AdminListSubCategoryPage } from '../pages/admin-list-sub-category/admin-list-sub-category';
+import { AdminEditProductPage } from '../pages/admin-edit-product/admin-edit-product';
 
 @NgModule({
   declarations: [
@@ -81,7 +85,9 @@ import { ResetPasswordModelPageModule } from '../pages/reset-password-model/rese
     AdminListCategoryPageModule,
     AdminListProductPageModule,
     ResetUserPasswordPageModule,
-    ResetPasswordModelPageModule
+    ResetPasswordModelPageModule,
+    AdminListSubCategoryPageModule,
+    AdminEditProductPageModule
   ],
   bootstrap: [IonicApp],
   entryComponents: [
@@ -101,7 +107,9 @@ import { ResetPasswordModelPageModule } from '../pages/reset-password-model/rese
     AdminListProductPage,
     AdminListUserPage,
     ResetUserPasswordPage,
-    ResetPasswordModelPage
+    ResetPasswordModelPage,
+    AdminListSubCategoryPage,
+    AdminEditProductPage
   ],
   providers: [
     StatusBar,

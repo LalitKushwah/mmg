@@ -12,6 +12,7 @@ import { ListPage } from '../pages/list/list';
 import {HeaderColor} from "@ionic-native/header-color";
 import { LoginPage } from '../pages/login/login';
 import { CustomerListOrderPage } from '../pages/customer-list-order/customer-list-order';
+import { CustomerHomePage } from '../pages/customer-home/customer-home';
 
 @Component({
   templateUrl: 'app.html'
@@ -41,13 +42,13 @@ export class MyApp {
 
   async getData() {
     try {
-      /* { title: 'Categories', component: AdminListCategoryPage, icon :'list-box'},
-          { title: 'Products', component: AdminListProductPage, icon :'list-box'}, */
+      /* { title: 'Categories', component: AdminListCategoryPage, icon :'list-box'}, */
       let profile = await this.storageService.getFromStorage('profile')
       if ((profile['userType'] === 'admin')) {
         this.pages = [
           { title: 'Home', component: HomePage, icon :'md-home'},
           { title: 'Customers', component: AdminListUserPage, icon :'md-happy'},
+          { title: 'Products', component: AdminListCategoryPage, icon :'list-box'},
         ]
       } else {
         this.pages = [

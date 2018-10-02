@@ -1,22 +1,17 @@
-import { AdminListProductPage } from './../admin-list-product/admin-list-product';
-import { StorageServiceProvider } from './../../providers/storage-service/storage-service';
-import { WidgetUtilService } from './../utils/widget-utils';
-import { ApiServiceProvider } from './../../providers/api-service/api-service';
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { StorageServiceProvider } from '../../providers/storage-service/storage-service';
+import { WidgetUtilService } from '../utils/widget-utils';
+import { ApiServiceProvider } from '../../providers/api-service/api-service';
 import { CONSTANTS } from '../utils/constants';
-import { CustomerListProductPage } from '../customer-list-product/customer-list-product';
+import { AdminListProductPage } from '../admin-list-product/admin-list-product';
 
-@IonicPage({
-  name: 'CustomerCategoryListPage'
-})
-
+@IonicPage()
 @Component({
-  selector: 'page-customer-category-list',
-  templateUrl: 'customer-category-list.html',
+  selector: 'page-admin-list-sub-category',
+  templateUrl: 'admin-list-sub-category.html',
 })
-export class CustomerCategoryListPage {
-
+export class AdminListSubCategoryPage {
   parentCategoryId: string = ''
   categoryListAvailable: Boolean = false
   childCategoryList: Array<any> = []
@@ -51,12 +46,7 @@ export class CustomerCategoryListPage {
     const categoryObj = {
       'categoryId' : categoryId
     }
-    let profile = await this.storageService.getFromStorage('profile')
-    if(profile['type'] === 'admin') {
-      this.navCtrl.push(AdminListProductPage, categoryObj)
-    } else{
-      this.navCtrl.push(CustomerListProductPage, categoryObj)
-    }
+    this.navCtrl.push(AdminListProductPage, categoryObj)
   }
 
   doInfinite(infiniteScroll) {
@@ -86,7 +76,4 @@ export class CustomerCategoryListPage {
       refresher.complete();
     }, 1000);
   }
-
 }
-
-

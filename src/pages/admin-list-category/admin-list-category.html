@@ -1,34 +1,31 @@
 <ion-header>
   <ion-navbar>
-    <ion-title>Category List</ion-title>
+    <ion-title>Parent Category</ion-title>
   </ion-navbar>
 </ion-header>
 
 <ion-content class="full-background">
-  <div class="search-spinner">
-    <ion-spinner name="crescent" *ngIf="!categoryListAvailable"></ion-spinner>
-  </div>
-  <ion-refresher (ionRefresh)="doRefresh($event)" spinner="crescent">
-    <ion-refresher-content></ion-refresher-content>
-  </ion-refresher>
-  <ion-list *ngIf="categoryListAvailable && (categoryList.length > 0)">
-    <button ion-item *ngFor="let category of categoryList">
-      <ion-avatar item-start>
-        <img src="./assets/imgs/productcategory.png">
-      </ion-avatar>
-      <span>{{category.name}}</span>
-      <button ion-button clear color="secondary" item-end>
-        <ion-note>{{category.type}}</ion-note>
-      </button>
-    </button>
-  </ion-list>
-  <ion-card *ngIf="categoryListAvailable && (categoryList.length < 1)">
-    <ion-card-header text-center>
-      <h4>No record found</h4>
-    </ion-card-header>
-  </ion-card>
-  <ion-infinite-scroll (ionInfinite)="doInfinite($event)">
-    <ion-infinite-scroll-content></ion-infinite-scroll-content>
-  </ion-infinite-scroll>
+<div class="search-spinner">
+  <ion-spinner name="crescent" *ngIf="!categoryListAvailable"></ion-spinner>
+</div>
+<ion-refresher (ionRefresh)="doRefresh($event)" spinner="crescent">
+  <ion-refresher-content></ion-refresher-content>
+</ion-refresher>
+<ion-list *ngIf="categoryListAvailable && (parentCategoryList.length > 0)">
+  <button ion-item *ngFor="let category of parentCategoryList" (click)="getChildCategory(category['_id'])">
+    <ion-avatar item-start>
+      <img src="./assets/imgs/productcategory.png">
+    </ion-avatar>
+    <span>{{category.name}}</span>
+    <button ion-button clear color="secondary" item-end><h1><ion-icon md="md-arrow-round-forward"></ion-icon></h1></button>
+  </button>
+</ion-list>
+<ion-card *ngIf="categoryListAvailable && (parentCategoryList.length < 1)">
+  <ion-card-header text-center>
+    <h4>No record found</h4>
+  </ion-card-header>
+</ion-card>
+<ion-infinite-scroll (ionInfinite)="doInfinite($event)">
+  <ion-infinite-scroll-content></ion-infinite-scroll-content>
+</ion-infinite-scroll>
 </ion-content>
-  

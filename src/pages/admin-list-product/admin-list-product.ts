@@ -1,3 +1,4 @@
+import { AdminEditProductPage } from './../admin-edit-product/admin-edit-product';
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { CONSTANTS } from '../utils/constants';
@@ -67,4 +68,13 @@ export class AdminListProductPage {
       refresher.complete();
     }, 1000);
   }
+
+  editProduct(product) {
+    let productInfo = {
+      'product': product
+    }
+    console.log('@@product@@', product)
+    this.navCtrl.push(AdminEditProductPage, productInfo)
+  }
+
 }

@@ -79,5 +79,8 @@ export class ApiServiceProvider {
   changePassword(data: Object): any {
     return this.http.post(CONSTANTS.BASE_URL + 'api/user/changePassword', data)
   }
-  
+
+  updateProduct(updateDetails: Object): any {
+    return this.http.post(CONSTANTS.BASE_URL + 'api/product/update', updateDetails)
+  }
 }

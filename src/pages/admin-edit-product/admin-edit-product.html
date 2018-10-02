@@ -1,0 +1,72 @@
+<ion-header>
+  <ion-navbar>
+    <ion-title>Edit Product</ion-title>
+  </ion-navbar>
+</ion-header>
+<ion-content class="full-background">
+  <ion-card>
+    <ion-card-header text-center><ion-icon name="create"></ion-icon>Edit Product</ion-card-header>
+    <ion-card-content>
+      <ion-grid>
+        <ion-row>
+          <ion-col>
+            <form [formGroup]="editProductForm">
+              <ion-item>
+                <ion-label floating>Name</ion-label>
+                <ion-input type="text" formControlName="name"></ion-input>
+              </ion-item>
+                <ion-item *ngIf="name.hasError('required') && name.touched">
+                <p style="color: red">name is required*</p>
+              </ion-item>
+      
+              <ion-item>
+                <ion-label floating>Product Code</ion-label>
+                <ion-input type="text" formControlName="productCode"></ion-input>
+              </ion-item>
+                <ion-item *ngIf="productCode.hasError('required') && productCode.touched">
+                <p style="color: red">product code is required*</p>
+              </ion-item>
+      
+              <ion-item>
+                <ion-label floating>Product Sys Code</ion-label>
+                <ion-input type="text" formControlName="productSysCode"></ion-input>
+              </ion-item>
+              <ion-item *ngIf="productSysCode.hasError('required') && productSysCode.touched">
+                <p style="color: red">product sys code is required*</p>
+              </ion-item>
+      
+              <ion-item>
+                <ion-label floating>Price</ion-label>
+                <ion-input type="text" formControlName="price"></ion-input>
+              </ion-item>
+              <ion-item *ngIf="price.hasError('required') && price.touched">
+                <p style="color: red">price is required*</p>
+              </ion-item>
+      
+              <!-- <ion-item>
+                <ion-label floating>Pack Type</ion-label>
+                <ion-input type="text" formControlName="packType"></ion-input>
+              </ion-item>
+              <ion-item *ngIf="packType.hasError('required') && packType.touched">
+                <p style="color: red">Pack Type is required*</p>
+              </ion-item>
+      
+      
+              <ion-item>
+                <ion-label floating>Current Case Size</ion-label>
+                <ion-input type="text" formControlName="currentCaseSize"></ion-input>
+              </ion-item>
+                <ion-item *ngIf="currentCaseSize.hasError('required') && currentCaseSize.touched">
+                <p style="color: red">case size is required*</p>
+              </ion-item>
+        -->
+              <ion-grid>
+                <button ion-button color="secondary" [disabled]="!(editProductForm.valid)" (click)="updateProduct();">Save<ion-spinner name="dots" *ngIf="showLoader"></ion-spinner></button>
+              </ion-grid>
+            </form>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+    </ion-card-content>
+  </ion-card>
+</ion-content>

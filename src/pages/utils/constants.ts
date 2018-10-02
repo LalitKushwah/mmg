@@ -11,6 +11,7 @@ export const CONSTANTS = {
     CUSTOMER_CREATED: 'Customer created successfully',
     ADMIN_CREATED: 'Admin created successfully',
     PRODUCT_CREATED: 'Product added successfully',
+    PRODUCT_UPDATED: 'Product updated successfully',
     CATEGORY_CREATED: 'Category added successfully',
     ORDER_PLACED: 'Your order has been placed successfully',
     ORDER_IMPORTED: 'Order imported successfully',
