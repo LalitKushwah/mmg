@@ -74,6 +74,9 @@ export class CustomerListOrderPage {
   }
 
   doRefresh(refresher) : void {
+    this.skipValue = 0
+    this.limit = CONSTANTS.PAGINATION_LIMIT
+    this.getUserOrderList()
     setTimeout(() => {
       refresher.complete();
     }, 1000);
