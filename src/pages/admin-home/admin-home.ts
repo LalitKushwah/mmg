@@ -1,6 +1,6 @@
 import { WidgetUtilService } from './../utils/widget-utils';
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, AlertController } from 'ionic-angular';
 import { PopoverHomePage } from '../popover-home/popover-home';
 import { CONSTANTS } from '../utils/constants';
 import { ApiServiceProvider } from '../../providers/api-service/api-service';
@@ -26,7 +26,7 @@ export class AdminHomePage {
   limit: number = CONSTANTS.PAGINATION_LIMIT
 
   constructor(public navCtrl: NavController, public navParams: NavParams, private widgetUtil: WidgetUtilService
-  , private apiService: ApiServiceProvider, private file: File) {
+  , private apiService: ApiServiceProvider, private file: File, private alertCtrl: AlertController) {
     this.skipValue = 0
     this.limit = CONSTANTS.PAGINATION_LIMIT
     this.getList()
@@ -137,38 +137,74 @@ export class AdminHomePage {
     this.widgetUtil.presentPopover(myEvent, PopoverHomePage)
   }
 
-  exportToCsv() {
+  filterOrderToExport() {
+    let alert = this.alertCtrl.create();
+    alert.setTitle('Select Order Status');
+    alert.addInput({
+      type: 'checkbox',
+      label: 'Recieved',
+      value: 'recieved',
+      checked: true
+    });
+
+    alert.addInput({
+      type: 'checkbox',
+      label: 'Cancel',
+      value: 'cancel',
+      checked: true
+    });
+
+    alert.addInput({
+      type: 'checkbox',
+      label: 'In Progress',
+      value: 'in-progress',
+      checked: true
+    });
+
+    alert.addButton('Cancel');
+    alert.addButton({
+      text: 'Okay',
+      handler: data => {
+        this.exportToCsv(data)
+      }
+    })
+    alert.present();
+  }
+
+  exportToCsv(selectedStatus) {
     let csvList =  []
     this.orderList.map((value) => {
-      value.productList.map((product, index) => {
-        let lineItem = {}
-        if(index === 0) {
-          lineItem =  {
-            OrderId: value.orderId,
-            OrderDate: this.formatDate(value.lastUpdatedAt),
-            CustomerName: value.userDetail.name,
-            CustomerCode: value.userDetail.externalId,
-            'Country(Province)': value.userDetail.country + "(" + value.userDetail.province  + ")",
-            OrderTotal: (parseFloat((value.orderTotal).toString()).toFixed(2))
+      if(selectedStatus.indexOf(value.status) >=0) {
+        value.productList.map((product, index) => {
+          let lineItem = {}
+          if(index === 0) {
+            lineItem =  {
+              OrderId: value.orderId,
+              OrderDate: this.formatDate(value.lastUpdatedAt),
+              CustomerName: value.userDetail.name,
+              CustomerCode: value.userDetail.externalId,
+              'Country(Province)': value.userDetail.country + "(" + value.userDetail.province  + ")",
+              OrderTotal: (parseFloat((value.orderTotal).toString()).toFixed(2))
+            }
+          } else {
+            lineItem =  {
+              OrderId: '*',
+              OrderDate: '*',
+              CustomerName: '*',
+              CustomerCode: '*',
+              'Country(Province)': '*',
+              OrderTotal: '*'
+            }
           }
-        } else {
-          lineItem =  {
-            OrderId: '*',
-            OrderDate: '*',
-            CustomerName: '*',
-            CustomerCode: '*',
-            'Country(Province)': '*',
-            OrderTotal: '*'
-          }
-        }
-        lineItem['Price'] = (parseFloat((product.price).toString()).toFixed(2))
-        lineItem['Quantity'] = product.quantity
-        lineItem['SubTotal'] = (parseFloat((Math.round((parseFloat(product.price) * parseInt(product.quantity) * 100) / 100)).toString()).toFixed(2))
-        lineItem['ProductName'] = product.productDetail.name
-        lineItem['ProductCode'] = product.productDetail.productCode
-        lineItem['ProductSysCode'] = product.productDetail.productSysCode
-        csvList.push(lineItem)
-      })
+          lineItem['Price'] = (parseFloat((product.price).toString()).toFixed(2))
+          lineItem['Quantity'] = product.quantity
+          lineItem['SubTotal'] = (parseFloat((Math.round((parseFloat(product.price) * parseInt(product.quantity) * 100) / 100)).toString()).toFixed(2))
+          lineItem['ProductName'] = product.productDetail.name
+          lineItem['ProductCode'] = product.productDetail.productCode
+          lineItem['ProductSysCode'] = product.productDetail.productSysCode
+          csvList.push(lineItem)
+        })
+      }
     })
     const fields = ['OrderId', 'OrderDate', 'CustomerName', 'CustomerCode', 'Country(Province)', 'ProductName', 'ProductCode', 'ProductSysCode', 'Price', 'Quantity', 'SubTotal', 'OrderTotal']
     const opts = { fields }
