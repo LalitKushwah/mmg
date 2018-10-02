@@ -71,3 +71,15 @@ tbody tr {
 }
 
 //
+
+.recieved {
+  color: green
+}
+
+.in-progress {
+  color: color($colors, primary)
+}
+
+.cancel {
+  color: red
+}

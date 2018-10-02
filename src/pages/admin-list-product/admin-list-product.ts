@@ -63,6 +63,8 @@ export class AdminListProductPage {
   }
 
   doRefresh(refresher) : void {
+    this.skipValue = 0
+    this.limit = CONSTANTS.PAGINATION_LIMIT
     this.getProducList()
     setTimeout(() => {
       refresher.complete();
@@ -73,7 +75,6 @@ export class AdminListProductPage {
     let productInfo = {
       'product': product
     }
-    console.log('@@product@@', product)
     this.navCtrl.push(AdminEditProductPage, productInfo)
   }
 

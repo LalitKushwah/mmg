@@ -21,6 +21,7 @@ export class AdminHomePage {
 
   orderList: Array<any> = [];
   orderListAvailable: Boolean = false
+  showLoader = false
   skipValue: number = 0
   limit: number = CONSTANTS.PAGINATION_LIMIT
 
@@ -37,6 +38,11 @@ export class AdminHomePage {
       this.orderList.map((value) => {
         value.lastUpdatedAt = this.formatDate(value.lastUpdatedAt)
         value.orderTotal = parseFloat((Math.round(value.orderTotal * 100) / 100).toString()).toFixed(2)
+        if((value.status != CONSTANTS.ORDER_STATUS_RECEIVED) && (value.status != CONSTANTS.ORDER_STATUS_CANCEL)) {
+          value.showImport = true
+        } else {
+          value.showImport = false
+        }
       })
       this.orderListAvailable = true
     }, (error) => {
@@ -105,6 +111,26 @@ export class AdminHomePage {
       d.getMinutes(),
       d.getSeconds()].join('-');
       return dformat
+  }
+
+  importOrder(order) {
+    this.changeOrderStatus(CONSTANTS.ORDER_STATUS_RECEIVED, CONSTANTS.ORDER_IMPORTED, order)
+  }
+
+  changeOrderStatus(newStatus, message, order) {
+    this.showLoader = true
+    this.apiService.changeOrderStatus(order['_id'], {status: newStatus}).subscribe((result) => {
+      this.getList()
+      this.widgetUtil.showToast(message)
+      this.showLoader = false
+    }, (error) => {
+      if (error.statusText === 'Unknown Error') {
+        this.widgetUtil.showToast(CONSTANTS.INTERNET_ISSUE)
+      } else {
+        this.widgetUtil.showToast(CONSTANTS.SERVER_ERROR)
+      }
+      this.showLoader = false
+    })
   }
 
   presentPopover(myEvent) {
