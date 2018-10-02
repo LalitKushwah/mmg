@@ -46,6 +46,7 @@ export class CustomerReviewSubmitOrderPage {
   }
 
   async submitOrder() {
+    let profile = await this.storageService.getFromStorage('profile')
     this.showLoader = true
     let orderObj = {
       productList : this.cartItems.map((value) => {
@@ -55,10 +56,11 @@ export class CustomerReviewSubmitOrderPage {
           price: parseFloat(value['price'])
         }
       }),
-      userId: (await this.storageService.getFromStorage('profile'))['_id'],
+      userId: profile['_id'],
       orderId: 'ORD' + Math.floor(Math.random()*90000) + Math.floor(Math.random()*90000),
       orderTotal: parseFloat(this.orderTotal.toString()),
       status: CONSTANTS.ORDER_STATUS_PROGRESS,
+      province: profile['province'],
       lastUpdatedAt: Date.now()
     }
     this.apiService.submitOrder(orderObj).subscribe((result) => {

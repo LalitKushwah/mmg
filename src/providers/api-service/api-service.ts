@@ -36,6 +36,10 @@ export class ApiServiceProvider {
     return this.http.get(CONSTANTS.BASE_URL + 'api/order/list/' + '?skip='+skip.toString() + "&limit="+ limit.toString())
   }
 
+  getProvinceOrderList(province: string, skip:number, limit:number): any {
+    return this.http.get(CONSTANTS.BASE_URL + 'api/order/list/province/' + province + '?skip='+skip.toString() + "&limit="+ limit.toString())
+  }
+
   getOrderListByUser(userId: string, skip:number, limit:number): any {
     return this.http.get(CONSTANTS.BASE_URL + 'api/order/list/user/' + userId + '?skip='+skip.toString() + "&limit="+ limit.toString())
   }

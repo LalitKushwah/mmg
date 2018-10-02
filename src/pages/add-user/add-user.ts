@@ -72,7 +72,8 @@ export class AddUserPage implements OnInit {
     this.addAdminForm = new FormGroup({
       name: this.name,
       userLoginId: this.userLoginId,
-      password: this.password
+      password: this.password,
+      province: this.province
     });
   }
 
@@ -118,6 +119,8 @@ export class AddUserPage implements OnInit {
       userDetails['userLoginId'] = this.userLoginId.value.trim()
       userDetails['password'] = this.password.value.trim()
       userDetails['userType'] = this.selectedUserType
+      userDetails['country'] = this.selectedCountry.trim()
+      userDetails['province'] = this.province.value.trim()
     }
     this.apiService.createUser(userDetails).subscribe((result) => {
       this.widgetUtil.showToast(message)

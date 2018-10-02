@@ -23,11 +23,11 @@
             </ion-col>  
             <ion-col *ngIf="showCustomerForm">
               <ion-item>
-                  <ion-label><ion-icon class="pin" padding-right class="primary-color-icon"></ion-icon>Country</ion-label>
-                  <ion-select [(ngModel)]="selectedCountry" interface="popover" (ngModelChange)="onUserTypeSelect()">
-                    <ion-option *ngFor="let country of countryList" [value]="country">{{country}}</ion-option>
-                  </ion-select>
-                </ion-item>
+                <ion-label><ion-icon class="pin" padding-right class="primary-color-icon"></ion-icon>Country</ion-label>
+                <ion-select [(ngModel)]="selectedCountry" interface="popover" (ngModelChange)="onUserTypeSelect()">
+                  <ion-option *ngFor="let country of countryList" [value]="country">{{country}}</ion-option>
+                </ion-select>
+              </ion-item>
               <form [formGroup]="addCustomerForm">
                 <ion-item>
                     <ion-label floating>Name</ion-label>
@@ -82,6 +82,12 @@
               </form>
             </ion-col>
             <ion-col *ngIf="!showCustomerForm">
+                <ion-item>
+                  <ion-label><ion-icon class="pin" padding-right class="primary-color-icon"></ion-icon>Country</ion-label>
+                  <ion-select [(ngModel)]="selectedCountry" interface="popover" (ngModelChange)="onUserTypeSelect()">
+                    <ion-option *ngFor="let country of countryList" [value]="country">{{country}}</ion-option>
+                  </ion-select>
+                </ion-item>
               <form [formGroup]="addAdminForm">
                 <ion-item>
                   <ion-label floating>Name</ion-label>
@@ -99,13 +105,20 @@
                 </ion-item>
                 <ion-item>
                   <ion-label floating>Password</ion-label>
-                  <ion-input ype="text" formControlName="password"></ion-input>
+                  <ion-input type="password" formControlName="password"></ion-input>
                 </ion-item>
                   <ion-item *ngIf="password.hasError('required') && password.touched">
                   <p style="color: red">password  is required*</p>
                 </ion-item>
+                <ion-item>
+                    <ion-label floating>Province</ion-label>
+                    <ion-input type="text" formControlName="province"></ion-input>
+                  </ion-item>
+                  <ion-item *ngIf="province.hasError('required') && province.touched">
+                    <p style="color: red">province is required*</p>
+                </ion-item>
                 <ion-grid>
-                  <button ion-button color="secondary" [disabled]="!(addAdminForm.controls.name.valid && addAdminForm.controls.userLoginId.valid && addAdminForm.controls.password.valid)" (click)="createUser('admin');">Add Admin<ion-spinner name="dots" *ngIf="showLoader"></ion-spinner></button>
+                  <button ion-button color="secondary" [disabled]="!(addAdminForm.controls.name.valid && addAdminForm.controls.userLoginId.valid && addAdminForm.controls.password.valid && addAdminForm.controls.province.valid)" (click)="createUser('admin');">Add Admin<ion-spinner name="dots" *ngIf="showLoader"></ion-spinner></button>
                 </ion-grid>
               </form>
             </ion-col>

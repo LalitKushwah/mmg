@@ -7,6 +7,7 @@ import { ApiServiceProvider } from '../../providers/api-service/api-service';
 import { CustomerOrderDetailPage } from '../customer-order-detail/customer-order-detail';
 import { File } from '@ionic-native/file'
 import * as json2Csv from 'json2csv'
+import { StorageServiceProvider } from '../../providers/storage-service/storage-service';
 
 @IonicPage({
   name: 'AdminHomePage'
@@ -26,14 +27,16 @@ export class AdminHomePage {
   limit: number = CONSTANTS.PAGINATION_LIMIT
 
   constructor(public navCtrl: NavController, public navParams: NavParams, private widgetUtil: WidgetUtilService
-  , private apiService: ApiServiceProvider, private file: File, private alertCtrl: AlertController) {
+  , private apiService: ApiServiceProvider, private file: File, private alertCtrl: AlertController,
+  private storageService: StorageServiceProvider) {
     this.skipValue = 0
     this.limit = CONSTANTS.PAGINATION_LIMIT
     this.getList()
   }
 
-  getList() {
-    this.apiService.getOrderList(this.skipValue, this.limit).subscribe((result) => {
+  async getList() {
+    let profile = await this.storageService.getFromStorage('profile')
+    this.apiService.getProvinceOrderList(profile['province'], this.skipValue, this.limit).subscribe((result) => {
       this.orderList = result.body
       this.orderList.map((value) => {
         value.lastUpdatedAt = this.formatDate(value.lastUpdatedAt)
@@ -62,9 +65,10 @@ export class AdminHomePage {
     this.navCtrl.push(CustomerOrderDetailPage, orderObj)
   }
 
-  doInfinite(infiniteScroll) {
+  async doInfinite(infiniteScroll) {
+    let profile = await this.storageService.getFromStorage('profile')
     this.skipValue = this.skipValue + this.limit
-    this.apiService.getOrderList(this.skipValue, this.limit).subscribe((result) => {
+    this.apiService.getProvinceOrderList(profile['province'], this.skipValue, this.limit).subscribe((result) => {
       if(result.body.length > 0) {
         result.body.map( (value) => {
           this.orderList.push(value)
