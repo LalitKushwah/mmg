@@ -45,7 +45,7 @@ export class AdminListProductPage {
 
   doInfinite(infiniteScroll) {
     this.skipValue = this.skipValue + this.limit
-    this.apiService.getAllProductList(this.skipValue, this.limit).subscribe((result) => {
+    this.apiService.getProductListByCategory(this.categoryId, this.skipValue, this.limit).subscribe((result) => {
       if(result.body.length > 0) {
         result.body.map( (value) => {
           this.productList.push(value)
