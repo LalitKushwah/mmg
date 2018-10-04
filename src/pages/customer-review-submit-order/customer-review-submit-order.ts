@@ -132,7 +132,7 @@ export class CustomerReviewSubmitOrderPage {
     return (product.quantity)
   }
 
-  calculateOrderTotal() {
+  async calculateOrderTotal() {
     if(this.cartItems.length > 0) {
       let updatedTotal = 0
       this.cartItems.map((value) => {
@@ -142,5 +142,6 @@ export class CustomerReviewSubmitOrderPage {
     } else {
       this.orderTotal = 0
     }
+    let result = await this.storageService.setToStorage('orderTotal', this.orderTotal)
   }
 }

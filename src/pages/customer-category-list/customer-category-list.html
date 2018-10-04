@@ -1,6 +1,12 @@
 <ion-header>
   <ion-navbar>
     <ion-title>Sub Category</ion-title>
+    <ion-buttons end>
+      <button ion-button icon-only (click)="reviewAndSubmitOrder()">
+        <h4>{{cart.length}}</h4>
+        <ion-icon name="cart"></ion-icon>
+      </button>
+    </ion-buttons>
   </ion-navbar>
 </ion-header>
 <ion-content class="full-background">

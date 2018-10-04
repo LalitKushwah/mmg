@@ -5,6 +5,10 @@
       </button>
       <ion-title>Parent Category</ion-title>
       <ion-buttons end>
+        <button ion-button icon-only (click)="reviewAndSubmitOrder()">
+          <h4>{{cart.length}}</h4>
+          <ion-icon name="cart"></ion-icon>
+        </button>
         <button ion-button icon-only (click)="presentPopover($event)">
           <ion-icon name="more"></ion-icon>
         </button>

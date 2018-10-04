@@ -6,6 +6,7 @@ import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { CONSTANTS } from '../utils/constants';
 import { CustomerListProductPage } from '../customer-list-product/customer-list-product';
+import { CustomerReviewSubmitOrderPage } from '../customer-review-submit-order/customer-review-submit-order';
 
 @IonicPage({
   name: 'CustomerCategoryListPage'
@@ -22,6 +23,7 @@ export class CustomerCategoryListPage {
   childCategoryList: Array<any> = []
   skipValue: number = 0
   limit: number = CONSTANTS.PAGINATION_LIMIT
+  cart: any = []
 
   constructor(public navCtrl: NavController, public navParams: NavParams, private apiService: ApiServiceProvider, private widgetUtil: WidgetUtilService
   , private storageService: StorageServiceProvider) {
@@ -56,6 +58,25 @@ export class CustomerCategoryListPage {
       this.navCtrl.push(AdminListProductPage, categoryObj)
     } else{
       this.navCtrl.push(CustomerListProductPage, categoryObj)
+    }
+  }
+
+  ionViewDidEnter(){
+    this.getCardItems()
+  }
+
+  async getCardItems() {
+    this.cart = await this.storageService.getFromStorage('cart')
+  }
+
+  async reviewAndSubmitOrder() {
+    if (this.cart.length <= 0) {
+      this.widgetUtil.showToast(CONSTANTS.CART_EMPTY)
+    }else {
+      let orderTotal = await this.storageService.getFromStorage('orderTotal')
+      this.navCtrl.push(CustomerReviewSubmitOrderPage, {
+        'orderTotal' : orderTotal
+      })
     }
   }
 

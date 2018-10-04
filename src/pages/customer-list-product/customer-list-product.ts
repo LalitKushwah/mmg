@@ -73,6 +73,7 @@ export class CustomerListProductPage {
       this.cartQuantity = 0
       this.orderTotal = 0
     }
+    let result = await this.storageService.setToStorage('orderTotal', this.orderTotal)
   }
 
   reviewAndSubmitOrder() {
@@ -115,12 +116,13 @@ export class CustomerListProductPage {
       })
       this.orderTotal = updatedTotal
       this.cartQuantity = updatedQuantity
+      this.storageService.setToStorage('cart', this.cart)
     } else {
       this.widgetUtil.showToast(`Atleast 1 quantity is required!`)
     }
   }
 
-  removeFromCart(product) {
+  async removeFromCart(product) {
     this.widgetUtil.showToast(`${product.name} removed from cart`)
     if (this.cart.length > 0) {
       this.cart.map((value, index) => {
@@ -128,7 +130,6 @@ export class CustomerListProductPage {
           this.cart.splice(index, 1)
         }
       })
-      this.storageService.setToStorage('cart', this.cart)
       this.getCardItems()
     }
   }

@@ -5,6 +5,8 @@ import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { PopoverHomePage } from '../popover-home/popover-home';
 import { CONSTANTS } from '../utils/constants';
 import { CustomerCategoryListPage } from '../customer-category-list/customer-category-list';
+import { StorageServiceProvider } from '../../providers/storage-service/storage-service';
+import { CustomerReviewSubmitOrderPage } from '../customer-review-submit-order/customer-review-submit-order';
 
 
 @IonicPage({
@@ -20,14 +22,35 @@ export class CustomerHomePage {
   categoryListAvailable: Boolean = false
   skipValue: number = 0
   limit: number = CONSTANTS.PAGINATION_LIMIT
+  cart: any = []
 
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, private widgetUtil: WidgetUtilService, private apiService: ApiServiceProvider) {
+  constructor(public navCtrl: NavController, public navParams: NavParams, private widgetUtil: WidgetUtilService, private apiService: ApiServiceProvider
+  , private storageService: StorageServiceProvider) {
     this.categoryListAvailable = false
     this.parentCategoryList = []
     this.skipValue = 0
     this.limit = CONSTANTS.PAGINATION_LIMIT
     this.getList()
+  }
+
+  ionViewDidEnter(){
+    this.getCardItems()
+  }
+
+  async getCardItems() {
+    this.cart = await this.storageService.getFromStorage('cart')
+  }
+
+  async reviewAndSubmitOrder() {
+    if (this.cart.length <= 0) {
+      this.widgetUtil.showToast(CONSTANTS.CART_EMPTY)
+    }else {
+      let orderTotal = await this.storageService.getFromStorage('orderTotal')
+      this.navCtrl.push(CustomerReviewSubmitOrderPage, {
+        'orderTotal' : orderTotal
+      })
+    }
   }
 
   getList() {
