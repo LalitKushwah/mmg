@@ -23,5 +23,6 @@ export const CONSTANTS = {
     PARENT_CATEGORY_NOT_FOUND: 'No parent category found! First add a parent category',
     CSV_DOWNLOADED: 'CSV Downloaded Successfully',
     CSV_DOWNLOAD_FAIL: 'Failed to download CSV',
-    USER_LOGIN_ID_ALREADY_EXIST: 'Entered UserLoginId already exist! Please enter a different one'
+    USER_LOGIN_ID_ALREADY_EXIST: 'Oops! Entered UserLoginId already exist! Please enter a different one',
+    UNIQUE_PRODUCT_CODE: 'Oops! Entered Product code or ProductSys code already exist!  Please enter a different one'
 }

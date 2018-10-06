@@ -26,8 +26,11 @@ export class AddUserPage implements OnInit {
   showLoader = false;
   userTypeList: Array<any> =  [ 'customer', 'admin']
   countryList: Array<any> =  [ 'ZAMBIA']
+  provinceList: Array<any> =  [ 'BOTSWANA', 'COPPERBELT', 'DRC', 'EASTERN', 'KENYA', 'LUAPULA', 'LUSAKA', 'MALAWI', 'MOZAMBIQUE', 'NORTH WESTERN', 'NORTHERN'
+  ,'SOUTH AFRICA', 'SOUTHERN', 'TANZANIA', 'WESTERN', 'ZIMBABWE' ]
   selectedUserType : string = 'customer'
   selectedCountry : string = 'ZAMBIA'
+  selectedProvince : string = 'BOTSWANA'
   showCustomerForm: boolean = true
 
   constructor(public navCtrl: NavController, public navParams: NavParams
@@ -72,8 +75,7 @@ export class AddUserPage implements OnInit {
     this.addAdminForm = new FormGroup({
       name: this.name,
       userLoginId: this.userLoginId,
-      password: this.password,
-      province: this.province
+      password: this.password
     });
   }
 
@@ -83,8 +85,7 @@ export class AddUserPage implements OnInit {
       userLoginId: this.userLoginId,
       password: this.password,
       externalId: this.externalId,
-      channel: this.channel,
-      province: this.province
+      channel: this.channel
     });
   }
 
@@ -111,7 +112,7 @@ export class AddUserPage implements OnInit {
       userDetails['userType'] = this.selectedUserType
       userDetails['country'] = this.selectedCountry.trim()
       userDetails['channel'] = this.channel.value.trim()
-      userDetails['province'] = this.province.value.trim()
+      userDetails['province'] = this.selectedProvince.trim()
       userDetails['externalId'] = this.externalId.value.trim()
     } else {
       message = CONSTANTS.ADMIN_CREATED
@@ -120,7 +121,7 @@ export class AddUserPage implements OnInit {
       userDetails['password'] = this.password.value.trim()
       userDetails['userType'] = this.selectedUserType
       userDetails['country'] = this.selectedCountry.trim()
-      userDetails['province'] = this.province.value.trim()
+      userDetails['province'] = this.selectedProvince.trim()
     }
     this.apiService.createUser(userDetails).subscribe((result) => {
       this.widgetUtil.showToast(message)

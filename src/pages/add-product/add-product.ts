@@ -107,9 +107,12 @@ export class AddProductPage {
       this.addProductForm.reset()
       this.showLoader = false;
     }, (error) => {
+      console.log('error', error)
       this.showLoader = false;
       if (error.statusText === 'Unknown Error'){
         this.widgetUtil.showToast(CONSTANTS.INTERNET_ISSUE)
+      } else if(error.error.message === CONSTANTS.UNIQUE_PRODUCT_CODE) {
+        this.widgetUtil.showToast(CONSTANTS.UNIQUE_PRODUCT_CODE)
       } else {
         this.widgetUtil.showToast(CONSTANTS.SERVER_ERROR)
       }
