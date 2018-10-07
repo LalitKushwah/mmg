@@ -1,8 +1,8 @@
 <?xml version='1.0' encoding='utf-8'?>
-<widget id="io.ionic.starter" version="0.0.1" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
-    <name>TradeKing</name>
-    <description>TradeKingZambia</description>
-    <author email="hi@ionicframework" href="http://ionicframework.com/">Ionic Framework Team</author>
+<widget id="com.tradekings.android" version="0.0.1" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
+    <name>TradeKings</name>
+    <description>TradeKingsZambia</description>
+    <author email="hi@ionicframework" href="http://ionicframework.com/">Tradekings Dev</author>
     <content src="index.html" />
     <access origin="*" />
     <allow-intent href="http://*/*" />
@@ -89,6 +89,6 @@
     <plugin name="cordova-plugin-statusbar" spec="^2.4.2" />
     <plugin name="cordova-plugin-headercolor" spec="^1.0.0" />
     <plugin name="cordova-plugin-file-transfer" spec="^1.7.1" />
-    <engine name="android" spec="7.0.0" />
     <plugin name="cordova-plugin-file" spec="^6.0.1" />
+    <engine name="android" spec="7.0.0" />
 </widget>
