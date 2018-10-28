@@ -54,6 +54,9 @@
         <ion-card-content>
           <ion-row>
             <ion-col col-12 text-center>
+              <ion-icon name="cart" color="grey"></ion-icon>Order Id: <span>{{orderDetail.orderId}}</span>
+            </ion-col>
+            <ion-col col-12 text-center>
               <ion-icon name="happy" color="grey"></ion-icon> Customer Name: <span>{{orderDetail.userDetail.name}}</span>
             </ion-col>
             <ion-col col-12 text-center>
@@ -64,7 +67,7 @@
               <span>Date: {{orderDetail.lastUpdatedAt}}</span>
             </ion-col>
             <ion-col col-12 text-center>
-              <ion-icon name="podium" color="grey"></ion-icon> Order Status: <strong class="{{orderDetail.status}}" text-uppercase>{{orderDetail.status}}</strong>
+              <ion-icon name="podium" color="grey"></ion-icon> <span class="{{orderDetail.status}}">Status: <strong text-uppercase>{{orderDetail.status}}</strong></span>
             </ion-col>
             <ion-col col-12 text-center>
               <ion-icon name="cash" color="grey"></ion-icon> <span>Order Total: {{orderDetail.orderTotal}} ZMW</span>
@@ -98,6 +101,9 @@
         </ion-card-content>
       </ion-card>
   </ion-list>
+  <ion-infinite-scroll (ionInfinite)="doInfinite($event)">
+    <ion-infinite-scroll-content></ion-infinite-scroll-content>
+  </ion-infinite-scroll>
 </ion-content>
 <ion-footer class="full-background">
   <ion-row>

@@ -19,6 +19,7 @@ import { CustomerReviewSubmitOrderPage } from '../customer-review-submit-order/c
 export class CustomerCategoryListPage {
 
   parentCategoryId: string = ''
+  categoryObj: any = {}
   categoryListAvailable: Boolean = false
   childCategoryList: Array<any> = []
   skipValue: number = 0
@@ -28,6 +29,7 @@ export class CustomerCategoryListPage {
   constructor(public navCtrl: NavController, public navParams: NavParams, private apiService: ApiServiceProvider, private widgetUtil: WidgetUtilService
   , private storageService: StorageServiceProvider) {
     this.parentCategoryId = this.navParams.get("parentCategoryId")
+    this.categoryObj = this.navParams.get("category")
     this.categoryListAvailable = false
     this.childCategoryList = []
     this.skipValue = 0
@@ -49,9 +51,10 @@ export class CustomerCategoryListPage {
     })
   }
 
-  async getProducts(categoryId) {
+  async getProducts(category) {
     const categoryObj = {
-      'categoryId' : categoryId
+      'categoryId' : category['_id'],
+      'category': category
     }
     let profile = await this.storageService.getFromStorage('profile')
     if(profile['type'] === 'admin') {

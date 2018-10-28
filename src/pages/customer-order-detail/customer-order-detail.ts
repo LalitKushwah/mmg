@@ -113,4 +113,11 @@ export class CustomerOrderDetailPage {
       refresher.complete();
     }, 1000);
   }
+
+  doInfinite(infiniteScroll) {
+    setTimeout(() => {
+      infiniteScroll.complete();
+    }, 500);
+  }
+  
 }

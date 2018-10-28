@@ -16,6 +16,7 @@ import { CONSTANTS } from '../utils/constants';
 export class CustomerListProductPage {
 
   categoryId: string = ''
+  categoryObj: any = {}
   productListAvailable: Boolean = false
   productList: Array<any> = [];
   cartQuantity: any = 0;
@@ -31,6 +32,7 @@ export class CustomerListProductPage {
     this.skipValue = 0
     this.limit = CONSTANTS.PAGINATION_LIMIT
     this.categoryId = this.navParams.get("categoryId")
+    this.categoryObj = this.navParams.get("category")
     this.productListAvailable = false
     this.productList = []
     this.getList()
@@ -47,7 +49,6 @@ export class CustomerListProductPage {
         value.quantity = 1
         value.price = (parseFloat((Math.round(value.price * 100) / 100).toString()).toFixed(2))
       })
-      console.log('this.productList', this.productList)
       this.productListAvailable = true
     }, (error) => {
       if (error.statusText === 'Unknown Error') {

@@ -42,9 +42,10 @@ export class AdminListCategoryPage {
     })
   }
 
-  getChildCategory(parentCategoryId) {
+  getChildCategory(category) {
     const categoryObj = {
-      'parentCategoryId' : parentCategoryId
+      'parentCategoryId' : category['_id'],
+      'category': category
     }
     this.navCtrl.push(AdminListSubCategoryPage, categoryObj)
   }

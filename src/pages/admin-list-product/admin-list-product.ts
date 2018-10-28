@@ -18,11 +18,13 @@ export class AdminListProductPage {
   productList: Array<any> = [];
   productListAvailable: Boolean = false
   categoryId: string = ''
+  categoryObj: any = {}
 
   constructor(public navCtrl: NavController, public navParams: NavParams, private apiService: ApiServiceProvider, private widgetUtil: WidgetUtilService) {
     this.skipValue = 0
     this.limit = CONSTANTS.PAGINATION_LIMIT
     this.categoryId = this.navParams.get("categoryId")
+    this.categoryObj = this.navParams.get("category")
     this.getProducList()
   }
 

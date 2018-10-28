@@ -216,7 +216,7 @@ export class AdminHomePage {
     const parser = new Json2csvParser (opts)
     const csv = parser.parse(csvList)
     /* let fileName =  'Tradkings-'+ Math.floor(Math.random()*90000) + '.csv' */
-    let fileName =  'TradkingsOrder-'+ this.getDateForCSV().trim() + '.csv'
+    let fileName =  'TKO-'+ this.getDateForCSV().trim() + '.csv'
 
     if((window['cordova'])) {
       this.file.writeFile(this.file.externalRootDirectory, fileName, csv)

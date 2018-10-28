@@ -1,6 +1,6 @@
 <ion-header>
   <ion-navbar>
-    <ion-title>Sub Category</ion-title>
+    <ion-title>{{categoryObj.name}}</ion-title>
   </ion-navbar>
 </ion-header>
 <ion-content class="full-background">
@@ -11,7 +11,7 @@
     <ion-refresher-content></ion-refresher-content>
   </ion-refresher>
   <ion-list *ngIf="categoryListAvailable && (childCategoryList.length > 0)">
-    <button ion-item *ngFor="let category of childCategoryList" (click)="getProducts(category['_id'])">
+    <button ion-item *ngFor="let category of childCategoryList" (click)="getProducts(category)">
       <ion-avatar item-start>
         <img src="./assets/imgs/productcategory.png">
       </ion-avatar>

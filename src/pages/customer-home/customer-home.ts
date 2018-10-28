@@ -67,9 +67,10 @@ export class CustomerHomePage {
     })
   }
 
-  getChildCategory(parentCategoryId) {
+  getChildCategory(category) {
     const categoryObj = {
-      'parentCategoryId' : parentCategoryId
+      'parentCategoryId' : category['_id'],
+      'category' : category
     }
     this.navCtrl.push(CustomerCategoryListPage, categoryObj)
   }

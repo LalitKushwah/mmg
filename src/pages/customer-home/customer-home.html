@@ -3,7 +3,7 @@
       <button ion-button menuToggle>
         <ion-icon name="menu"></ion-icon>
       </button>
-      <ion-title>Parent Category</ion-title>
+      <ion-title>Parent Categories</ion-title>
       <ion-buttons end>
         <button ion-button icon-only (click)="reviewAndSubmitOrder()">
           <h4>{{cart.length}}</h4>
@@ -24,7 +24,7 @@
     <ion-refresher-content></ion-refresher-content>
   </ion-refresher>
   <ion-list *ngIf="categoryListAvailable && (parentCategoryList.length > 0)">
-    <button ion-item *ngFor="let category of parentCategoryList" (click)="getChildCategory(category['_id'])">
+    <button ion-item *ngFor="let category of parentCategoryList" (click)="getChildCategory(category)">
       <ion-avatar item-start>
         <img src="./assets/imgs/productcategory.png">
       </ion-avatar>

@@ -1,6 +1,6 @@
 <ion-header>
   <ion-navbar>
-    <ion-title>Parent Category</ion-title>
+    <ion-title>Parent Categories</ion-title>
   </ion-navbar>
 </ion-header>
 
@@ -12,7 +12,7 @@
   <ion-refresher-content></ion-refresher-content>
 </ion-refresher>
 <ion-list *ngIf="categoryListAvailable && (parentCategoryList.length > 0)">
-  <button ion-item *ngFor="let category of parentCategoryList" (click)="getChildCategory(category['_id'])">
+  <button ion-item *ngFor="let category of parentCategoryList" (click)="getChildCategory(category)">
     <ion-avatar item-start>
       <img src="./assets/imgs/productcategory.png">
     </ion-avatar>
