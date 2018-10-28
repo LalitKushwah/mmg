@@ -111,6 +111,22 @@ export class CustomerCategoryListPage {
     }, 1000);
   }
 
+  getItems(ev: any) {
+    let val = ev.target.value;
+    if(val) {
+      if (val === ''){
+      }
+      // set val to the value of the searchbar
+      // Reset items back to all of the items
+      // if the value is an empty string don't filter the items
+      if (val && val.trim() != '') {
+      }
+    } 
+    if (ev.type === "mousedown"){
+    }
+  }
+
+
 }
 
 
