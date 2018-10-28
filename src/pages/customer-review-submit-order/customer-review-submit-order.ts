@@ -132,6 +132,21 @@ export class CustomerReviewSubmitOrderPage {
     return (product.quantity)
   }
 
+  updateCart(product) {
+    this.cartItems.map((value) => {
+      if(value['_id'] === product['_id']) {
+        let qty =  parseInt(product.quantity)
+        value.quantity = qty
+        value['subTotal'] = (parseFloat((Math.round((value.quantity * parseFloat(value.price) * 100) / 100)).toString()).toFixed(2))
+        return (qty)
+      }
+    })
+    this.calculateOrderTotal()
+    this.storageService.setToStorage('cart', this.cartItems)
+    return (product.quantity)
+  }
+
+
   async calculateOrderTotal() {
     if(this.cartItems.length > 0) {
       let updatedTotal = 0
