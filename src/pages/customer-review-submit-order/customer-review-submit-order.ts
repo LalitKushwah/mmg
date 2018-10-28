@@ -20,11 +20,11 @@ export class CustomerReviewSubmitOrderPage {
   orderTotal: any = 0
   showLoader: boolean = false
   showClearCartLoader: boolean = false
-  
+
 
   constructor(public navCtrl: NavController, public navParams: NavParams
-  , private storageService: StorageServiceProvider, private apiService: ApiServiceProvider,
-  private widgetUtil: WidgetUtilService) {
+    , private storageService: StorageServiceProvider, private apiService: ApiServiceProvider,
+    private widgetUtil: WidgetUtilService) {
     this.showLoader = false
     this.orderTotal = (parseFloat((Math.round(this.navParams.get("orderTotal") * 100) / 100).toString()).toFixed(2))
     this.getCartItems()
@@ -38,7 +38,7 @@ export class CustomerReviewSubmitOrderPage {
     })
   }
 
-  doRefresh(refresher) : void {
+  doRefresh(refresher): void {
     this.getCartItems()
     setTimeout(() => {
       refresher.complete();
@@ -49,7 +49,7 @@ export class CustomerReviewSubmitOrderPage {
     let profile = await this.storageService.getFromStorage('profile')
     this.showLoader = true
     let orderObj = {
-      productList : this.cartItems.map((value) => {
+      productList: this.cartItems.map((value) => {
         return {
           productId: value['_id'],
           quantity: value['quantity'],
@@ -57,7 +57,7 @@ export class CustomerReviewSubmitOrderPage {
         }
       }),
       userId: profile['_id'],
-      orderId: 'ORD' + Math.floor(Math.random()*90000) + Math.floor(Math.random()*90000),
+      orderId: 'ORD' + Math.floor(Math.random() * 90000) + Math.floor(Math.random() * 90000),
       orderTotal: parseFloat(this.orderTotal.toString()),
       status: CONSTANTS.ORDER_STATUS_PROGRESS,
       province: profile['province'],
@@ -87,12 +87,12 @@ export class CustomerReviewSubmitOrderPage {
     this.showClearCartLoader = false
     this.widgetUtil.showToast('All items removed from cart')
   }
-  
+
   removeFromCart(product) {
     this.widgetUtil.showToast(`${product.name} removed from cart`)
     if (this.cartItems.length > 0) {
       this.cartItems.map((value, index) => {
-        if(value['_id'] === product['_id']) {
+        if (value['_id'] === product['_id']) {
           this.cartItems.splice(index, 1)
         }
       })
@@ -104,9 +104,9 @@ export class CustomerReviewSubmitOrderPage {
 
   decrementQty(product) {
     this.cartItems.map((value) => {
-      if(value['_id'] === product['_id']) {
-        let qty =  parseInt(value.quantity) - 1
-        if(qty >= 0) {
+      if (value['_id'] === product['_id']) {
+        let qty = parseInt(value.quantity) - 1
+        if (qty >= 0) {
           value.quantity = qty
           value['subTotal'] = (parseFloat((Math.round((value.quantity * parseFloat(value.price) * 100) / 100)).toString()).toFixed(2))
         }
@@ -120,8 +120,8 @@ export class CustomerReviewSubmitOrderPage {
 
   incrementQty(product) {
     this.cartItems.map((value) => {
-      if(value['_id'] === product['_id']) {
-        let qty =  parseInt(value.quantity) + 1
+      if (value['_id'] === product['_id']) {
+        let qty = parseInt(value.quantity) + 1
         value.quantity = qty
         value['subTotal'] = (parseFloat((Math.round((value.quantity * parseFloat(value.price) * 100) / 100)).toString()).toFixed(2))
         return (qty)
@@ -134,8 +134,8 @@ export class CustomerReviewSubmitOrderPage {
 
   updateCart(product) {
     this.cartItems.map((value) => {
-      if(value['_id'] === product['_id']) {
-        let qty =  parseInt(product.quantity)
+      if (value['_id'] === product['_id']) {
+        let qty = parseInt(product.quantity)
         value.quantity = qty
         value['subTotal'] = (parseFloat((Math.round((value.quantity * parseFloat(value.price) * 100) / 100)).toString()).toFixed(2))
         return (qty)
@@ -148,7 +148,7 @@ export class CustomerReviewSubmitOrderPage {
 
 
   async calculateOrderTotal() {
-    if(this.cartItems.length > 0) {
+    if (this.cartItems.length > 0) {
       let updatedTotal = 0
       this.cartItems.map((value) => {
         updatedTotal = updatedTotal + (parseFloat(value.price) * parseInt(value.quantity))
