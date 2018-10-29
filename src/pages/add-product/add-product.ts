@@ -100,6 +100,7 @@ export class AddProductPage {
     productDetail['productSysCode'] = this.productSysCode.value.trim()
     productDetail['currentCaseSize'] = this.currentCaseSize.value.trim()
     productDetail['categoryId'] = this.selectedCategory['_id']
+    productDetail['parentCategoryId'] = this.selectedCategory.parentCategoryId
     productDetail['lastUpdatedAt'] = Date.now()
     this.showLoader = true
     this.apiService.addProduct(productDetail).subscribe((result) => {

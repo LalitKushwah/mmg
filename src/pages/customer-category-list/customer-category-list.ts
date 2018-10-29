@@ -25,6 +25,7 @@ export class CustomerCategoryListPage {
   skipValue: number = 0
   limit: number = CONSTANTS.PAGINATION_LIMIT
   cart: any = []
+  searchQuery: string = ''
 
   constructor(public navCtrl: NavController, public navParams: NavParams, private apiService: ApiServiceProvider, private widgetUtil: WidgetUtilService
   , private storageService: StorageServiceProvider) {
@@ -112,21 +113,27 @@ export class CustomerCategoryListPage {
   }
 
   getItems(ev: any) {
-    let val = ev.target.value;
+    let val = ev.target.value
     if(val) {
-      if (val === ''){
+      if (val != '') {
       }
       // set val to the value of the searchbar
       // Reset items back to all of the items
       // if the value is an empty string don't filter the items
       if (val && val.trim() != '') {
+        this.searchQuery = val
       }
     } 
     if (ev.type === "mousedown"){
     }
   }
 
-
+  submitSearch(ev: any) {
+    let searchQuery = {
+      keyword: this.searchQuery,
+      parentCategoryId: this.parentCategoryId
+    }
+  }
 }
 
 

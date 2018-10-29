@@ -8,12 +8,16 @@
       </button>
     </ion-buttons>
   </ion-navbar>
+  <ion-toolbar *ngIf="categoryListAvailable && (childCategoryList.length > 0)">
+    <form (ngSubmit)="submitSearch($event)">
+      <ion-searchbar (ionInput)="getItems($event)" placeholder="Search any product in {{categoryObj.name}}"></ion-searchbar>
+    </form>
+  </ion-toolbar>
 </ion-header>
 <ion-content class="full-background">
   <div class="search-spinner">
     <ion-spinner name="crescent" *ngIf="!categoryListAvailable"></ion-spinner>
   </div>
-  <ion-searchbar *ngIf="categoryListAvailable && (childCategoryList.length > 0)" (ionInput)="getItems($event)" placeholder="Search any product in {{categoryObj.name}}" class="sticky-custom"></ion-searchbar>
   <ion-refresher (ionRefresh)="doRefresh($event)" spinner="crescent">
     <ion-refresher-content></ion-refresher-content>
   </ion-refresher>
