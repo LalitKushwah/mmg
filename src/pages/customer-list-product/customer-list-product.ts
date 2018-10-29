@@ -16,8 +16,10 @@ import { CONSTANTS } from '../utils/constants';
 export class CustomerListProductPage {
 
   categoryId: string = ''
+  keyword: string = ''
   categoryObj: any = {}
   productListAvailable: Boolean = false
+  isSearch: Boolean = false
   productList: Array<any> = [];
   cartQuantity: any = 0;
   orderTotal: any = 0;
@@ -33,34 +35,56 @@ export class CustomerListProductPage {
     this.limit = CONSTANTS.PAGINATION_LIMIT
     this.categoryId = this.navParams.get("categoryId")
     this.categoryObj = this.navParams.get("category")
+    this.isSearch = this.navParams.get("isSearch")
+    this.keyword = this.navParams.get("keyword")
+    console.log('this.isSearch', this.isSearch)
+    console.log('this.keyword', this.keyword)
     this.productListAvailable = false
     this.productList = []
     this.getList()
   }
 
   ionViewDidEnter(){
-    this.getCardItems()
+    this.getCartItems()
   }
 
   getList() {
-    this.apiService.getProductListByCategory(this.categoryId, this.skipValue, this.limit).subscribe((result) => {
-      this.productList = result.body
-      this.productList.map(value => {
-        value.quantity = 1
-        value.price = (parseFloat((Math.round(value.price * 100) / 100).toString()).toFixed(2))
+    if(!this.isSearch) {
+      this.apiService.getProductListByCategory(this.categoryId, this.skipValue, this.limit).subscribe((result) => {
+        this.productList = result.body
+        this.productList.map(value => {
+          value.quantity = 1
+          value.price = (parseFloat((Math.round(value.price * 100) / 100).toString()).toFixed(2))
+        })
+        this.productListAvailable = true
+      }, (error) => {
+        if (error.statusText === 'Unknown Error') {
+          this.widgetUtil.showToast(CONSTANTS.INTERNET_ISSUE)
+        } else {
+          this.widgetUtil.showToast(CONSTANTS.SERVER_ERROR)
+        }
+        this.productListAvailable = true
       })
-      this.productListAvailable = true
-    }, (error) => {
-      if (error.statusText === 'Unknown Error') {
-        this.widgetUtil.showToast(CONSTANTS.INTERNET_ISSUE)
-      } else {
-        this.widgetUtil.showToast(CONSTANTS.SERVER_ERROR)
-      }
-      this.productListAvailable = true
-    })
+    } else {
+      this.apiService.searchProductInParentCategory(this.skipValue, this.limit, this.categoryId, this.keyword).subscribe((result) => {
+        this.productList = result.body
+        this.productList.map(value => {
+          value.quantity = 1
+          value.price = (parseFloat((Math.round(value.price * 100) / 100).toString()).toFixed(2))
+        })
+        this.productListAvailable = true
+      }, (error) => {
+        if (error.statusText === 'Unknown Error') {
+          this.widgetUtil.showToast(CONSTANTS.INTERNET_ISSUE)
+        } else {
+          this.widgetUtil.showToast(CONSTANTS.SERVER_ERROR)
+        }
+        this.productListAvailable = true
+      })
+    }
   }
 
-  async getCardItems() {
+  async getCartItems() {
     this.cart = await this.storageService.getFromStorage('cart')
     if(this.cart.length > 0) {
       let updatedTotal = 0, updatedQuantity = 0;
@@ -131,7 +155,7 @@ export class CustomerListProductPage {
           this.cart.splice(index, 1)
         }
       })
-      this.getCardItems()
+      this.getCartItems()
     }
   }
 
@@ -170,7 +194,7 @@ export class CustomerListProductPage {
 
   doRefresh(refresher) : void {
     this.getList()
-    this.getCardItems()
+    this.getCartItems()
     setTimeout(() => {
       refresher.complete();
     }, 1000);

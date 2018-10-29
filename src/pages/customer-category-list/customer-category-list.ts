@@ -55,7 +55,8 @@ export class CustomerCategoryListPage {
   async getProducts(category) {
     const categoryObj = {
       'categoryId' : category['_id'],
-      'category': category
+      'category': category,
+      'isSearch': false
     }
     let profile = await this.storageService.getFromStorage('profile')
     if(profile['type'] === 'admin') {
@@ -122,16 +123,26 @@ export class CustomerCategoryListPage {
       // if the value is an empty string don't filter the items
       if (val && val.trim() != '') {
         this.searchQuery = val
+        console.log('this.searchQuery22', this.searchQuery)
       }
     } 
     if (ev.type === "mousedown"){
     }
   }
 
-  submitSearch(ev: any) {
-    let searchQuery = {
-      keyword: this.searchQuery,
-      parentCategoryId: this.parentCategoryId
+  async submitSearch(ev: any) {
+    console.log('this.searchQuery!!!', this.searchQuery)
+    let data = {
+      'keyword': this.searchQuery,
+      'categoryObj': this.categoryObj,
+      'isSearch': true
+    }
+    console.log('(data((((', data)
+    let profile = await this.storageService.getFromStorage('profile')
+    if(profile['type'] === 'admin') {
+      this.navCtrl.push(AdminListProductPage, data)
+    } else{
+      this.navCtrl.push(CustomerListProductPage, data)
     }
   }
 }

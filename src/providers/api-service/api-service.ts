@@ -87,4 +87,9 @@ export class ApiServiceProvider {
   updateProduct(updateDetails: Object): any {
     return this.http.post(CONSTANTS.BASE_URL + 'api/product/update', updateDetails)
   }
+
+  searchProductInParentCategory(skip: number, limit:number, parentCategoryId: string, keyword: string): any {
+    return this.http.get(CONSTANTS.BASE_URL + 'api/product/search/parentCategory/' + parentCategoryId + '?skip='+skip.toString() + "&limit="+ limit.toString() + "&keyword="+ keyword)
+  }
+
 }
