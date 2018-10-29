@@ -30,6 +30,7 @@ export class CustomerCategoryListPage {
   constructor(public navCtrl: NavController, public navParams: NavParams, private apiService: ApiServiceProvider, private widgetUtil: WidgetUtilService
   , private storageService: StorageServiceProvider) {
     this.parentCategoryId = this.navParams.get("parentCategoryId")
+    console.log('$$$$$$$$$$$$$', this.parentCategoryId)
     this.categoryObj = this.navParams.get("category")
     this.categoryListAvailable = false
     this.childCategoryList = []
@@ -115,34 +116,25 @@ export class CustomerCategoryListPage {
 
   getItems(ev: any) {
     let val = ev.target.value
-    if(val) {
-      if (val != '') {
-      }
-      // set val to the value of the searchbar
-      // Reset items back to all of the items
-      // if the value is an empty string don't filter the items
-      if (val && val.trim() != '') {
-        this.searchQuery = val
-        console.log('this.searchQuery22', this.searchQuery)
-      }
-    } 
+    this.searchQuery = val
     if (ev.type === "mousedown"){
     }
   }
 
   async submitSearch(ev: any) {
-    console.log('this.searchQuery!!!', this.searchQuery)
-    let data = {
-      'keyword': this.searchQuery,
-      'categoryObj': this.categoryObj,
-      'isSearch': true
-    }
-    console.log('(data((((', data)
-    let profile = await this.storageService.getFromStorage('profile')
-    if(profile['type'] === 'admin') {
-      this.navCtrl.push(AdminListProductPage, data)
-    } else{
-      this.navCtrl.push(CustomerListProductPage, data)
+    if (this.searchQuery && this.searchQuery.trim() != '') { 
+      let data = {
+        'keyword': this.searchQuery,
+        'parentCategoryId': this.parentCategoryId,
+        'isSearch': true
+      }
+      let profile = await this.storageService.getFromStorage('profile')
+      this.searchQuery  = ''
+      if(profile['type'] === 'admin') {
+        this.navCtrl.push(AdminListProductPage, data)
+      } else{
+        this.navCtrl.push(CustomerListProductPage, data)
+      }
     }
   }
 }

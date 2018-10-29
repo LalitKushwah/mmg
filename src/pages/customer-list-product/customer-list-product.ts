@@ -17,6 +17,7 @@ export class CustomerListProductPage {
 
   categoryId: string = ''
   keyword: string = ''
+  parentCategoryId: string = ''
   categoryObj: any = {}
   productListAvailable: Boolean = false
   isSearch: Boolean = false
@@ -34,11 +35,10 @@ export class CustomerListProductPage {
     this.skipValue = 0
     this.limit = CONSTANTS.PAGINATION_LIMIT
     this.categoryId = this.navParams.get("categoryId")
+    this.parentCategoryId = this.navParams.get("parentCategoryId")
     this.categoryObj = this.navParams.get("category")
     this.isSearch = this.navParams.get("isSearch")
     this.keyword = this.navParams.get("keyword")
-    console.log('this.isSearch', this.isSearch)
-    console.log('this.keyword', this.keyword)
     this.productListAvailable = false
     this.productList = []
     this.getList()
@@ -66,7 +66,7 @@ export class CustomerListProductPage {
         this.productListAvailable = true
       })
     } else {
-      this.apiService.searchProductInParentCategory(this.skipValue, this.limit, this.categoryId, this.keyword).subscribe((result) => {
+      this.apiService.searchProductInParentCategory(this.skipValue, this.limit, this.parentCategoryId, this.keyword).subscribe((result) => {
         this.productList = result.body
         this.productList.map(value => {
           value.quantity = 1
@@ -172,24 +172,45 @@ export class CustomerListProductPage {
 
   doInfinite(infiniteScroll) {
     this.skipValue = this.skipValue + this.limit
-    this.apiService.getProductListByCategory(this.categoryId, this.skipValue, this.limit).subscribe((result) => {
-      if(result.body.length > 0) {
-        result.body.map( (value) => {
-          value.quantity = 0
-          this.productList.push(value)
-        }) 
-      } else {
-          this.skipValue = this.limit
-      }
-      infiniteScroll.complete();
-    }, (error) => {
-      infiniteScroll.complete();
-      if (error.statusText === 'Unknown Error') {
-        this.widgetUtil.showToast(CONSTANTS.INTERNET_ISSUE)
-      } else {
-        this.widgetUtil.showToast(CONSTANTS.SERVER_ERROR)
-      }
-    })
+    if(!this.isSearch) {
+      this.apiService.getProductListByCategory(this.categoryId, this.skipValue, this.limit).subscribe((result) => {
+        if(result.body.length > 0) {
+          result.body.map( (value) => {
+            value.quantity = 0
+            this.productList.push(value)
+          }) 
+        } else {
+            this.skipValue = this.limit
+        }
+        infiniteScroll.complete();
+      }, (error) => {
+        infiniteScroll.complete();
+        if (error.statusText === 'Unknown Error') {
+          this.widgetUtil.showToast(CONSTANTS.INTERNET_ISSUE)
+        } else {
+          this.widgetUtil.showToast(CONSTANTS.SERVER_ERROR)
+        }
+      })
+    } else {
+      this.apiService.searchProductInParentCategory(this.skipValue, this.limit, this.parentCategoryId, this.keyword).subscribe((result) => {
+        if(result.body.length > 0) {
+          result.body.map( (value) => {
+            value.quantity = 0
+            this.productList.push(value)
+          }) 
+        } else {
+            this.skipValue = this.limit
+        }
+        infiniteScroll.complete();
+      }, (error) => {
+        infiniteScroll.complete();
+        if (error.statusText === 'Unknown Error') {
+          this.widgetUtil.showToast(CONSTANTS.INTERNET_ISSUE)
+        } else {
+          this.widgetUtil.showToast(CONSTANTS.SERVER_ERROR)
+        }
+      })
+    }
   }
 
   doRefresh(refresher) : void {

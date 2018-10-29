@@ -1,6 +1,7 @@
   <ion-header>
     <ion-navbar>
-      <ion-title>{{categoryObj.name}}</ion-title>
+      <ion-title *ngIf="!isSearch">{{categoryObj.name}}</ion-title>
+      <ion-title *ngIf="isSearch">Search Result: {{keyword}}</ion-title>
       <ion-buttons end>
         <button ion-button icon-only (click)="reviewAndSubmitOrder()">
           <h4>{{cart.length}}</h4>
