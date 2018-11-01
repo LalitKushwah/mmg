@@ -30,7 +30,6 @@ export class CustomerCategoryListPage {
   constructor(public navCtrl: NavController, public navParams: NavParams, private apiService: ApiServiceProvider, private widgetUtil: WidgetUtilService
   , private storageService: StorageServiceProvider) {
     this.parentCategoryId = this.navParams.get("parentCategoryId")
-    console.log('$$$$$$$$$$$$$', this.parentCategoryId)
     this.categoryObj = this.navParams.get("category")
     this.categoryListAvailable = false
     this.childCategoryList = []

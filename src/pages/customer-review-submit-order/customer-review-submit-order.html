@@ -60,7 +60,15 @@
     <ion-list>
       <ion-card class="sticky-custom">
         <ion-card-header text-center>
-          <strong><ion-icon name="cash"></ion-icon> Order Total: {{orderTotal}} ZMW</strong>
+          <ion-row>
+            <ion-col col-12>
+                <strong><ion-icon name="cash"></ion-icon> Order Total: {{orderTotal}} ZMW</strong>
+            </ion-col>
+            <ion-col col-12>
+              <button ion-button outline color="secondary" (click)="openCategoryTotalModal()" >View Category Wise Total</button>
+            </ion-col>
+          </ion-row>
+          <span></span>
         </ion-card-header>
       </ion-card>
       <ion-card *ngFor="let product of cartItems">

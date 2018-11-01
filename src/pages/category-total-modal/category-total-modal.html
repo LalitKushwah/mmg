@@ -1,0 +1,30 @@
+<ion-header>
+  <ion-navbar color="light">
+    <ion-title>Category Wise Total</ion-title>
+    <ion-buttons end>
+      <button ion-button icon-only (click)="dismissModal()"><ion-icon name="close-circle"></ion-icon>
+      </button>
+    </ion-buttons>
+  </ion-navbar>
+</ion-header>
+<ion-content class="full-background">
+  <div class="search-spinner">
+    <ion-spinner name="crescent" *ngIf="!categoryListAvailable"></ion-spinner>
+  </div>
+  <ion-card style="overflow-x:auto;" *ngIf="categoryListAvailable">
+    <table>
+      <thead>
+        <tr>
+          <th>Category</th>
+          <th>Sub Total</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let category of parentCategoryList">
+          <td>{{category.name}}</td>
+          <td>{{(category.subTotal)}} ZMW</td>
+        </tr>
+      </tbody>
+    </table>
+  </ion-card>
+</ion-content>

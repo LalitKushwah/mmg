@@ -1,3 +1,4 @@
+import { CategoryTotalModalPageModule } from './../pages/category-total-modal/category-total-modal.module';
 import { AdminEditProductPageModule } from './../pages/admin-edit-product/admin-edit-product.module';
 import { AdminListSubCategoryPageModule } from './../pages/admin-list-sub-category/admin-list-sub-category.module';
 import { ResetPasswordModelPage } from './../pages/reset-password-model/reset-password-model';
@@ -52,6 +53,7 @@ import { AdminListUserPage } from '../pages/admin-list-user/admin-list-user';
 import { ResetPasswordModelPageModule } from '../pages/reset-password-model/reset-password-model.module';
 import { AdminListSubCategoryPage } from '../pages/admin-list-sub-category/admin-list-sub-category';
 import { AdminEditProductPage } from '../pages/admin-edit-product/admin-edit-product';
+import { CategoryTotalModalPage } from '../pages/category-total-modal/category-total-modal';
 
 @NgModule({
   declarations: [
@@ -87,7 +89,8 @@ import { AdminEditProductPage } from '../pages/admin-edit-product/admin-edit-pro
     ResetUserPasswordPageModule,
     ResetPasswordModelPageModule,
     AdminListSubCategoryPageModule,
-    AdminEditProductPageModule
+    AdminEditProductPageModule,
+    CategoryTotalModalPageModule
   ],
   bootstrap: [IonicApp],
   entryComponents: [
@@ -109,7 +112,8 @@ import { AdminEditProductPage } from '../pages/admin-edit-product/admin-edit-pro
     ResetUserPasswordPage,
     ResetPasswordModelPage,
     AdminListSubCategoryPage,
-    AdminEditProductPage
+    AdminEditProductPage,
+    CategoryTotalModalPage
   ],
   providers: [
     StatusBar,

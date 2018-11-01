@@ -1,9 +1,10 @@
+import { CategoryTotalModalPage } from './../category-total-modal/category-total-modal';
 import { HomePage } from './../home/home';
 import { WidgetUtilService } from './../utils/widget-utils';
 import { ApiServiceProvider } from './../../providers/api-service/api-service';
 import { StorageServiceProvider } from './../../providers/storage-service/storage-service';
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, ModalController } from 'ionic-angular';
 import { CONSTANTS } from '../utils/constants';
 
 @IonicPage({
@@ -24,10 +25,14 @@ export class CustomerReviewSubmitOrderPage {
 
   constructor(public navCtrl: NavController, public navParams: NavParams
     , private storageService: StorageServiceProvider, private apiService: ApiServiceProvider,
-    private widgetUtil: WidgetUtilService) {
+    private widgetUtil: WidgetUtilService, private modalController: ModalController) {
     this.showLoader = false
     this.orderTotal = (parseFloat((Math.round(this.navParams.get("orderTotal") * 100) / 100).toString()).toFixed(2))
     this.getCartItems()
+  }
+
+  ionViewDidEnter(){
+    this.calculateOrderTotal()
   }
 
   async getCartItems() {
@@ -158,5 +163,10 @@ export class CustomerReviewSubmitOrderPage {
       this.orderTotal = 0
     }
     let result = await this.storageService.setToStorage('orderTotal', this.orderTotal)
+  }
+
+  openCategoryTotalModal() {
+    const modal = this.modalController.create(CategoryTotalModalPage, {cartItems: this.cartItems})
+    modal.present()
   }
 }
