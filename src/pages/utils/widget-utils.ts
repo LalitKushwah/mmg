@@ -21,7 +21,7 @@ export class WidgetUtilService {
   showToast(message) {
     let toast = this.toastController.create({
       message: message,
-      duration: 1500,
+      duration: 1000,
       position: 'bottom'
     });
     toast.present();
