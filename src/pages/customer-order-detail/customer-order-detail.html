@@ -1,0 +1,115 @@
+<ion-header>
+  <ion-navbar>
+    <ion-title>Order Detail</ion-title>
+  </ion-navbar>
+</ion-header>
+
+<ion-content class="full-background">
+  <ion-refresher (ionRefresh)="doRefresh($event)" spinner="crescent">
+    <ion-refresher-content></ion-refresher-content>
+  </ion-refresher>
+  <div class="search-spinner">
+    <ion-spinner name="crescent" *ngIf="!orderItemsAvailable"></ion-spinner>
+  </div>
+  <!-- <ion-card style="overflow-x:auto;" *ngIf="orderItemsAvailable">
+      <table>
+        <thead>
+          <tr>
+            <th>S.No</th>
+            <th>Name</th>
+            <th>Quantity</th>
+            <th>Price (ZMW)</th>
+            <th>Sub Total (ZMW)</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let item of orderItems; let i = index">
+            <td>{{(i+1)}}</td>
+            <td>{{item.productDetail.name}} [{{item.productDetail.productCode}}]</td>
+            <td>{{item.quantity}}</td>
+            <td>{{item.price}}</td>
+            <td>{{(item.subTotal)}}</td>
+          </tr>
+        </tbody>
+      </table>
+      <ion-row>
+        <ion-col text-center>
+          <button ion-button outline color="grey"><ion-icon name="cash"></ion-icon> Order Total (ZMW): {{orderDetail.orderTotal}}</button> 
+          <strong><ion-icon name="cash"></ion-icon> Order Total: {{orderDetail.orderTotal}} ZMW</strong>
+        </ion-col>
+      </ion-row>
+      <ion-row *ngIf="showImportOrder">
+        <ion-col text-center>
+          <button ion-button primary color="secondary" (click)="importOrder()"><ion-icon name="arrow-dropdown-circle"></ion-icon> Import Order<ion-spinner name="dots" *ngIf="showLoader"></ion-spinner></button>
+        </ion-col>
+      </ion-row>
+      <ion-row *ngIf="showCsvButton">
+        <ion-col text-center>
+          <button ion-button primary color="secondary" (click)="exportToCsv()"><ion-icon name="arrow-dropdown-circle"></ion-icon> Export to csv<ion-spinner name="dots" *ngIf="showLoader"></ion-spinner></button>
+        </ion-col>
+        </ion-row>
+    </ion-card> -->
+    <ion-list>
+      <ion-card>
+        <ion-card-content>
+          <ion-row>
+            <ion-col col-12 text-center>
+              <ion-icon name="cart" color="grey"></ion-icon>Order Id: <span>{{orderDetail.orderId}}</span>
+            </ion-col>
+            <ion-col col-12 text-center>
+              <ion-icon name="happy" color="grey"></ion-icon> Customer Name: <span>{{orderDetail.userDetail.name}}</span>
+            </ion-col>
+            <ion-col col-12 text-center>
+              <ion-icon name="pin" color="grey"></ion-icon> Province: <span>{{orderDetail.userDetail.country}} [ {{orderDetail.userDetail.province}} ]</span>
+            </ion-col>
+            <ion-col col-12 text-center>
+              <ion-icon color="grey" name="calendar"></ion-icon>
+              <span>Date: {{orderDetail.lastUpdatedAt}}</span>
+            </ion-col>
+            <ion-col col-12 text-center>
+              <ion-icon name="podium" color="grey"></ion-icon> <span class="{{orderDetail.status}}">Status: <strong text-uppercase>{{orderDetail.status}}</strong></span>
+            </ion-col>
+            <ion-col col-12 text-center>
+              <ion-icon name="cash" color="grey"></ion-icon> <span>Order Total: {{orderDetail.orderTotal}} ZMW</span>
+            </ion-col>
+          </ion-row>
+        </ion-card-content>
+      </ion-card>
+      <ion-card *ngFor="let item of orderItems">
+        <ion-card-content>
+          <ion-row>
+            <ion-col text-center>
+              <ion-icon name="cube" color="grey"></ion-icon>
+              <span>{{item.productDetail.name}} [{{item.productDetail.productCode}}]</span>
+            </ion-col>
+          </ion-row>
+          <ion-row>
+            <ion-col text-center>
+              Quantity: {{item.quantity}}
+            </ion-col>
+            <ion-col text-center>
+              <ion-icon name="cash" color="grey"></ion-icon>
+              <span>Price: {{item.price}} ZMW</span>
+            </ion-col>
+          </ion-row>
+          <ion-row>
+            <ion-col col-12 text-center>
+              <ion-icon name="cash" color="grey"></ion-icon>
+              <span>SubTotal: {{item.subTotal}} ZMW</span>
+            </ion-col>
+          </ion-row>
+        </ion-card-content>
+      </ion-card>
+  </ion-list>
+  <ion-infinite-scroll (ionInfinite)="doInfinite($event)">
+    <ion-infinite-scroll-content></ion-infinite-scroll-content>
+  </ion-infinite-scroll>
+</ion-content>
+<ion-footer class="full-background">
+  <ion-row>
+    <ion-col text-center>
+      <button *ngIf="showImportOrder" ion-button primary color="secondary" (click)="importOrder()"><ion-icon name="arrow-dropdown-circle"></ion-icon> Import Order<ion-spinner name="dots" *ngIf="showLoader"></ion-spinner></button>
+      <button *ngIf="showCancelOrder" ion-button primary color="secondary" (click)="cancelOrder()"><ion-icon name="close-circle"></ion-icon> Cancel Order<ion-spinner name="dots" *ngIf="showLoader"></ion-spinner></button>
+    </ion-col>
+  </ion-row>
+</ion-footer>

@@ -1,0 +1,85 @@
+@import url('https://fonts.googleapis.com/css?family=Roboto');
+@import url('https://fonts.googleapis.com/css?family=Open+Sans');
+
+.ion-content {
+  font-family: Roboto;
+
+}
+.full-background {
+  background-color: color($colors, full-background);
+}
+
+ion-card{
+  box-shadow: 0 3px 5px -1px rgba(0,0,0,.2), 0 6px 10px 0 rgba(0,0,0,.14), 0 1px 18px 0 rgba(0,0,0,.12) !important;
+}
+
+ion-spinner {
+  * {
+    stroke: #ffeb3b;
+  }
+
+  &.spinner-circles circle,
+  &.spinner-bubbles circle,
+  &.spinner-dots circle {
+    fill: #ffeb3b;
+  }
+}
+
+ion-icon {
+  margin-right: 5px
+}
+
+.search-spinner{
+  top:45%;
+  left: 45%;
+  position: fixed;
+  z-index: 1;
+}
+
+.sticky-custom {
+  position: -webkit-sticky !important;
+  position: sticky !important;
+  top:0 !important;
+  z-index: 1 !important;
+}
+
+//table
+
+table, td, th {    
+  text-align: left;
+}
+table {
+  border-collapse: collapse;
+  width: 100%;
+}
+th, td {
+  padding: 5px;
+}
+tr:nth-child(even){background-color: #f2f2f2}
+
+table thead tr {
+  height: 50px;
+  background: #36304a;
+  color: white;
+}
+
+tbody tr {
+  font-size: 15px;
+  color: #808080;
+  line-height: 1.2;
+  font-weight: unset;
+}
+
+//
+
+.recieved {
+  color: green
+}
+
+.in-progress {
+  color: color($colors, primary)
+}
+
+.cancel {
+  color: red
+}

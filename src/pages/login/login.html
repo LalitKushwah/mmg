@@ -1,0 +1,39 @@
+<ion-header>
+  <ion-navbar>
+    <ion-title>Login</ion-title>
+  </ion-navbar>
+</ion-header>
+<ion-content padding class="full-background">
+  <ion-card>
+    <ion-card-header text-center>Login
+      <ion-icon name="md-key"></ion-icon>
+    </ion-card-header>
+    <ion-card-content>
+      <form [formGroup]="userLoginForm">
+        <ion-grid>
+          <ion-row>
+            <ion-col>
+              <ion-item>
+                <ion-label floating>Login Id</ion-label>
+                <ion-input type="text" formControlName="userLoginId"></ion-input>
+              </ion-item>
+              <ion-item *ngIf="userLoginId.hasError('required') && userLoginId.touched">
+                <p style="color: red">Login Id is required*</p>
+              </ion-item>
+              <ion-item>
+                <ion-label floating >Password</ion-label>
+                <ion-input type="password" formControlName="passwordLogin"></ion-input>
+              </ion-item>
+              <ion-item *ngIf="passwordLogin.hasError('required') && passwordLogin.touched">
+                <p style="color: red">Password is required*</p>
+              </ion-item>
+            </ion-col>
+          </ion-row>
+        </ion-grid>
+        <ion-grid>
+          <button ion-button color="secondary" [disabled]="!(userLoginForm.valid)" (click)="login();">Login<ion-spinner name="dots" *ngIf="showLoginLoader"></ion-spinner></button>
+        </ion-grid>
+      </form>
+    </ion-card-content>
+  </ion-card>
+</ion-content>

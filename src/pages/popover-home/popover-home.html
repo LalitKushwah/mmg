@@ -1,0 +1,6 @@
+<ion-list *ngFor="let option of popoverOptions">
+  <ion-item (click)="openPage(option.name)" >
+    <ion-icon name="{{option.icon}}"></ion-icon>
+    <span>{{option.name}}</span>
+  </ion-item>
+</ion-list>

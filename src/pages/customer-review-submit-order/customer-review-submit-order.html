@@ -1,0 +1,145 @@
+<ion-header>
+  <ion-navbar>
+    <ion-title>Review and Submit</ion-title>
+  </ion-navbar>
+</ion-header>
+<ion-content class="full-background">
+  <ion-refresher (ionRefresh)="doRefresh($event)" spinner="crescent">
+    <ion-refresher-content></ion-refresher-content>
+  </ion-refresher>
+    <!-- <ion-card style="overflow-x:auto;">
+      <table>
+          <thead>
+            <tr>
+              <th>Name</th>
+              <th>Quantity</th>
+              <th>Price (ZMW)</th>
+              <th>Sub Total (ZMW)</th>
+              <th>Action</th>
+              </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let item of cartItems">
+              <td>{{item.name}}</td>
+              <td>
+                <ion-row>
+                  <ion-col col-2 text-left>
+                    <button ion-button clear icon-only (click)="(item.quantity = decrementQty(item.quantity))"><ion-icon name="remove-circle" ></ion-icon></button>
+                  </ion-col>
+                  <ion-col col-2>
+                    <ion-input item-start type="text" placeholder="Quantity" [(ngModel)]="item.quantity" #qty></ion-input>
+                  </ion-col>
+                  <ion-col col-2 text-left>
+                    <button ion-button clear icon-only (click)="(item.quantity = incrementQty(item.quantity))"><ion-icon name="add-circle" ></ion-icon></button>
+                  </ion-col>
+                </ion-row>
+              </td>
+              <td>{{item.price}}</td>
+              <td>{{(item.subTotal)}}</td>
+              <td>
+                <button icon-only ion-button color="light" (click)="removeFromCart(item)">
+                  <strong><ion-icon name="trash"></ion-icon></strong>
+                </button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+        <ion-row>
+          <ion-col text-center>
+               <button ion-button outline color="grey"><ion-icon name="cash"></ion-icon> Order Total (ZMW): {{orderTotal}}</button> 
+              <strong><ion-icon name="cash"></ion-icon> Order Total: {{orderTotal}} ZMW</strong>
+          </ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-col text-center>
+            <button ion-button (click)="clearCart()" [disabled]="(cartItems.length < 1)" color="light"><ion-icon name="trash"></ion-icon> Clear Cart <ion-spinner name="dots" *ngIf="showClearCartLoader"></ion-spinner></button>
+            <button ion-button (click)="submitOrder()" [disabled]="(cartItems.length < 1)" color="secondary"><ion-icon name="cart"></ion-icon> Submit Order <ion-spinner name="dots" *ngIf="showLoader"></ion-spinner></button>
+          </ion-col>
+        </ion-row>
+    </ion-card> -->
+    <ion-list>
+      <ion-card class="sticky-custom">
+        <ion-card-header text-center>
+          <ion-row>
+            <ion-col col-12>
+                <strong><ion-icon name="cash"></ion-icon> Order Total: {{orderTotal}} ZMW</strong>
+            </ion-col>
+            <ion-col col-12>
+              <button ion-button outline color="secondary" (click)="openCategoryTotalModal()" >View Category Wise Total</button>
+            </ion-col>
+          </ion-row>
+          <span></span>
+        </ion-card-header>
+      </ion-card>
+      <ion-card *ngFor="let product of cartItems">
+          <ion-card-content>
+          <ion-row>
+              <ion-col text-center>
+                <ion-icon name="cube" color="grey"></ion-icon>
+                <span>{{product.name}}</span>
+              </ion-col>
+            </ion-row>
+            <ion-row>
+              <ion-col text-center>
+                <ion-icon name="cash" color="grey"></ion-icon>
+                <span>Price: {{product.price}} ZMW</span>
+              </ion-col>
+            </ion-row>
+            <!-- <ion-row>
+              <ion-col col-12>
+                <ion-row>
+                  <ion-col col-4 text-left style="padding-top: 7%">
+                    <span>Quantity: </span>
+                  </ion-col>
+                  <ion-col col-2 text-left>
+                    <button ion-button clear icon-only (click)="(product.quantity = decrementQty(product))"><ion-icon name="remove-circle" ></ion-icon></button>
+                  </ion-col>
+                  <ion-col col-2>
+                    <input type='text' name='quantity' [(ngModel)]="product.quantity" value='0' class='qty' style="width: 40px;height: 25px;text-align: center;margin-top: 10px;margin-left: 10px;" />
+                  </ion-col>
+                  <ion-col col-2 text-left>
+                    <button ion-button clear icon-only (click)="(product.quantity = incrementQty(product))"><ion-icon name="add-circle" ></ion-icon></button>
+                  </ion-col>
+                </ion-row>
+              </ion-col>
+            </ion-row> -->
+            <ion-row>
+              <ion-col col-12>
+                <ion-row>
+                  <ion-col col-4 text-left style="padding-top: 7%">
+                    <span>Quantity: </span>
+                  </ion-col>
+                  <ion-col col-2>
+                    <input type='text' name='quantity' [(ngModel)]="product.quantity" value='0' class='qty' style="width: 40px;height: 25px;text-align: center;margin-top: 10px;margin-left: 10px;" />
+                  </ion-col>
+                  <ion-col col-6 text-right>
+                    <button ion-button  color="secondary" (click)="updateCart(product)" style="color: white!important;">
+                      <strong><ion-icon name="cart"></ion-icon>Update</strong>
+                    </button>
+                  </ion-col>
+                </ion-row>
+              </ion-col>
+            </ion-row>
+            <ion-row>
+              <ion-col col-10>
+                <ion-icon name="cash" color="grey"></ion-icon>
+                <span>SubTotal: {{product.subTotal}} ZMW</span>
+              </ion-col>
+              <ion-col col-2 text-right>
+                <button ion-button clear icon-only color="grey" (click)="removeFromCart(product)">
+                  <ion-icon name="trash"></ion-icon>
+                </button>
+              </ion-col>
+            </ion-row>
+        </ion-card-content>
+      </ion-card>
+    </ion-list>
+</ion-content>
+<ion-footer>
+  <ion-row>
+    <ion-col text-center>
+      <button ion-button (click)="clearCart()" [disabled]="(cartItems.length < 1)" color="light"><ion-icon name="trash"></ion-icon> Clear Cart <ion-spinner name="dots" *ngIf="showClearCartLoader"></ion-spinner></button>
+      <button ion-button (click)="submitOrder()" [disabled]="(cartItems.length < 1)" color="secondary"><ion-icon name="cart"></ion-icon> Submit Order <ion-spinner name="dots" *ngIf="showLoader"></ion-spinner></button>
+    </ion-col>
+  </ion-row>
+</ion-footer>

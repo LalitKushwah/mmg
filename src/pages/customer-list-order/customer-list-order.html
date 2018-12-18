@@ -1,0 +1,69 @@
+<ion-header>
+  <ion-navbar>
+    <ion-title>Order List</ion-title>
+  </ion-navbar>
+</ion-header>
+<ion-content class="full-background">
+  <div class="search-spinner">
+      <ion-spinner name="crescent" *ngIf="!orderListAvailable"></ion-spinner>
+    </div>
+    <ion-refresher (ionRefresh)="doRefresh($event)" spinner="crescent">
+      <ion-refresher-content></ion-refresher-content>
+    </ion-refresher>
+    <!-- <ion-card *ngIf="orderListAvailable" style="overflow-x:auto;">
+      <table>
+        <thead>
+          <tr>
+            <th>Order Id</th>
+            <th>Date</th>
+            <th>Total (ZMW)</th>
+            <th>Status</th>
+            <th>Detail</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let order of orderList; let i = index">
+            <td>{{(order.orderId)}}</td>
+            <td>{{order.lastUpdatedAt}}</td>
+            <td>{{order.orderTotal}}</td>
+            <td>{{order.status}}</td>
+            <td><button ion-button clear color="secondary" item-end (click)="getOrderDetial(order)">view</button></td>
+          </tr>
+        </tbody>
+      </table>
+      <ion-infinite-scroll (ionInfinite)="doInfinite($event)">
+        <ion-infinite-scroll-content></ion-infinite-scroll-content>
+      </ion-infinite-scroll>
+    </ion-card> -->
+    <ion-card *ngFor="let order of orderList">
+      <ion-card-content>
+        <ion-row>
+          <ion-col text-center>
+              <ion-icon color="grey" name="cart"></ion-icon> Order Id: {{order.orderId}}
+          </ion-col>
+        </ion-row>
+          <ion-row>
+            <ion-col text-center>
+                <ion-icon color="grey" name="calendar"></ion-icon>
+                Date: {{order.lastUpdatedAt}}
+            </ion-col>
+            <ion-col text-center>
+                <ion-icon color="grey" name="cash"></ion-icon> Total: {{order.orderTotal}} ZMW
+            </ion-col>
+          </ion-row>
+          <ion-row>
+            <ion-col col-12 text-center class="{{order.status}}"> 
+                <ion-icon color="grey" name="podium"></ion-icon>Status: <strong text-uppercase>{{order.status}}</strong>
+            </ion-col>
+          </ion-row>
+          <ion-row>
+            <ion-col col-12 text-center>
+              <button ion-button outline color="secondary" item-end (click)="getOrderDetial(order)">view order</button>
+            </ion-col>
+          </ion-row>
+      </ion-card-content>
+    </ion-card>
+    <ion-infinite-scroll (ionInfinite)="doInfinite($event)">
+      <ion-infinite-scroll-content></ion-infinite-scroll-content>
+    </ion-infinite-scroll>
+</ion-content>

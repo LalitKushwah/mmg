@@ -1,0 +1,43 @@
+<ion-header>
+    <ion-navbar>
+      <button ion-button menuToggle>
+        <ion-icon name="menu"></ion-icon>
+      </button>
+      <ion-title>Parent Categories</ion-title>
+      <ion-buttons end>
+        <button ion-button icon-only (click)="reviewAndSubmitOrder()">
+          <h4>{{cart.length}}</h4>
+          <ion-icon name="cart"></ion-icon>
+        </button>
+        <button ion-button icon-only (click)="presentPopover($event)">
+          <ion-icon name="more"></ion-icon>
+        </button>
+      </ion-buttons>
+    </ion-navbar>
+</ion-header>
+
+<ion-content class="full-background">
+  <div class="search-spinner">
+    <ion-spinner name="crescent" *ngIf="!categoryListAvailable"></ion-spinner>
+  </div>
+  <ion-refresher (ionRefresh)="doRefresh($event)" spinner="crescent">
+    <ion-refresher-content></ion-refresher-content>
+  </ion-refresher>
+  <ion-list *ngIf="categoryListAvailable && (parentCategoryList.length > 0)">
+    <button ion-item *ngFor="let category of parentCategoryList" (click)="getChildCategory(category)">
+      <ion-avatar item-start>
+        <img src="./assets/imgs/productcategory.png">
+      </ion-avatar>
+      <span>{{category.name}}</span>
+      <button ion-button clear color="secondary" item-end><h1><ion-icon md="md-arrow-round-forward"></ion-icon></h1></button>
+    </button>
+  </ion-list>
+  <ion-card *ngIf="categoryListAvailable && (parentCategoryList.length < 1)">
+    <ion-card-header text-center>
+      <h4>No record found</h4>
+    </ion-card-header>
+  </ion-card>
+  <ion-infinite-scroll (ionInfinite)="doInfinite($event)">
+    <ion-infinite-scroll-content></ion-infinite-scroll-content>
+  </ion-infinite-scroll>
+</ion-content>

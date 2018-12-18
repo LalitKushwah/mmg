@@ -1,0 +1,76 @@
+  <ion-header>
+    <ion-navbar>
+      <ion-title *ngIf="!isSearch">{{categoryObj.name}}</ion-title>
+      <ion-title *ngIf="isSearch">Search Result: {{keyword}}</ion-title>
+      <ion-buttons end>
+        <button ion-button icon-only (click)="reviewAndSubmitOrder()">
+          <h4>{{cart.length}}</h4>
+          <ion-icon name="cart"></ion-icon>
+        </button>
+      </ion-buttons>
+    </ion-navbar>
+  </ion-header>
+  <ion-content class="full-background">
+    <div class="search-spinner">
+      <ion-spinner name="crescent" *ngIf="!productListAvailable"></ion-spinner>
+    </div>
+    <ion-refresher (ionRefresh)="doRefresh($event)" spinner="crescent">
+      <ion-refresher-content></ion-refresher-content>
+    </ion-refresher>
+    <ion-list *ngIf="productListAvailable &&  (productList.length > 0)">
+      <ion-card *ngFor="let product of productList">
+        <ion-card-content>
+        <ion-row>
+            <ion-col text-center>
+              <ion-icon name="cube" color="grey"></ion-icon>
+              <span>{{product.name}}</span>
+            </ion-col>
+          </ion-row>
+          <ion-row>
+            <ion-col text-center>
+              <ion-icon name="cash" color="grey"></ion-icon>
+              Price: <span>{{product.price}} ZMW</span>
+            </ion-col>
+            <ion-col text-center>
+              CaseSize: <span>{{product.currentCaseSize}}</span>
+            </ion-col>
+          </ion-row>
+          <ion-row>
+            <ion-col col-12>
+              <ion-row>
+                <ion-col col-2 text-left>
+                  <button ion-button clear icon-only (click)="(product.quantity = decrementQty(product.quantity))"><ion-icon name="remove-circle" ></ion-icon></button>
+                </ion-col>
+                <ion-col col-2 text-center>
+                <!--   <ion-input type="text" placeholder="Quantity" [(ngModel)]="product.quantity" #qty style="text-align: center;"></ion-input> -->
+                  <input type='text' name='quantity' [(ngModel)]="product.quantity" value='0' class='qty' style="width: 40px;height: 25px;text-align: center;margin-top: 10px;margin-left: 10px;" />
+                </ion-col>
+                <ion-col col-2 text-left>
+                  <button ion-button clear icon-only (click)="(product.quantity = incrementQty(product.quantity))"><ion-icon name="add-circle" ></ion-icon></button>
+                </ion-col>
+                <ion-col col-6 text-right>
+                  <button ion-button color="secondary" (click)="addToCart(product, product.quantity)" style="color: white!important;">
+                    <strong><ion-icon name="cart"></ion-icon>Add</strong>
+                  </button>
+                </ion-col>
+              </ion-row>
+            </ion-col>
+            <!-- <ion-col text-right>
+              <button ion-button color="light" (click)="removeFromCart(product)">
+                <strong><ion-icon name="trash"></ion-icon></strong>
+              </button>
+            </ion-col> -->
+          </ion-row>
+        </ion-card-content>
+      </ion-card>
+      <ion-infinite-scroll (ionInfinite)="doInfinite($event)">
+        <ion-infinite-scroll-content></ion-infinite-scroll-content>
+      </ion-infinite-scroll>
+    </ion-list>
+    <ion-card *ngIf="productListAvailable && (productList.length < 1)">
+      <ion-card-header text-center>
+        <h4>No record found</h4>
+      </ion-card-header>
+    </ion-card>
+  </ion-content>
+  

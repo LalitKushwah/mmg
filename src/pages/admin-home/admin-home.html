@@ -1,0 +1,103 @@
+<ion-header>
+  <ion-navbar>
+    <button ion-button menuToggle>
+      <ion-icon name="menu"></ion-icon>
+    </button>
+    <ion-title>Orders List</ion-title>
+    <ion-buttons end>
+      <button ion-button icon-only (click)="presentPopover($event)">
+        <ion-icon name="more"></ion-icon>
+      </button>
+    </ion-buttons>
+  </ion-navbar>
+</ion-header>
+<ion-content class="full-background">
+  <div class="search-spinner">
+    <ion-spinner name="crescent" *ngIf="!orderListAvailable"></ion-spinner>
+  </div>
+  <ion-refresher (ionRefresh)="doRefresh($event)" spinner="crescent">
+    <ion-refresher-content></ion-refresher-content>
+  </ion-refresher>
+  <!-- <ion-card *ngIf="orderListAvailable && (orderList.length > 0)" style="overflow-x:auto;">
+    <table>
+      <thead>
+        <tr>
+          <th>Cust.Name</th>
+          <th>Date</th>
+          <th>Total (ZMW)</th>
+          <th>Status</th>
+          <th>Detail</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let order of orderList; let i = index">
+          <td>{{order.userDetail.name}} [{{order.userDetail.externalId}}]</td>
+          <td>{{order.lastUpdatedAt}}</td>
+          <td>{{order.orderTotal}}</td>
+          <td>{{order.status}}</td>
+          <td><button ion-button clear color="secondary" item-end (click)="getOrderDetial(order)">view</button></td>
+        </tr>
+      </tbody>
+    </table>
+    <ion-infinite-scroll (ionInfinite)="doInfinite($event)">
+      <ion-infinite-scroll-content></ion-infinite-scroll-content>
+    </ion-infinite-scroll>
+  </ion-card> -->
+  <ion-card *ngFor="let order of orderList">
+    <ion-card-content>
+      <ion-row>
+        <ion-col text-center>
+            <ion-icon color="grey" name="cart"></ion-icon> Order Id: {{order.orderId}}
+        </ion-col>
+      </ion-row>
+        <ion-row>
+          <ion-col text-center>
+              <ion-icon color="grey" name="happy"></ion-icon>
+              Customer: {{order.userDetail.name}} [{{order.userDetail.externalId}}]
+          </ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-col col-12 text-center>
+            <ion-icon name="pin" color="grey"></ion-icon> Province: <span>{{order.userDetail.country}} [ {{order.userDetail.province}} ]</span>
+          </ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-col text-center>
+              <ion-icon color="grey" name="calendar"></ion-icon>
+              Date: {{order.lastUpdatedAt}}
+          </ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-col text-center>
+              <ion-icon color="grey" name="cash"></ion-icon> Total: {{order.orderTotal}} ZMW
+          </ion-col>
+          <ion-col text-center class="{{order.status}}"> 
+            <ion-icon color="grey" name="podium"></ion-icon>Status: <strong text-uppercase>{{order.status}}</strong>
+          </ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-col text-center>
+            <button ion-button outline color="secondary" item-end (click)="getOrderDetial(order)">view order</button>
+          </ion-col>
+          <ion-col text-center>
+            <button ion-button color="light" [disabled]="!(order.showImport)" (click)="importOrder(order)"><ion-icon name="arrow-dropdown-circle"></ion-icon> Import Order<ion-spinner name="dots" *ngIf="showLoader"></ion-spinner></button>
+          </ion-col>
+        </ion-row>
+    </ion-card-content>
+  </ion-card>
+  <ion-infinite-scroll (ionInfinite)="doInfinite($event)">
+    <ion-infinite-scroll-content></ion-infinite-scroll-content>
+  </ion-infinite-scroll>
+  <ion-card *ngIf="orderListAvailable && (orderList.length < 1)">
+    <ion-card-header text-center>
+      <h4>No record found</h4>
+    </ion-card-header>
+  </ion-card>
+</ion-content>
+<ion-footer *ngIf="orderList.length" class="full-background">
+  <ion-row>
+    <ion-col text-center>
+      <button ion-button  color="secondary" (click)="filterOrderToExport()"><ion-icon name="document"></ion-icon> Export to csv</button>
+    </ion-col>
+  </ion-row>
+</ion-footer>
