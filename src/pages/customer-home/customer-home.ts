@@ -39,7 +39,7 @@ export class CustomerHomePage {
   }
 
   async getCardItems() {
-    this.cart = await this.storageService.getFromStorage('cart')
+    this.cart = await this.storageService.getCartFromStorage()
   }
 
   async reviewAndSubmitOrder() {
@@ -91,7 +91,7 @@ export class CustomerHomePage {
       if(result.body.length > 0) {
         result.body.map( (value) => {
           this.parentCategoryList.push(value)
-        }) 
+        })
       } else {
         this.skipValue = this.limit
       }

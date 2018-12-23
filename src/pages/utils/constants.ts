@@ -1,5 +1,5 @@
 export const CONSTANTS = {
-    BASE_URL : 'http://41.218.83.178:3000/',
+    BASE_URL : 'http://localhost:3000/',
     INTERNET_ISSUE : 'oops! You are not connected to the internet!',
     AUTH_FAIL : 'LoginId or password incorrect',
     SERVER_ERROR: 'Something went wrong',
@@ -24,5 +24,6 @@ export const CONSTANTS = {
     CSV_DOWNLOADED: 'CSV Downloaded Successfully',
     CSV_DOWNLOAD_FAIL: 'Failed to download CSV',
     USER_LOGIN_ID_ALREADY_EXIST: 'Oops! Entered UserLoginId already exist! Please enter a different one',
-    UNIQUE_PRODUCT_CODE: 'Oops! Entered Product code or ProductSys code already exist!  Please enter a different one'
+    UNIQUE_PRODUCT_CODE: 'Oops! Entered Product code or ProductSys code already exist!  Please enter a different one',
+    TOKEN_EXPIRED: 400
 }

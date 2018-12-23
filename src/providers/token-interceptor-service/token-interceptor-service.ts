@@ -1,13 +1,17 @@
-import { StorageServiceProvider } from './../storage-service/storage-service';
-import { HttpClient } from '@angular/common/http';
-import {HttpEvent, HttpHandler, HttpInterceptor, HttpRequest} from '@angular/common/http';
+import {HttpErrorResponse, HttpEvent, HttpHandler, HttpInterceptor, HttpRequest} from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
+
+import  'rxjs/add/operator/do';
+import {App} from "ionic-angular";
+import {LoginPage} from "../../pages/login/login";
+import {CONSTANTS} from "../../pages/utils/constants";
+
 
 @Injectable()
 export class TokenInterceptorServiceProvider implements HttpInterceptor {
 
-  constructor(public http: HttpClient, private storageService: StorageServiceProvider) {
+  constructor(private app: App) {
   }
 
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
@@ -18,6 +22,16 @@ export class TokenInterceptorServiceProvider implements HttpInterceptor {
         }
       });
     }
-    return next.handle(req);
+    return next.handle(req).do((event: HttpEvent<any>) => {},
+      (err: any) => {
+        if (err instanceof HttpErrorResponse) {
+          if (err.status === CONSTANTS.TOKEN_EXPIRED) {
+            // Remove invalid token
+            localStorage.removeItem('token');
+            // redirect user to Login page
+            this.app.getActiveNav().setRoot(LoginPage);
+          }
+        }
+      });;
   }
 }

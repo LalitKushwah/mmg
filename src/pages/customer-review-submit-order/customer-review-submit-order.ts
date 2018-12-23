@@ -36,7 +36,7 @@ export class CustomerReviewSubmitOrderPage {
   }
 
   async getCartItems() {
-    this.cartItems = await this.storageService.getFromStorage('cart')
+    this.cartItems = await this.storageService.getCartFromStorage()
     this.cartItems.map((value) => {
       value.price = (parseFloat((Math.round(value.price * 100) / 100).toString()).toFixed(2))
       value['subTotal'] = (parseFloat((Math.round((value.quantity * parseFloat(value.price) * 100) / 100)).toString()).toFixed(2))
