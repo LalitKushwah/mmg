@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css?family=Roboto');
+@import url('https://fonts.googleapis.com/css?family=Proxima+Nova');
 @import url('https://fonts.googleapis.com/css?family=Open+Sans');
 
 .ion-content {
@@ -6,7 +6,7 @@
 
 }
 .full-background {
-  background-color: color($colors, full-background);
+  background-color: #fff;
 }
 
 ion-card{
@@ -45,7 +45,7 @@ ion-icon {
 
 //table
 
-table, td, th {    
+table, td, th {
   text-align: left;
 }
 table {
@@ -82,4 +82,36 @@ tbody tr {
 
 .cancel {
   color: red
+}
+
+
+//header
+ion-navbar.toolbar {
+  .toolbar-background{
+    background: #225F93;
+  }
+}
+
+
+//overriding default framework style
+.item.item-block {
+  padding: 0;
+}
+
+.item-md.item-input.ng-valid.item-input-has-value:not(.input-has-focus):not(.item-input-has-focus) .item-inner,
+.item-md.item-input.ng-valid.input-has-value:not(.input-has-focus):not(.item-input-has-focus) .item-inner,
+.item-md.item-input.item-input-has-focus .item-inner,
+.item-md.item-input.input-has-focus .item-inner {
+  box-shadow: 0 -1px 0 0 #225F93;
+  border-bottom-color: #225F93;
+}
+.item-md.item-input.ng-invalid.ng-touched:not(.input-has-focus):not(.item-input-has-focus) .item-inner{
+  box-shadow: 0 -1px 0 0 #f53d3d;
+}
+ion-content.content-md[padding] .scroll-content {
+	padding-bottom: 16px !important;
+}
+
+ion-content.content-md:not([padding]) .scroll-content {
+	padding-bottom: 0 !important;
 }
