@@ -85,7 +85,7 @@ export class CustomerListProductPage {
   }
 
   async getCartItems() {
-    this.cart = await this.storageService.getFromStorage('cart')
+    this.cart = await this.storageService.getCartFromStorage()
     if(this.cart.length > 0) {
       let updatedTotal = 0, updatedQuantity = 0;
       this.cart.map((value) => {
@@ -178,7 +178,7 @@ export class CustomerListProductPage {
           result.body.map( (value) => {
             value.quantity = 0
             this.productList.push(value)
-          }) 
+          })
         } else {
             this.skipValue = this.limit
         }
@@ -197,7 +197,7 @@ export class CustomerListProductPage {
           result.body.map( (value) => {
             value.quantity = 0
             this.productList.push(value)
-          }) 
+          })
         } else {
             this.skipValue = this.limit
         }

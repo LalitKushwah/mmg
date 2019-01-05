@@ -7,13 +7,17 @@ import { Component } from '@angular/core';
 import { NavController, MenuController, PopoverController } from 'ionic-angular';
 import { LoginPage } from '../login/login';
 import { MyApp } from '../../app/app.component';
+import {CustomerReviewSubmitOrderPage} from "../customer-review-submit-order/customer-review-submit-order";
+import {CONSTANTS} from "../utils/constants";
 
 @Component({
   selector: 'page-home',
   templateUrl: 'home.html'
 })
 export class HomePage {
-  
+
+  cart: any = [];
+
   constructor(public navCtrl: NavController, private menuController: MenuController, private popoverController: PopoverController
   ,private storageService: StorageServiceProvider, private widgetUtil: WidgetUtilService) {
     this.checkData()
@@ -48,5 +52,24 @@ export class HomePage {
 
   presentPopover(myEvent) {
     this.widgetUtil.presentPopover(myEvent, PopoverHomePage)
+  }
+
+  async reviewAndSubmitOrder() {
+    if (this.cart.length <= 0) {
+      this.widgetUtil.showToast(CONSTANTS.CART_EMPTY)
+    }else {
+      let orderTotal = await this.storageService.getFromStorage('orderTotal')
+      this.navCtrl.push(CustomerReviewSubmitOrderPage, {
+        'orderTotal' : orderTotal
+      })
+    }
+  }
+
+  async getCardItems() {
+    this.cart = await this.storageService.getCartFromStorage()
+  }
+
+  ionViewDidEnter(){
+    this.getCardItems()
   }
 }

@@ -71,7 +71,7 @@ export class CustomerCategoryListPage {
   }
 
   async getCardItems() {
-    this.cart = await this.storageService.getFromStorage('cart')
+    this.cart = await this.storageService.getCartFromStorage()
   }
 
   async reviewAndSubmitOrder() {
@@ -91,7 +91,7 @@ export class CustomerCategoryListPage {
       if(result.body.length > 0) {
         result.body.map( (value) => {
           this.childCategoryList.push(value)
-        }) 
+        })
       }else {
         this.skipValue = this.limit
       }
@@ -121,7 +121,7 @@ export class CustomerCategoryListPage {
   }
 
   async submitSearch(ev: any) {
-    if (this.searchQuery && this.searchQuery.trim() != '') { 
+    if (this.searchQuery && this.searchQuery.trim() != '') {
       let data = {
         'keyword': this.searchQuery,
         'parentCategoryId': this.parentCategoryId,

@@ -39,7 +39,7 @@ export class CustomerHomePage {
   }
 
   async getCardItems() {
-    this.cart = await this.storageService.getFromStorage('cart')
+    this.cart = await this.storageService.getCartFromStorage()
   }
 
   async reviewAndSubmitOrder() {

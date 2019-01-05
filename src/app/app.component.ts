@@ -26,9 +26,9 @@ export class MyApp {
   pages: Array<{ title: string, component: any, icon: string }>;
 
   constructor(public platform: Platform, public statusBar: StatusBar, public splashScreen: SplashScreen
-    , private headerColor: HeaderColor, private menuController: MenuController, private storageService: StorageServiceProvider,
-    private zone: NgZone, public events: Events, private app: App) {
-    this.pages = [{ title: 'Home', component: HomePage, icon: 'md-home' }]
+  , private headerColor : HeaderColor, private menuController: MenuController, private storageService: StorageServiceProvider,
+  private zone: NgZone,  public events: Events, private app: App) {
+    this.pages = [{ title: 'Home', component: HomePage, icon :'md-home'}]
     this.menuController.swipeEnable(true)
     this.initializeApp();
     this.events.subscribe('updateScreen', () => {
@@ -52,11 +52,11 @@ export class MyApp {
         ]
       } else {
         this.pages = [
-          { title: 'Home', component: HomePage, icon: 'md-home' },
-          { title: 'Your Orders', component: CustomerListOrderPage, icon: 'cart' }
+          { title: 'Home', component: HomePage, icon :'md-home'},
+          { title: 'Your Orders', component: CustomerListOrderPage, icon : 'cart'}
         ]
       }
-      if (profile) {
+      if(profile) {
         this.partyName = profile['name']
       }
     } catch (err) {

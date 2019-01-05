@@ -18,6 +18,23 @@ export class StorageServiceProvider {
     })
   }
 
+  getCartFromStorage() {
+    return new Promise((resolve, reject) => {
+      this.storage.get('cart')
+        .then(result => {
+          if(result) {
+            resolve(result)
+          } else {
+            this.storage.set('cart', []).then(res => {
+              resolve(res)
+            })
+          }
+        }).catch(err => {
+          reject(err)
+      })
+    })
+  }
+
   setToStorage(key, value) {
     return this.storage.set(key, value)
   }
