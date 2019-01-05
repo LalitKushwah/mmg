@@ -1,3 +1,18 @@
 page-popover-home {
-    padding: 0px;
+    padding: 20px 0;
+    .item.item-block{
+        padding: 0 20px;
+        .item-inner {
+            padding-right: 0;
+        }
+    } 
+    ion-list.list {
+        margin: 0;
+        &:first-child {
+            padding-top: 15px;
+        }
+        &:last-child {
+            padding-bottom: 15px;
+        }
+    }
 }

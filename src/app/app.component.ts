@@ -9,7 +9,7 @@ import { SplashScreen } from '@ionic-native/splash-screen';
 
 import { HomePage } from '../pages/home/home';
 import { ListPage } from '../pages/list/list';
-import {HeaderColor} from "@ionic-native/header-color";
+import { HeaderColor } from "@ionic-native/header-color";
 import { LoginPage } from '../pages/login/login';
 import { CustomerListOrderPage } from '../pages/customer-list-order/customer-list-order';
 import { CustomerHomePage } from '../pages/customer-home/customer-home';
@@ -23,16 +23,16 @@ export class MyApp {
   rootPage: any = HomePage;
   partyName: string = ''
 
-  pages: Array<{title: string, component: any, icon : string}>;
+  pages: Array<{ title: string, component: any, icon: string }>;
 
   constructor(public platform: Platform, public statusBar: StatusBar, public splashScreen: SplashScreen
-  , private headerColor : HeaderColor, private menuController: MenuController, private storageService: StorageServiceProvider,
-  private zone: NgZone,  public events: Events, private app: App) {
-    this.pages = [{ title: 'Home', component: HomePage, icon :'md-home'}]
+    , private headerColor: HeaderColor, private menuController: MenuController, private storageService: StorageServiceProvider,
+    private zone: NgZone, public events: Events, private app: App) {
+    this.pages = [{ title: 'Home', component: HomePage, icon: 'md-home' }]
     this.menuController.swipeEnable(true)
     this.initializeApp();
     this.events.subscribe('updateScreen', () => {
-      this.zone.run(() => {})
+      this.zone.run(() => { })
     })
   }
 
@@ -46,20 +46,20 @@ export class MyApp {
       let profile = await this.storageService.getFromStorage('profile')
       if ((profile['userType'] === 'admin')) {
         this.pages = [
-          { title: 'Home', component: HomePage, icon :'md-home'},
-          { title: 'Customers', component: AdminListUserPage, icon :'md-happy'},
-          { title: 'Products', component: AdminListCategoryPage, icon :'list-box'},
+          { title: 'Home', component: HomePage, icon: 'md-home' },
+          { title: 'Customers', component: AdminListUserPage, icon: 'md-happy' },
+          { title: 'Products', component: AdminListCategoryPage, icon: 'list-box' },
         ]
       } else {
         this.pages = [
-          { title: 'Home', component: HomePage, icon :'md-home'},
-          { title: 'Your Orders', component: CustomerListOrderPage, icon : 'cart'}
+          { title: 'Home', component: HomePage, icon: 'md-home' },
+          { title: 'Your Orders', component: CustomerListOrderPage, icon: 'cart' }
         ]
       }
-      if(profile) {
+      if (profile) {
         this.partyName = profile['name']
       }
-    } catch(err) {
+    } catch (err) {
       console.log('Error: Home Page Component:', err)
     }
     this.events.publish('updateScreen')
@@ -77,7 +77,7 @@ export class MyApp {
   }
 
   openPage(page) {
-    if(page.component.name === 'HomePage') {
+    if (page.component.name === 'HomePage') {
       this.app.getRootNav().setRoot(page.component)
     } else {
       this.nav.push(page.component)

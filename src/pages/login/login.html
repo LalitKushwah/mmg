@@ -5,19 +5,22 @@
   <form [formGroup]="userLoginForm">
     <ion-grid>
       <ion-row>
-        <ion-col>
           <ion-item>
             <ion-label floating>Login Id</ion-label>
             <ion-input type="text" formControlName="userLoginId"></ion-input>
           </ion-item>
-          <p *ngIf="userLoginId.hasError('required') && userLoginId.touched" class="error">*Login Id is required</p>
+          <ion-icon name="log-in"></ion-icon>
+        </ion-row>
+        
+        <p *ngIf="userLoginId.hasError('required') && userLoginId.touched" class="error">*Login Id is required</p>
+      <ion-row>
           <ion-item>
             <ion-label floating>Password</ion-label>
             <ion-input type="password" formControlName="passwordLogin"></ion-input>
           </ion-item>
-          <p *ngIf="passwordLogin.hasError('required') && passwordLogin.touched" class="error">*Password is required</p>
-        </ion-col>
+          <ion-icon name="lock"></ion-icon>
       </ion-row>
+      <p *ngIf="passwordLogin.hasError('required') && passwordLogin.touched" class="error">*Password is required</p>
     </ion-grid>
     <ion-grid>
       <button ion-button color="secondary" [disabled]="!(userLoginForm.valid)" (click)="login();">

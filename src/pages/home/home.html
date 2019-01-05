@@ -4,9 +4,10 @@
       <ion-icon name="menu"></ion-icon>
     </button>
     <ion-title>Trade King</ion-title>
-    <ion-buttons end>
-      <button ion-button icon-only (click)="presentPopover($event)">
-        <ion-icon name="more"></ion-icon>
+    <ion-buttons end>      
+      <button class="cart-btn" ion-button icon-only (click)="reviewAndSubmitOrder()">
+        <ion-icon name="cart"></ion-icon>
+        <ion-badge class="cart-badge">{{cart.length}}</ion-badge>
       </button>
     </ion-buttons>
   </ion-navbar>

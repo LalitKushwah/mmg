@@ -1,10 +1,10 @@
 <ion-header>
   <ion-navbar>
     <ion-title>{{categoryObj.name}}</ion-title>
-    <ion-buttons end>
-      <button ion-button icon-only (click)="reviewAndSubmitOrder()">
-        <h4>{{cart.length}}</h4>
+    <ion-buttons end>      
+      <button class="cart-btn" ion-button icon-only (click)="reviewAndSubmitOrder()">
         <ion-icon name="cart"></ion-icon>
+        <ion-badge class="cart-badge">{{cart.length}}</ion-badge>
       </button>
     </ion-buttons>
   </ion-navbar>
@@ -27,7 +27,7 @@
         <img src="./assets/imgs/productcategory.png">
       </ion-avatar>
       <span>{{category.name}}</span>
-      <button ion-button clear color="secondary" item-end><h1><ion-icon md="md-arrow-round-forward"></ion-icon></h1></button>
+      <button ion-button clear color="secondary" item-end><ion-icon name="arrow-forward"></ion-icon></button>
     </button>
   </ion-list>
   <ion-card *ngIf="categoryListAvailable && (childCategoryList.length < 1)">
