@@ -7,8 +7,9 @@ import { Component } from '@angular/core';
 import { NavController, MenuController, PopoverController } from 'ionic-angular';
 import { LoginPage } from '../login/login';
 import { MyApp } from '../../app/app.component';
-import {CustomerReviewSubmitOrderPage} from "../customer-review-submit-order/customer-review-submit-order";
-import {CONSTANTS} from "../utils/constants";
+import { CustomerReviewSubmitOrderPage } from "../customer-review-submit-order/customer-review-submit-order";
+import { CONSTANTS } from "../utils/constants";
+import { PageNotFoundPage } from "./../page-not-found/page-not-found";
 
 @Component({
   selector: 'page-home',
@@ -19,28 +20,30 @@ export class HomePage {
   cart: any = [];
 
   constructor(public navCtrl: NavController, private menuController: MenuController, private popoverController: PopoverController
-  ,private storageService: StorageServiceProvider, private widgetUtil: WidgetUtilService) {
+    , private storageService: StorageServiceProvider, private widgetUtil: WidgetUtilService) {
     this.checkData()
   }
 
   async checkData() {
     try {
       let profile = await this.storageService.getFromStorage('profile')
-      if(profile) {
-        if(!(profile['token'])) {
+      if (profile) {
+        if (!(profile['token'])) {
           this.gotToLogin()
         } else {
           this.menuController.swipeEnable(true, 'main_menu')
           if (profile['userType'] === 'admin') {
             this.navCtrl.setRoot(AdminHomePage)
-          }else{
+          } else {
             this.navCtrl.setRoot(CustomerHomePage)
+            // added for testing page not found
+            // this.navCtrl.setRoot(PageNotFoundPage)
           }
         }
       } else {
         this.gotToLogin()
       }
-    } catch(err) {
+    } catch (err) {
       console.log('Error: Home Page Component:', err)
     }
   }
@@ -57,10 +60,10 @@ export class HomePage {
   async reviewAndSubmitOrder() {
     if (this.cart.length <= 0) {
       this.widgetUtil.showToast(CONSTANTS.CART_EMPTY)
-    }else {
+    } else {
       let orderTotal = await this.storageService.getFromStorage('orderTotal')
       this.navCtrl.push(CustomerReviewSubmitOrderPage, {
-        'orderTotal' : orderTotal
+        'orderTotal': orderTotal
       })
     }
   }
@@ -69,7 +72,7 @@ export class HomePage {
     this.cart = await this.storageService.getCartFromStorage()
   }
 
-  ionViewDidEnter(){
+  ionViewDidEnter() {
     this.getCardItems()
   }
 }

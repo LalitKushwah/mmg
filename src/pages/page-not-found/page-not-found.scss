@@ -1,0 +1,31 @@
+page-page-not-found {
+    .scroll-content {
+        background: color($colors, primary);
+        color: color($colors, full-background);
+        font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+        text-align: center;
+        display: table;
+        height: 100vh;
+        width: 100vw;;
+        .not-found {
+            display: table-cell;
+            vertical-align: middle;
+        }
+        img {
+            max-width: 40%;
+        }
+        .error-code {
+            font-size: 70px;
+            margin: 40px 0 0;
+        }
+        .error-msg {
+            font-size: 38px;
+        }
+        button {
+            background: color($colors, secondary);
+            &:first-child{
+                margin-right: 20px;
+            }
+        }
+    }
+}

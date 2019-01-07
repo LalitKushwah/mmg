@@ -54,6 +54,7 @@ import { ResetPasswordModelPageModule } from '../pages/reset-password-model/rese
 import { AdminListSubCategoryPage } from '../pages/admin-list-sub-category/admin-list-sub-category';
 import { AdminEditProductPage } from '../pages/admin-edit-product/admin-edit-product';
 import { CategoryTotalModalPage } from '../pages/category-total-modal/category-total-modal';
+import { PageNotFoundPageModule } from '../pages/page-not-found/page-not-found.module';
 
 @NgModule({
   declarations: [
@@ -90,7 +91,8 @@ import { CategoryTotalModalPage } from '../pages/category-total-modal/category-t
     ResetPasswordModelPageModule,
     AdminListSubCategoryPageModule,
     AdminEditProductPageModule,
-    CategoryTotalModalPageModule
+    CategoryTotalModalPageModule,
+    PageNotFoundPageModule
   ],
   bootstrap: [IonicApp],
   entryComponents: [
