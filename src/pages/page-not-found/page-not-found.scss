@@ -12,14 +12,15 @@ page-page-not-found {
             vertical-align: middle;
         }
         img {
-            max-width: 40%;
+            height: 150px;
         }
         .error-code {
-            font-size: 70px;
-            margin: 40px 0 0;
+            font-size: 40px;
+            margin: 20px 0 0;
         }
         .error-msg {
-            font-size: 38px;
+            font-size: 20px;
+            margin-bottom: 40px;
         }
         button {
             background: color($colors, secondary);

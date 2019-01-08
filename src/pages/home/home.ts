@@ -35,9 +35,9 @@ export class HomePage {
           if (profile['userType'] === 'admin') {
             this.navCtrl.setRoot(AdminHomePage)
           } else {
-            this.navCtrl.setRoot(CustomerHomePage)
+            //this.navCtrl.setRoot(CustomerHomePage)
             // added for testing page not found
-            // this.navCtrl.setRoot(PageNotFoundPage)
+            this.navCtrl.setRoot(PageNotFoundPage)
           }
         }
       } else {
