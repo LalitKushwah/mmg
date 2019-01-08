@@ -70,7 +70,7 @@ export class MyApp {
       // Okay, so the platform is ready and our plugins are available.
       // Here you can do any higher level native things you might need.
       this.statusBar.overlaysWebView(false);
-      this.statusBar.backgroundColorByHexString('#488aff');
+      this.statusBar.backgroundColorByHexString('#1A4D76');
       this.headerColor.tint('#FD367E');
       this.splashScreen.hide();
     });

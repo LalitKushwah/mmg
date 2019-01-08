@@ -6,6 +6,7 @@ import  'rxjs/add/operator/do';
 import {App} from "ionic-angular";
 import {LoginPage} from "../../pages/login/login";
 import {CONSTANTS} from "../../pages/utils/constants";
+import {SessionExpiredPage} from "../../pages/session-expired/session-expired";
 
 
 @Injectable()
@@ -29,9 +30,9 @@ export class TokenInterceptorServiceProvider implements HttpInterceptor {
             // Remove invalid token
             localStorage.removeItem('token');
             // redirect user to Login page
-            this.app.getActiveNav().setRoot(LoginPage);
+            this.app.getActiveNav().setRoot(SessionExpiredPage);
           }
         }
-      });;
+      });
   }
 }

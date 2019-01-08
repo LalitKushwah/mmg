@@ -1,6 +1,6 @@
 <ion-content padding class="full-background" text-center>
   <div class="logo-wrapper">
-    <img src="../assets/imgs/avatar.png" alt="logo">
+    <img src="assets/imgs/avatar.png" alt="logo">
   </div>
   <form [formGroup]="userLoginForm">
     <ion-grid>
@@ -11,7 +11,7 @@
           </ion-item>
           <ion-icon name="log-in"></ion-icon>
         </ion-row>
-        
+
         <p *ngIf="userLoginId.hasError('required') && userLoginId.touched" class="error">*Login Id is required</p>
       <ion-row>
           <ion-item>

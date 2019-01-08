@@ -55,6 +55,7 @@ import { AdminListSubCategoryPage } from '../pages/admin-list-sub-category/admin
 import { AdminEditProductPage } from '../pages/admin-edit-product/admin-edit-product';
 import { CategoryTotalModalPage } from '../pages/category-total-modal/category-total-modal';
 import { SessionExpiredPageModule } from '../pages/session-expired/session-expired.module';
+import {SessionExpiredPage} from "../pages/session-expired/session-expired";
 
 @NgModule({
   declarations: [
@@ -115,7 +116,8 @@ import { SessionExpiredPageModule } from '../pages/session-expired/session-expir
     ResetPasswordModelPage,
     AdminListSubCategoryPage,
     AdminEditProductPage,
-    CategoryTotalModalPage
+    CategoryTotalModalPage,
+    SessionExpiredPage
   ],
   providers: [
     StatusBar,

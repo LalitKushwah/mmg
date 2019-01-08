@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import {LoginPage} from "../login/login";
 
 /**
  * Generated class for the SessionExpiredPage page.
@@ -8,7 +9,9 @@ import { IonicPage, NavController, NavParams } from 'ionic-angular';
  * Ionic pages and navigation.
  */
 
-@IonicPage()
+@IonicPage({
+  name:'SessionExpiredPage'
+})
 @Component({
   selector: 'page-session-expired',
   templateUrl: 'session-expired.html',
@@ -18,8 +21,8 @@ export class SessionExpiredPage {
   constructor(public navCtrl: NavController, public navParams: NavParams) {
   }
 
-  ionViewDidLoad() {
-    console.log('ionViewDidLoad SessionExpiredPage');
+  goToLogin() {
+    this.navCtrl.setRoot(LoginPage)
   }
 
 }
