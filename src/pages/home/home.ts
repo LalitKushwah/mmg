@@ -9,7 +9,7 @@ import { LoginPage } from '../login/login';
 import { MyApp } from '../../app/app.component';
 import { CustomerReviewSubmitOrderPage } from "../customer-review-submit-order/customer-review-submit-order";
 import { CONSTANTS } from "../utils/constants";
-import { PageNotFoundPage } from "./../page-not-found/page-not-found";
+import { SessionExpiredPage } from "./../session-expired/session-expired";
 
 @Component({
   selector: 'page-home',
@@ -37,7 +37,7 @@ export class HomePage {
           } else {
             //this.navCtrl.setRoot(CustomerHomePage)
             // added for testing page not found
-            this.navCtrl.setRoot(PageNotFoundPage)
+            this.navCtrl.setRoot(SessionExpiredPage)
           }
         }
       } else {

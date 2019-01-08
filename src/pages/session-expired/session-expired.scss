@@ -1,4 +1,4 @@
-page-page-not-found {
+page-session-expired {
     .scroll-content {
         background: color($colors, primary);
         color: color($colors, full-background);
@@ -24,9 +24,6 @@ page-page-not-found {
         }
         button {
             background: color($colors, secondary);
-            &:first-child{
-                margin-right: 20px;
-            }
         }
     }
 }
