@@ -1,6 +1,5 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
-import { StorageServiceProvider } from '../../providers/storage-service/storage-service';
 import { WidgetUtilService } from '../../utils/widget-utils';
 import { ApiServiceProvider } from '../../providers/api-service/api-service';
 import { CONSTANTS } from '../../utils/constants';
@@ -19,8 +18,10 @@ export class AdminListSubCategoryPage {
   skipValue: number = 0
   limit: number = CONSTANTS.PAGINATION_LIMIT
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, private apiService: ApiServiceProvider, private widgetUtil: WidgetUtilService
-  , private storageService: StorageServiceProvider) {
+  constructor(public navCtrl: NavController,
+              public navParams: NavParams,
+              private apiService: ApiServiceProvider,
+              private widgetUtil: WidgetUtilService,) {
     this.parentCategoryId = this.navParams.get("parentCategoryId")
     this.categoryObj = this.navParams.get("category")
     this.categoryListAvailable = false

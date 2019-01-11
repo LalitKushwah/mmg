@@ -1,13 +1,12 @@
-import { ResetUserPasswordPage } from './../reset-user-password/reset-user-password';
-import { AddProductPage } from './../add-product/add-product';
-import { AddCategoryPage } from './../add-category/add-category';
-import { AddUserPage } from './../add-user/add-user';
+import { ResetUserPasswordPage } from '../reset-user-password/reset-user-password';
+import { AddProductPage } from '../add-product/add-product';
+import { AddCategoryPage } from '../add-category/add-category';
+import { AddUserPage } from '../add-user/add-user';
 import { WidgetUtilService } from '../../utils/widget-utils';
-import { HomePage } from './../home/home';
-import { LoginPage } from './../login/login';
-import { StorageServiceProvider } from './../../providers/storage-service/storage-service';
+import { HomePage } from '../home/home';
+import { StorageServiceProvider } from '../../providers/storage-service/storage-service';
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams, App, PopoverController, ViewController } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, App} from 'ionic-angular';
 
 @IonicPage({
   name: 'PopoverHomePage'

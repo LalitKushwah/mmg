@@ -98,7 +98,7 @@ export class CustomerListProductPage {
       this.cartQuantity = 0
       this.orderTotal = 0
     }
-    let result = await this.storageService.setToStorage('orderTotal', this.orderTotal)
+    await this.storageService.setToStorage('orderTotal', this.orderTotal)
   }
 
   reviewAndSubmitOrder() {

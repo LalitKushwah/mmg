@@ -4,7 +4,6 @@ import { Observable } from 'rxjs/Observable';
 
 import  'rxjs/add/operator/do';
 import {App} from "ionic-angular";
-import {LoginPage} from "../../pages/login/login";
 import {CONSTANTS} from "../../utils/constants";
 import {SessionExpiredPage} from "../../pages/session-expired/session-expired";
 

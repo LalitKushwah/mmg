@@ -1,10 +1,9 @@
-import { ApiServiceProvider } from './../../providers/api-service/api-service';
+import { ApiServiceProvider } from '../../providers/api-service/api-service';
 import { CONSTANTS } from '../../utils/constants';
-import { StorageServiceProvider } from './../../providers/storage-service/storage-service';
+import { StorageServiceProvider } from '../../providers/storage-service/storage-service';
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams, FabButton, Platform } from 'ionic-angular';
+import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { WidgetUtilService } from '../../utils/widget-utils';
-import { File } from '@ionic-native/file';
 import { FileTransfer, FileTransferObject } from '@ionic-native/file-transfer';
 
 @IonicPage({
@@ -28,10 +27,13 @@ export class CustomerOrderDetailPage {
   headerRow: any[] = [];
   fileTransfer: FileTransferObject = this.transfer.create();
 
-  constructor(public navCtrl: NavController, public navParams: NavParams
-  , private storageService: StorageServiceProvider, private apiService: ApiServiceProvider,
-    private widgetUtil: WidgetUtilService, private file: File,
-    private transfer: FileTransfer, private platform: Platform) {
+  constructor(public navCtrl: NavController,
+              public navParams: NavParams,
+              private storageService: StorageServiceProvider,
+              private apiService: ApiServiceProvider,
+              private widgetUtil: WidgetUtilService,
+              private transfer: FileTransfer) {
+
     this.orderDetail = this.navParams.get('order')
     this.orderItems = this.orderDetail.productList
     this.orderItems.map((value) => {
