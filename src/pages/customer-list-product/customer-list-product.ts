@@ -2,9 +2,9 @@ import { CustomerReviewSubmitOrderPage } from './../customer-review-submit-order
 import { StorageServiceProvider } from './../../providers/storage-service/storage-service';
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
-import { WidgetUtilService } from '../utils/widget-utils';
+import { WidgetUtilService } from '../../utils/widget-utils';
 import { ApiServiceProvider } from '../../providers/api-service/api-service';
-import { CONSTANTS } from '../utils/constants';
+import { CONSTANTS } from '../../utils/constants';
 
 @IonicPage({
   name: 'CustomerListProductPage'

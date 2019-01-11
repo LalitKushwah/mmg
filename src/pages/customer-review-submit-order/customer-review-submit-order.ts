@@ -1,11 +1,11 @@
 import { CategoryTotalModalPage } from './../category-total-modal/category-total-modal';
 import { HomePage } from './../home/home';
-import { WidgetUtilService } from './../utils/widget-utils';
+import { WidgetUtilService } from '../../utils/widget-utils';
 import { ApiServiceProvider } from './../../providers/api-service/api-service';
 import { StorageServiceProvider } from './../../providers/storage-service/storage-service';
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams, ModalController } from 'ionic-angular';
-import { CONSTANTS } from '../utils/constants';
+import { CONSTANTS } from '../../utils/constants';
 
 @IonicPage({
   name: 'CustomerReviewSubmitOrderPage'

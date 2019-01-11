@@ -1,14 +1,14 @@
 import { AdminHomePage } from './../admin-home/admin-home';
 import { CustomerHomePage } from './../customer-home/customer-home';
 import { StorageServiceProvider } from './../../providers/storage-service/storage-service';
-import { WidgetUtilService } from './../utils/widget-utils';
+import { WidgetUtilService } from '../../utils/widget-utils';
 import { PopoverHomePage } from './../popover-home/popover-home';
 import { Component } from '@angular/core';
 import { NavController, MenuController, PopoverController } from 'ionic-angular';
 import { LoginPage } from '../login/login';
 import { MyApp } from '../../app/app.component';
 import { CustomerReviewSubmitOrderPage } from "../customer-review-submit-order/customer-review-submit-order";
-import { CONSTANTS } from "../utils/constants";
+import { CONSTANTS } from "../../utils/constants";
 import { SessionExpiredPage } from "./../session-expired/session-expired";
 
 @Component({

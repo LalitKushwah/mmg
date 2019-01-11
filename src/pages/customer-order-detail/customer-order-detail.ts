@@ -1,9 +1,9 @@
 import { ApiServiceProvider } from './../../providers/api-service/api-service';
-import { CONSTANTS } from './../utils/constants';
+import { CONSTANTS } from '../../utils/constants';
 import { StorageServiceProvider } from './../../providers/storage-service/storage-service';
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams, FabButton, Platform } from 'ionic-angular';
-import { WidgetUtilService } from '../utils/widget-utils';
+import { WidgetUtilService } from '../../utils/widget-utils';
 import { File } from '@ionic-native/file';
 import { FileTransfer, FileTransferObject } from '@ionic-native/file-transfer';
 
@@ -30,7 +30,7 @@ export class CustomerOrderDetailPage {
 
   constructor(public navCtrl: NavController, public navParams: NavParams
   , private storageService: StorageServiceProvider, private apiService: ApiServiceProvider,
-    private widgetUtil: WidgetUtilService, private file: File, 
+    private widgetUtil: WidgetUtilService, private file: File,
     private transfer: FileTransfer, private platform: Platform) {
     this.orderDetail = this.navParams.get('order')
     this.orderItems = this.orderDetail.productList
@@ -40,8 +40,8 @@ export class CustomerOrderDetailPage {
     })
     this.orderItemsAvailable = true
     this.showImportOrder = false
-    this.showCsvButton = false 
-    this.showCancelOrder= false 
+    this.showCsvButton = false
+    this.showCancelOrder= false
   }
 
   ionViewDidEnter(){
@@ -119,5 +119,5 @@ export class CustomerOrderDetailPage {
       infiniteScroll.complete();
     }, 500);
   }
-  
+
 }

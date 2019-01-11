@@ -2,7 +2,7 @@ import { ResetUserPasswordPage } from './../reset-user-password/reset-user-passw
 import { AddProductPage } from './../add-product/add-product';
 import { AddCategoryPage } from './../add-category/add-category';
 import { AddUserPage } from './../add-user/add-user';
-import { WidgetUtilService } from './../utils/widget-utils';
+import { WidgetUtilService } from '../../utils/widget-utils';
 import { HomePage } from './../home/home';
 import { LoginPage } from './../login/login';
 import { StorageServiceProvider } from './../../providers/storage-service/storage-service';
@@ -88,7 +88,7 @@ export class PopoverHomePage {
     this.navCtrl.push(AddUserPage)
     this.dismissPopover()
   }
-  
+
   addCategory() {
     this.navCtrl.push(AddCategoryPage)
     this.dismissPopover()

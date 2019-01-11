@@ -1,10 +1,10 @@
 import { AdminListProductPage } from './../admin-list-product/admin-list-product';
 import { StorageServiceProvider } from './../../providers/storage-service/storage-service';
-import { WidgetUtilService } from './../utils/widget-utils';
+import { WidgetUtilService } from '../../utils/widget-utils';
 import { ApiServiceProvider } from './../../providers/api-service/api-service';
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
-import { CONSTANTS } from '../utils/constants';
+import { CONSTANTS } from '../../utils/constants';
 import { CustomerListProductPage } from '../customer-list-product/customer-list-product';
 import { CustomerReviewSubmitOrderPage } from '../customer-review-submit-order/customer-review-submit-order';
 

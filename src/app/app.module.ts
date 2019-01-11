@@ -20,7 +20,7 @@ import { CustomerListProductPage } from './../pages/customer-list-product/custom
 import { CustomerCategoryListPageModule } from './../pages/customer-category-list/customer-category-list.module';
 import { AdminHomePageModule } from './../pages/admin-home/admin-home.module';
 import { CustomerHomePageModule } from './../pages/customer-home/customer-home.module';
-import { WidgetUtilService } from './../pages/utils/widget-utils';
+import { WidgetUtilService } from '../utils/widget-utils';
 import { BrowserModule } from '@angular/platform-browser';
 import { ErrorHandler, NgModule } from '@angular/core';
 import { IonicApp, IonicErrorHandler, IonicModule } from 'ionic-angular';

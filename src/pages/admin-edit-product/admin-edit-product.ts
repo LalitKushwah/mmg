@@ -1,9 +1,9 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
-import { CONSTANTS } from '../utils/constants';
+import { CONSTANTS } from '../../utils/constants';
 import { ApiServiceProvider } from '../../providers/api-service/api-service';
-import { WidgetUtilService } from '../utils/widget-utils';
+import { WidgetUtilService } from '../../utils/widget-utils';
 
 @IonicPage()
 @Component({

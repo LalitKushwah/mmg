@@ -1,9 +1,9 @@
 import { StorageServiceProvider } from './../../providers/storage-service/storage-service';
-import { CONSTANTS } from './../utils/constants';
+import { CONSTANTS } from '../../utils/constants';
 import { Component, OnInit } from '@angular/core';
 import { IonicPage, NavController, NavParams, App, ViewController } from 'ionic-angular';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
-import { WidgetUtilService } from '../utils/widget-utils';
+import { WidgetUtilService } from '../../utils/widget-utils';
 import { ApiServiceProvider } from '../../providers/api-service/api-service';
 import { HomePage } from '../home/home';
 import { ViewCompiler } from '@angular/compiler';

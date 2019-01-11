@@ -2,8 +2,8 @@ import { ResetPasswordModelPage } from './../reset-password-model/reset-password
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams, ModalController, Alert, AlertController } from 'ionic-angular';
 import { ApiServiceProvider } from '../../providers/api-service/api-service';
-import { WidgetUtilService } from '../utils/widget-utils';
-import { CONSTANTS } from '../utils/constants';
+import { WidgetUtilService } from '../../utils/widget-utils';
+import { CONSTANTS } from '../../utils/constants';
 
 @IonicPage({
   name: 'AdminListUserPage'
