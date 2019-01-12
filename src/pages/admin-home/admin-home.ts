@@ -1,8 +1,8 @@
-import { WidgetUtilService } from './../utils/widget-utils';
+import { WidgetUtilService } from '../../utils/widget-utils';
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams, AlertController } from 'ionic-angular';
 import { PopoverHomePage } from '../popover-home/popover-home';
-import { CONSTANTS } from '../utils/constants';
+import { CONSTANTS } from '../../utils/constants';
 import { ApiServiceProvider } from '../../providers/api-service/api-service';
 import { CustomerOrderDetailPage } from '../customer-order-detail/customer-order-detail';
 import { File } from '@ionic-native/file'
@@ -72,7 +72,7 @@ export class AdminHomePage {
       if(result.body.length > 0) {
         result.body.map( (value) => {
           this.orderList.push(value)
-        }) 
+        })
       } else {
         this.skipValue = this.limit
       }

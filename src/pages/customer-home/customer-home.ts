@@ -1,9 +1,9 @@
 import { ApiServiceProvider } from './../../providers/api-service/api-service';
-import { WidgetUtilService } from './../utils/widget-utils';
+import { WidgetUtilService } from '../../utils/widget-utils';
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { PopoverHomePage } from '../popover-home/popover-home';
-import { CONSTANTS } from '../utils/constants';
+import { CONSTANTS } from '../../utils/constants';
 import { CustomerCategoryListPage } from '../customer-category-list/customer-category-list';
 import { StorageServiceProvider } from '../../providers/storage-service/storage-service';
 import { CustomerReviewSubmitOrderPage } from '../customer-review-submit-order/customer-review-submit-order';

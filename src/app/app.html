@@ -6,13 +6,15 @@
           <img src="./assets/imgs/avatar.png">
         </ion-avatar>
       </div>
-      <ion-title>Welcome, <span>{{partyName}}</span></ion-title>
+      <ion-title>Welcome <span>{{partyName}}</span></ion-title>
     </ion-toolbar>
   </ion-header>
   <ion-content class="full-background">
     <ion-list>
       <button menuClose ion-item *ngFor="let p of pages" (click)="openPage(p)">
-        <ion-icon name="{{p.icon}}" color="grey" padding="16px"></ion-icon> {{p.title}}
+        <!-- <ion-icon name="{{p.icon}}" color="grey" padding="16px"></ion-icon>  -->
+        <img src="../assets/icon/{{p.icon}}.svg" alt="{{p.icon}}"/>
+        <span>{{p.title}}</span>
       </button>
     </ion-list>
   </ion-content>

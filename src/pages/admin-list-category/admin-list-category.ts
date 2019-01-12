@@ -1,8 +1,8 @@
 import { AdminListSubCategoryPage } from './../admin-list-sub-category/admin-list-sub-category';
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
-import { CONSTANTS } from '../utils/constants';
-import { WidgetUtilService } from '../utils/widget-utils';
+import { CONSTANTS } from '../../utils/constants';
+import { WidgetUtilService } from '../../utils/widget-utils';
 import { ApiServiceProvider } from '../../providers/api-service/api-service';
 import { PopoverHomePage } from '../popover-home/popover-home';
 

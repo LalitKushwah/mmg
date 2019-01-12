@@ -23,7 +23,7 @@
       <p *ngIf="passwordLogin.hasError('required') && passwordLogin.touched" class="error">*Password is required</p>
     </ion-grid>
     <ion-grid>
-      <button ion-button color="secondary" [disabled]="!(userLoginForm.valid)" (click)="login();">
+      <button ion-button large color="secondary" [disabled]="!(userLoginForm.valid)" (click)="login();">
         Login
         <ion-spinner name="dots" *ngIf="showLoginLoader"></ion-spinner></button>
     </ion-grid>

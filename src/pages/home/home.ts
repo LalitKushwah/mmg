@@ -1,15 +1,13 @@
-import { AdminHomePage } from './../admin-home/admin-home';
-import { CustomerHomePage } from './../customer-home/customer-home';
-import { StorageServiceProvider } from './../../providers/storage-service/storage-service';
-import { WidgetUtilService } from './../utils/widget-utils';
-import { PopoverHomePage } from './../popover-home/popover-home';
+import { AdminHomePage } from '../admin-home/admin-home';
+import { CustomerHomePage } from '../customer-home/customer-home';
+import { StorageServiceProvider } from '../../providers/storage-service/storage-service';
+import { WidgetUtilService } from '../../utils/widget-utils';
+import { PopoverHomePage } from '../popover-home/popover-home';
 import { Component } from '@angular/core';
-import { NavController, MenuController, PopoverController } from 'ionic-angular';
+import { NavController, MenuController } from 'ionic-angular';
 import { LoginPage } from '../login/login';
-import { MyApp } from '../../app/app.component';
 import { CustomerReviewSubmitOrderPage } from "../customer-review-submit-order/customer-review-submit-order";
-import { CONSTANTS } from "../utils/constants";
-import { SessionExpiredPage } from "./../session-expired/session-expired";
+import { CONSTANTS } from "../../utils/constants";
 
 @Component({
   selector: 'page-home',
@@ -19,8 +17,11 @@ export class HomePage {
 
   cart: any = [];
 
-  constructor(public navCtrl: NavController, private menuController: MenuController, private popoverController: PopoverController
-    , private storageService: StorageServiceProvider, private widgetUtil: WidgetUtilService) {
+  constructor(public navCtrl: NavController,
+              private menuController: MenuController,
+              private storageService: StorageServiceProvider,
+              private widgetUtil: WidgetUtilService) {
+
     this.checkData()
   }
 
