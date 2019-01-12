@@ -1,5 +1,5 @@
 <ion-header>
-  <ion-navbar color="light">
+  <ion-navbar>
     <ion-title>Category Wise Total</ion-title>
     <ion-buttons end>
       <button ion-button icon-only (click)="dismissModal()"><ion-icon name="close-circle"></ion-icon>
@@ -11,7 +11,7 @@
   <div class="search-spinner">
     <ion-spinner name="crescent" *ngIf="!categoryListAvailable"></ion-spinner>
   </div>
-  <ion-card style="overflow-x:auto;" *ngIf="categoryListAvailable">
+  <ion-card *ngIf="categoryListAvailable">
     <table>
       <thead>
         <tr>

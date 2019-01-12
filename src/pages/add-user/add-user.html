@@ -4,111 +4,113 @@
   </ion-navbar>
 </ion-header>
 <ion-content class="full-background">
-  <ion-card>
-    <ion-card-header text-center>Add User
-      <!-- <ion-icon name="happy"></ion-icon> -->
-    </ion-card-header>
-    <ion-card-content>
-      <ion-grid>
-          <ion-row>
-            <ion-col>
-              <ion-list>
-                <ion-item>
-                  <ion-label><ion-icon name="md-happy" color="grey" padding-right></ion-icon>User Type</ion-label>
-                  <ion-select [(ngModel)]="selectedUserType" interface="popover" (ngModelChange)="onUserTypeSelect()">
-                    <ion-option *ngFor="let user of userTypeList" [value]="user">{{user}}</ion-option>
-                  </ion-select>
-                </ion-item>
-                <ion-item>
-                  <ion-label><ion-icon name="pin" color="grey" padding-right></ion-icon>Country</ion-label>
-                  <ion-select [(ngModel)]="selectedCountry" interface="popover">
-                    <ion-option *ngFor="let country of countryList" [value]="country">{{country}}</ion-option>
-                  </ion-select>
-                </ion-item>
-                <ion-item>
-                  <ion-label><ion-icon name="locate" color="grey" padding-right></ion-icon>Province</ion-label>
-                  <ion-select [(ngModel)]="selectedProvince" interface="popover">
-                    <ion-option *ngFor="let province of provinceList" [value]="province">{{province}}</ion-option>
-                  </ion-select>
-                </ion-item>
-              </ion-list>
-            </ion-col>  
-            <ion-col *ngIf="showCustomerForm">
-              <form [formGroup]="addCustomerForm">
-                <ion-item>
-                    <ion-label floating>Name</ion-label>
-                    <ion-input type="text" formControlName="name"></ion-input>
-                </ion-item>
-                  <ion-item *ngIf="name.hasError('required') && name.touched">
-                  <p style="color: red">name is required*</p>
-                </ion-item>
 
-                <ion-item>
-                    <ion-label floating>Customer Code</ion-label>
-                    <ion-input type="text" formControlName="externalId"></ion-input>
-                  </ion-item>
-                    <ion-item *ngIf="externalId.hasError('required') && externalId.touched">
-                    <p style="color: red">customer code is required*</p>
-                  </ion-item>
+  <ion-grid>
+    <ion-row>
+      <ion-col>
+        <ion-list>
+          <ion-item>
+            <ion-label>
+              <ion-icon name="md-happy" color="grey" padding-right></ion-icon>User Type
+            </ion-label>
+            <ion-select [(ngModel)]="selectedUserType" interface="popover" (ngModelChange)="onUserTypeSelect()">
+              <ion-option *ngFor="let user of userTypeList" [value]="user">{{user}}</ion-option>
+            </ion-select>
+          </ion-item>
+          <ion-item>
+            <ion-label>
+              <ion-icon name="pin" color="grey" padding-right></ion-icon>Country
+            </ion-label>
+            <ion-select [(ngModel)]="selectedCountry" interface="popover">
+              <ion-option *ngFor="let country of countryList" [value]="country">{{country}}</ion-option>
+            </ion-select>
+          </ion-item>
+          <ion-item>
+            <ion-label>
+              <ion-icon name="locate" color="grey" padding-right></ion-icon>Province
+            </ion-label>
+            <ion-select [(ngModel)]="selectedProvince" interface="popover">
+              <ion-option *ngFor="let province of provinceList" [value]="province">{{province}}</ion-option>
+            </ion-select>
+          </ion-item>
+        </ion-list>
+      </ion-col>
+      <ion-col *ngIf="showCustomerForm">
+        <form [formGroup]="addCustomerForm">
+          <ion-item>
+            <ion-label floating>Name</ion-label>
+            <ion-input type="text" formControlName="name"></ion-input>
+          </ion-item>
+          <p class="error" *ngIf="name.hasError('required') && name.touched">
+            *Name is required
+          </p>
 
-                <ion-item>
-                  <ion-label floating>User Login Id</ion-label>
-                  <ion-input type="text" formControlName="userLoginId"></ion-input>
-                </ion-item>
-                <ion-item *ngIf="userLoginId.hasError('required') && userLoginId.touched">
-                  <p style="color: red">User Login Id is required*</p>
-                </ion-item>
+          <ion-item>
+            <ion-label floating>Customer Code</ion-label>
+            <ion-input type="text" formControlName="externalId"></ion-input>
+          </ion-item>
+          <p class="error" *ngIf="externalId.hasError('required') && externalId.touched">
+            *Customer code is required
+          </p>
 
-                <ion-item>
-                  <ion-label floating>Password</ion-label>
-                  <ion-input type="text" formControlName="password"></ion-input>
-                </ion-item>
-                  <ion-item *ngIf="password.hasError('required') && password.touched">
-                  <p style="color: red">password  is required*</p>
-                </ion-item>
+          <ion-item>
+            <ion-label floating>User Login Id</ion-label>
+            <ion-input type="text" formControlName="userLoginId"></ion-input>
+          </ion-item>
+          <p class="error" *ngIf="userLoginId.hasError('required') && userLoginId.touched">
+            *User Login Id is required
+          </p>
 
-                <ion-item>
-                  <ion-label floating>Channel</ion-label>
-                  <ion-input type="text" formControlName="channel"></ion-input>
-                </ion-item>
-                <ion-item *ngIf="channel.hasError('required') && channel.touched">
-                  <p style="color: red">channel is required*</p>
-                </ion-item>
-                <ion-grid>
-                  <button ion-button color="secondary" [disabled]="!(addCustomerForm.valid)" (click)="createUser('customer');">Add Customer<ion-spinner name="dots" *ngIf="showLoader"></ion-spinner></button>
-                </ion-grid>
-              </form>
-            </ion-col>
-            <ion-col *ngIf="!showCustomerForm">
-              <form [formGroup]="addAdminForm">
-                <ion-item>
-                  <ion-label floating>Name</ion-label>
-                  <ion-input type="text" formControlName="name"></ion-input>
-                </ion-item>
-                  <ion-item *ngIf="name.hasError('required') && name.touched">
-                  <p style="color: red">name is required*</p>
-                </ion-item>
-                <ion-item>
-                  <ion-label floating>User Login Id</ion-label>
-                  <ion-input type="text" formControlName="userLoginId"></ion-input>
-                </ion-item>
-                <ion-item *ngIf="userLoginId.hasError('required') && userLoginId.touched">
-                  <p style="color: red">User Login Id is required*</p>
-                </ion-item>
-                <ion-item>
-                  <ion-label floating>Password</ion-label>
-                  <ion-input type="password" formControlName="password"></ion-input>
-                </ion-item>
-                  <ion-item *ngIf="password.hasError('required') && password.touched">
-                  <p style="color: red">password  is required*</p>
-                </ion-item>
-                <ion-grid>
-                  <button ion-button color="secondary" [disabled]="!(addAdminForm.controls.name.valid && addAdminForm.controls.userLoginId.valid && addAdminForm.controls.password.valid)" (click)="createUser('admin');">Add Admin<ion-spinner name="dots" *ngIf="showLoader"></ion-spinner></button>
-                </ion-grid>
-              </form>
-            </ion-col>
-          </ion-row>
-        </ion-grid>
-    </ion-card-content>
-  </ion-card>
+          <ion-item>
+            <ion-label floating>Password</ion-label>
+            <ion-input type="text" formControlName="password"></ion-input>
+          </ion-item>
+          <p class="error" *ngIf="password.hasError('required') && password.touched">
+            *Password is required*
+          </p>
+
+          <ion-item>
+            <ion-label floating>Channel</ion-label>
+            <ion-input type="text" formControlName="channel"></ion-input>
+          </ion-item>
+          <p class="error" *ngIf="channel.hasError('required') && channel.touched">
+            *Channel is required
+          </p>
+          <ion-grid>
+            <button ion-button color="secondary" [disabled]="!(addCustomerForm.valid)" (click)="createUser('customer');">Add
+              Customer<ion-spinner name="dots" *ngIf="showLoader"></ion-spinner></button>
+          </ion-grid>
+        </form>
+      </ion-col>
+      <ion-col *ngIf="!showCustomerForm">
+        <form [formGroup]="addAdminForm">
+          <ion-item>
+            <ion-label floating>Name</ion-label>
+            <ion-input type="text" formControlName="name"></ion-input>
+          </ion-item>
+          <p class="error" *ngIf="name.hasError('required') && name.touched">
+            *Name is required
+          </p>
+          <ion-item>
+            <ion-label floating>User Login Id</ion-label>
+            <ion-input type="text" formControlName="userLoginId"></ion-input>
+          </ion-item>
+          <p class="error" *ngIf="userLoginId.hasError('required') && userLoginId.touched">
+            *User Login Id is required
+          </p>
+          <ion-item>
+            <ion-label floating>Password</ion-label>
+            <ion-input type="password" formControlName="password"></ion-input>
+          </ion-item>
+          <p class="error" *ngIf="password.hasError('required') && password.touched">
+            *Password is required
+          </p>
+          <ion-grid>
+            <button ion-button color="secondary" [disabled]="!(addAdminForm.controls.name.valid && addAdminForm.controls.userLoginId.valid && addAdminForm.controls.password.valid)"
+              (click)="createUser('admin');">Add Admin<ion-spinner name="dots" *ngIf="showLoader"></ion-spinner></button>
+          </ion-grid>
+        </form>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
 </ion-content>

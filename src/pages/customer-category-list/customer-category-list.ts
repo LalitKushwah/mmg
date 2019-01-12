@@ -4,6 +4,7 @@ import { WidgetUtilService } from './../utils/widget-utils';
 import { ApiServiceProvider } from './../../providers/api-service/api-service';
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { PopoverHomePage } from '../popover-home/popover-home';
 import { CONSTANTS } from '../utils/constants';
 import { CustomerListProductPage } from '../customer-list-product/customer-list-product';
 import { CustomerReviewSubmitOrderPage } from '../customer-review-submit-order/customer-review-submit-order';
@@ -135,6 +136,9 @@ export class CustomerCategoryListPage {
         this.navCtrl.push(CustomerListProductPage, data)
       }
     }
+  }
+  presentPopover(myEvent) {
+    this.widgetUtil.presentPopover(myEvent, PopoverHomePage)
   }
 }
 

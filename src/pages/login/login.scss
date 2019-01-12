@@ -6,11 +6,6 @@ page-login {
       width: 50%;
     }
   }
-  .error {
-    text-align: left;
-    color: color($colors, danger);
-    margin-top: 0;
-  }
   ion-item.item.item-block {
     margin-bottom: 20px;
   }
@@ -35,4 +30,9 @@ page-login {
       color: #bebebe;
     }
   }
+}
+.error {
+  text-align: left;
+  color: color($colors, danger);
+  margin-top: 0;
 }

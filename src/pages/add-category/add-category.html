@@ -1,50 +1,44 @@
 <ion-header>
-    <ion-navbar>
-      <ion-title>Add Category</ion-title>
-    </ion-navbar>
-  </ion-header>
-  <ion-content class="full-background">
-    <div class="search-spinner">
-      <ion-spinner name="crescent" *ngIf="!categoryListAvailable"></ion-spinner>
-    </div>
-    <ion-card *ngIf="categoryListAvailable">
-      <ion-card-header text-center>Add Category</ion-card-header>
-      <ion-card-content>
-        <ion-grid>
-            <ion-row>
-              <ion-col>
-                <ion-list>
-                  <ion-item>
-                      <ion-label>Category Type</ion-label>
-                      <ion-select [(ngModel)]="selectedCategoryType" interface="popover" (ngModelChange)="onCategoryTypeSelect()">
-                        <ion-option *ngFor="let categoryType of categoryTypeList" [value]="categoryType">{{categoryType}}</ion-option>
-                      </ion-select>
-                    </ion-item>
-                  <ion-item *ngIf="showParentList">
-                    <ion-label>Parent Category</ion-label>
-                    <ion-select [(ngModel)]="selectedCategory" interface="popover" [compareWith]="compareFn">
-                      <ion-option *ngFor="let category of categoryList" [value]="category">{{category.name}}</ion-option>
-                    </ion-select>
-                  </ion-item>
-                </ion-list>
-              </ion-col>  
-              <ion-col>
-                <form [formGroup]="addCategoryForm">
-                  <ion-item>
-                      <ion-label floating>Name</ion-label>
-                      <ion-input type="text" formControlName="name"></ion-input>
-                  </ion-item>
-                    <ion-item *ngIf="name.hasError('required') && name.touched">
-                    <p style="color: red">name is required*</p>
-                  </ion-item>
-                  <ion-grid>
-                    <button ion-button color="secondary" [disabled]="!(addCategoryForm.valid && allowAddingCategory)" (click)="addCategory();">Add Category<ion-spinner name="dots" *ngIf="showLoader"></ion-spinner></button>
-                  </ion-grid>
-                </form>
-              </ion-col>
-            </ion-row>
+  <ion-navbar>
+    <ion-title>Add Category</ion-title>
+  </ion-navbar>
+</ion-header>
+<ion-content class="full-background">
+  <div class="search-spinner">
+    <ion-spinner name="crescent" *ngIf="!categoryListAvailable"></ion-spinner>
+  </div>
+  <ion-grid *ngIf="categoryListAvailable">
+    <ion-row>
+      <ion-col>
+        <ion-list>
+          <ion-item>
+            <ion-label>Category Type</ion-label>
+            <ion-select [(ngModel)]="selectedCategoryType" interface="popover" (ngModelChange)="onCategoryTypeSelect()">
+              <ion-option *ngFor="let categoryType of categoryTypeList" [value]="categoryType">{{categoryType}}</ion-option>
+            </ion-select>
+          </ion-item>
+          <ion-item *ngIf="showParentList">
+            <ion-label>Parent Category</ion-label>
+            <ion-select [(ngModel)]="selectedCategory" interface="popover" [compareWith]="compareFn">
+              <ion-option *ngFor="let category of categoryList" [value]="category">{{category.name}}</ion-option>
+            </ion-select>
+          </ion-item>
+        </ion-list>
+      </ion-col>
+      <ion-col>
+        <form [formGroup]="addCategoryForm">
+          <ion-item>
+            <ion-label floating>Name</ion-label>
+            <ion-input type="text" formControlName="name"></ion-input>
+          </ion-item>
+          <p class="error" *ngIf="name.hasError('required') && name.touched">
+            *Name is required</p>
+          <ion-grid>
+            <button ion-button color="secondary" [disabled]="!(addCategoryForm.valid && allowAddingCategory)" (click)="addCategory();">Add
+              Category<ion-spinner name="dots" *ngIf="showLoader"></ion-spinner></button>
           </ion-grid>
-      </ion-card-content>
-    </ion-card>
-  </ion-content>
-  
+        </form>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+</ion-content>

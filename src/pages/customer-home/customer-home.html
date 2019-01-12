@@ -24,13 +24,10 @@
     <ion-refresher-content></ion-refresher-content>
   </ion-refresher>
   <ion-list *ngIf="categoryListAvailable && (parentCategoryList.length > 0)">
-    <button ion-item *ngFor="let category of parentCategoryList" (click)="getChildCategory(category)">
-      <ion-avatar item-start>
-        <img src="./assets/imgs/productcategory.png">
-      </ion-avatar>
-      <span>{{category.name}}</span>
+    <ion-item *ngFor="let category of parentCategoryList" (click)="getChildCategory(category)">
+        <img src="./assets/imgs/productcategory.png">{{category.name}}
       <button ion-button clear color="secondary" item-end><ion-icon name="arrow-forward"></ion-icon></button>
-    </button>
+    </ion-item>
   </ion-list>
   <ion-card *ngIf="categoryListAvailable && (parentCategoryList.length < 1)">
     <ion-card-header text-center>
