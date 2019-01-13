@@ -189,8 +189,8 @@ ion-menu {
     }
   }
   img {
-    width: 70px;
-    margin-top: 20px; 
+    width: 60px;
+    margin: 20px 0 5px;
     color: #fff;
   }
   .item.item-block > span {
@@ -216,5 +216,11 @@ ion-menu {
   .item.item-block .item-inner {
     border-bottom: none;
   }
+  ion-list.list {
+    margin-top: 20px;
+  }
 }
 
+ion-card-content.card-content {
+  padding:  15px 5px;
+}

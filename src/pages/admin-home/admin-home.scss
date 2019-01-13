@@ -1,3 +1,8 @@
 page-admin-home {
-
+    ion-infinite-scroll {
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        z-index: 100;
+    }
 }
