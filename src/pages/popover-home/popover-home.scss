@@ -22,4 +22,13 @@ ion-popover {
             border-bottom: 1px solid #ccc !important;
         }
     }
+    &.popover-ios .popover-content {
+        width: 210px;
+    }
+    .list-ios:last-child,
+    .list-md:last-child {
+        > .item-block .item-inner {
+            border: none !important;
+        }
+    }
 }
