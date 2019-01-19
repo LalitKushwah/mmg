@@ -3,7 +3,7 @@
     <name>TradeKings</name>
     <description>TradeKingsZambia</description>
     <author email="hi@ionicframework" href="http://ionicframework.com/">Tradekings Dev</author>
-    <content original-src="index.html" src="http://192.168.0.101:8101" />
+    <content src="index.html" />
     <access origin="*" />
     <allow-intent href="http://*/*" />
     <allow-intent href="https://*/*" />
@@ -82,6 +82,7 @@
     <allow-navigation href="http://192.168.0.101:8101" />
     <allow-navigation href="http://192.168.0.101:8100" />
     <engine name="android" spec="^7.0.0" />
+    <engine name="ios" spec="^4.4.0" />
     <plugin name="cordova-plugin-device" spec="^2.0.2" />
     <plugin name="cordova-plugin-file" spec="^6.0.1" />
     <plugin name="cordova-plugin-file-transfer" spec="^1.7.1" />
