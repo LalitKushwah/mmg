@@ -122,6 +122,10 @@ ion-toolbar.toolbar {
   }
   > div {
     text-align: center;
+    &.toolbar-content {
+      border-bottom: 1px solid #fff;
+      padding-bottom: 20px;
+    }
   }
 }
 //overriding default framework style
@@ -209,7 +213,7 @@ ion-menu {
     }
   }
   img {
-    width: 60px;
+    width: 45px;
     margin: 20px 0 5px;
     color: #fff;
   }
@@ -221,16 +225,16 @@ ion-menu {
   }
   ion-avatar {    
     display: inline-block;
-    width: 100px;
-    height: 100px;
+    width: 90px;
+    height: 90px;
     border-radius: 50px;
     background: #fff;
     margin: 10px 0;
     img {    
-      width: 65px;
+      width: 64px;
       position: relative;
-      top: -4px;
-      left: 18px;
+      top: -8px;
+      left: 13px;
     }
   }
   .item.item-block .item-inner {
