@@ -32,6 +32,10 @@ export class ApiServiceProvider {
     return this.http.post(CONSTANTS.BASE_URL + 'api/order/', orderDetails)
   }
 
+  getData(obj) {
+    return this.http.post(CONSTANTS.BASE_URL + 'api/user/products', obj)
+  }
+
   getOrderList(skip:number, limit:number): any {
     return this.http.get(CONSTANTS.BASE_URL + 'api/order/list/' + '?skip='+skip.toString() + "&limit="+ limit.toString())
   }

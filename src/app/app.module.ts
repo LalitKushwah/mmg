@@ -56,6 +56,8 @@ import { AdminEditProductPage } from '../pages/admin-edit-product/admin-edit-pro
 import { CategoryTotalModalPage } from '../pages/category-total-modal/category-total-modal';
 import { SessionExpiredPageModule } from '../pages/session-expired/session-expired.module';
 import {SessionExpiredPage} from "../pages/session-expired/session-expired";
+import {OracleConnectPageModule} from "../pages/oracle-connect/oracle-connect.module";
+import {OracleConnectPage} from "../pages/oracle-connect/oracle-connect";
 
 @NgModule({
   declarations: [
@@ -93,7 +95,8 @@ import {SessionExpiredPage} from "../pages/session-expired/session-expired";
     AdminListSubCategoryPageModule,
     AdminEditProductPageModule,
     CategoryTotalModalPageModule,
-    SessionExpiredPageModule
+    SessionExpiredPageModule,
+    OracleConnectPageModule
   ],
   bootstrap: [IonicApp],
   entryComponents: [
@@ -117,7 +120,8 @@ import {SessionExpiredPage} from "../pages/session-expired/session-expired";
     AdminListSubCategoryPage,
     AdminEditProductPage,
     CategoryTotalModalPage,
-    SessionExpiredPage
+    SessionExpiredPage,
+    OracleConnectPage
   ],
   providers: [
     StatusBar,
