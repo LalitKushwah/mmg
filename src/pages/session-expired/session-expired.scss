@@ -1,0 +1,29 @@
+page-session-expired {
+    .scroll-content {
+        background: color($colors, primary);
+        color: color($colors, full-background);
+        font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+        text-align: center;
+        display: table;
+        height: 100vh;
+        width: 100vw;;
+        .not-found {
+            display: table-cell;
+            vertical-align: middle;
+        }
+        img {
+            height: 150px;
+        }
+        .error-code {
+            font-size: 40px;
+            margin: 20px 0 0;
+        }
+        .error-msg {
+            font-size: 20px;
+            margin-bottom: 40px;
+        }
+        button {
+            background: color($colors, secondary);
+        }
+    }
+}

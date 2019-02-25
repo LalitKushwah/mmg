@@ -1,4 +1,4 @@
-import { CONSTANTS } from './../../pages/utils/constants';
+import { CONSTANTS } from '../../utils/constants';
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 
@@ -11,7 +11,7 @@ export class ApiServiceProvider {
   login(credentials: Object): any {
     return this.http.post(CONSTANTS.BASE_URL + 'api/user/authenticate', credentials)
   }
-  
+
   getParentCategoryList(skip: number, limit:number): any {
     return this.http.get(CONSTANTS.BASE_URL + 'api/category/list/parent?skip='+skip.toString() + "&limit="+ limit.toString())
   }
@@ -30,6 +30,10 @@ export class ApiServiceProvider {
 
   submitOrder(orderDetails: Object): any {
     return this.http.post(CONSTANTS.BASE_URL + 'api/order/', orderDetails)
+  }
+
+  getData(obj) {
+    return this.http.post(CONSTANTS.BASE_URL + 'api/user/products', obj)
   }
 
   getOrderList(skip:number, limit:number): any {

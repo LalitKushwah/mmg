@@ -1,26 +1,26 @@
-import { CategoryTotalModalPageModule } from './../pages/category-total-modal/category-total-modal.module';
-import { AdminEditProductPageModule } from './../pages/admin-edit-product/admin-edit-product.module';
-import { AdminListSubCategoryPageModule } from './../pages/admin-list-sub-category/admin-list-sub-category.module';
-import { ResetPasswordModelPage } from './../pages/reset-password-model/reset-password-model';
-import { ResetUserPasswordPageModule } from './../pages/reset-user-password/reset-user-password.module';
-import { ResetUserPasswordPage } from './../pages/reset-user-password/reset-user-password';
-import { AdminListProductPageModule } from './../pages/admin-list-product/admin-list-product.module';
-import { AdminListCategoryPageModule } from './../pages/admin-list-category/admin-list-category.module';
-import { AdminListUserPageModule } from './../pages/admin-list-user/admin-list-user.module';
-import { AddUserPageModule } from './../pages/add-user/add-user.module';
-import { AddProductPageModule } from './../pages/add-product/add-product.module';
-import { AddCategoryPageModule } from './../pages/add-category/add-category.module';
-import { CustomerOrderDetailPageModule } from './../pages/customer-order-detail/customer-order-detail.module';
-import { CustomerOrderDetailPage } from './../pages/customer-order-detail/customer-order-detail';
-import { CustomerListOrderPageModule } from './../pages/customer-list-order/customer-list-order.module';
-import { CustomerListOrderPage } from './../pages/customer-list-order/customer-list-order';
-import { CustomerReviewSubmitOrderPageModule } from './../pages/customer-review-submit-order/customer-review-submit-order.module';
-import { CustomerListProductPageModule } from './../pages/customer-list-product/customer-list-product.module';
-import { CustomerListProductPage } from './../pages/customer-list-product/customer-list-product';
-import { CustomerCategoryListPageModule } from './../pages/customer-category-list/customer-category-list.module';
-import { AdminHomePageModule } from './../pages/admin-home/admin-home.module';
-import { CustomerHomePageModule } from './../pages/customer-home/customer-home.module';
-import { WidgetUtilService } from './../pages/utils/widget-utils';
+import { CategoryTotalModalPageModule } from '../pages/category-total-modal/category-total-modal.module';
+import { AdminEditProductPageModule } from '../pages/admin-edit-product/admin-edit-product.module';
+import { AdminListSubCategoryPageModule } from '../pages/admin-list-sub-category/admin-list-sub-category.module';
+import { ResetPasswordModelPage } from '../pages/reset-password-model/reset-password-model';
+import { ResetUserPasswordPageModule } from '../pages/reset-user-password/reset-user-password.module';
+import { ResetUserPasswordPage } from '../pages/reset-user-password/reset-user-password';
+import { AdminListProductPageModule } from '../pages/admin-list-product/admin-list-product.module';
+import { AdminListCategoryPageModule } from '../pages/admin-list-category/admin-list-category.module';
+import { AdminListUserPageModule } from '../pages/admin-list-user/admin-list-user.module';
+import { AddUserPageModule } from '../pages/add-user/add-user.module';
+import { AddProductPageModule } from '../pages/add-product/add-product.module';
+import { AddCategoryPageModule } from '../pages/add-category/add-category.module';
+import { CustomerOrderDetailPageModule } from '../pages/customer-order-detail/customer-order-detail.module';
+import { CustomerOrderDetailPage } from '../pages/customer-order-detail/customer-order-detail';
+import { CustomerListOrderPageModule } from '../pages/customer-list-order/customer-list-order.module';
+import { CustomerListOrderPage } from '../pages/customer-list-order/customer-list-order';
+import { CustomerReviewSubmitOrderPageModule } from '../pages/customer-review-submit-order/customer-review-submit-order.module';
+import { CustomerListProductPageModule } from '../pages/customer-list-product/customer-list-product.module';
+import { CustomerListProductPage } from '../pages/customer-list-product/customer-list-product';
+import { CustomerCategoryListPageModule } from '../pages/customer-category-list/customer-category-list.module';
+import { AdminHomePageModule } from '../pages/admin-home/admin-home.module';
+import { CustomerHomePageModule } from '../pages/customer-home/customer-home.module';
+import { WidgetUtilService } from '../utils/widget-utils';
 import { BrowserModule } from '@angular/platform-browser';
 import { ErrorHandler, NgModule } from '@angular/core';
 import { IonicApp, IonicErrorHandler, IonicModule } from 'ionic-angular';
@@ -46,7 +46,7 @@ import { AddCategoryPage } from '../pages/add-category/add-category';
 import { AddUserPage } from '../pages/add-user/add-user';
 import { AddProductPage } from '../pages/add-product/add-product';
 import { File } from '@ionic-native/file';
-import { FileTransfer, FileUploadOptions, FileTransferObject } from '@ionic-native/file-transfer';
+import { FileTransfer, FileTransferObject } from '@ionic-native/file-transfer';
 import { AdminListCategoryPage } from '../pages/admin-list-category/admin-list-category';
 import { AdminListProductPage } from '../pages/admin-list-product/admin-list-product';
 import { AdminListUserPage } from '../pages/admin-list-user/admin-list-user';
@@ -54,6 +54,10 @@ import { ResetPasswordModelPageModule } from '../pages/reset-password-model/rese
 import { AdminListSubCategoryPage } from '../pages/admin-list-sub-category/admin-list-sub-category';
 import { AdminEditProductPage } from '../pages/admin-edit-product/admin-edit-product';
 import { CategoryTotalModalPage } from '../pages/category-total-modal/category-total-modal';
+import { SessionExpiredPageModule } from '../pages/session-expired/session-expired.module';
+import {SessionExpiredPage} from "../pages/session-expired/session-expired";
+import {OracleConnectPageModule} from "../pages/oracle-connect/oracle-connect.module";
+import {OracleConnectPage} from "../pages/oracle-connect/oracle-connect";
 
 @NgModule({
   declarations: [
@@ -90,7 +94,9 @@ import { CategoryTotalModalPage } from '../pages/category-total-modal/category-t
     ResetPasswordModelPageModule,
     AdminListSubCategoryPageModule,
     AdminEditProductPageModule,
-    CategoryTotalModalPageModule
+    CategoryTotalModalPageModule,
+    SessionExpiredPageModule,
+    OracleConnectPageModule
   ],
   bootstrap: [IonicApp],
   entryComponents: [
@@ -113,7 +119,9 @@ import { CategoryTotalModalPage } from '../pages/category-total-modal/category-t
     ResetPasswordModelPage,
     AdminListSubCategoryPage,
     AdminEditProductPage,
-    CategoryTotalModalPage
+    CategoryTotalModalPage,
+    SessionExpiredPage,
+    OracleConnectPage
   ],
   providers: [
     StatusBar,

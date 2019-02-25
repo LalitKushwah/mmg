@@ -1,9 +1,8 @@
-import { ResetPasswordModelPage } from './../reset-password-model/reset-password-model';
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams, ModalController, Alert, AlertController } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, AlertController } from 'ionic-angular';
 import { ApiServiceProvider } from '../../providers/api-service/api-service';
-import { WidgetUtilService } from '../utils/widget-utils';
-import { CONSTANTS } from '../utils/constants';
+import { WidgetUtilService } from '../../utils/widget-utils';
+import { CONSTANTS } from '../../utils/constants';
 
 @IonicPage({
   name: 'AdminListUserPage'
@@ -19,8 +18,10 @@ export class AdminListUserPage {
   userList: Array<any> = [];
   userListAvailable: Boolean = false
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, private apiService: ApiServiceProvider, private widgetUtil: WidgetUtilService
-  , private modal: ModalController, private alertCtrl: AlertController) {
+  constructor(public navCtrl: NavController, public navParams: NavParams,
+              private apiService: ApiServiceProvider,
+              private widgetUtil: WidgetUtilService,
+              private alertCtrl: AlertController) {
     this.skipValue = 0
     this.limit = CONSTANTS.PAGINATION_LIMIT
     this.getUserList()
@@ -46,7 +47,7 @@ export class AdminListUserPage {
       if(result.body.length > 0) {
         result.body.map( (value) => {
           this.userList.push(value)
-        }) 
+        })
       } else {
         this.skipValue = this.limit
       }
@@ -67,7 +68,7 @@ export class AdminListUserPage {
       refresher.complete();
     }, 1000);
   }
-  
+
   resetPasswordModel(user) {
     /* const resetPasswordConfirm = this.modal.create('ResetPasswordModelPage', {message: 'Are you sure you want to reset password for ' +  customerName})
     resetPasswordConfirm.present()

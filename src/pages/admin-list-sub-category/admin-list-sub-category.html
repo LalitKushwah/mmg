@@ -11,13 +11,10 @@
     <ion-refresher-content></ion-refresher-content>
   </ion-refresher>
   <ion-list *ngIf="categoryListAvailable && (childCategoryList.length > 0)">
-    <button ion-item *ngFor="let category of childCategoryList" (click)="getProducts(category)">
-      <ion-avatar item-start>
-        <img src="./assets/imgs/productcategory.png">
-      </ion-avatar>
-      <span>{{category.name}}</span>
-      <button ion-button clear color="secondary" item-end><h1><ion-icon md="md-arrow-round-forward"></ion-icon></h1></button>
-    </button>
+    <ion-item *ngFor="let category of childCategoryList" (click)="getProducts(category)">
+        <img src="assets/imgs/productcategory.svg">{{category.name}}
+      <button ion-button clear color="secondary" item-end><ion-icon name="arrow-forward"></ion-icon></button>
+    </ion-item>
   </ion-list>
   <ion-card *ngIf="categoryListAvailable && (childCategoryList.length < 1)">
     <ion-card-header text-center>

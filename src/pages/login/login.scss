@@ -1,3 +1,38 @@
 page-login {
-
+  position: relative;
+  .logo-wrapper {
+    padding: 25px 0;
+    img {
+      width: 50%;
+    }
+  }
+  ion-item.item.item-block {
+    margin-bottom: 20px;
+  }
+  button {
+    position: absolute;
+    bottom: 0;
+  }
+  form {
+    ion-grid:first-child {
+      min-height: 40vh;
+    }
+    ion-grid:last-child {
+      text-align: center;
+    }
+  }
+  ion-row {
+    position: relative;
+    ion-icon {
+      position: absolute;
+      right: 0;
+      bottom: 30px;
+      color: #bebebe;
+    }
+  }
+}
+.error {
+  text-align: left;
+  color: color($colors, danger);
+  margin-top: 0;
 }

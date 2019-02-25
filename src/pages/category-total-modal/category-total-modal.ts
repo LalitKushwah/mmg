@@ -1,8 +1,8 @@
-import { WidgetUtilService } from './../utils/widget-utils';
+import { WidgetUtilService } from '../../utils/widget-utils';
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams, ViewController } from 'ionic-angular';
+import { IonicPage, NavParams, ViewController } from 'ionic-angular';
 import { ApiServiceProvider } from '../../providers/api-service/api-service';
-import { CONSTANTS } from '../utils/constants';
+import { CONSTANTS } from '../../utils/constants';
 
 @IonicPage({
   name: 'CategoryTotalModalPage'
@@ -37,7 +37,7 @@ export class CategoryTotalModalPage {
             } else {
               parentCategoryObj.subTotal = (parseFloat(cartItem.subTotal))
             }
-          } 
+          }
         })
       })
       this.parentCategoryList.map(parentCategoryObj => {

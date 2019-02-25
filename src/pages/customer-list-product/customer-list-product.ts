@@ -2,9 +2,10 @@ import { CustomerReviewSubmitOrderPage } from './../customer-review-submit-order
 import { StorageServiceProvider } from './../../providers/storage-service/storage-service';
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
-import { WidgetUtilService } from '../utils/widget-utils';
+import { WidgetUtilService } from '../../utils/widget-utils';
 import { ApiServiceProvider } from '../../providers/api-service/api-service';
-import { CONSTANTS } from '../utils/constants';
+import { CONSTANTS } from '../../utils/constants';
+import { PopoverHomePage } from '../popover-home/popover-home';
 
 @IonicPage({
   name: 'CustomerListProductPage'
@@ -85,7 +86,7 @@ export class CustomerListProductPage {
   }
 
   async getCartItems() {
-    this.cart = await this.storageService.getFromStorage('cart')
+    this.cart = await this.storageService.getCartFromStorage()
     if(this.cart.length > 0) {
       let updatedTotal = 0, updatedQuantity = 0;
       this.cart.map((value) => {
@@ -98,7 +99,7 @@ export class CustomerListProductPage {
       this.cartQuantity = 0
       this.orderTotal = 0
     }
-    let result = await this.storageService.setToStorage('orderTotal', this.orderTotal)
+    await this.storageService.setToStorage('orderTotal', this.orderTotal)
   }
 
   reviewAndSubmitOrder() {
@@ -178,7 +179,7 @@ export class CustomerListProductPage {
           result.body.map( (value) => {
             value.quantity = 0
             this.productList.push(value)
-          }) 
+          })
         } else {
             this.skipValue = this.limit
         }
@@ -197,7 +198,7 @@ export class CustomerListProductPage {
           result.body.map( (value) => {
             value.quantity = 0
             this.productList.push(value)
-          }) 
+          })
         } else {
             this.skipValue = this.limit
         }
@@ -220,5 +221,8 @@ export class CustomerListProductPage {
       refresher.complete();
     }, 1000);
   }
-
+  
+  presentPopover(myEvent) {
+    this.widgetUtil.presentPopover(myEvent, PopoverHomePage)
+  }
 }

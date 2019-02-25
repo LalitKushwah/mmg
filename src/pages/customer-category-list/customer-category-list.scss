@@ -1,3 +1,22 @@
 page-customer-category-list {
+    ion-icon {
+        font-size: 2em;
+    }
+}
+.searchbar .searchbar-input {
+    padding: 6px 10px 6px 50px;
+}
 
+ion-item {
+    img {
+        overflow: hidden;
+        width: 35px;
+        height: 40px;
+        margin-right: 20px;
+    }
+}
+
+ion-label {
+    display: flex;
+    align-items: center;
 }

@@ -1,9 +1,9 @@
 import { AdminEditProductPage } from './../admin-edit-product/admin-edit-product';
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
-import { CONSTANTS } from '../utils/constants';
+import { CONSTANTS } from '../../utils/constants';
 import { ApiServiceProvider } from '../../providers/api-service/api-service';
-import { WidgetUtilService } from '../utils/widget-utils';
+import { WidgetUtilService } from '../../utils/widget-utils';
 
 @IonicPage({
   name: 'AdminListProductPage'
@@ -51,7 +51,7 @@ export class AdminListProductPage {
       if(result.body.length > 0) {
         result.body.map( (value) => {
           this.productList.push(value)
-        }) 
+        })
       } else {
         this.skipValue = this.limit
       }

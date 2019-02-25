@@ -1,12 +1,11 @@
-import { MyApp } from './../../app/app.component';
-import { HomePage } from './../home/home';
-import { WidgetUtilService } from './../utils/widget-utils';
-import { StorageServiceProvider } from './../../providers/storage-service/storage-service';
-import { ApiServiceProvider } from './../../providers/api-service/api-service';
+import { MyApp } from '../../app/app.component';
+import { WidgetUtilService } from '../../utils/widget-utils';
+import { StorageServiceProvider } from '../../providers/storage-service/storage-service';
+import { ApiServiceProvider } from '../../providers/api-service/api-service';
 import { Component, OnInit } from '@angular/core';
-import { IonicPage, NavController, NavParams, MenuController } from 'ionic-angular';
+import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
-import { CONSTANTS } from '../utils/constants';
+import { CONSTANTS } from '../../utils/constants';
 
 @IonicPage({
   name: 'LoginPage'
@@ -21,9 +20,13 @@ export class LoginPage implements OnInit {
   passwordLogin: FormControl;
   userLoginId: FormControl;
   showLoginLoader = false;
-  
-  constructor(public navCtrl: NavController, public navParams: NavParams, private apiService: ApiServiceProvider, private storageService: StorageServiceProvider
-  , private widgetUtil: WidgetUtilService, private menuController: MenuController) {
+
+  constructor(public navCtrl: NavController,
+              public navParams: NavParams,
+              private apiService: ApiServiceProvider,
+              private storageService: StorageServiceProvider,
+              private widgetUtil: WidgetUtilService) {
+
     this.checkData()
   }
 
@@ -65,7 +68,6 @@ export class LoginPage implements OnInit {
       this.storageService.setToStorage('token', result.body[0].token)
       this.storageService.setToStorage('profile', result.body[0])
       this.storageService.setToStorage('userType', result.body[0].userType)
-      this.storageService.setToStorage('cart', [])
       localStorage.setItem('token', result.body[0].token)
       this.showLoginLoader = false;
       this.navCtrl.setRoot(MyApp)

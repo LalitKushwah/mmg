@@ -1,18 +1,20 @@
 <ion-menu [content]="content" id="main_menu" (ionOpen)="getData()" (ionClose)="getData()" type="overlay" persistent="true">
   <ion-header>
     <ion-toolbar>
-      <div style="background-color: #488aff !important">
-        <ion-avatar item-start>
-          <img src="./assets/imgs/avatar.png" style="width: 50px;height: 50px;margin-left: 5px">
+      <div>
+        <ion-avatar>
+          <img src="assets/imgs/avatar.png">
         </ion-avatar>
       </div>
-      <ion-title>Welcome, {{partyName}}</ion-title>
+      <ion-title>Welcome <span>{{partyName}}</span></ion-title>
     </ion-toolbar>
   </ion-header>
   <ion-content class="full-background">
     <ion-list>
       <button menuClose ion-item *ngFor="let p of pages" (click)="openPage(p)">
-        <ion-icon name="{{p.icon}}" color="grey" padding="16px"></ion-icon> {{p.title}}
+        <!-- <ion-icon name="{{p.icon}}" color="grey" padding="16px"></ion-icon>  -->
+        <img src="assets/icon/{{p.icon}}.svg" alt="{{p.icon}}"/>
+        <span>{{p.title}}</span>
       </button>
     </ion-list>
   </ion-content>

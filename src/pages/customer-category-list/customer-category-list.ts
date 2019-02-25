@@ -1,10 +1,11 @@
 import { AdminListProductPage } from './../admin-list-product/admin-list-product';
 import { StorageServiceProvider } from './../../providers/storage-service/storage-service';
-import { WidgetUtilService } from './../utils/widget-utils';
+import { WidgetUtilService } from '../../utils/widget-utils';
 import { ApiServiceProvider } from './../../providers/api-service/api-service';
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
-import { CONSTANTS } from '../utils/constants';
+import { PopoverHomePage } from '../popover-home/popover-home';
+import { CONSTANTS } from '../../utils/constants';
 import { CustomerListProductPage } from '../customer-list-product/customer-list-product';
 import { CustomerReviewSubmitOrderPage } from '../customer-review-submit-order/customer-review-submit-order';
 
@@ -71,7 +72,7 @@ export class CustomerCategoryListPage {
   }
 
   async getCardItems() {
-    this.cart = await this.storageService.getFromStorage('cart')
+    this.cart = await this.storageService.getCartFromStorage()
   }
 
   async reviewAndSubmitOrder() {
@@ -91,7 +92,7 @@ export class CustomerCategoryListPage {
       if(result.body.length > 0) {
         result.body.map( (value) => {
           this.childCategoryList.push(value)
-        }) 
+        })
       }else {
         this.skipValue = this.limit
       }
@@ -121,7 +122,7 @@ export class CustomerCategoryListPage {
   }
 
   async submitSearch(ev: any) {
-    if (this.searchQuery && this.searchQuery.trim() != '') { 
+    if (this.searchQuery && this.searchQuery.trim() != '') {
       let data = {
         'keyword': this.searchQuery,
         'parentCategoryId': this.parentCategoryId,
@@ -135,6 +136,9 @@ export class CustomerCategoryListPage {
         this.navCtrl.push(CustomerListProductPage, data)
       }
     }
+  }
+  presentPopover(myEvent) {
+    this.widgetUtil.presentPopover(myEvent, PopoverHomePage)
   }
 }
 

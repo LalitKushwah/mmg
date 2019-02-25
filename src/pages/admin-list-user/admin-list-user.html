@@ -15,16 +15,13 @@
     <ion-refresher-content></ion-refresher-content>
   </ion-refresher>
   <ion-list *ngIf="userListAvailable && (userList.length > 0)">
-    <button ion-item *ngFor="let user of userList">
-      <ion-avatar item-start>
-        <img src="./assets/imgs/avatar.png">
-      </ion-avatar>
-      <span>[{{user.externalId}}] {{user.name}}</span>
-      <!-- <button ion-button clear color="secondary" item-end><h1><ion-icon md="md-arrow-round-forward"></ion-icon></h1></button> -->
+    <ion-item *ngFor="let user of userList">
+      <span>{{user.externalId}}</span><span>{{user.name}}</span>
+      <!-- <button ion-button clear color="secondary" item-end><h1><ion-icon md="arrow-forward"></ion-icon></h1></button> -->
       <button ion-button clear color="secondary" item-end (click)="resetPasswordModel(user)">
-        <ion-icon name="md-key"></ion-icon>Reset
+        <img src="assets/imgs/key.svg">
       </button>
-    </button>
+    </ion-item>
   </ion-list>
   <ion-card *ngIf="userListAvailable && (userList.length < 1)">
     <ion-card-header text-center>
@@ -35,4 +32,4 @@
     <ion-infinite-scroll-content></ion-infinite-scroll-content>
   </ion-infinite-scroll>
 </ion-content>
-  
+
