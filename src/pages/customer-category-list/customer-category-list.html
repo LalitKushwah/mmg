@@ -1,11 +1,11 @@
 <ion-header>
   <ion-navbar>
     <ion-title>{{categoryObj.name}}</ion-title>
-    <ion-buttons end>      
+    <ion-buttons end>
       <button class="cart-btn" ion-button icon-only (click)="reviewAndSubmitOrder()">
         <ion-icon name="cart"></ion-icon>
         <ion-badge class="cart-badge">{{cart.length}}</ion-badge>
-      </button>      
+      </button>
       <button ion-button icon-only (click)="presentPopover($event)">
         <ion-icon name="more"></ion-icon>
       </button>
@@ -26,7 +26,7 @@
   </ion-refresher>
   <ion-list *ngIf="categoryListAvailable && (childCategoryList.length > 0)">
     <ion-item *ngFor="let category of childCategoryList" (click)="getProducts(category)">
-      <img src="./assets/imgs/productcategory.svg"> {{category.name}}
+      <img src="assets/imgs/productcategory.svg"> {{category.name}}
       <button ion-button clear color="secondary" item-end><ion-icon name="arrow-forward"></ion-icon></button>
     </ion-item>
   </ion-list>

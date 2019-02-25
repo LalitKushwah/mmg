@@ -12,7 +12,7 @@
   </ion-refresher>
   <ion-list *ngIf="categoryListAvailable && (childCategoryList.length > 0)">
     <ion-item *ngFor="let category of childCategoryList" (click)="getProducts(category)">
-        <img src="./assets/imgs/productcategory.svg">{{category.name}}
+        <img src="assets/imgs/productcategory.svg">{{category.name}}
       <button ion-button clear color="secondary" item-end><ion-icon name="arrow-forward"></ion-icon></button>
     </ion-item>
   </ion-list>
