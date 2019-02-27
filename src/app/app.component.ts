@@ -40,17 +40,21 @@ export class MyApp {
     try {
       /* { title: 'Categories', component: AdminListCategoryPage, icon :'list-box'}, */
       let profile = await this.storageService.getFromStorage('profile')
-      if ((profile['userType'] === 'admin')) {
-        this.pages = [
-          { title: 'Home', component: HomePage, icon: 'home' },
-          { title: 'Customers', component: AdminListUserPage, icon: 'happy' },
-          { title: 'Products', component: AdminListCategoryPage, icon: 'products' },
-        ]
+      if(profile['userLoginId'] !== 'R0001') {
+        if ((profile['userType'] === 'admin')) {
+          this.pages = [
+            {title: 'Home', component: HomePage, icon: 'home'},
+            {title: 'Customers', component: AdminListUserPage, icon: 'happy'},
+            {title: 'Products', component: AdminListCategoryPage, icon: 'products'},
+          ]
+        } else {
+          this.pages = [
+            {title: 'Home', component: HomePage, icon: 'home'},
+            {title: 'Your Orders', component: CustomerListOrderPage, icon: 'cart'}
+          ]
+        }
       } else {
-        this.pages = [
-          { title: 'Home', component: HomePage, icon :'home'},
-          { title: 'Your Orders', component: CustomerListOrderPage, icon : 'cart'}
-        ]
+        this.app.getRootNav().setRoot('OracleConnectPage')
       }
       if(profile) {
         this.partyName = profile['name']
