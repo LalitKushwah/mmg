@@ -12,6 +12,9 @@
 ion-card.card{
   box-shadow: none;
   border-bottom: 1px solid #ccc;
+  &:last-child {
+    border-bottom: none;
+  }
 }
 
 ion-spinner {

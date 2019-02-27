@@ -85,7 +85,7 @@
           </ion-row>
           <ion-row>
             <ion-col text-center>
-              Quantity: {{item.quantity}}
+              Qty: {{item.quantity}}
             </ion-col>
             <ion-col text-center>
               <ion-icon name="cash" color="grey"></ion-icon>
@@ -105,7 +105,7 @@
     <ion-infinite-scroll-content></ion-infinite-scroll-content>
   </ion-infinite-scroll>
 </ion-content>
-<ion-footer class="full-background">
+<ion-footer class="full-background" *ngIf="showImportOrder || showCancelOrder"> 
   <ion-row>
     <ion-col text-center>
       <button *ngIf="showImportOrder" ion-button primary color="secondary" (click)="importOrder()"><ion-icon name="arrow-dropdown-circle"></ion-icon> Import Order<ion-spinner name="dots" *ngIf="showLoader"></ion-spinner></button>
