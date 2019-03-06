@@ -198,10 +198,12 @@ ion-badge {
 button.bar-button {
   color: #fff;
   &:first-child {
-    margin-right: 10px
+    margin-right: 10px;
   }
 }
-
+.button-md {
+  padding: 0 .8em;
+}
 ion-menu {
   .item.item-block ,
   .full-background {

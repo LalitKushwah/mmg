@@ -33,7 +33,7 @@ export class HomePage {
           this.gotToLogin()
         } else {
           this.menuController.swipeEnable(true, 'main_menu')
-          if (profile['userType'] === 'admin') {
+          if (profile['userType'] === 'ADMIN') {
             this.navCtrl.setRoot(AdminHomePage)
           } else {
             this.navCtrl.setRoot(CustomerHomePage)

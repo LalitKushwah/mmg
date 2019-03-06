@@ -41,10 +41,10 @@ export class MyApp {
       /* { title: 'Categories', component: AdminListCategoryPage, icon :'list-box'}, */
       let profile = await this.storageService.getFromStorage('profile')
       if(profile['userLoginId'] !== 'R0001') {
-        if ((profile['userType'] === 'admin')) {
+        if ((profile['userType'] === 'ADMIN')) {
           this.pages = [
             {title: 'Home', component: HomePage, icon: 'home'},
-            {title: 'Customers', component: AdminListUserPage, icon: 'happy'},
+            {title: 'Customers', component: AdminListUserPage, icon: 'customer'},
             {title: 'Products', component: AdminListCategoryPage, icon: 'products'},
           ]
         } else {
