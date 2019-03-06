@@ -24,11 +24,11 @@ export class AddUserPage implements OnInit {
   channel: FormControl;
   province: FormControl;
   showLoader = false;
-  userTypeList: Array<any> =  [ 'customer', 'admin']
+  userTypeList: Array<any> =  [ 'CUSTOMER', 'ADMIN']
   countryList: Array<any> =  [ 'ZAMBIA']
   provinceList: Array<any> =  [ 'BOTSWANA', 'COPPERBELT', 'DRC', 'EASTERN', 'KENYA', 'LUAPULA', 'LUSAKA', 'MALAWI', 'MOZAMBIQUE', 'NORTH WESTERN', 'NORTHERN'
   ,'SOUTH AFRICA', 'SOUTHERN', 'TANZANIA', 'WESTERN', 'ZIMBABWE' ]
-  selectedUserType : string = 'customer'
+  selectedUserType : string = 'CUSTOMER'
   selectedCountry : string = 'ZAMBIA'
   selectedProvince : string = 'BOTSWANA'
   showCustomerForm: boolean = true
@@ -90,7 +90,7 @@ export class AddUserPage implements OnInit {
   }
 
   onUserTypeSelect() {
-    if (this.selectedUserType != 'customer') {
+    if (this.selectedUserType != 'CUSTOMER') {
       this.showCustomerForm = false
     }else {
       this.showCustomerForm = true
