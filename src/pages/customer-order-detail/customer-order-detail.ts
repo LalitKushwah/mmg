@@ -57,12 +57,12 @@ export class CustomerOrderDetailPage {
     }else{
       this.showCsvButton = false
     } */
-    if ((profile['userType'] === 'admin') && (this.orderDetail.status != CONSTANTS.ORDER_STATUS_RECEIVED) && (this.orderDetail.status != CONSTANTS.ORDER_STATUS_CANCEL)) {
+    if ((profile['userType'] === 'ADMIN') && (this.orderDetail.status != CONSTANTS.ORDER_STATUS_RECEIVED) && (this.orderDetail.status != CONSTANTS.ORDER_STATUS_CANCEL)) {
       this.showImportOrder = true
     } else {
       this.showImportOrder = false
     }
-    if ((profile['userType'] === 'customer') && (this.orderDetail.status != CONSTANTS.ORDER_STATUS_RECEIVED) && (this.orderDetail.status != CONSTANTS.ORDER_STATUS_CANCEL)) {
+    if ((profile['userType'] === 'CUSTOMER') && (this.orderDetail.status != CONSTANTS.ORDER_STATUS_RECEIVED) && (this.orderDetail.status != CONSTANTS.ORDER_STATUS_CANCEL)) {
       this.showCancelOrder = true
     } else {
       this.showCancelOrder = false

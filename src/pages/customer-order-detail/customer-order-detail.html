@@ -34,7 +34,7 @@
       </table>
       <ion-row>
         <ion-col text-center>
-          <button ion-button outline color="grey"><ion-icon name="cash"></ion-icon> Order Total (ZMW): {{orderDetail.orderTotal}}</button> 
+          <button ion-button outline color="grey"><ion-icon name="cash"></ion-icon> Order Total (ZMW): {{orderDetail.orderTotal}}</button>
           <strong><ion-icon name="cash"></ion-icon> Order Total: {{orderDetail.orderTotal}} ZMW</strong>
         </ion-col>
       </ion-row>
@@ -109,6 +109,9 @@
   <ion-row>
     <ion-col text-center>
       <button *ngIf="showImportOrder" ion-button primary color="secondary" (click)="importOrder()"><ion-icon name="arrow-dropdown-circle"></ion-icon> Import Order<ion-spinner name="dots" *ngIf="showLoader"></ion-spinner></button>
+        <ion-col text-center>
+          <button *ngIf="showCsvButton" ion-button primary color="secondary" (click)="exportToCsv()"><ion-icon name="arrow-dropdown-circle"></ion-icon> Export to csv<ion-spinner name="dots" *ngIf="showLoader"></ion-spinner></button>
+        </ion-col>
       <button *ngIf="showCancelOrder" ion-button primary color="secondary" (click)="cancelOrder()"><ion-icon name="close-circle"></ion-icon> Cancel Order<ion-spinner name="dots" *ngIf="showLoader"></ion-spinner></button>
     </ion-col>
   </ion-row>
