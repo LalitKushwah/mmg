@@ -11,7 +11,7 @@
         <ion-list>
           <ion-item>
             <ion-label>
-              <ion-icon name="md-happy" color="grey" padding-right></ion-icon>User Type
+              <ion-icon name=help-buoy color="grey" padding-right></ion-icon>User Type
             </ion-label>
             <ion-select [(ngModel)]="selectedUserType" interface="popover" (ngModelChange)="onUserTypeSelect()">
               <ion-option *ngFor="let user of userTypeList" [value]="user">{{user}}</ion-option>
