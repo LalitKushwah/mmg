@@ -2,14 +2,14 @@
     <ion-navbar>
       <ion-title *ngIf="!isSearch">{{categoryObj.name}}</ion-title>
       <ion-title *ngIf="isSearch">Search Result: {{keyword}}</ion-title>
-      <ion-buttons end>        
+      <ion-buttons end>
         <button class="cart-btn" ion-button icon-only (click)="reviewAndSubmitOrder()">
           <ion-icon name="cart"></ion-icon>
           <ion-badge class="cart-badge">{{cart.length}}</ion-badge>
         </button>
         <button ion-button icon-only (click)="presentPopover($event)">
           <ion-icon name="more"></ion-icon>
-        </button>        
+        </button>
       </ion-buttons>
     </ion-navbar>
   </ion-header>
@@ -36,6 +36,12 @@
             </ion-col>
             <ion-col text-center>
               CaseSize: <span>{{product.currentCaseSize}}</span>
+            </ion-col>
+          </ion-row>
+          <ion-row *ngIf="product.tkPoint">
+            <ion-col text-center>
+              <ion-icon name="trophy" color="grey"></ion-icon>
+              TK-Point: <span>{{product.tkPoint}}</span>
             </ion-col>
           </ion-row>
           <ion-row>
@@ -76,4 +82,3 @@
       </ion-card-header>
     </ion-card>
   </ion-content>
-  
