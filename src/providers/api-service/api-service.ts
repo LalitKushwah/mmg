@@ -32,6 +32,12 @@ export class ApiServiceProvider {
     return this.http.post(CONSTANTS.BASE_URL + 'api/order/', orderDetails)
   }
 
+  createOrderToErp(orderId) {
+    return this.http.post(CONSTANTS.BASE_URL + 'api/erp/createOrderToERP', [ {
+      '_id': orderId
+    }])
+  }
+
   getData(obj) {
     return this.http.post(CONSTANTS.BASE_URL + 'api/user/products', obj)
   }

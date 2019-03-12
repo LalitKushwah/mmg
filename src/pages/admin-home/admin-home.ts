@@ -117,8 +117,21 @@ export class AdminHomePage {
       return dformat
   }
 
+  // Create order to ERP and mark received in mongo
   importOrder(order) {
-    this.changeOrderStatus(CONSTANTS.ORDER_STATUS_RECEIVED, CONSTANTS.ORDER_IMPORTED, order)
+    this.showLoader = true;
+    this.apiService.createOrderToErp(order['_id']).subscribe(result => {
+        this.getList()
+        this.widgetUtil.showToast(CONSTANTS.ORDER_IMPORTED)
+        this.showLoader = false
+      }, (error) => {
+        if (error.statusText === 'Unknown Error') {
+          this.widgetUtil.showToast(CONSTANTS.INTERNET_ISSUE)
+        } else {
+          this.widgetUtil.showToast(CONSTANTS.SERVER_ERROR)
+        }
+        this.showLoader = false
+    })
   }
 
   changeOrderStatus(newStatus, message, order) {
