@@ -7,6 +7,10 @@
           <ion-icon name="cart"></ion-icon>
           <ion-badge class="cart-badge">{{cart.length}}</ion-badge>
         </button>
+        <button class="cart-btn" ion-button icon-only>
+          <ion-icon name="trophy"></ion-icon>
+          <ion-badge class="cart-badge">{{tkPoint}}</ion-badge>
+        </button>
         <button ion-button icon-only (click)="presentPopover($event)">
           <ion-icon name="more"></ion-icon>
         </button>

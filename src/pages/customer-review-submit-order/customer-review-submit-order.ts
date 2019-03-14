@@ -19,6 +19,7 @@ export class CustomerReviewSubmitOrderPage {
 
   cartItems: any = []
   orderTotal: any = 0
+  totalTK = 0;
   showLoader: boolean = false
   showClearCartLoader: boolean = false
 
@@ -37,6 +38,9 @@ export class CustomerReviewSubmitOrderPage {
 
   ionViewDidEnter(){
     this.calculateOrderTotal()
+    this.storageService.getTkPointsFromStorage().then((res: any) => {
+      this.totalTK = res
+    })
   }
 
   async getCartItems() {
@@ -56,18 +60,21 @@ export class CustomerReviewSubmitOrderPage {
 
   async submitOrder() {
     let profile = await this.storageService.getFromStorage('profile')
+    let totalTkPoints = await this.storageService.getTkPointsFromStorage()
     this.showLoader = true
     let orderObj = {
       productList: this.cartItems.map((value) => {
         return {
           productId: value['_id'],
           quantity: value['quantity'],
-          price: parseFloat(value['price'])
+          price: parseFloat(value['price']),
+          tkPoint: parseInt(value.tkPoint)
         }
       }),
       userId: profile['_id'],
       orderId: 'ORD' + Math.floor(Math.random() * 90000) + Math.floor(Math.random() * 90000),
       orderTotal: parseFloat(this.orderTotal.toString()),
+      totalTkPoints: parseInt(totalTkPoints.toString()),
       status: CONSTANTS.ORDER_STATUS_PROGRESS,
       province: profile['province'],
       lastUpdatedAt: Date.now()
@@ -91,6 +98,7 @@ export class CustomerReviewSubmitOrderPage {
   async clearCart() {
     this.showClearCartLoader = true
     await this.storageService.setToStorage('cart', [])
+    await this.storageService.removeFromStorage('tkpoint')
     this.orderTotal = 0
     this.getCartItems()
     this.showClearCartLoader = false
@@ -104,8 +112,14 @@ export class CustomerReviewSubmitOrderPage {
         if (value['_id'] === product['_id']) {
           this.cartItems.splice(index, 1)
         }
-      })
-      this.storageService.setToStorage('cart', this.cartItems)
+      });
+      let tk = product.quantity * product.tkPoint;
+      this.storageService.getTkPointsFromStorage().then(async (tkpoints: any) => {
+        let tkpoint = tkpoints - (product.quantity * product.tkPoint);
+        this.totalTK = tkpoint;
+        await this.storageService.setToStorage('tkpoint', tkpoint);
+      });
+      this.storageService.setToStorage('cart', this.cartItems);
       this.getCartItems()
       this.calculateOrderTotal()
     }
@@ -122,6 +136,12 @@ export class CustomerReviewSubmitOrderPage {
         return (qty)
       }
     })
+    let sum = 0
+    this.cartItems.map(item => {
+      sum = sum + (parseInt(item.tkPoint) * parseInt(item.quantity))
+    })
+    this.totalTK = sum
+    this.storageService.setToStorage('tkpoint', sum)
     this.calculateOrderTotal()
     this.storageService.setToStorage('cart', this.cartItems)
     return (product.quantity)
@@ -136,6 +156,12 @@ export class CustomerReviewSubmitOrderPage {
         return (qty)
       }
     })
+    let sum = 0
+    this.cartItems.map(item => {
+      sum = sum + (parseInt(item.tkPoint) * parseInt(item.quantity))
+    })
+    this.totalTK = sum
+    this.storageService.setToStorage('tkpoint', sum)
     this.calculateOrderTotal()
     this.storageService.setToStorage('cart', this.cartItems)
     return (product.quantity)
@@ -144,13 +170,19 @@ export class CustomerReviewSubmitOrderPage {
   updateCart(product) {
     this.cartItems.map((value) => {
       if (value['_id'] === product['_id']) {
-        let qty = parseInt(product.quantity)
-        value.quantity = qty
-        value['subTotal'] = (parseFloat((Math.round((value.quantity * parseFloat(value.price) * 100) / 100)).toString()).toFixed(2))
+        let qty = parseInt(product.quantity);
+        value.quantity = qty;
+        value['subTotal'] = (parseFloat((Math.round((value.quantity * parseFloat(value.price) * 100) / 100)).toString()).toFixed(2));
         return (qty)
       }
-    })
-    this.calculateOrderTotal()
+    });
+    let sum = 0;
+    this.cartItems.map(item => {
+      sum = sum + (parseInt(item.tkPoint) * parseInt(item.quantity))
+    });
+    this.totalTK = sum;
+    this.storageService.setToStorage('tkpoint', sum);
+    this.calculateOrderTotal();
     this.storageService.setToStorage('cart', this.cartItems)
     return (product.quantity)
   }
