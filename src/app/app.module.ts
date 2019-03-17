@@ -58,6 +58,12 @@ import { SessionExpiredPageModule } from '../pages/session-expired/session-expir
 import {SessionExpiredPage} from "../pages/session-expired/session-expired";
 import {OracleConnectPageModule} from "../pages/oracle-connect/oracle-connect.module";
 import {OracleConnectPage} from "../pages/oracle-connect/oracle-connect";
+import { ClubPremierPage } from '../pages/club-premier/club-premier';
+import { ClubPremierPageModule } from '../pages/club-premier/club-premier.module';
+import { ClubPremierGuidePage } from '../pages/club-premier-guide/club-premier-guide';
+import { ClubPremierGuidePageModule } from '../pages/club-premier-guide/club-premier-guide.module';
+import { GiftRewardsPageModule } from '../pages/gift-rewards/gift-rewards.module';
+import { GiftRewardsPage } from '../pages/gift-rewards/gift-rewards';
 
 @NgModule({
   declarations: [
@@ -96,7 +102,10 @@ import {OracleConnectPage} from "../pages/oracle-connect/oracle-connect";
     AdminEditProductPageModule,
     CategoryTotalModalPageModule,
     SessionExpiredPageModule,
-    OracleConnectPageModule
+    OracleConnectPageModule,
+    ClubPremierPageModule,
+    ClubPremierGuidePageModule,
+    GiftRewardsPageModule
   ],
   bootstrap: [IonicApp],
   entryComponents: [
@@ -121,7 +130,10 @@ import {OracleConnectPage} from "../pages/oracle-connect/oracle-connect";
     AdminEditProductPage,
     CategoryTotalModalPage,
     SessionExpiredPage,
-    OracleConnectPage
+    OracleConnectPage,
+    ClubPremierPage,
+    ClubPremierGuidePage,
+    GiftRewardsPage
   ],
   providers: [
     StatusBar,
