@@ -78,7 +78,9 @@
         <span></span>
       </ion-card-header>
     </ion-card>
-    <ion-card *ngFor="let product of cartItems">
+
+    <!-- cart item details -->
+    <!-- <ion-card *ngFor="let product of cartItems">
       <ion-card-content>
         <ion-row>
           <ion-col text-center>
@@ -98,24 +100,6 @@
             TK-Point: <span>{{product.tkPoint}}</span>
           </ion-col>
         </ion-row>
-        <!-- <ion-row>
-              <ion-col col-12>
-                <ion-row>
-                  <ion-col col-4 text-left style="padding-top: 7%">
-                    <span>Quantity: </span>
-                  </ion-col>
-                  <ion-col col-2 text-left>
-                    <button ion-button clear icon-only (click)="(product.quantity = decrementQty(product))"><ion-icon name="remove-circle" ></ion-icon></button>
-                  </ion-col>
-                  <ion-col col-2>
-                    <input type='text' name='quantity' [(ngModel)]="product.quantity" value='0' class='qty' style="width: 40px;height: 25px;text-align: center;margin-top: 10px;margin-left: 10px;" />
-                  </ion-col>
-                  <ion-col col-2 text-left>
-                    <button ion-button clear icon-only (click)="(product.quantity = incrementQty(product))"><ion-icon name="add-circle" ></ion-icon></button>
-                  </ion-col>
-                </ion-row>
-              </ion-col>
-            </ion-row> -->
         <ion-row>
           <ion-col col-12>
             <ion-row>
@@ -147,9 +131,70 @@
           </ion-col>
         </ion-row>
       </ion-card-content>
-    </ion-card>
+    </ion-card> -->
+
+
+
+    <ion-item *ngFor="let product of cartItems" margin-bottom>
+      <ion-row class="acc-label" (click)="expandItem($event)">
+        <ion-col>
+          {{product.name}}
+        </ion-col>
+      </ion-row>
+      <div id="expandWrapper" class="collapsed">
+        <ion-row>
+          <ion-col text-center>
+            <ion-icon name="cube" color="grey"></ion-icon>
+            <span>{{product.name}}</span>
+          </ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-col text-center>
+            <ion-icon name="cash" color="grey"></ion-icon>
+            <span>Price: {{product.price}} ZMW</span>
+          </ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-col text-center *ngIf="product.tkPoint">
+            <ion-icon name="trophy" color="grey"></ion-icon>
+            TK-Point: <span>{{product.tkPoint}}</span>
+          </ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-col col-12>
+            <ion-row>
+              <ion-col col-2 text-left style="padding-top: 7%">
+                <span>Qty: </span>
+              </ion-col>
+              <ion-col col-2>
+                <input type='text' name='quantity' [(ngModel)]="product.quantity" value='0' class='qty' style="width: 40px;height: 25px;text-align: center;margin-top: 10px;" />
+              </ion-col>
+              <ion-col col-8 text-right>
+                <button ion-button color="secondary" (click)="updateCart(product)" style="color: white!important;">
+                  <strong>
+                    <ion-icon name="cart"></ion-icon>Update
+                  </strong>
+                </button>
+              </ion-col>
+            </ion-row>
+          </ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-col col-10>
+            <ion-icon name="cash" color="grey"></ion-icon>
+            <span>SubTotal: {{product.subTotal}} ZMW</span>
+          </ion-col>
+          <ion-col col-2 text-right>
+            <button ion-button clear icon-only color="grey" (click)="removeFromCart(product)">
+              <ion-icon name="trash"></ion-icon>
+            </button>
+          </ion-col>
+        </ion-row>
+      </div>
+    </ion-item>
   </ion-list>
 </ion-content>
+
 <ion-footer>
   <ion-row>
     <ion-col text-center>

@@ -6,6 +6,7 @@ import { StorageServiceProvider } from '../../providers/storage-service/storage-
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams, ModalController } from 'ionic-angular';
 import { CONSTANTS } from '../../utils/constants';
+import { Expansion } from '@angular/compiler';
 
 @IonicPage({
   name: 'CustomerReviewSubmitOrderPage'
@@ -22,7 +23,7 @@ export class CustomerReviewSubmitOrderPage {
   totalTK = 0;
   showLoader: boolean = false
   showClearCartLoader: boolean = false
-
+  expanded = false;
 
   constructor(public navCtrl: NavController,
               public navParams: NavParams,
@@ -204,5 +205,10 @@ export class CustomerReviewSubmitOrderPage {
   openCategoryTotalModal() {
     const modal = this.modalController.create(CategoryTotalModalPage, {cartItems: this.cartItems})
     modal.present()
+  }
+
+  expandItem(event: any) {
+    event.target.parentElement.classList.toggle('expand')
+    event.target.parentElement.nextElementSibling.classList.toggle('expand-wrapper')
   }
 }

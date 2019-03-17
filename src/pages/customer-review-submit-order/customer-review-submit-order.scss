@@ -11,4 +11,39 @@ page-customer-review-submit-order {
         display: flex;
         align-items: center;
     }
+   
+    ion-label {
+        display: block;
+    }
+    .acc-label {
+        position: relative;
+        padding-right: 40px;
+        white-space: normal;
+        &::after{
+            content: '+';
+            position: absolute;
+            right: 0;
+            background: #229bd0;
+            border-radius: 12px;
+            height: 24px;
+            width: 24px;
+            color: #fff;
+            text-align: center;
+            line-height: 23px;
+        }
+        &.expand {
+            &::after{
+                content: '-';
+            }
+        }
+    }
+   
+    .expand-wrapper {
+        height: auto !important;
+        transition: 0.2s linear;
+    }  
+    
+    .collapsed {
+        height: 0;
+    }
 }
