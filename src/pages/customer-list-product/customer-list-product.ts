@@ -232,6 +232,8 @@ export class CustomerListProductPage {
   }
 
   searchProducts() {
-    this.filteredProductList = this.productList.filter(product => product.name.toLowerCase().includes(this.searchQuery.toLowerCase()))
+    if(this.searchQuery) {
+      this.filteredProductList = this.productList.filter(product => product.name.toLowerCase().includes(this.searchQuery.toLowerCase()))
+    }
   }
 }
