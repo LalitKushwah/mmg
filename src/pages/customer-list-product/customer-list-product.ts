@@ -23,11 +23,13 @@ export class CustomerListProductPage {
   productListAvailable: Boolean = false
   isSearch: Boolean = false
   productList: Array<any> = [];
+  filteredProductList: Array<any> = [];
   cartQuantity: any = 0;
   orderTotal: any = 0;
   cartDetail:any = []
   cart: any = []
   skipValue: number = 0
+  searchQuery: string;
   limit: number = CONSTANTS.PAGINATION_LIMIT
 
   constructor(public navCtrl: NavController, public navParams: NavParams,
@@ -57,6 +59,7 @@ export class CustomerListProductPage {
           value.quantity = 1
           value.price = (parseFloat((Math.round(value.price * 100) / 100).toString()).toFixed(2))
         })
+        this.filteredProductList = this.productList
         this.productListAvailable = true
       }, (error) => {
         if (error.statusText === 'Unknown Error') {
@@ -73,6 +76,7 @@ export class CustomerListProductPage {
           value.quantity = 1
           value.price = (parseFloat((Math.round(value.price * 100) / 100).toString()).toFixed(2))
         })
+        this.filteredProductList = this.productList
         this.productListAvailable = true
       }, (error) => {
         if (error.statusText === 'Unknown Error') {
@@ -212,6 +216,7 @@ export class CustomerListProductPage {
         }
       })
     }
+    this.searchProducts()
   }
 
   doRefresh(refresher) : void {
@@ -221,8 +226,12 @@ export class CustomerListProductPage {
       refresher.complete();
     }, 1000);
   }
-  
+
   presentPopover(myEvent) {
     this.widgetUtil.presentPopover(myEvent, PopoverHomePage)
+  }
+
+  searchProducts() {
+    this.filteredProductList = this.productList.filter(product => product.name.toLowerCase().includes(this.searchQuery.toLowerCase()))
   }
 }
