@@ -5,6 +5,9 @@
     </button> -->
     <ion-title>Customer List</ion-title>
   </ion-navbar>
+  <ion-toolbar>
+    <ion-searchbar (ionInput)="searchCustomers()" [(ngModel)]="searchQuery" placeholder="Search Customers"></ion-searchbar>
+  </ion-toolbar>
 </ion-header>
 
 <ion-content class="full-background">
@@ -15,7 +18,7 @@
     <ion-refresher-content></ion-refresher-content>
   </ion-refresher>
   <ion-list *ngIf="userListAvailable && (userList.length > 0)">
-    <ion-item *ngFor="let user of userList">
+    <ion-item *ngFor="let user of filteredUserList">
       <span>{{user.externalId}}</span><span>{{user.name}}</span>
       <!-- <button ion-button clear color="secondary" item-end><h1><ion-icon md="arrow-forward"></ion-icon></h1></button> -->
       <button ion-button clear color="secondary" item-end (click)="resetPasswordModel(user)">

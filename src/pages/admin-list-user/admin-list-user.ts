@@ -16,7 +16,9 @@ export class AdminListUserPage {
   skipValue: number = 0
   limit: number = CONSTANTS.PAGINATION_LIMIT
   userList: Array<any> = [];
+  filteredUserList: Array<any> = [];
   userListAvailable: Boolean = false
+  searchQuery: string
 
   constructor(public navCtrl: NavController, public navParams: NavParams,
               private apiService: ApiServiceProvider,
@@ -30,6 +32,7 @@ export class AdminListUserPage {
   getUserList() {
     this.apiService.getCustomerList(this.skipValue, this.limit).subscribe((result) => {
       this.userList = result.body
+      this.filteredUserList = this.userList
       this.userListAvailable = true
     }, (error) => {
       if (error.statusText === 'Unknown Error') {
@@ -60,6 +63,7 @@ export class AdminListUserPage {
         this.widgetUtil.showToast(CONSTANTS.SERVER_ERROR)
       }
     })
+    this.searchCustomers()
   }
 
   doRefresh(refresher) : void {
@@ -105,5 +109,11 @@ export class AdminListUserPage {
         this.widgetUtil.showToast(CONSTANTS.SERVER_ERROR)
       }
     })
+  }
+
+  searchCustomers() {
+    if (this.searchQuery) {
+      this.filteredUserList = this.userList.filter(user => user.name.toLowerCase().includes(this.searchQuery.toLowerCase()))
+    }
   }
 }
