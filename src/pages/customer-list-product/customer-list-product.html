@@ -2,16 +2,19 @@
     <ion-navbar>
       <ion-title *ngIf="!isSearch">{{categoryObj.name}}</ion-title>
       <ion-title *ngIf="isSearch">Search Result: {{keyword}}</ion-title>
-      <ion-buttons end>        
+      <ion-buttons end>
         <button class="cart-btn" ion-button icon-only (click)="reviewAndSubmitOrder()">
           <ion-icon name="cart"></ion-icon>
           <ion-badge class="cart-badge">{{cart.length}}</ion-badge>
         </button>
         <button ion-button icon-only (click)="presentPopover($event)">
           <ion-icon name="more"></ion-icon>
-        </button>        
+        </button>
       </ion-buttons>
     </ion-navbar>
+    <ion-toolbar>
+        <ion-searchbar (ionInput)="searchProducts()" [(ngModel)]="searchQuery" placeholder="Search any product in {{categoryObj.name}}"></ion-searchbar>
+    </ion-toolbar>
   </ion-header>
   <ion-content class="full-background">
     <div class="search-spinner">
@@ -21,7 +24,7 @@
       <ion-refresher-content></ion-refresher-content>
     </ion-refresher>
     <ion-list *ngIf="productListAvailable &&  (productList.length > 0)">
-      <ion-card *ngFor="let product of productList">
+      <ion-card *ngFor="let product of filteredProductList">
         <ion-card-content>
         <ion-row>
             <ion-col text-center>
@@ -76,4 +79,3 @@
       </ion-card-header>
     </ion-card>
   </ion-content>
-  
