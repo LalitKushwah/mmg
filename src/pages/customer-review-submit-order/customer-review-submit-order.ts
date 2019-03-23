@@ -101,6 +101,7 @@ export class CustomerReviewSubmitOrderPage {
     await this.storageService.setToStorage('cart', [])
     await this.storageService.removeFromStorage('tkpoint')
     this.orderTotal = 0
+    this.totalTK = 0
     this.getCartItems()
     this.showClearCartLoader = false
     this.widgetUtil.showToast('All items removed from cart')
