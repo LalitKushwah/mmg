@@ -126,8 +126,9 @@ export class CustomerCategoryListPage {
       let data = {
         'keyword': this.searchQuery,
         'parentCategoryId': this.parentCategoryId,
-        'isSearch': true
-      }
+        'isSearch': true,
+        'category': this.categoryObj
+      };
       let profile = await this.storageService.getFromStorage('profile')
       this.searchQuery  = ''
       if(profile['type'] === 'admin') {
