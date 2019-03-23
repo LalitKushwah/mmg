@@ -23,6 +23,7 @@ export class CustomerHomePage {
   skipValue: number = 0
   limit: number = CONSTANTS.PAGINATION_LIMIT
   cart: any = []
+  tkPoint: any = 0
 
 
   constructor(public navCtrl: NavController, public navParams: NavParams, private widgetUtil: WidgetUtilService, private apiService: ApiServiceProvider
@@ -40,6 +41,9 @@ export class CustomerHomePage {
 
   async getCardItems() {
     this.cart = await this.storageService.getCartFromStorage()
+    this.storageService.getTkPointsFromStorage().then(res => {
+      this.tkPoint = res
+    })
   }
 
   async reviewAndSubmitOrder() {

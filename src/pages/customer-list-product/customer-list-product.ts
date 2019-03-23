@@ -28,6 +28,7 @@ export class CustomerListProductPage {
   orderTotal: any = 0;
   cartDetail:any = []
   cart: any = []
+  tkPoint: any = 0
   skipValue: number = 0
   searchQuery: string;
   limit: number = CONSTANTS.PAGINATION_LIMIT
@@ -49,6 +50,9 @@ export class CustomerListProductPage {
 
   ionViewDidEnter(){
     this.getCartItems()
+    this.storageService.getTkPointsFromStorage().then(res => {
+      this.tkPoint = res
+    })
   }
 
   getList() {
@@ -91,6 +95,7 @@ export class CustomerListProductPage {
 
   async getCartItems() {
     this.cart = await this.storageService.getCartFromStorage()
+    this.tkPoint = await this.storageService.getTkPointsFromStorage()
     if(this.cart.length > 0) {
       let updatedTotal = 0, updatedQuantity = 0;
       this.cart.map((value) => {
@@ -138,6 +143,13 @@ export class CustomerListProductPage {
       } else {
         this.cart = productsInCart
       }
+      let sum = 0
+      this.cart.map(item => {
+        sum = sum + (parseInt(item.tkPoint) * parseInt(item.quantity))
+      })
+      this.tkPoint = sum
+      this.storageService.setToStorage('tkpoint', sum)
+
       this.cartDetail = await this.storageService.setToStorage('cart', this.cart)
       let updatedTotal = 0, updatedQuantity = 0;
       this.cartDetail.map((value) => {

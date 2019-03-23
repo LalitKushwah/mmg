@@ -21,6 +21,7 @@ export class AdminEditProductPage {
   packType: FormControl;
   productSysCode: FormControl;
   currentCaseSize: FormControl;
+  tkPoint: FormControl;
   showLoader = false;
 
   constructor(public navCtrl: NavController, public navParams: NavParams,
@@ -46,6 +47,10 @@ export class AdminEditProductPage {
     this.productSysCode = new FormControl(this.productDetail.productSysCode, [
       Validators.required
     ]);
+    const tkPoints = this.productDetail.tkPoint ? this.productDetail.tkPoint : 0
+    this.tkPoint = new FormControl(tkPoints, [
+      Validators.required
+    ])
   }
 
   createProductForm() {
@@ -53,7 +58,8 @@ export class AdminEditProductPage {
       name: this.name,
       price: this.price,
       productCode: this.productCode,
-      productSysCode: this.productSysCode
+      productSysCode: this.productSysCode,
+      tkPoint: this.tkPoint
     });
   }
 
@@ -65,6 +71,7 @@ export class AdminEditProductPage {
     updateDetail['productCode'] = this.productCode.value.trim()
     updateDetail['productSysCode'] = this.productSysCode.value.trim()
     updateDetail['lastUpdatedAt'] = Date.now()
+    updateDetail['tkPoint'] = parseFloat(this.tkPoint.value.trim())
     this.showLoader = true
     this.apiService.updateProduct(updateDetail).subscribe((result) => {
       this.widgetUtil.showToast(CONSTANTS.PRODUCT_UPDATED)

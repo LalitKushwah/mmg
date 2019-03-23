@@ -36,6 +36,12 @@
             CaseSize: <span>{{product.currentCaseSize}}</span>
           </ion-col>
         </ion-row>
+        <ion-row *ngIf="product.tkPoint">
+          <ion-col text-center>
+            <ion-icon name="trophy" color="grey"></ion-icon>
+            TK-Point: <span>{{product.tkPoint}}</span>
+          </ion-col>
+        </ion-row>
         <ion-row>
           <ion-col text-center>
             <button color="secondary" ion-button outline (click)="editProduct(product)">

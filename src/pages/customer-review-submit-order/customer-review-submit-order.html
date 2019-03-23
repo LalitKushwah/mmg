@@ -46,7 +46,7 @@
         </table>
         <ion-row>
           <ion-col text-center>
-               <button ion-button outline color="grey"><ion-icon name="cash"></ion-icon> Order Total (ZMW): {{orderTotal}}</button> 
+               <button ion-button outline color="grey"><ion-icon name="cash"></ion-icon> Order Total (ZMW): {{orderTotal}}</button>
               <strong><ion-icon name="cash"></ion-icon> Order Total: {{orderTotal}} ZMW</strong>
           </ion-col>
         </ion-row>
@@ -64,6 +64,11 @@
           <ion-col col-12>
             <strong>
               <ion-icon name="cash"></ion-icon> Order Total: {{orderTotal}} ZMW
+            </strong>
+          </ion-col>
+          <ion-col col-12>
+            <strong>
+              <ion-icon name="trophy"></ion-icon> Total TK Points: {{totalTK}}
             </strong>
           </ion-col>
           <ion-col col-12>
@@ -85,6 +90,12 @@
           <ion-col text-center>
             <ion-icon name="cash" color="grey"></ion-icon>
             <span>Price: {{product.price}} ZMW</span>
+          </ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-col text-center *ngIf="product.tkPoint">
+            <ion-icon name="trophy" color="grey"></ion-icon>
+            TK-Point: <span>{{product.tkPoint}}</span>
           </ion-col>
         </ion-row>
         <!-- <ion-row>

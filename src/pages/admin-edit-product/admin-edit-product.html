@@ -32,6 +32,12 @@
           </ion-item>
           <p class="error" *ngIf="price.hasError('required') && price.touched">*Price is required</p>
 
+          <ion-item>
+            <ion-label floating>TK-Point</ion-label>
+            <ion-input type="text" formControlName="tkPoint"></ion-input>
+          </ion-item>
+          <p class="error" *ngIf="tkPoint.hasError('required') && tkPoint.touched">*TKPoint is required</p>
+
           <!-- <ion-item>
                 <ion-label floating>Pack Type</ion-label>
                 <ion-input type="text" formControlName="packType"></ion-input>
@@ -39,8 +45,8 @@
               <ion-item *ngIf="packType.hasError('required') && packType.touched">
                 <p style="color: red">Pack Type is required*</p>
               </ion-item>
-      
-      
+
+
               <ion-item>
                 <ion-label floating>Current Case Size</ion-label>
                 <ion-input type="text" formControlName="currentCaseSize"></ion-input>

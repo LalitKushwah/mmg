@@ -35,6 +35,24 @@ export class StorageServiceProvider {
     })
   }
 
+  getTkPointsFromStorage() {
+    return new Promise((resolve, reject) => {
+      this.storage.get('tkpoint')
+        .then(result => {
+          if(result) {
+            resolve(result)
+          } else {
+            this.storage.set('tkpoint', 0).then(res => {
+              resolve(res)
+            })
+          }
+        }).catch(err => {
+        reject(err)
+      })
+    })
+  }
+
+
   setToStorage(key, value) {
     return this.storage.set(key, value)
   }
