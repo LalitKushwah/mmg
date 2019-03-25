@@ -6,7 +6,6 @@ import { StorageServiceProvider } from '../../providers/storage-service/storage-
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams, ModalController } from 'ionic-angular';
 import { CONSTANTS } from '../../utils/constants';
-import { Expansion } from '@angular/compiler';
 
 @IonicPage({
   name: 'CustomerReviewSubmitOrderPage'
@@ -115,7 +114,6 @@ export class CustomerReviewSubmitOrderPage {
           this.cartItems.splice(index, 1)
         }
       });
-      let tk = product.quantity * product.tkPoint;
       this.storageService.getTkPointsFromStorage().then(async (tkpoints: any) => {
         let tkpoint = tkpoints - (product.quantity * product.tkPoint);
         this.totalTK = tkpoint;
