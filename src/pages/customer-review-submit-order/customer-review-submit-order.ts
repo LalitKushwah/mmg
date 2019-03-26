@@ -82,6 +82,7 @@ export class CustomerReviewSubmitOrderPage {
     this.apiService.submitOrder(orderObj).subscribe((result) => {
       this.showLoader = false
       this.storageService.setToStorage('cart', [])
+      this.storageService.removeFromStorage('tkpoint')
       this.widgetUtil.showToast(CONSTANTS.ORDER_PLACED)
       this.navCtrl.setRoot(HomePage)
     }, (error) => {
