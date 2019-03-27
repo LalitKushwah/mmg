@@ -1,0 +1,36 @@
+page-gift-rewards {
+    ion-slide {
+        height: 300px;
+    }
+    ion-slides {
+        height: 70%;
+    }
+    h3 {
+        padding-bottom: 80px;
+    }
+    .backBtn {
+        position: absolute;
+        left: 10px;
+        top: 30vh;
+        width: 15vw;
+        height: 15vw;
+        z-index: 100;
+        background: transparent;
+     }
+     
+     .nextBtn {
+        position: absolute;
+        right: 10px;
+        top: 30vh;
+        width: 15vw;
+        height: 15vw;
+        z-index: 100;
+        background: transparent;
+     }
+     ion-icon {
+         font-size: 70px;
+     }
+     .swiper-slide img {
+         max-width: 80%;
+     }
+}

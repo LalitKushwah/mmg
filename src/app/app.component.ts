@@ -9,6 +9,7 @@ import { SplashScreen } from '@ionic-native/splash-screen';
 import { HomePage } from '../pages/home/home';
 import { HeaderColor } from "@ionic-native/header-color";
 import { CustomerListOrderPage } from '../pages/customer-list-order/customer-list-order';
+import { ClubPremierPage } from '../pages/club-premier/club-premier';
 
 @Component({
   templateUrl: 'app.html'
@@ -50,7 +51,8 @@ export class MyApp {
         } else {
           this.pages = [
             {title: 'Home', component: HomePage, icon: 'home'},
-            {title: 'Your Orders', component: CustomerListOrderPage, icon: 'cart'}
+            {title: 'Your Orders', component: CustomerListOrderPage, icon: 'cart'},
+            {title: 'Club Premier', component: ClubPremierPage, icon: 'loan'}
           ]
         }
       } else {

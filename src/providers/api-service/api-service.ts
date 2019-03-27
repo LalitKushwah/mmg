@@ -94,6 +94,10 @@ export class ApiServiceProvider {
     return this.http.post(CONSTANTS.BASE_URL + 'api/user/changePassword', data)
   }
 
+  getUserDetails(userLoginId) : any {
+    return this.http.get(CONSTANTS.BASE_URL + 'api/user/getUserDetails/?userLoginId=' + userLoginId)
+  }
+
   updateProduct(updateDetails: Object): any {
     return this.http.post(CONSTANTS.BASE_URL + 'api/product/update', updateDetails)
   }
