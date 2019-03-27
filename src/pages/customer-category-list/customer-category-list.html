@@ -6,7 +6,7 @@
         <ion-icon name="cart"></ion-icon>
         <ion-badge class="cart-badge">{{cart.length}}</ion-badge>
       </button>
-      <button class="cart-btn" ion-button icon-only>
+      <button class="cart-btn" ion-button icon-only (click)="showTkToast()">
         <ion-icon name="trophy"></ion-icon>
         <ion-badge class="cart-badge">{{tkPoint}}</ion-badge>
       </button>

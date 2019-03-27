@@ -248,4 +248,8 @@ export class CustomerListProductPage {
       this.filteredProductList = this.productList.filter(product => product.name.toLowerCase().includes(this.searchQuery.toLowerCase()))
     }
   }
+
+  showTkToast() {
+    this.widgetUtil.showToast('TK points will convert into TK currency post target achievement of QTR')
+  }
 }
