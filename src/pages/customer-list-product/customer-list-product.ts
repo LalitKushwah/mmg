@@ -216,7 +216,7 @@ export class CustomerListProductPage {
         }
       })
     }
-    this.searchProducts()
+    // this.searchProducts()
   }
 
   doRefresh(refresher) : void {
@@ -231,9 +231,7 @@ export class CustomerListProductPage {
     this.widgetUtil.presentPopover(myEvent, PopoverHomePage)
   }
 
-  searchProducts() {
-    if(this.searchQuery) {
-      this.filteredProductList = this.productList.filter(product => product.name.toLowerCase().includes(this.searchQuery.toLowerCase()))
-    }
+  searchProducts(searchQuery) {
+      this.filteredProductList = this.productList.filter(product => product.name.toLowerCase().includes(searchQuery.toLowerCase()))
   }
 }
