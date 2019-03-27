@@ -89,6 +89,10 @@ export class CustomerHomePage {
     }, 1000);
   }
 
+  showTkToast() {
+    this.widgetUtil.showToast('TK points will convert into TK currency post target achievement of QTR')
+  }
+
   doInfinite(infiniteScroll) {
     this.skipValue = this.skipValue + this.limit
     this.apiService.getParentCategoryList(this.skipValue, this.limit).subscribe((result) => {

@@ -143,6 +143,10 @@ export class CustomerCategoryListPage {
   presentPopover(myEvent) {
     this.widgetUtil.presentPopover(myEvent, PopoverHomePage)
   }
+
+  showTkToast() {
+    this.widgetUtil.showToast('TK points will convert into TK currency post target achievement of QTR')
+  }
 }
 
 

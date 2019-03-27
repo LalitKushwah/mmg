@@ -4,7 +4,7 @@ import { WidgetUtilService } from '../../utils/widget-utils';
 import { ApiServiceProvider } from '../../providers/api-service/api-service';
 import { StorageServiceProvider } from '../../providers/storage-service/storage-service';
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams, ModalController } from 'ionic-angular';
+import {IonicPage, NavController, NavParams, ModalController, AlertController} from 'ionic-angular';
 import { CONSTANTS } from '../../utils/constants';
 
 @IonicPage({
@@ -29,7 +29,8 @@ export class CustomerReviewSubmitOrderPage {
               private storageService: StorageServiceProvider,
               private apiService: ApiServiceProvider,
               private widgetUtil: WidgetUtilService,
-              private modalController: ModalController) {
+              private modalController: ModalController,
+              private alertController: AlertController) {
 
     this.showLoader = false
     this.orderTotal = (parseFloat((Math.round(this.navParams.get("orderTotal") * 100) / 100).toString()).toFixed(2))
@@ -56,6 +57,28 @@ export class CustomerReviewSubmitOrderPage {
     setTimeout(() => {
       refresher.complete();
     }, 1000);
+  }
+
+  confirmSubmitOrder() {
+    const alert = this.alertController.create({
+      title: 'Information',
+      subTitle: 'TK points will convert into TK currency post target achievement of QTR',
+      buttons: [
+        {
+          text : 'Okay',
+          handler: () => {
+            this.submitOrder()
+          }
+        },
+        {
+          text : 'Cancel',
+          handler: () => {
+            // do nothing
+          }
+        }
+      ]
+    });
+    alert.present();
   }
 
   async submitOrder() {
@@ -208,7 +231,9 @@ export class CustomerReviewSubmitOrderPage {
   }
 
   expandItem(event: any) {
-    event.target.parentElement.classList.toggle('expand')
-    event.target.parentElement.nextElementSibling.classList.toggle('expand-wrapper')
+    if (event.target.parentElement && event.target.parentElement.nextElementSibling) {
+      event.target.parentElement.classList.toggle('expand')
+      event.target.parentElement.nextElementSibling.classList.toggle('expand-wrapper')
+    }
   }
 }
