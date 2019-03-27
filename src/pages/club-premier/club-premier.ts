@@ -2,6 +2,8 @@ import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { ClubPremierGuidePage } from '../club-premier-guide/club-premier-guide';
 import { GiftRewardsPage } from '../gift-rewards/gift-rewards';
+import {StorageServiceProvider} from "../../providers/storage-service/storage-service";
+import {ApiServiceProvider} from "../../providers/api-service/api-service";
 
 /**
  * Generated class for the ClubPremierPage page.
@@ -17,11 +19,22 @@ import { GiftRewardsPage } from '../gift-rewards/gift-rewards';
 })
 export class ClubPremierPage {
 
-  constructor(public navCtrl: NavController, public navParams: NavParams) {
+  tkPoints = 0
+  tkCurrency = 0
+
+  constructor(public navCtrl: NavController,
+              public navParams: NavParams,
+              private storageService: StorageServiceProvider,
+              private apiService: ApiServiceProvider) {
   }
 
   ionViewDidLoad() {
-    console.log('ionViewDidLoad ClubPremierPage');
+    this.storageService.getFromStorage('profile').then((res: any) => {
+      this.apiService.getUserDetails(res.userLoginId).subscribe(data => {
+          this.tkPoints = data.body[0].tkPoints
+          this.tkCurrency = data.body[0].tkCurrency
+      })
+    })
   }
 
   viewGuide() {

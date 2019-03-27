@@ -14,19 +14,21 @@
 
 
 <ion-content padding>
-  <ion-card>  
+  <ion-card>
     <ion-card-content>
-      View your Tk Points and Tk currency
+      Total TK Points: {{ tkPoints }}
+      <br/>
+      Total TK Currency : {{ tkCurrency }}
     </ion-card-content>
   </ion-card>
-  <ion-card (click)="viewGuide()">  
+  <ion-card (click)="viewGuide()">
     <ion-card-content>
-      PDF Content
+      Program Detail
     </ion-card-content>
   </ion-card>
-  <ion-card (click)="viewRewards()">  
+  <ion-card (click)="viewRewards()">
     <ion-card-content>
-      View Rewards 
+      Redeem
     </ion-card-content>
   </ion-card>
 </ion-content>
