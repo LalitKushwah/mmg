@@ -28,6 +28,10 @@ export class ApiServiceProvider {
     return this.http.get(CONSTANTS.BASE_URL + 'api/product/list/category/' + categoryId + '?skip='+skip.toString() + "&limit="+ limit.toString())
   }
 
+  getAllProductsByCategory(categoryId: string): any {
+    return this.http.get(CONSTANTS.BASE_URL + 'api/product/list/category/all/' + categoryId)
+  }
+
   submitOrder(orderDetails: Object): any {
     return this.http.post(CONSTANTS.BASE_URL + 'api/order/', orderDetails)
   }

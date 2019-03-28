@@ -233,5 +233,22 @@ export class CustomerListProductPage {
 
   searchProducts(searchQuery) {
       this.filteredProductList = this.productList.filter(product => product.name.toLowerCase().includes(searchQuery.toLowerCase()))
+    if (this.filteredProductList.length === 0) {
+      this.apiService.getAllProductsByCategory(this.categoryId).subscribe((result) => {
+        if(result.body.length > 0) {
+          result.body.map( (value) => {
+            value.quantity = 0
+            this.productList.push(value)
+            this.searchProducts(searchQuery)
+          })
+        }
+      }, (error) => {
+        if (error.statusText === 'Unknown Error') {
+          this.widgetUtil.showToast(CONSTANTS.INTERNET_ISSUE)
+        } else {
+          this.widgetUtil.showToast(CONSTANTS.SERVER_ERROR)
+        }
+      })
+    }
   }
 }
