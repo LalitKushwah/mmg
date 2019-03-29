@@ -63,7 +63,6 @@ export class AdminListUserPage {
         this.widgetUtil.showToast(CONSTANTS.SERVER_ERROR)
       }
     })
-    this.searchCustomers()
   }
 
   doRefresh(refresher) : void {
@@ -111,9 +110,24 @@ export class AdminListUserPage {
     })
   }
 
-  searchCustomers() {
-    if (this.searchQuery) {
-      this.filteredUserList = this.userList.filter(user => user.name.toLowerCase().includes(this.searchQuery.toLowerCase()))
+  searchCustomers(searchQuery) {
+      this.filteredUserList = this.userList.filter(user => user.name.toLowerCase().includes(searchQuery.toLowerCase()))
+    if (this.filteredUserList.length === 0) {
+      this.apiService.getAllCustomers().subscribe((result) => {
+        if(result.body.length > 0) {
+          result.body.map( (value) => {
+            value.quantity = 0
+            this.userList.push(value)
+            this.searchCustomers(searchQuery)
+          })
+        }
+      }, (error) => {
+        if (error.statusText === 'Unknown Error') {
+          this.widgetUtil.showToast(CONSTANTS.INTERNET_ISSUE)
+        } else {
+          this.widgetUtil.showToast(CONSTANTS.SERVER_ERROR)
+        }
+      })
     }
   }
 }
