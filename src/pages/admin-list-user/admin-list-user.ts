@@ -63,7 +63,6 @@ export class AdminListUserPage {
         this.widgetUtil.showToast(CONSTANTS.SERVER_ERROR)
       }
     })
-    this.searchCustomers()
   }
 
   doRefresh(refresher) : void {
