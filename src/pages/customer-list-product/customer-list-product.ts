@@ -145,7 +145,9 @@ export class CustomerListProductPage {
       }
       let sum = 0
       this.cart.map(item => {
-        sum = sum + (parseInt(item.tkPoint) * parseInt(item.quantity))
+          if (item.tkPoint) {
+            sum = sum + (parseFloat(item.tkPoint) * parseInt(item.quantity))
+        }
       })
       this.tkPoint = sum
       this.storageService.setToStorage('tkpoint', sum)

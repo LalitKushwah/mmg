@@ -162,7 +162,9 @@ export class CustomerReviewSubmitOrderPage {
     })
     let sum = 0
     this.cartItems.map(item => {
-      sum = sum + (parseInt(item.tkPoint) * parseInt(item.quantity))
+      if (item.tkPoint) {
+        sum = sum + (parseFloat(item.tkPoint) * parseInt(item.quantity))
+      }
     })
     this.totalTK = sum
     this.storageService.setToStorage('tkpoint', sum)
@@ -182,7 +184,9 @@ export class CustomerReviewSubmitOrderPage {
     })
     let sum = 0
     this.cartItems.map(item => {
-      sum = sum + (parseInt(item.tkPoint) * parseInt(item.quantity))
+      if (item.tkPoint) {
+        sum = sum + (parseFloat(item.tkPoint) * parseInt(item.quantity))
+      }
     })
     this.totalTK = sum
     this.storageService.setToStorage('tkpoint', sum)
@@ -202,7 +206,9 @@ export class CustomerReviewSubmitOrderPage {
     });
     let sum = 0;
     this.cartItems.map(item => {
-      sum = sum + (parseInt(item.tkPoint) * parseInt(item.quantity))
+      if (item.tkPoint) {
+        sum = sum + (parseFloat(item.tkPoint) * parseInt(item.quantity))
+      }
     });
     this.totalTK = sum;
     this.storageService.setToStorage('tkpoint', sum);
