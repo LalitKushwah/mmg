@@ -1,17 +1,4 @@
-page-customer-review-submit-order {
-    ion-footer {
-        button:first-child {
-            margin-right: 20px;
-        }
-    }
-    ion-card.card:last-child {
-        border-bottom: none;
-    }
-    [col-10] {
-        display: flex;
-        align-items: center;
-    }
-   
+page-tk-faq {
     ion-label {
         display: block;
     }
@@ -41,15 +28,6 @@ page-customer-review-submit-order {
         }
     }
    
-    .cnt-badge{
-        background: color($colors, secondary);
-        height: 22px;
-        width: 22px;
-        font-size: 16px;
-        display: inline-block;
-        color: #fff;
-        text-align: center;
-    }
     .expand-wrapper {
         height: auto !important;
         transition: 0.2s linear;
@@ -57,5 +35,6 @@ page-customer-review-submit-order {
     
     .collapsed {
         height: 0;
+        white-space: normal;
     }
 }

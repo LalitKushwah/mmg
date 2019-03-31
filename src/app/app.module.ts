@@ -64,6 +64,16 @@ import { ClubPremierGuidePage } from '../pages/club-premier-guide/club-premier-g
 import { ClubPremierGuidePageModule } from '../pages/club-premier-guide/club-premier-guide.module';
 import { GiftRewardsPageModule } from '../pages/gift-rewards/gift-rewards.module';
 import { GiftRewardsPage } from '../pages/gift-rewards/gift-rewards';
+import { TkFaqPage } from '../pages/tk-faq/tk-faq';
+import { TkFaqPageModule } from '../pages/tk-faq/tk-faq.module';
+import { TermsAndConditionsPage } from '../pages/terms-and-conditions/terms-and-conditions';
+import { TermsAndConditionsPageModule } from '../pages/terms-and-conditions/terms-and-conditions.module';
+import { WelcomeKitPage } from '../pages/welcome-kit/welcome-kit';
+import { WelcomeKitPageModule } from '../pages/welcome-kit/welcome-kit.module';
+import { SpecialProductsPageModule } from '../pages/special-products/special-products.module';
+import { SpecialProductsPage } from '../pages/special-products/special-products';
+import { ClubClassificationPage } from '../pages/club-classification/club-classification';
+import { ClubClassificationPageModule } from '../pages/club-classification/club-classification.module';
 
 @NgModule({
   declarations: [
@@ -105,7 +115,12 @@ import { GiftRewardsPage } from '../pages/gift-rewards/gift-rewards';
     OracleConnectPageModule,
     ClubPremierPageModule,
     ClubPremierGuidePageModule,
-    GiftRewardsPageModule
+    GiftRewardsPageModule,
+    TkFaqPageModule,
+    TermsAndConditionsPageModule,
+    WelcomeKitPageModule,
+    SpecialProductsPageModule,
+    ClubClassificationPageModule
   ],
   bootstrap: [IonicApp],
   entryComponents: [
@@ -133,7 +148,12 @@ import { GiftRewardsPage } from '../pages/gift-rewards/gift-rewards';
     OracleConnectPage,
     ClubPremierPage,
     ClubPremierGuidePage,
-    GiftRewardsPage
+    GiftRewardsPage,
+    TkFaqPage,
+    TermsAndConditionsPage,
+    WelcomeKitPage,
+    SpecialProductsPage,
+    ClubClassificationPage
   ],
   providers: [
     StatusBar,

@@ -1,3 +1,20 @@
 page-club-premier-guide {
-
+    .steps {
+        overflow: hidden;
+        img {
+            width: 33.33%;
+            max-width: 33%;
+            float: left;
+        }
+    }
+    .check {
+        padding: 0;
+        li {
+            list-style-type: none;
+            background: url('../../assets/icon/check.svg') no-repeat;
+            padding-left: 30px;
+            background-size: 20px;
+            margin-bottom: 10px;
+        }
+    }
 }
