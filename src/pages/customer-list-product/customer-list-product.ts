@@ -54,6 +54,9 @@ export class CustomerListProductPage {
     this.apiService.getAllProductsByCategory(this.categoryId).subscribe((result) => {
       if (result.body && result.body.length) {
         this.allProducts = result.body
+        this.allProducts.map((product: any) => {
+          product['quantity'] = 1
+        })
       }
     }, error => {
           if (error.statusText === 'Unknown Error') {
