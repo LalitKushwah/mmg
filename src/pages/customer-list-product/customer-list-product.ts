@@ -31,7 +31,8 @@ export class CustomerListProductPage {
   tkPoint: any = 0
   skipValue: number = 0
   searchQuery: string;
-  limit: number = CONSTANTS.PAGINATION_LIMIT
+  limit: number = CONSTANTS.PAGINATION_LIMIT;
+  allProducts = []
 
   constructor(public navCtrl: NavController, public navParams: NavParams,
     private apiService: ApiServiceProvider, private widgetUtil: WidgetUtilService
@@ -46,6 +47,24 @@ export class CustomerListProductPage {
     this.productListAvailable = false
     this.productList = []
     this.getList()
+  }
+
+  ionViewWillEnter() {
+    // INFO: get All products corresponding to category
+    this.apiService.getAllProductsByCategory(this.categoryId).subscribe((result) => {
+      if (result.body && result.body.length) {
+        this.allProducts = result.body
+        this.allProducts.map((product: any) => {
+          product['quantity'] = 1
+        })
+      }
+    }, error => {
+          if (error.statusText === 'Unknown Error') {
+            this.widgetUtil.showToast(CONSTANTS.INTERNET_ISSUE)
+          } else {
+            this.widgetUtil.showToast(CONSTANTS.SERVER_ERROR)
+          }
+    })
   }
 
   ionViewDidEnter(){
@@ -131,7 +150,7 @@ export class CustomerListProductPage {
       const productsInCart = this.cart.map((value)=> {
         if (value['_id'] === product['_id']) {
           presentInCart = true
-          value.quantity = value.quantity + product.quantity
+          value.quantity = value.quantity + parseInt(product.quantity)
         }
         return value
       })
@@ -145,7 +164,9 @@ export class CustomerListProductPage {
       }
       let sum = 0
       this.cart.map(item => {
-        sum = sum + (parseInt(item.tkPoint) * parseInt(item.quantity))
+          if (item.tkPoint) {
+            sum = sum + (parseFloat(item.tkPoint) * parseInt(item.quantity))
+        }
       })
       this.tkPoint = sum
       this.storageService.setToStorage('tkpoint', sum)
@@ -228,7 +249,7 @@ export class CustomerListProductPage {
         }
       })
     }
-    this.searchProducts()
+    // this.searchProducts()
   }
 
   doRefresh(refresher) : void {
@@ -243,11 +264,10 @@ export class CustomerListProductPage {
     this.widgetUtil.presentPopover(myEvent, PopoverHomePage)
   }
 
-  searchProducts() {
-    if(this.searchQuery) {
-      this.filteredProductList = this.productList.filter(product => product.name.toLowerCase().includes(this.searchQuery.toLowerCase()))
-    }
-  }
+  searchProducts(searchQuery) {
+    this.filteredProductList = this.allProducts.filter(product =>
+      product.name.toLowerCase().includes(searchQuery.toLowerCase())
+    )}
 
   showTkToast() {
     this.widgetUtil.showToast('TK points will convert into TK currency post target achievement of QTR')

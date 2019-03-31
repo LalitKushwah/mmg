@@ -71,7 +71,7 @@ export class CustomerReviewSubmitOrderPage {
           }
         },
         {
-          text : 'Cancel',
+          text : 'Close',
           handler: () => {
             // do nothing
           }
@@ -91,13 +91,13 @@ export class CustomerReviewSubmitOrderPage {
           productId: value['_id'],
           quantity: value['quantity'],
           price: parseFloat(value['price']),
-          tkPoint: parseInt(value.tkPoint)
+          tkPoint: parseFloat(value['tkPoint'])
         }
       }),
       userId: profile['_id'],
       orderId: 'ORD' + Math.floor(Math.random() * 90000) + Math.floor(Math.random() * 90000),
       orderTotal: parseFloat(this.orderTotal.toString()),
-      totalTkPoints: parseInt(totalTkPoints.toString()),
+      totalTkPoints: parseFloat(totalTkPoints.toString()),
       status: CONSTANTS.ORDER_STATUS_PROGRESS,
       province: profile['province'],
       lastUpdatedAt: Date.now()
@@ -162,7 +162,9 @@ export class CustomerReviewSubmitOrderPage {
     })
     let sum = 0
     this.cartItems.map(item => {
-      sum = sum + (parseInt(item.tkPoint) * parseInt(item.quantity))
+      if (item.tkPoint) {
+        sum = sum + (parseFloat(item.tkPoint) * parseInt(item.quantity))
+      }
     })
     this.totalTK = sum
     this.storageService.setToStorage('tkpoint', sum)
@@ -182,7 +184,9 @@ export class CustomerReviewSubmitOrderPage {
     })
     let sum = 0
     this.cartItems.map(item => {
-      sum = sum + (parseInt(item.tkPoint) * parseInt(item.quantity))
+      if (item.tkPoint) {
+        sum = sum + (parseFloat(item.tkPoint) * parseInt(item.quantity))
+      }
     })
     this.totalTK = sum
     this.storageService.setToStorage('tkpoint', sum)
@@ -202,7 +206,9 @@ export class CustomerReviewSubmitOrderPage {
     });
     let sum = 0;
     this.cartItems.map(item => {
-      sum = sum + (parseInt(item.tkPoint) * parseInt(item.quantity))
+      if (item.tkPoint) {
+        sum = sum + (parseFloat(item.tkPoint) * parseInt(item.quantity))
+      }
     });
     this.totalTK = sum;
     this.storageService.setToStorage('tkpoint', sum);

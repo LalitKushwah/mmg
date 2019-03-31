@@ -17,7 +17,7 @@
       </ion-buttons>
     </ion-navbar>
     <ion-toolbar>
-        <ion-searchbar (ionInput)="searchProducts()" [(ngModel)]="searchQuery" placeholder="Search any product in {{categoryObj.name}}"></ion-searchbar>
+        <ion-searchbar #q (ionChange)="searchProducts(q.value)" placeholder="Search any product in {{categoryObj.name}}"></ion-searchbar>
     </ion-toolbar>
   </ion-header>
   <ion-content class="full-background">

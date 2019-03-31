@@ -4,6 +4,7 @@ import { ClubPremierGuidePage } from '../club-premier-guide/club-premier-guide';
 import { GiftRewardsPage } from '../gift-rewards/gift-rewards';
 import {StorageServiceProvider} from "../../providers/storage-service/storage-service";
 import {ApiServiceProvider} from "../../providers/api-service/api-service";
+import {WidgetUtilService} from "../../utils/widget-utils";
 
 /**
  * Generated class for the ClubPremierPage page.
@@ -25,7 +26,8 @@ export class ClubPremierPage {
   constructor(public navCtrl: NavController,
               public navParams: NavParams,
               private storageService: StorageServiceProvider,
-              private apiService: ApiServiceProvider) {
+              private apiService: ApiServiceProvider,
+              private widgetService :WidgetUtilService) {
   }
 
   ionViewDidLoad() {
@@ -42,6 +44,6 @@ export class ClubPremierPage {
   }
 
   viewRewards() {
-    this.navCtrl.push(GiftRewardsPage)
+    this.widgetService.showToast('Work In Progress Coming Soon...')
   }
 }
