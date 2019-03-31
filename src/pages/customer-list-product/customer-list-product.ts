@@ -131,7 +131,7 @@ export class CustomerListProductPage {
       const productsInCart = this.cart.map((value)=> {
         if (value['_id'] === product['_id']) {
           presentInCart = true
-          value.quantity = value.quantity + product.quantity
+          value.quantity = value.quantity + parseInt(product.quantity)
         }
         return value
       })
