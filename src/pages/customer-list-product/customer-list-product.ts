@@ -31,7 +31,8 @@ export class CustomerListProductPage {
   tkPoint: any = 0
   skipValue: number = 0
   searchQuery: string;
-  limit: number = CONSTANTS.PAGINATION_LIMIT
+  limit: number = CONSTANTS.PAGINATION_LIMIT;
+  allProducts = []
 
   constructor(public navCtrl: NavController, public navParams: NavParams,
     private apiService: ApiServiceProvider, private widgetUtil: WidgetUtilService
@@ -46,6 +47,21 @@ export class CustomerListProductPage {
     this.productListAvailable = false
     this.productList = []
     this.getList()
+  }
+
+  ionViewWillEnter() {
+    // INFO: get All products corresponding to category
+    this.apiService.getAllProductsByCategory(this.categoryId).subscribe((result) => {
+      if (result.body && result.body.length) {
+        this.allProducts = result.body
+      }
+    }, error => {
+          if (error.statusText === 'Unknown Error') {
+            this.widgetUtil.showToast(CONSTANTS.INTERNET_ISSUE)
+          } else {
+            this.widgetUtil.showToast(CONSTANTS.SERVER_ERROR)
+          }
+    })
   }
 
   ionViewDidEnter(){
@@ -246,25 +262,9 @@ export class CustomerListProductPage {
   }
 
   searchProducts(searchQuery) {
-      this.filteredProductList = this.productList.filter(product => product.name.toLowerCase().includes(searchQuery.toLowerCase()))
-    if (this.filteredProductList.length === 0) {
-      this.apiService.getAllProductsByCategory(this.categoryId).subscribe((result) => {
-        if(result.body.length > 0) {
-          result.body.map( (value) => {
-            value.quantity = 0
-            this.productList.push(value)
-            this.searchProducts(searchQuery)
-          })
-        }
-      }, (error) => {
-        if (error.statusText === 'Unknown Error') {
-          this.widgetUtil.showToast(CONSTANTS.INTERNET_ISSUE)
-        } else {
-          this.widgetUtil.showToast(CONSTANTS.SERVER_ERROR)
-        }
-      })
-    }
-  }
+    this.filteredProductList = this.allProducts.filter(product =>
+      product.name.toLowerCase().includes(searchQuery.toLowerCase())
+    )}
 
   showTkToast() {
     this.widgetUtil.showToast('TK points will convert into TK currency post target achievement of QTR')

@@ -71,7 +71,7 @@ export class CustomerReviewSubmitOrderPage {
           }
         },
         {
-          text : 'Cancel',
+          text : 'Close',
           handler: () => {
             // do nothing
           }
