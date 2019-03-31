@@ -91,13 +91,13 @@ export class CustomerReviewSubmitOrderPage {
           productId: value['_id'],
           quantity: value['quantity'],
           price: parseFloat(value['price']),
-          tkPoint: parseInt(value.tkPoint)
+          tkPoint: parseFloat(value['tkPoint'])
         }
       }),
       userId: profile['_id'],
       orderId: 'ORD' + Math.floor(Math.random() * 90000) + Math.floor(Math.random() * 90000),
       orderTotal: parseFloat(this.orderTotal.toString()),
-      totalTkPoints: parseInt(totalTkPoints.toString()),
+      totalTkPoints: parseFloat(totalTkPoints.toString()),
       status: CONSTANTS.ORDER_STATUS_PROGRESS,
       province: profile['province'],
       lastUpdatedAt: Date.now()
