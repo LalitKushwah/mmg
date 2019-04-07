@@ -11,69 +11,12 @@
 </ion-header>
 
 <ion-content padding>
-  <ion-slides>
-    <ion-slide>
-      <h3>Apple I Phone XS MAX=13500</h3>
-      <img src="../../assets/imgs/gifts/apple-iphone.png">
-    </ion-slide>
-    <ion-slide>
-      <h3>Toyota Fortuner=650000</h3>
-      <img src="../../assets/imgs/gifts/fortuner.png">
-    </ion-slide>
-    <ion-slide>
-      <h3>Hisense Refrigerator 228L Metallic=3000 Points</h3>
-      <img src="../../assets/imgs/gifts/fr.png">
-    </ion-slide>
-    <ion-slide>
-      <h3>Hisense Refrigerator 458L Stainless=9000 Points</h3>
-      <img src="../../assets/imgs/gifts/fridge.png">
-    </ion-slide>
-    <ion-slide>
-      <h3>32 Inch LED=2000 Points</h3>
-      <img src="../../assets/imgs/gifts/hisense.png">
-    </ion-slide>
-    <ion-slide>
-      <h3>Isuzu D Max=450000</h3>
-      <img src="../../assets/imgs/gifts/isuzu.png">
-    </ion-slide>
-    <ion-slide>
-      <h3>Lenovo 5080=7500</h3>
-      <img src="../../assets/imgs/gifts/lenovo.png">
-    </ion-slide>
-    <ion-slide>
-      <h3>Hisense 65'' Premium ULED Smart TV=19000</h3>
-      <img src="../../assets/imgs/gifts/premium-uled.png">
-    </ion-slide>
-    <ion-slide>
-      <h3>Samsung AC 1800 BTU=11000</h3>
-      <img src="../../assets/imgs/gifts/samsung-ac.png">
-    </ion-slide>
-    <ion-slide>
-      <h3>Samsung Galaxy S9=8500</h3>
-      <img src="../../assets/imgs/gifts/samsung-galaxy.png">
-    </ion-slide>
-    <ion-slide>
-      <h3>Samsung Note 9=9500</h3>
-      <img src="../../assets/imgs/gifts/samsung-note.png">
-    </ion-slide>
-    <ion-slide>
-      <h3>Hisense TV 55 Smart UHD LED=6800</h3>
-      <img src="../../assets/imgs/gifts/smart-6800.png">
-    </ion-slide>
-    <ion-slide>
-      <h3>Hisense TV 55 Smart UHD LED=6800</h3>
-      <img src="../../assets/imgs/gifts/smart-uhd.png">
-    </ion-slide>
-    <ion-slide>
-      <h3>Toyota Hilux=500000</h3>
-      <img src="../../assets/imgs/gifts/toyota.png">
-    </ion-slide>
-  </ion-slides>
-  <button (click)="slidePrev()" class="backBtn">
-    <ion-icon name="arrow-dropleft"></ion-icon>
-  </button>
-
-  <button (click)="slideNext()" class="nextBtn">
-    <ion-icon name="arrow-dropright"></ion-icon>
-  </button>
+  <ion-content class="full-background">
+    <ion-list>
+      <ion-card *ngFor="let product of giftProducts">
+        <ion-card-content>
+          {{ product.name }}
+        </ion-card-content>
+      </ion-card>
+    </ion-list>
 </ion-content>

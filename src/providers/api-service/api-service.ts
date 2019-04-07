@@ -114,4 +114,8 @@ export class ApiServiceProvider {
     return this.http.get(CONSTANTS.BASE_URL + 'api/product/search/parentCategory/' + parentCategoryId + '?skip='+skip.toString() + "&limit="+ limit.toString() + "&keyword="+ keyword)
   }
 
+  getGiftProducts(): any {
+    return this.http.get(CONSTANTS.BASE_URL + 'api/product/list/gift/products',{})
+  }
+
 }
