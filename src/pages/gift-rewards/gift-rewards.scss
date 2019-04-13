@@ -1,4 +1,20 @@
 page-gift-rewards {
+    ion-content.content:not([padding]) .scroll-content {
+        padding: 0;
+    }
+    ion-card.card {
+        margin: 0;
+        width: 100%;
+    }
+    ion-card-content.card-content {
+        padding: 15px 0;
+        .col {
+            padding: 5px 0 5px 5px;
+        }
+        button {
+            width: 100%;
+        }
+    }
     ion-slide {
         height: 300px;
     }
@@ -35,5 +51,14 @@ page-gift-rewards {
      }
   [text-center] {
     display: block;
+  }
+  .checkout {
+      background: #225f93;
+      padding: 20px 0;
+      color: #fff;
+  }
+  .prod-name {
+      font-size: 16px;
+      font-weight: bold;
   }
 }

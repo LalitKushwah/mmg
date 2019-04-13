@@ -38,16 +38,17 @@
           </ion-col>
         </ion-row>
         <ion-row>
-          <ion-col col-12>
-              <ion-col col-2 text-left style="padding-top: 7%">
-                <span>Qty:  {{product.quantity}}</span>
-              </ion-col>
+          <ion-col text-center>
+            <ion-col col-2 text-left style="padding-top: 7%">
+              <span>Qty: {{product.quantity}}</span>
+            </ion-col>
+            <ion-col col-2 text-right>
+              <button ion-button clear icon-only color="grey" (click)="removeFromCart(product)">
+                <ion-icon class="trash" name="trash"></ion-icon>
+              </button>
+            </ion-col>
           </ion-col>
-          <ion-col col-2 text-right>
-            <button ion-button clear icon-only color="grey" (click)="removeFromCart(product)">
-              <ion-icon name="trash"></ion-icon>
-            </button>
-          </ion-col>
+
         </ion-row>
       </div>
     </ion-item>
@@ -58,7 +59,8 @@
   <ion-row>
     <ion-col text-center>
       <button ion-button (click)="clearCart()" [disabled]="(giftCartProducts.length < 1)" color="light">
-        <ion-icon name="trash"></ion-icon> Clear Cart <ion-spinner name="dots" *ngIf="showClearCartLoader"></ion-spinner>
+        <ion-icon name="trash"></ion-icon> Clear Cart <ion-spinner name="dots" *ngIf="showClearCartLoader">
+        </ion-spinner>
       </button>
       <button ion-button (click)="confirmSubmitOrder()" [disabled]="(giftCartProducts.length < 1)" color="secondary">
         <ion-icon name="cart"></ion-icon> Submit Order <ion-spinner name="dots" *ngIf="showLoader"></ion-spinner>
