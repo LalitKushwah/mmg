@@ -1,0 +1,68 @@
+<ion-header>
+  <ion-navbar>
+    <ion-title>Checkout</ion-title>
+  </ion-navbar>
+</ion-header>
+<ion-content class="full-background">
+  <ion-list>
+    <ion-card>
+      <ion-card-header text-center>
+        <ion-row>
+          <ion-col col-12>
+            <strong>
+              <ion-icon name="cash"></ion-icon> Total TK-Currency: {{totalTkCurrency}}
+            </strong>
+          </ion-col>
+        </ion-row>
+        <span></span>
+      </ion-card-header>
+    </ion-card>
+    <ion-item *ngFor="let product of giftCartProducts" margin-bottom>
+      <ion-row class="acc-label" (click)="expandItem($event)">
+        <ion-col>
+          {{product.name}} -
+          <span class="bold">{{ product.quantity }} item</span>
+        </ion-col>
+      </ion-row>
+      <div id="expandWrapper" class="collapsed">
+        <ion-row>
+          <ion-col text-center>
+            <ion-icon name="cube" color="grey"></ion-icon>
+            <span>{{ product.name }}</span>
+          </ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-col text-center>
+            <ion-icon name="cash" color="grey"></ion-icon>
+            <span>TkCurrency: {{ product.tkCurrencyValue }} </span>
+          </ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-col col-12>
+              <ion-col col-2 text-left style="padding-top: 7%">
+                <span>Qty:  {{product.quantity}}</span>
+              </ion-col>
+          </ion-col>
+          <ion-col col-2 text-right>
+            <button ion-button clear icon-only color="grey" (click)="removeFromCart(product)">
+              <ion-icon name="trash"></ion-icon>
+            </button>
+          </ion-col>
+        </ion-row>
+      </div>
+    </ion-item>
+  </ion-list>
+</ion-content>
+
+<ion-footer>
+  <ion-row>
+    <ion-col text-center>
+      <button ion-button (click)="clearCart()" [disabled]="(giftCartProducts.length < 1)" color="light">
+        <ion-icon name="trash"></ion-icon> Clear Cart <ion-spinner name="dots" *ngIf="showClearCartLoader"></ion-spinner>
+      </button>
+      <button ion-button (click)="confirmSubmitOrder()" [disabled]="(giftCartProducts.length < 1)" color="secondary">
+        <ion-icon name="cart"></ion-icon> Submit Order <ion-spinner name="dots" *ngIf="showLoader"></ion-spinner>
+      </button>
+    </ion-col>
+  </ion-row>
+</ion-footer>
