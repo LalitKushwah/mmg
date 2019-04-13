@@ -74,6 +74,8 @@ import { SpecialProductsPageModule } from '../pages/special-products/special-pro
 import { SpecialProductsPage } from '../pages/special-products/special-products';
 import { ClubClassificationPage } from '../pages/club-classification/club-classification';
 import { ClubClassificationPageModule } from '../pages/club-classification/club-classification.module';
+import {GiftCheckoutPage} from "../pages/gift-checkout/gift-checkout";
+import {GiftCheckoutPageModule} from "../pages/gift-checkout/gift-checkout.module";
 
 @NgModule({
   declarations: [
@@ -120,7 +122,8 @@ import { ClubClassificationPageModule } from '../pages/club-classification/club-
     TermsAndConditionsPageModule,
     WelcomeKitPageModule,
     SpecialProductsPageModule,
-    ClubClassificationPageModule
+    ClubClassificationPageModule,
+    GiftCheckoutPageModule
   ],
   bootstrap: [IonicApp],
   entryComponents: [
@@ -153,7 +156,8 @@ import { ClubClassificationPageModule } from '../pages/club-classification/club-
     TermsAndConditionsPage,
     WelcomeKitPage,
     SpecialProductsPage,
-    ClubClassificationPage
+    ClubClassificationPage,
+    GiftCheckoutPage
   ],
   providers: [
     StatusBar,

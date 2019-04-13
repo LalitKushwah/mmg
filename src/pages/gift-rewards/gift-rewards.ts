@@ -3,6 +3,7 @@ import { IonicPage, NavController, NavParams, Slides  } from 'ionic-angular';
 import {ApiServiceProvider} from "../../providers/api-service/api-service";
 import {StorageServiceProvider} from "../../providers/storage-service/storage-service";
 import {WidgetUtilService} from "../../utils/widget-utils";
+import {GiftCheckoutPage} from "../gift-checkout/gift-checkout";
 
 /**
  * Generated class for the GiftRewardsPage page.
@@ -22,13 +23,17 @@ export class GiftRewardsPage {
   totalTkPoints
   totalTkCurrency
   giftProductsCart = []
-
   constructor(public navCtrl: NavController,
               public navParams: NavParams,
               private apiService: ApiServiceProvider,
               private storageService: StorageServiceProvider,
               private widgetService: WidgetUtilService) {
+
     this.getGiftProducts()
+  }
+
+  ionViewWillEnter() {
+    this.giftProductsCart = this.storageService.getGiftProductCart()
     this.getTKCurrency()
   }
 
@@ -36,7 +41,9 @@ export class GiftRewardsPage {
     this.storageService.getFromStorage('profile').then((res: any) => {
       this.apiService.getUserDetails(res.userLoginId).subscribe(data => {
         this.totalTkPoints = data.body[0].tkPoints
-        this.totalTkCurrency = data.body[0].tkCurrency
+        // this.totalTkCurrency = data.body[0].tkCurrency
+        this.totalTkCurrency = 100000
+
       })
     })
   }
@@ -51,6 +58,7 @@ export class GiftRewardsPage {
 
   addItemToGiftCart(product) {
     let currencyLeft = parseFloat(this.totalTkCurrency) - parseFloat(product.tkCurrencyValue);
+    console.log('======= 26 ======', currencyLeft)
     if (currencyLeft > 0) {
       this.totalTkCurrency = this.totalTkCurrency - product.tkCurrencyValue;
       let flag = false
@@ -63,11 +71,16 @@ export class GiftRewardsPage {
       if (!flag) {
         product.quantity = 1
         this.giftProductsCart.push(product)
+        this.storageService.setGiftProductCart(this.giftProductsCart)
       }
       this.widgetService.showToast('Gift Item Added Successfully...')
     } else {
       this.widgetService.showToast('You Do not have sufficient TK-Currency')
     }
+  }
+
+  moveToGiftCheckoutPage() {
+    this.navCtrl.push(GiftCheckoutPage, { cart: this.giftProductsCart })
   }
 
 }

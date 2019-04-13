@@ -4,6 +4,16 @@ import {Storage} from "@ionic/storage";
 @Injectable()
 export class StorageServiceProvider {
 
+  private _giftProductCart = []
+
+  getGiftProductCart(): any[] {
+    return this._giftProductCart;
+  }
+
+  setGiftProductCart(value: any[]) {
+    this._giftProductCart = value;
+  }
+
   constructor(public storage: Storage) {
   }
 
