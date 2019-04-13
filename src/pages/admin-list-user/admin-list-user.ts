@@ -19,6 +19,7 @@ export class AdminListUserPage {
   filteredUserList: Array<any> = [];
   userListAvailable: Boolean = false
   searchQuery: string
+  allCustomers = []
 
   constructor(public navCtrl: NavController, public navParams: NavParams,
               private apiService: ApiServiceProvider,
@@ -29,6 +30,19 @@ export class AdminListUserPage {
     this.getUserList()
   }
 
+  ionViewWillEnter() {
+    this.apiService.getAllCustomers().subscribe((result) => {
+      if (result.body && result.body.length > 0) {
+        this.allCustomers = result.body
+      }
+    }, (error) => {
+      if (error.statusText === 'Unknown Error') {
+        this.widgetUtil.showToast(CONSTANTS.INTERNET_ISSUE)
+      } else {
+        this.widgetUtil.showToast(CONSTANTS.SERVER_ERROR)
+      }
+    })
+  }
   getUserList() {
     this.apiService.getCustomerList(this.skipValue, this.limit).subscribe((result) => {
       this.userList = result.body
@@ -111,23 +125,7 @@ export class AdminListUserPage {
   }
 
   searchCustomers(searchQuery) {
-      this.filteredUserList = this.userList.filter(user => user.name.toLowerCase().includes(searchQuery.toLowerCase()))
-    if (this.filteredUserList.length === 0) {
-      this.apiService.getAllCustomers().subscribe((result) => {
-        if(result.body.length > 0) {
-          result.body.map( (value) => {
-            value.quantity = 0
-            this.userList.push(value)
-            this.searchCustomers(searchQuery)
-          })
-        }
-      }, (error) => {
-        if (error.statusText === 'Unknown Error') {
-          this.widgetUtil.showToast(CONSTANTS.INTERNET_ISSUE)
-        } else {
-          this.widgetUtil.showToast(CONSTANTS.SERVER_ERROR)
-        }
-      })
-    }
-  }
+      this.filteredUserList = this.allCustomers.filter(user =>
+        user.name.toLowerCase().includes(searchQuery.toLowerCase())
+      )}
 }

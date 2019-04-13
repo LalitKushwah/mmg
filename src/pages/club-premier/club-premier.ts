@@ -44,6 +44,6 @@ export class ClubPremierPage {
   }
 
   viewRewards() {
-    this.widgetService.showToast('Work In Progress Coming Soon...')
+    this.navCtrl.push(GiftRewardsPage)
   }
 }
