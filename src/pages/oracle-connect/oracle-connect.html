@@ -7,7 +7,7 @@
 <ion-header>
 
   <ion-navbar>
-    <ion-title>oracle-connect</ion-title>
+    <ion-title>Developer Zone</ion-title>
   </ion-navbar>
 
 </ion-header>
@@ -15,11 +15,6 @@
 
 <ion-content padding>
   <ion-item>
-    <ion-label floating>Type Entity Name</ion-label>
-    <ion-input type="text" #value value="Product_master"></ion-input>
+    <button full large ion-button (click)="startSchedular()">Start Schedular</button>
   </ion-item>
-  <button ion-button color="secondary" item-end (click)="getData(value.value)">Fetch Data</button>
-  <ion-item>
-  </ion-item>
-  <div #jsonEditor style="width: 320px; height: 400px;"></div>
 </ion-content>

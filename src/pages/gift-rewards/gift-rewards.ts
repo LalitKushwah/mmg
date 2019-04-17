@@ -1,5 +1,5 @@
 import { Component, ViewChild  } from '@angular/core';
-import { IonicPage, NavController, NavParams, Slides  } from 'ionic-angular';
+import {IonicPage, LoadingController, NavController, NavParams, Slides} from 'ionic-angular';
 import {ApiServiceProvider} from "../../providers/api-service/api-service";
 import {StorageServiceProvider} from "../../providers/storage-service/storage-service";
 import {WidgetUtilService} from "../../utils/widget-utils";
@@ -27,7 +27,8 @@ export class GiftRewardsPage {
               public navParams: NavParams,
               private apiService: ApiServiceProvider,
               private storageService: StorageServiceProvider,
-              private widgetService: WidgetUtilService) {
+              private widgetService: WidgetUtilService,
+              private loadingCtrl: LoadingController) {
 
     this.getGiftProducts()
   }
@@ -41,16 +42,20 @@ export class GiftRewardsPage {
     this.storageService.getFromStorage('profile').then((res: any) => {
       this.apiService.getUserDetails(res.userLoginId).subscribe(data => {
         this.totalTkPoints = data.body[0].tkPoints
-        // this.totalTkCurrency = data.body[0].tkCurrency
-        this.totalTkCurrency = 100000
-
+        this.totalTkCurrency = data.body[0].tkCurrency
       })
     })
   }
 
   getGiftProducts() {
+      const loader = this.loadingCtrl.create({
+        content: "Fetching Products Please Wait...",
+      });
+      loader.present();
     this.apiService.getGiftProducts().subscribe(res => {
       this.giftProducts = res.body
+      console.log('======= 57 ======', this.giftProducts)
+      loader.dismiss()
       // schema of the received gift products
       // {_id: "5ca8ad0a45d7402c15f989c1", name: "32 Inch LED", brand: "Hisense", tkCurrencyValue: "2000"}
     })

@@ -110,7 +110,6 @@ export class CustomerReviewSubmitOrderPage {
       this.navCtrl.setRoot(HomePage)
     }, (error) => {
       this.showLoader = false
-      console.log('error', error)
       if (error.statusText === 'Unknown Error') {
         this.widgetUtil.showToast(CONSTANTS.INTERNET_ISSUE)
       } else {

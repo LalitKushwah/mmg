@@ -95,7 +95,6 @@ export class CustomerOrderDetailPage {
 
   getOrderDetail() {
     this.apiService.getOrderDetail(this.orderDetail['_id']).subscribe((result) => {
-      console.log('ordedeails', result.body[0])
       this.orderDetail = result.body[0]
       this.checkData()
       this.showLoader = false

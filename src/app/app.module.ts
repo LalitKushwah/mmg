@@ -76,6 +76,7 @@ import { ClubClassificationPage } from '../pages/club-classification/club-classi
 import { ClubClassificationPageModule } from '../pages/club-classification/club-classification.module';
 import {GiftCheckoutPage} from "../pages/gift-checkout/gift-checkout";
 import {GiftCheckoutPageModule} from "../pages/gift-checkout/gift-checkout.module";
+import {DatePipe} from "@angular/common";
 
 @NgModule({
   declarations: [
@@ -174,7 +175,8 @@ import {GiftCheckoutPageModule} from "../pages/gift-checkout/gift-checkout.modul
     },
     File,
     FileTransfer,
-    FileTransferObject
+    FileTransferObject,
+    DatePipe
   ]
 })
 export class AppModule {}
