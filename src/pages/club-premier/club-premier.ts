@@ -1,10 +1,9 @@
 import { Component } from '@angular/core';
-import {IonicPage, LoadingController, NavController, NavParams} from 'ionic-angular';
+import {AlertController, IonicPage, LoadingController, NavController, NavParams} from 'ionic-angular';
 import { ClubPremierGuidePage } from '../club-premier-guide/club-premier-guide';
 import { GiftRewardsPage } from '../gift-rewards/gift-rewards';
 import {StorageServiceProvider} from "../../providers/storage-service/storage-service";
 import {ApiServiceProvider} from "../../providers/api-service/api-service";
-import {WidgetUtilService} from "../../utils/widget-utils";
 
 /**
  * Generated class for the ClubPremierPage page.
@@ -27,7 +26,8 @@ export class ClubPremierPage {
               public navParams: NavParams,
               private storageService: StorageServiceProvider,
               private apiService: ApiServiceProvider,
-              private loadingCtrl: LoadingController) {
+              private loadingCtrl: LoadingController,
+              private alertCtrl: AlertController) {
   }
 
   ionViewDidLoad() {
@@ -50,5 +50,14 @@ export class ClubPremierPage {
 
   viewRewards() {
     this.navCtrl.push(GiftRewardsPage)
+  }
+
+  provideInfo() {
+    const alert = this.alertCtrl.create({
+      title: 'Information',
+      subTitle: 'TK points will convert into TK currency post target achievement',
+      buttons: ['OK']
+    });
+    alert.present();
   }
 }

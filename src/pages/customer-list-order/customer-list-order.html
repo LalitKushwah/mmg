@@ -47,12 +47,20 @@
                 <ion-icon color="grey" name="calendar"></ion-icon>
                 Date: {{order.lastUpdatedAt}}
             </ion-col>
+          </ion-row>
+          <ion-row>
             <ion-col text-center>
                 <ion-icon color="grey" name="cash"></ion-icon> Total: {{order.orderTotal}} ZMW
             </ion-col>
           </ion-row>
+        <ion-row>
+          <ion-col col-12 text-center>
+            <ion-icon color="grey" name="trophy"></ion-icon>
+            Total Tk-Points: <strong text-uppercase>{{order.totalTkPoints}}</strong>
+          </ion-col>
+        </ion-row>
           <ion-row>
-            <ion-col col-12 text-center class="{{order.status}}"> 
+            <ion-col col-12 text-center class="{{order.status}}">
                 <ion-icon color="grey" name="podium"></ion-icon>Status: <strong text-uppercase>{{order.status}}</strong>
             </ion-col>
           </ion-row>

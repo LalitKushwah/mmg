@@ -15,7 +15,7 @@
   <ion-item *ngFor="let faq of faqs" margin-bottom>
     <ion-row class="acc-label" (click)="expandItem($event)">
       <ion-col>
-        {{faq.ques}}
+        <b>{{faq.ques}}</b>
       </ion-col>
     </ion-row>
     <div id="expandWrapper" class="collapsed">

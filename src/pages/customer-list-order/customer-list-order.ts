@@ -34,6 +34,7 @@ export class CustomerListOrderPage {
     this.userId = (await this.storageService.getFromStorage('profile'))['_id']
     this.apiService.getOrderListByUser(this.userId, this.skipValue, this.limit).subscribe((result) => {
       this.orderList = result.body
+      console.log('===== 37 ====', this.orderList)
       this.orderList.map((value) => {
         value.orderTotal = parseFloat((Math.round(value.orderTotal * 100) / 100).toString()).toFixed(2)
         value.lastUpdatedAt = this.formatDate(value.lastUpdatedAt)

@@ -75,6 +75,12 @@
             <ion-icon color="grey" name="podium"></ion-icon>Status: <strong text-uppercase>{{order.status}}</strong>
           </ion-col>
         </ion-row>
+      <ion-row>
+        <ion-col col-12 text-center>
+          <ion-icon color="grey" name="trophy"></ion-icon>
+          Total Tk-Points: <strong text-uppercase>{{order.totalTkPoints}}</strong>
+        </ion-col>
+      </ion-row>
         <ion-row>
           <ion-col text-center>
             <button ion-button outline color="secondary" item-end (click)="getOrderDetial(order)">view order</button>

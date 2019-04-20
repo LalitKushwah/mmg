@@ -1,5 +1,5 @@
-import { Component, ViewChild  } from '@angular/core';
-import {IonicPage, LoadingController, NavController, NavParams, Slides} from 'ionic-angular';
+import { Component  } from '@angular/core';
+import {IonicPage, LoadingController, NavController, NavParams} from 'ionic-angular';
 import {ApiServiceProvider} from "../../providers/api-service/api-service";
 import {StorageServiceProvider} from "../../providers/storage-service/storage-service";
 import {WidgetUtilService} from "../../utils/widget-utils";
