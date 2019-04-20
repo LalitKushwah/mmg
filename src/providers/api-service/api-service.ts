@@ -122,8 +122,19 @@ export class ApiServiceProvider {
     return this.http.post(CONSTANTS.BASE_URL + 'api/order/create/gift/order', orderDetails)
   }
 
-  triggerSchedular() {
-    return this.http.post(CONSTANTS.BASE_URL + 'api/erp/schedular', {})
+  updateProductInMongo() {
+    return this.http.post(CONSTANTS.BASE_URL + 'api/erp/update/product/mongo', {})
   }
 
+  updateProductStatInERP() {
+    return this.http.post(CONSTANTS.BASE_URL + 'api/erp/update/product/erp', {})
+  }
+
+  updateCustomerInMongo() {
+    return this.http.post(CONSTANTS.BASE_URL + 'api/erp/update/customer/mongo', {})
+  }
+
+  updateCustomerStatInERP() {
+    return this.http.post(CONSTANTS.BASE_URL + 'api/erp/update/customer/erp', {})
+  }
 }

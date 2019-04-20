@@ -25,12 +25,54 @@ export class OracleConnectPage {
               private loadingCtrl: LoadingController) {
   }
 
-  startSchedular() {
+  updateProductInMongo() {
     const loader = this.loadingCtrl.create({
       content: "Schedular is Running...",
     });
     loader.present();
-    this.apiService.triggerSchedular().subscribe(res => {
+    this.apiService.updateProductInMongo().subscribe(res => {
+      loader.dismiss()
+      this.widgetUtil.showToast('Schedular completed successfully...')
+    }, error => {
+      this.widgetUtil.showToast(`Error while running schedular:  ${error}`)
+      loader.dismiss()
+    })
+  }
+
+  updateProductStatInERP() {
+    const loader = this.loadingCtrl.create({
+      content: "Schedular is Running...",
+    });
+    loader.present();
+    this.apiService.updateProductStatInERP().subscribe(res => {
+      loader.dismiss()
+      this.widgetUtil.showToast('Schedular completed successfully...')
+    }, error => {
+      this.widgetUtil.showToast(`Error while running schedular:  ${error}`)
+      loader.dismiss()
+    })
+  }
+
+  updateCustomerInMongo() {
+    const loader = this.loadingCtrl.create({
+      content: "Schedular is Running...",
+    });
+    loader.present();
+    this.apiService.updateCustomerInMongo().subscribe(res => {
+      loader.dismiss()
+      this.widgetUtil.showToast('Schedular completed successfully...')
+    }, error => {
+      this.widgetUtil.showToast(`Error while running schedular:  ${error}`)
+      loader.dismiss()
+    })
+  }
+
+  updateCustomerStatInERP() {
+    const loader = this.loadingCtrl.create({
+      content: "Schedular is Running...",
+    });
+    loader.present();
+    this.apiService.updateCustomerStatInERP().subscribe(res => {
       loader.dismiss()
       this.widgetUtil.showToast('Schedular completed successfully...')
     }, error => {

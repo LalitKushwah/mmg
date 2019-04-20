@@ -10,8 +10,11 @@ page-gift-rewards {
         width: 100%;
     }
     .gift-image {
-      height: 100px;
-      width: 100px;
+      height: 40vw;
+      width: 40vw;
+      display: inline-block;
+      margin-left: auto;
+      margin-right: auto;
     }
     ion-card-content.card-content {
         padding: 15px 0;

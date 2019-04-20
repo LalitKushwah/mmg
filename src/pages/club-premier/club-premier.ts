@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import {IonicPage, LoadingController, NavController, NavParams} from 'ionic-angular';
 import { ClubPremierGuidePage } from '../club-premier-guide/club-premier-guide';
 import { GiftRewardsPage } from '../gift-rewards/gift-rewards';
 import {StorageServiceProvider} from "../../providers/storage-service/storage-service";
@@ -27,12 +27,17 @@ export class ClubPremierPage {
               public navParams: NavParams,
               private storageService: StorageServiceProvider,
               private apiService: ApiServiceProvider,
-              private widgetService :WidgetUtilService) {
+              private loadingCtrl: LoadingController) {
   }
 
   ionViewDidLoad() {
+    const loader = this.loadingCtrl.create({
+      content: "Please Wait...",
+    });
+    loader.present();
     this.storageService.getFromStorage('profile').then((res: any) => {
       this.apiService.getUserDetails(res.userLoginId).subscribe(data => {
+          loader.dismiss()
           this.tkPoints = data.body[0].tkPoints
           this.tkCurrency = data.body[0].tkCurrency
       })

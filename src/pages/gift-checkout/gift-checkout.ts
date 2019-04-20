@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import {AlertController, DateTime, IonicPage, NavController, NavParams} from 'ionic-angular';
 import {StorageServiceProvider} from "../../providers/storage-service/storage-service";
 import {HomePage} from "../home/home";
 import {CONSTANTS} from "../../utils/constants";
@@ -25,7 +25,8 @@ export class GiftCheckoutPage {
               private storageService: StorageServiceProvider,
               private apiService: ApiServiceProvider,
               public widgetUtil: WidgetUtilService,
-              private datePipe: DatePipe) {
+              private datePipe: DatePipe,
+              private alertController: AlertController) {
     this.showLoader = false
     this.giftCartProducts = this.navParams.get('cart')
     this.calculateTotalTkCurrency()
@@ -75,6 +76,28 @@ export class GiftCheckoutPage {
   }
 
   async confirmSubmitOrder() {
+    const alert = this.alertController.create({
+      title: 'Disclaimer',
+      subTitle: 'Gift Rewards shown in images may differ from actual products.',
+      buttons: [
+        {
+          text : 'Okay',
+          handler: () => {
+            this.submitGiftOrder()
+          }
+        },
+        {
+          text : 'Close',
+          handler: () => {
+            // do nothing
+          }
+        }
+      ]
+    });
+    alert.present();
+  }
+
+  async submitGiftOrder() {
     this.showLoader = true
     let profile = await this.storageService.getFromStorage('profile')
     let orderObj: any = {
@@ -97,21 +120,42 @@ export class GiftCheckoutPage {
     orderObj.emailContent = `<!DOCTYPE html>
                             <html>
                               <head>
-                                <meta charset="utf-8">
-                                <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
-                                <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-                                <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+                                <meta charset="utf-8">                                                               
+                                <style>
+                                #customers {
+                                  font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
+                                  border-collapse: collapse;
+                                  width: 100%;
+                                }
+                                
+                                #customers td, #customers th {
+                                  border: 1px solid #ddd;
+                                  padding: 8px;
+                                }
+                                
+                                #customers tr:nth-child(even){background-color: #f2f2f2;}
+                                
+                                #customers tr:hover {background-color: #ddd;}
+                                
+                                #customers th {
+                                  padding-top: 12px;
+                                  padding-bottom: 12px;
+                                  text-align: left;
+                                  background-color: #4CAF50;
+                                  color: white;
+                                }
+                                </style>    
                               </head>
                               <body style="padding:30px">
                                 <p>Dear TK Management Team,</p>
-                                <table border="1px">
+                                <table id="customers" border="1px">
                                   <tr>
                                     <td>Order Number</td>
                                     <td>${orderObj.orderId}</td>
                                   </tr>
                                   <tr>
                                     <td>Date</td>
-                                    <td><${this.datePipe.transform(orderObj.lastUpdatedAt, 'MM/dd/yyyy')}/td>
+                                    <td>${this.datePipe.transform(orderObj.lastUpdatedAt, 'MM/dd/yyyy')}</td>
                                   </tr>
                                   <tr>
                                     <td>Dealer Name</td>
@@ -125,8 +169,8 @@ export class GiftCheckoutPage {
                                     <td>Currency Used</td>
                                     <td>${orderObj.totalTkCurrency}</td>
                                 </table>
-                                <div class="table-responsive">
-                                <table border="1" class="table table-bordered">
+                                <br/>
+                                <table border="1" id="customers">
                                   <thead>
                                   <tr>
                                     <th>Item</th>
@@ -135,16 +179,15 @@ export class GiftCheckoutPage {
                                 </thead>
                                 <tbody>
                                 ${orderObj.productList.map(product => {
-                                  return (
-                                    `<tr>
+      return (
+        `<tr>
                                       <td>${product.productName}</td>
                                       <td>${product.quantity}</td>
-                                    </tr>`        
-                                  )
-                                }).join('')}                       
+                                    </tr>`
+      )
+    }).join('')}                       
                                 </tbody>
                                 </table>
-                              </div>
                               </body>
                             </html>
                             `
@@ -153,7 +196,7 @@ export class GiftCheckoutPage {
       this.showLoader = false
       this.storageService.setGiftProductCart([])
       this.widgetUtil.showToast(CONSTANTS.ORDER_PLACED)
-this.navCtrl.setRoot(HomePage)
+      this.navCtrl.setRoot(HomePage)
     }, (error) => {
       this.showLoader = false
       console.log('error', error)

@@ -38,10 +38,6 @@ export class LoginPage implements OnInit {
     this.createForm();
   }
 
-  ionViewDidLoad() {
-    console.log('ionViewDidLoad LoginPage');
-  }
-
   createFormControls() {
     this.userLoginId = new FormControl('', [
       Validators.required
