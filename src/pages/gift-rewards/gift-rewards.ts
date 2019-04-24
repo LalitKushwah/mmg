@@ -1,4 +1,4 @@
-import { Component  } from '@angular/core';
+import {Component, ElementRef, ViewChild} from '@angular/core';
 import {IonicPage, LoadingController, NavController, NavParams} from 'ionic-angular';
 import {ApiServiceProvider} from "../../providers/api-service/api-service";
 import {StorageServiceProvider} from "../../providers/storage-service/storage-service";
@@ -19,9 +19,13 @@ import {GiftCheckoutPage} from "../gift-checkout/gift-checkout";
 })
 export class GiftRewardsPage {
 
+  @ViewChild('tdprod') tdprod: any;
+
+
   giftProducts = []
   totalTkPoints
   totalTkCurrency
+  leftTkCurrency
   giftProductsCart = []
   constructor(public navCtrl: NavController,
               public navParams: NavParams,
@@ -31,11 +35,11 @@ export class GiftRewardsPage {
               private loadingCtrl: LoadingController) {
 
     this.getGiftProducts()
+    this.getTKCurrency()
   }
 
   ionViewWillEnter() {
     this.giftProductsCart = this.storageService.getGiftProductCart()
-    this.getTKCurrency()
   }
 
   getTKCurrency() {
@@ -43,6 +47,9 @@ export class GiftRewardsPage {
       this.apiService.getUserDetails(res.userLoginId).subscribe(data => {
         this.totalTkPoints = data.body[0].tkPoints
         this.totalTkCurrency = data.body[0].tkCurrency
+        this.leftTkCurrency = this.totalTkCurrency
+        this.storageService.setToStorage('leftTkCurrency', this.leftTkCurrency)
+        this.storageService.setToStorage('totalTkCurrency', this.totalTkCurrency)
       })
     })
   }
@@ -54,20 +61,29 @@ export class GiftRewardsPage {
       loader.present();
     this.apiService.getGiftProducts().subscribe(res => {
       this.giftProducts = res.body
+      console.log('===== 57 =====', this.giftProducts)
       loader.dismiss()
       // schema of the received gift products
       // {_id: "5ca8ad0a45d7402c15f989c1", name: "32 Inch LED", brand: "Hisense", tkCurrencyValue: "2000"}
     })
   }
 
-  addItemToGiftCart(product) {
-    let currencyLeft = parseFloat(this.totalTkCurrency) - parseFloat(product.tkCurrencyValue);
-    if (currencyLeft > 0) {
-      this.totalTkCurrency = this.totalTkCurrency - product.tkCurrencyValue;
+  async addItemToGiftCart(product) {
+    if (product.brand === 'Tradekings') {
+      product.tkCurrencyValue = parseFloat(this.tdprod.nativeElement.value)
+    }
+    let availbleTkCurrency: any = await this.storageService.getFromStorage('leftTkCurrency')
+    let currencyLeft = parseFloat(availbleTkCurrency) - parseFloat(product.tkCurrencyValue);
+    if (currencyLeft > -1) {
+      await this.storageService.setToStorage('leftTkCurrency', currencyLeft)
       let flag = false
       this.giftProductsCart.map(existingProduct => {
         if (product._id === existingProduct._id) {
-            product.quantity = product.quantity  + 1;
+            if (product.brand !== 'Tradekings') {
+              product.quantity = product.quantity + 1;
+            } else {
+              existingProduct.tkCurrencyValue = product.tkCurrencyValue;
+            }
             flag = true
         }
       })

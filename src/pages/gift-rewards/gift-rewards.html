@@ -32,11 +32,17 @@
               </ion-row>
               <ion-row>
                 <ion-col size="12">
-                  {{ product.tkCurrencyValue }} TK Currency
+                  <div *ngIf="product.brand === 'Tradekings'; then thenBlock else elseBlock"></div>
+                  <ng-template #thenBlock>
+                    <input class="special-gift-prod"
+                           type="text"
+                           value="{{ product.tkCurrencyValue}}" #tdprod/> TK Currency</ng-template>
+                  <ng-template #elseBlock>{{ product.tkCurrencyValue}} TK Currency</ng-template>
+
                 </ion-col>
               </ion-row>
               <ion-row>
-                <ion-col size="12">
+                <ion-col size="12"
                   <button ion-button right (click)="addItemToGiftCart(product)" color="secondary">Add</button>
                 </ion-col>
               </ion-row>

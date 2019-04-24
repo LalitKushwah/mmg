@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import {AlertController, DateTime, IonicPage, NavController, NavParams} from 'ionic-angular';
+import {AlertController, IonicPage, NavController, NavParams} from 'ionic-angular';
 import {StorageServiceProvider} from "../../providers/storage-service/storage-service";
 import {HomePage} from "../home/home";
 import {CONSTANTS} from "../../utils/constants";
@@ -69,10 +69,12 @@ export class GiftCheckoutPage {
     }
   }
 
-  clearCart() {
+  async clearCart() {
     this.giftCartProducts = []
     this.totalTkCurrency = 0
     this.storageService.setGiftProductCart(this.giftCartProducts)
+    const totalCurrency = await this.storageService.getFromStorage('totalTkCurrency')
+    await this.storageService.setToStorage('leftTkCurrency', totalCurrency)
   }
 
   async confirmSubmitOrder() {
