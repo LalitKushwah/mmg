@@ -24,6 +24,12 @@ page-club-classification {
             }
         }
     }
+    .card-wrapper {
+        img {
+            width: 100%;
+            border-radius: 10px;
+        }
+    }
     .check {
         padding: 0;
         li {
