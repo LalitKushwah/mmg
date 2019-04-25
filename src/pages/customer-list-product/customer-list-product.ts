@@ -214,7 +214,7 @@ export class CustomerListProductPage {
       this.apiService.getProductListByCategory(this.categoryId, this.skipValue, this.limit).subscribe((result) => {
         if(result.body.length > 0) {
           result.body.map( (value) => {
-            value.quantity = 0
+            value.quantity = 1
             this.productList.push(value)
           })
         } else {
