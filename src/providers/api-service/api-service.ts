@@ -137,4 +137,8 @@ export class ApiServiceProvider {
   updateCustomerStatInERP() {
     return this.http.post(CONSTANTS.BASE_URL + 'api/erp/update/customer/erp', {})
   }
+
+  getVersion(): any {
+    return this.http.get(CONSTANTS.BASE_URL + 'api/user/version')
+  }
 }
