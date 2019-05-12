@@ -138,6 +138,10 @@ export class ApiServiceProvider {
     return this.http.post(CONSTANTS.BASE_URL + 'api/erp/update/customer/erp', {})
   }
 
+  createNewCustomerInMongo () {
+    return this.http.post(CONSTANTS.BASE_URL + 'api/erp/create/new/customer/mongo', {})
+  }
+
   getVersion(): any {
     return this.http.get(CONSTANTS.BASE_URL + 'api/user/version')
   }
