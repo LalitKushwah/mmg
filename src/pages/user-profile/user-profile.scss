@@ -1,3 +1,14 @@
 page-user-profile {
+    .profile-card{
+        margin-top: 10px;
+        border-radius: 5px;
+        box-shadow: 0px 0px 5px 0px rgba(0,0,0,0.2);
+    }
+    .profile-item{
+        border-bottom: 1px solid #e6e6e6;
+    }
 
+    .profile-header{
+        border-bottom: 2px solid #e6e6e6;
+    }
 }

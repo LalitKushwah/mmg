@@ -22,4 +22,5 @@ export class UserProfilePage {
     console.log('ionViewDidLoad UserProfilePage');
   }
 
+
 }
