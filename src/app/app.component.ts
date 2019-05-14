@@ -54,8 +54,8 @@ export class MyApp {
           ]
         } else {
           this.pages = [
-            {title: 'Home', component: CustomerHomePage, icon: 'home'},
-            {title: 'Profile', component: UserProfilePage, icon: 'profile'},
+            {title: 'Shop', component: CustomerHomePage, icon: 'shopping-bag'},
+            {title: 'Profile', component: UserProfilePage, icon: 'customer'},
             {title: 'Your Orders', component: CustomerListOrderPage, icon: 'cart'},
             {title: 'Club Premier', component: ClubPremierPage, icon: 'loan'}
           ]

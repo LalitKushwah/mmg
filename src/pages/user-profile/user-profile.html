@@ -6,8 +6,8 @@
       </button>
       <ion-title>Profile</ion-title>
       <ion-buttons end>
-        <button ion-button icon-only>
-          <ion-icon name="more"></ion-icon>
+        <button ion-button icon-only (click)="presentPopover($event)">
+          <ion-icon name="more" ></ion-icon>
         </button>
       </ion-buttons>
     </ion-navbar>
@@ -21,7 +21,7 @@
   <ion-card-header>
     <ion-item class="profile-header">
       <ion-avatar item-start>
-        <img src="assets/icon/profile.svg">
+        <img src="assets/icon/customer-dark.svg">
       </ion-avatar>
       <ion-item>
         User Details
