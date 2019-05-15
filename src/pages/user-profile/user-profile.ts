@@ -4,6 +4,9 @@ import { IonicPage, NavController, NavParams } from 'ionic-angular';
 
 import { PopoverHomePage } from '../popover-home/popover-home';
 
+import { TargetGraphPage } from '../target-graph/target-graph';
+
+
 /**
  * Generated class for the UserProfilePage page.
  *
@@ -16,7 +19,7 @@ import { PopoverHomePage } from '../popover-home/popover-home';
 })
 @Component({
   selector: 'page-user-profile',
-  templateUrl: 'user-profile.html',
+  templateUrl: 'user-profile.html'
 })
 export class UserProfilePage {
 
@@ -30,5 +33,8 @@ export class UserProfilePage {
     this.widgetUtil.presentPopover(myEvent, PopoverHomePage)
   }
 
+  openGraph() {
+    this.navCtrl.push('TargetGraphPage');
+}
 
 }

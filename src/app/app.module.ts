@@ -30,6 +30,11 @@ import { HomePage } from '../pages/home/home';
 import { ListPage } from '../pages/list/list';
 
 import { UserProfilePage } from '../pages/user-profile/user-profile';
+import { TargetGraphPage } from '../pages/target-graph/target-graph';
+
+import { TargetGraphPageModule } from '../pages/target-graph/target-graph.module';
+
+import { ChartsModule } from 'ng2-charts-x';
 
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
@@ -86,6 +91,7 @@ import {DatePipe} from "@angular/common";
     HomePage,
     ListPage,
     UserProfilePage
+    // TargetGraphPage
   ],
   imports: [
     BrowserModule,
@@ -127,7 +133,9 @@ import {DatePipe} from "@angular/common";
     WelcomeKitPageModule,
     SpecialProductsPageModule,
     ClubClassificationPageModule,
-    GiftCheckoutPageModule
+    GiftCheckoutPageModule,
+    TargetGraphPageModule,
+    ChartsModule
   ],
   bootstrap: [IonicApp],
   entryComponents: [
@@ -162,7 +170,8 @@ import {DatePipe} from "@angular/common";
     SpecialProductsPage,
     ClubClassificationPage,
     GiftCheckoutPage,
-    UserProfilePage
+    UserProfilePage,
+    TargetGraphPage
   ],
   providers: [
     StatusBar,

@@ -9,7 +9,6 @@ import { SplashScreen } from '@ionic-native/splash-screen';
 import { UserProfilePage } from '../pages/user-profile/user-profile';
 import { CustomerHomePage } from '../pages/customer-home/customer-home';
 
-
 import { HomePage } from '../pages/home/home';
 import { HeaderColor } from "@ionic-native/header-color";
 import { CustomerListOrderPage } from '../pages/customer-list-order/customer-list-order';
