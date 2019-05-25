@@ -1,16 +1,17 @@
 page-user-profile {
     .profile-card{
-        margin-top: 10px;
+        margin-top: 20px;
+        margin-bottom: 5px;
         border-radius: 5px;
-        box-shadow: 0px 0px 5px 0px rgba(0,0,0,0.2);
+        box-shadow: 0px 0px 5px 0px rgba(0,0,0,0.1);
     }
-    .profile-item{
-        border-bottom: 1px solid #e6e6e6;
-    }
+    // .profile-item{
+    //     border-bottom: 1px solid #e6e6e6;
+    // }
 
-    .profile-header{
-        border-bottom: 2px solid #e6e6e6;
-    }
+    // .profile-header{
+    //     border-bottom: 2px solid #e6e6e6;
+    // }
 
     // .profile-expand{
        
@@ -48,14 +49,14 @@ page-user-profile {
             ion-row{
                 ion-col{
                     border: 1px solid rgb(94, 156, 211);
-                }        
+                }       
             }
             
             .header, .footer{
                 background: #225F93;
                 color: #fff;
                 font-size: 12px;
-                font-weight: bold;
+                // font-weight: bold;
             }
             .table-content{
                 font-size: 12px;

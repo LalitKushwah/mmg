@@ -30,8 +30,8 @@
 
 
   </ion-card-header>
-
-  <ion-list>
+</ion-card>
+  <!-- <ion-list> -->
 
     
     <!-- <ion-item class="profile-expand" padding>
@@ -68,11 +68,11 @@
 
     </ion-item> -->
 
-
+    <ion-card class="profile-card">
     <button (click)="toggleFunc();" class="accordion">
         <ion-icon name="trophy" item-start></ion-icon>
         Target vs Achievement
-        <ion-icon name="arrow-dropdown" class="expand-icon" item-end></ion-icon>
+        <ion-icon name="add" class="expand-icon" item-end></ion-icon>
     </button>
     <div class="panel" [ngClass]="opened ? 'active' : ''">
       
@@ -120,13 +120,15 @@
               </ion-row>
             </ion-grid>           
       </ion-list>
+    
     </div>
+    </ion-card>
 
-
+    <ion-card class="profile-card">
     <button (click)="toggleFuncTK();" class="accordion">
         <ion-icon name="md-cash" item-start></ion-icon>
         Outstanding
-        <ion-icon name="arrow-dropdown" class="expand-icon" item-end></ion-icon>
+        <ion-icon name="add" class="expand-icon" item-end></ion-icon>
         </button>
     <div class="panel" [ngClass]="TKopened ? 'active' : ''">
       
@@ -155,12 +157,13 @@
             </ion-grid>            
       </ion-list>
     </div>
+  </ion-card>
 
-
+<ion-card class="profile-card">
     <button (click)="toggleFuncOut();" class="accordion">
         <ion-icon name="md-cash" item-start></ion-icon>
         TK Currency
-        <ion-icon name="arrow-dropdown" class="expand-icon" item-end></ion-icon>
+        <ion-icon name="add" class="expand-icon" item-end></ion-icon>
       </button>
     <div class="panel" [ngClass]="Outopened ? 'active' : ''">
       
@@ -178,10 +181,10 @@
             </ion-grid>
       </ion-list>
     </div>
+  </ion-card>
+
+  <!-- </ion-list> -->
 
 
-  </ion-list>
-
-</ion-card>
 
 </ion-content>
