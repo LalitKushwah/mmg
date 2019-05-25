@@ -5,6 +5,10 @@ import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { PopoverHomePage } from '../popover-home/popover-home';
 
 import { TargetGraphPage } from '../target-graph/target-graph';
+import { TargetPage } from '../target/target';
+import { TkCurrencyPage} from '../tk-currency/tk-currency';
+import { OutstandingPage} from '../outstanding/outstanding';
+
 
 
 /**
@@ -35,6 +39,18 @@ export class UserProfilePage {
 
   openGraph() {
     this.navCtrl.push('TargetGraphPage');
-}
+  }
+
+  openTarget() {
+    this.navCtrl.push('TargetPage');
+  }
+
+  openOutstanding() {
+    this.navCtrl.push('OutstandingPage');
+  }
+
+  openTkCurrency() {
+    this.navCtrl.push('TkCurrencyPage');
+  }
 
 }

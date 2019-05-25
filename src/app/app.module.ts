@@ -31,8 +31,15 @@ import { ListPage } from '../pages/list/list';
 
 import { UserProfilePage } from '../pages/user-profile/user-profile';
 import { TargetGraphPage } from '../pages/target-graph/target-graph';
+import { TargetPage } from '../pages/target/target';
+import { TkCurrencyPage} from '../pages/tk-currency/tk-currency';
+import { OutstandingPage} from '../pages/outstanding/outstanding';
+
 
 import { TargetGraphPageModule } from '../pages/target-graph/target-graph.module';
+import { TargetPageModule } from '../pages/target/target.module';
+import { TkCurrencyPageModule } from '../pages/tk-currency/tk-currency.module';
+import { OutstandingPageModule } from '../pages/outstanding/outstanding.module';
 
 import { ChartsModule } from 'ng2-charts-x';
 
@@ -90,7 +97,8 @@ import {DatePipe} from "@angular/common";
     MyApp,
     HomePage,
     ListPage,
-    UserProfilePage
+    UserProfilePage,
+    //TargetPage
     // TargetGraphPage
   ],
   imports: [
@@ -135,7 +143,10 @@ import {DatePipe} from "@angular/common";
     ClubClassificationPageModule,
     GiftCheckoutPageModule,
     TargetGraphPageModule,
-    ChartsModule
+    ChartsModule,
+    TargetPageModule,
+    TkCurrencyPageModule,
+    OutstandingPageModule
   ],
   bootstrap: [IonicApp],
   entryComponents: [
@@ -171,7 +182,10 @@ import {DatePipe} from "@angular/common";
     ClubClassificationPage,
     GiftCheckoutPage,
     UserProfilePage,
-    TargetGraphPage
+    TargetGraphPage,
+    TargetPage,
+    OutstandingPage,
+    TkCurrencyPage
   ],
   providers: [
     StatusBar,

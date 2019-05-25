@@ -37,34 +37,31 @@
 
   <ion-list>
 
-    <ion-item class="profile-item" padding>
-      <ion-icon name="md-cash" item-start></ion-icon>
-      TK Points: 100
-    </ion-item>
-
-    <ion-item class="profile-item" padding>
-      <ion-icon name="md-cash" item-start></ion-icon>
-      TK Currency: 200
-    </ion-item>
-
-    <ion-item class="profile-item" padding>
-      <ion-icon name="md-cash" item-start></ion-icon>
-      TK Super Cash: 5678
-    </ion-item>
-
-    <ion-item class="profile-item" padding>
-      <ion-icon name="md-cash" item-start></ion-icon>
-      TK Reward Points: 1000
-    </ion-item>
-
+    
     <ion-item class="profile-expand" padding>
-      <button ion-item (click)="openGraph()">
+      <button ion-item (click)="openTarget()">
         <ion-icon name="trophy" item-start></ion-icon>
         Target vs Achievement
         <ion-icon name="arrow-dropdown" item-end></ion-icon>
       </button>
       <!-- <ion-icon name="md-cash" item-start></ion-icon>
       Target vs Achievement -->
+    </ion-item>
+
+    <ion-item class="profile-expand" padding>
+      <button ion-item (click)="openOutstanding()">
+        <ion-icon name="md-cash" item-start></ion-icon>
+        Outstanding
+        <ion-icon name="arrow-dropdown" item-end></ion-icon>
+      </button>
+    </ion-item>
+
+    <ion-item class="profile-expand" padding>
+      <button ion-item (click)="openTkCurrency()">
+        <ion-icon name="md-cash" item-start></ion-icon>
+        TK Currency
+        <ion-icon name="arrow-dropdown" item-end></ion-icon>
+      </button>
     </ion-item>
 
 
