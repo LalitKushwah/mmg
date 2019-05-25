@@ -27,6 +27,10 @@ import { OutstandingPage} from '../outstanding/outstanding';
 })
 export class UserProfilePage {
 
+  opened: boolean = false;
+  TKopened: boolean = false;
+  Outopened: boolean = false;
+
   constructor(public navCtrl: NavController, public navParams: NavParams, private widgetUtil: WidgetUtilService) {
   }
 
@@ -37,20 +41,50 @@ export class UserProfilePage {
     this.widgetUtil.presentPopover(myEvent, PopoverHomePage)
   }
 
-  openGraph() {
-    this.navCtrl.push('TargetGraphPage');
+  // openGraph() {
+  //   this.navCtrl.push('TargetGraphPage');
+  // }
+
+  // openTarget() {
+  //   this.navCtrl.push('TargetPage');
+  // }
+
+  // openOutstanding() {
+  //   this.navCtrl.push('OutstandingPage');
+  // }
+
+  // openTkCurrency() {
+  //   this.navCtrl.push('TkCurrencyPage');
+  // }
+
+  toggleFunc() {
+    this.opened = !this.opened;
+    if(this.TKopened){
+      this.TKopened = !this.TKopened 
+    }
+    if(this.Outopened){
+      this.Outopened = !this.Outopened 
+    }
   }
 
-  openTarget() {
-    this.navCtrl.push('TargetPage');
+  toggleFuncTK() {
+    this.TKopened = !this.TKopened;
+    if(this.opened){
+      this.opened = !this.opened 
+    }
+    if(this.Outopened){
+      this.Outopened = !this.Outopened 
+    }
   }
 
-  openOutstanding() {
-    this.navCtrl.push('OutstandingPage');
-  }
-
-  openTkCurrency() {
-    this.navCtrl.push('TkCurrencyPage');
+  toggleFuncOut() {
+    this.Outopened = !this.Outopened;
+    if(this.opened){
+      this.opened = !this.opened 
+    }
+    if(this.TKopened){
+      this.TKopened = !this.TKopened 
+    }
   }
 
 }
