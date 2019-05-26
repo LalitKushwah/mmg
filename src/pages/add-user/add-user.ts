@@ -16,6 +16,7 @@ export class AddUserPage implements OnInit {
 
   addAdminForm : FormGroup;
   addCustomerForm : FormGroup;
+  addSalesmanForm: FormGroup;
   name: FormControl;
   password: FormControl;
   userLoginId: FormControl;
@@ -24,24 +25,25 @@ export class AddUserPage implements OnInit {
   channel: FormControl;
   province: FormControl;
   showLoader = false;
-  userTypeList: Array<any> =  [ 'CUSTOMER', 'ADMIN']
+  userTypeList: Array<any> =  [ 'CUSTOMER', 'ADMIN','SALESMAN']
   countryList: Array<any> =  [ 'ZAMBIA']
   provinceList: Array<any> =  [ 'BOTSWANA', 'COPPERBELT', 'DRC', 'EASTERN', 'KENYA', 'LUAPULA', 'LUSAKA', 'MALAWI', 'MOZAMBIQUE', 'NORTH WESTERN', 'NORTHERN'
   ,'SOUTH AFRICA', 'SOUTHERN', 'TANZANIA', 'WESTERN', 'ZIMBABWE' ]
   selectedUserType : string = 'CUSTOMER'
   selectedCountry : string = 'ZAMBIA'
   selectedProvince : string = 'BOTSWANA'
-  showCustomerForm: boolean = true
+  showCustomerForm: string = 'CUSTOMER'
 
   constructor(public navCtrl: NavController, public navParams: NavParams
   , private apiService: ApiServiceProvider, private widgetUtil: WidgetUtilService) {
-    this.showCustomerForm = true
+    this.showCustomerForm = this.selectedUserType
   }
 
   ngOnInit(): void {
     this.createFormControls()
     this.createAdminForm()
     this.createCustomerForm()
+    this.createSalesmanForm()
   }
 
   createFormControls() {
@@ -79,6 +81,14 @@ export class AddUserPage implements OnInit {
     });
   }
 
+  createSalesmanForm() {
+    this.addSalesmanForm = new FormGroup({
+      name: this.name,
+      userLoginId: this.userLoginId,
+      password: this.password
+    });
+  }
+
   createCustomerForm() {
     this.addCustomerForm = new FormGroup({
       name: this.name,
@@ -90,14 +100,10 @@ export class AddUserPage implements OnInit {
   }
 
   onUserTypeSelect() {
-    if (this.selectedUserType != 'CUSTOMER') {
-      this.showCustomerForm = false
-    }else {
-      this.showCustomerForm = true
-    }
+    this.showCustomerForm = this.selectedUserType
     this.addAdminForm.reset()
     this.addCustomerForm.reset()
-  }
+  } 
 
   createUser (userType) {
     let message = ''
@@ -114,7 +120,7 @@ export class AddUserPage implements OnInit {
       userDetails['channel'] = this.channel.value.trim()
       userDetails['province'] = this.selectedProvince.trim()
       userDetails['externalId'] = this.externalId.value.trim()
-    } else {
+    } else if(userType === 'admin') {
       message = CONSTANTS.ADMIN_CREATED
       userDetails['name'] = this.name.value.trim()
       userDetails['userLoginId'] = this.userLoginId.value.trim()
@@ -122,6 +128,14 @@ export class AddUserPage implements OnInit {
       userDetails['userType'] = this.selectedUserType
       userDetails['country'] = this.selectedCountry.trim()
       userDetails['province'] = this.selectedProvince.trim()
+    } else {
+      message = CONSTANTS.SALESMAN_CREATED
+      userDetails['name'] = this.name.value.trim()
+      userDetails['userLoginId'] = this.userLoginId.value.trim()
+      userDetails['password'] = this.password.value.trim()
+      userDetails['userType'] = this.selectedUserType
+      userDetails['country'] = this.selectedCountry.trim()
+      userDetails['province'] = this.selectedProvince.trim()      
     }
     this.apiService.createUser(userDetails).subscribe((result) => {
       this.widgetUtil.showToast(message)

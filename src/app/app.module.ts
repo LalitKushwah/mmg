@@ -77,6 +77,10 @@ import { ClubClassificationPageModule } from '../pages/club-classification/club-
 import {GiftCheckoutPage} from "../pages/gift-checkout/gift-checkout";
 import {GiftCheckoutPageModule} from "../pages/gift-checkout/gift-checkout.module";
 import {DatePipe} from "@angular/common";
+import { EditUserPageModule } from '../pages/edit-user/edit-user.module';
+import { EditUserPage } from '../pages/edit-user/edit-user';
+import { AddSalesmanModalPageModule } from '../pages/add-salesman-modal/add-salesman-modal.module';
+import { AddSalesmanModalPage } from '../pages/add-salesman-modal/add-salesman-modal';
 
 @NgModule({
   declarations: [
@@ -106,6 +110,7 @@ import {DatePipe} from "@angular/common";
     AddCategoryPageModule,
     AddProductPageModule,
     AddUserPageModule,
+    EditUserPageModule,
     AdminListUserPageModule,
     AdminListCategoryPageModule,
     AdminListProductPageModule,
@@ -124,7 +129,8 @@ import {DatePipe} from "@angular/common";
     WelcomeKitPageModule,
     SpecialProductsPageModule,
     ClubClassificationPageModule,
-    GiftCheckoutPageModule
+    GiftCheckoutPageModule,
+    AddSalesmanModalPageModule
   ],
   bootstrap: [IonicApp],
   entryComponents: [
@@ -139,6 +145,7 @@ import {DatePipe} from "@angular/common";
     CustomerOrderDetailPage,
     AddCategoryPage,
     AddUserPage,
+    EditUserPage,
     AddProductPage,
     AdminListCategoryPage,
     AdminListProductPage,
@@ -158,7 +165,8 @@ import {DatePipe} from "@angular/common";
     WelcomeKitPage,
     SpecialProductsPage,
     ClubClassificationPage,
-    GiftCheckoutPage
+    GiftCheckoutPage,
+    AddSalesmanModalPage
   ],
   providers: [
     StatusBar,

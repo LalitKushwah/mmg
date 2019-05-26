@@ -59,6 +59,7 @@ export class OracleConnectPage {
     });
     loader.present();
     this.apiService.updateCustomerInMongo().subscribe(res => {
+      console.log('===== 62 =====', res)
       loader.dismiss()
       this.widgetUtil.showToast('Schedular completed successfully...')
     }, error => {
@@ -87,6 +88,20 @@ export class OracleConnectPage {
     });
     loader.present();
     this.apiService.createNewCustomerInMongo().subscribe(res => {
+      loader.dismiss()
+      this.widgetUtil.showToast('Schedular completed successfully...')
+    }, error => {
+      this.widgetUtil.showToast(`Error while running schedular:  ${error}`)
+      loader.dismiss()
+    })
+  }
+
+  createNewProductInMongo () {
+    const loader = this.loadingCtrl.create({
+      content: "Schedular is Running...",
+    });
+    loader.present();
+    this.apiService.createNewProductInMongo().subscribe(res => {
       loader.dismiss()
       this.widgetUtil.showToast('Schedular completed successfully...')
     }, error => {
