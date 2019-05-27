@@ -1,0 +1,20 @@
+<ion-header>
+  <ion-navbar>
+  </ion-navbar>
+  <ion-toolbar>
+    <ion-searchbar #q (ionChange)="searchProducts(q.value)" placeholder="Search Salesman"></ion-searchbar>
+  </ion-toolbar>
+</ion-header>
+<ion-content>
+    <ion-list>
+        <ion-card *ngFor="let salesman of filteredSalesmanList" (click)="addSalesMan(salesman)">
+          <ion-card-content>
+            <ion-row>
+              <ion-col text-center>
+                  <span>{{salesman.name}}</span>
+              </ion-col>
+            </ion-row>
+           </ion-card-content>
+           </ion-card>
+           </ion-list> 
+</ion-content>

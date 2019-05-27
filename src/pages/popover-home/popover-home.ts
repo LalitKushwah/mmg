@@ -7,6 +7,7 @@ import { HomePage } from '../home/home';
 import { StorageServiceProvider } from '../../providers/storage-service/storage-service';
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams, App} from 'ionic-angular';
+import { EditUserPage } from '../edit-user/edit-user';
 
 @IonicPage({
   name: 'PopoverHomePage'
@@ -30,6 +31,10 @@ export class PopoverHomePage {
       this.popoverOptions = [
         {
           name: 'Add User',
+          icon: 'person-add'
+        },
+        {
+          name: 'Edit User',
           icon: 'person-add'
         },
         {
@@ -68,6 +73,9 @@ export class PopoverHomePage {
       case 'Add User':
       this.addUser()
       break
+      case 'Edit User':
+      this.editUser()
+      break
       case 'Add Category':
       this.addCategory()
       break
@@ -86,6 +94,11 @@ export class PopoverHomePage {
   addUser(){
     this.navCtrl.push(AddUserPage)
     this.dismissPopover()
+  }
+
+  editUser() {
+    this.navCtrl.push(EditUserPage)
+    this.dismissPopover()    
   }
 
   addCategory() {

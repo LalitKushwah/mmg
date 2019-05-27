@@ -1,0 +1,81 @@
+<ion-header>
+  <ion-navbar>
+    <ion-title>Edit User Information</ion-title>
+  </ion-navbar>
+</ion-header>
+<ion-content class="full-background">
+
+  <ion-grid>
+    <ion-row>
+      <ion-col>
+        <ion-list>
+          <ion-item>
+            <ion-label>
+              <ion-icon name="locate" color="grey" padding-right></ion-icon>Province
+            </ion-label>
+            <ion-select [(ngModel)]="selectedProvince" interface="popover">
+              <ion-option *ngFor="let province of provinceList" [value]="province">{{province}}</ion-option>
+            </ion-select>
+          </ion-item>
+        </ion-list>
+      </ion-col>
+      <ion-col>
+          <ion-item>
+            <ion-label floating>Name</ion-label>
+            <ion-input type="text" [(ngModel)]="custName"></ion-input>
+          </ion-item>
+          <ion-item>
+            <ion-label floating>Customer Code</ion-label>
+            <ion-input type="text" [(ngModel)]="custCode"></ion-input>
+          </ion-item>
+          <ion-item>
+              <ion-label floating>TK Point</ion-label>
+              <ion-input type="text" [(ngModel)]="tkPoint"></ion-input>
+          </ion-item>
+          <ion-item>
+              <ion-label floating>TK Currency</ion-label>
+              <ion-input type="text" [(ngModel)]="tkCurrency"></ion-input>
+          </ion-item>
+          <!-- <ion-item>
+            <ion-label floating>Customer Code</ion-label>
+            <ion-input type="text" formControlName="externalId"></ion-input>
+          </ion-item>
+          <p class="error" *ngIf="externalId.hasError('required') && externalId.touched">
+            *Customer code is required
+          </p> -->
+
+          <!-- <ion-item>
+            <ion-label floating>User Login Id</ion-label>
+            <ion-input type="text" formControlName="userLoginId"></ion-input>
+          </ion-item>
+          <p class="error" *ngIf="userLoginId.hasError('required') && userLoginId.touched">
+            *User Login Id is required
+          </p>
+
+          <ion-item>
+            <ion-label floating>Password</ion-label>
+            <ion-input type="text" formControlName="password"></ion-input>
+          </ion-item>
+          <p class="error" *ngIf="password.hasError('required') && password.touched">
+            *Password is required*
+          </p>
+
+          <ion-item>
+            <ion-label floating>Channel</ion-label>
+            <ion-input type="text" formControlName="channel"></ion-input>
+          </ion-item>
+          <p class="error" *ngIf="channel.hasError('required') && channel.touched">
+            *Channel is required
+          </p> -->
+            <ion-label>Associated Salesman</ion-label>
+            <button ion-button color="secondary" (click)="addSalesman()">Add</button>
+            <button ion-button color="primary" *ngFor="let salesman of salesmanList">{{salesman.name}}</button>
+          
+          <ion-grid>
+            <button ion-button color="secondary"  (click)="updateUser()">Update
+              Customer<ion-spinner name="dots" *ngIf="showLoader"></ion-spinner></button>
+          </ion-grid>
+      </ion-col>
+      </ion-row>
+      </ion-grid>
+      </ion-content>

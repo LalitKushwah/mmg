@@ -1,7 +1,7 @@
 import { ApiServiceProvider } from './../../providers/api-service/api-service';
 import { WidgetUtilService } from '../../utils/widget-utils';
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import {AlertController, IonicPage, NavController, NavParams} from 'ionic-angular';
 import { PopoverHomePage } from '../popover-home/popover-home';
 import { CONSTANTS } from '../../utils/constants';
 import { CustomerCategoryListPage } from '../customer-category-list/customer-category-list';
@@ -26,13 +26,19 @@ export class CustomerHomePage {
   tkPoint: any = 0
 
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, private widgetUtil: WidgetUtilService, private apiService: ApiServiceProvider
-  , private storageService: StorageServiceProvider) {
+  constructor(public navCtrl: NavController,
+              public navParams: NavParams,
+              private widgetUtil: WidgetUtilService,
+              private apiService: ApiServiceProvider,
+              private storageService: StorageServiceProvider,
+              private alertCtrl: AlertController) {
+
     this.categoryListAvailable = false
     this.parentCategoryList = []
     this.skipValue = 0
     this.limit = CONSTANTS.PAGINATION_LIMIT
     this.getList()
+    this.getVersion()
   }
 
   ionViewDidEnter(){
@@ -112,5 +118,18 @@ export class CustomerHomePage {
         this.widgetUtil.showToast(CONSTANTS.SERVER_ERROR)
       }
     })
+  }
+
+  getVersion() {
+    this.apiService.getVersion().subscribe(res => {
+      if (res.version !== 1.1) {
+        const alert = this.alertCtrl.create({
+          title: 'Information',
+          subTitle: 'New Version of App is Available',
+          buttons: ['OK']
+        });
+        alert.present();
+      }
+      })
   }
 }

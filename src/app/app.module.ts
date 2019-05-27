@@ -30,18 +30,7 @@ import { HomePage } from '../pages/home/home';
 import { ListPage } from '../pages/list/list';
 
 import { UserProfilePage } from '../pages/user-profile/user-profile';
-import { TargetGraphPage } from '../pages/target-graph/target-graph';
-import { TargetPage } from '../pages/target/target';
-import { TkCurrencyPage} from '../pages/tk-currency/tk-currency';
-import { OutstandingPage} from '../pages/outstanding/outstanding';
 
-
-import { TargetGraphPageModule } from '../pages/target-graph/target-graph.module';
-import { TargetPageModule } from '../pages/target/target.module';
-import { TkCurrencyPageModule } from '../pages/tk-currency/tk-currency.module';
-import { OutstandingPageModule } from '../pages/outstanding/outstanding.module';
-
-import { ChartsModule } from 'ng2-charts-x';
 
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
@@ -91,15 +80,18 @@ import { ClubClassificationPageModule } from '../pages/club-classification/club-
 import {GiftCheckoutPage} from "../pages/gift-checkout/gift-checkout";
 import {GiftCheckoutPageModule} from "../pages/gift-checkout/gift-checkout.module";
 import {DatePipe} from "@angular/common";
+import { EditUserPageModule } from '../pages/edit-user/edit-user.module';
+import { EditUserPage } from '../pages/edit-user/edit-user';
+import { AddSalesmanModalPageModule } from '../pages/add-salesman-modal/add-salesman-modal.module';
+import { AddSalesmanModalPage } from '../pages/add-salesman-modal/add-salesman-modal';
+import { UserProfilePageModule } from '../pages/user-profile/user-profile.module';
 
 @NgModule({
   declarations: [
     MyApp,
     HomePage,
     ListPage,
-    UserProfilePage,
-    //TargetPage
-    // TargetGraphPage
+    UserProfilePage
   ],
   imports: [
     BrowserModule,
@@ -123,6 +115,7 @@ import {DatePipe} from "@angular/common";
     AddCategoryPageModule,
     AddProductPageModule,
     AddUserPageModule,
+    EditUserPageModule,
     AdminListUserPageModule,
     AdminListCategoryPageModule,
     AdminListProductPageModule,
@@ -142,11 +135,7 @@ import {DatePipe} from "@angular/common";
     SpecialProductsPageModule,
     ClubClassificationPageModule,
     GiftCheckoutPageModule,
-    TargetGraphPageModule,
-    ChartsModule,
-    TargetPageModule,
-    TkCurrencyPageModule,
-    OutstandingPageModule
+    AddSalesmanModalPageModule
   ],
   bootstrap: [IonicApp],
   entryComponents: [
@@ -161,6 +150,7 @@ import {DatePipe} from "@angular/common";
     CustomerOrderDetailPage,
     AddCategoryPage,
     AddUserPage,
+    EditUserPage,
     AddProductPage,
     AdminListCategoryPage,
     AdminListProductPage,
@@ -181,11 +171,8 @@ import {DatePipe} from "@angular/common";
     SpecialProductsPage,
     ClubClassificationPage,
     GiftCheckoutPage,
+    AddSalesmanModalPage,
     UserProfilePage,
-    TargetGraphPage,
-    TargetPage,
-    OutstandingPage,
-    TkCurrencyPage
   ],
   providers: [
     StatusBar,

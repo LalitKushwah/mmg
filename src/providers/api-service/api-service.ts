@@ -85,6 +85,9 @@ export class ApiServiceProvider {
   getAllCustomers(): any {
     return this.http.get(CONSTANTS.BASE_URL + 'api/user/list/all/customer')
   }
+  getAllSalesman(): any {
+    return this.http.get(CONSTANTS.BASE_URL + 'api/user/list/all/salesman')
+  }
 
   getAllCategoryList(skip: number, limit:number): any {
     return this.http.get(CONSTANTS.BASE_URL + 'api/category/list?skip='+skip.toString() + "&limit="+ limit.toString())
@@ -136,5 +139,17 @@ export class ApiServiceProvider {
 
   updateCustomerStatInERP() {
     return this.http.post(CONSTANTS.BASE_URL + 'api/erp/update/customer/erp', {})
+  }
+
+  createNewCustomerInMongo () {
+    return this.http.post(CONSTANTS.BASE_URL + 'api/erp/create/new/customer/mongo', {})
+  }
+
+  createNewProductInMongo () {
+    return this.http.post(CONSTANTS.BASE_URL + 'api/erp/create/new/product/mongo', {})
+  }
+
+  getVersion(): any {
+    return this.http.get(CONSTANTS.BASE_URL + 'api/user/version')
   }
 }
