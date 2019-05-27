@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams, ModalController } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, ModalController, AlertController } from 'ionic-angular';
 import { StorageServiceProvider } from '../../providers/storage-service/storage-service';
 import { ApiServiceProvider} from '../../providers/api-service/api-service'
 import { WidgetUtilService} from '../../utils/widget-utils'
@@ -38,7 +38,8 @@ export class EditUserPage {
               private apiService: ApiServiceProvider, 
               private widgetUtil: WidgetUtilService,
               private strorageService: StorageServiceProvider,
-              private modalCtrl: ModalController) {
+              private modalCtrl: ModalController,
+              private alertCtrl: AlertController) {
     this.showCustomerForm = this.selectedUserType
     const toBeAddSalesMan = this.navParams.get('data')
     if (toBeAddSalesMan) {
@@ -75,6 +76,28 @@ export class EditUserPage {
       this.updatedUserObject.salesManList.push(obj.userLoginId)
     })
     console.log('======= 73 ======', this.updatedUserObject)
+  }
+
+  removeSalesman() {
+    const confirm = this.alertCtrl.create({
+      title: 'Remove salesman?',
+      message: 'Are you sure to remove this salesman association to customer?',
+      buttons: [
+        {
+          text: 'Disagree',
+          handler: () => {
+            console.log('Disagree Clicked');
+          }
+        },
+        {
+          text: 'Agree',
+          handler: () => {
+            console.log('Agree Clicked');
+          }
+        }
+      ]
+    });
+    confirm.present();
   }
 
 }

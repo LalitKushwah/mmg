@@ -6,7 +6,7 @@
 <ion-content class="full-background">
 
   <ion-grid>
-    <ion-row>
+    <ion-row padding>
       <ion-col>
         <ion-list>
           <ion-item>
@@ -67,12 +67,43 @@
           <p class="error" *ngIf="channel.hasError('required') && channel.touched">
             *Channel is required
           </p> -->
-            <ion-label>Associated Salesman</ion-label>
-            <button ion-button color="secondary" (click)="addSalesman()">Add</button>
-            <button ion-button color="primary" *ngFor="let salesman of salesmanList">{{salesman.name}}</button>
-          
+            <ion-label class="custom-title">Associated Salesman</ion-label>
+            <button ion-button color="secondary" (click)="addSalesman()" style="float: right"><ion-icon name="add"></ion-icon>Add</button>
+            <!-- <button ion-button color="primary" *ngFor="let salesman of salesmanList">{{salesman.name}}</button> -->
+
+            <!-- =====Show only when Salesman Association list is empty===== -->
+            <p padding>No Association Found!</p>
+            <!-- ==================== -->
+            
+            <div class="pill-wrapper" *ngFor="let salesman of salesmanList">
+              <span class="pill-content">{{salesman.name}}</span>
+              <button class="pill-remove" (click)="removeSalesman()"><ion-icon name="close-circle" class="pill-close-icon"></ion-icon></button>
+            </div>
+            
+            <!-- <div class="pill-wrapper">
+                <span class="pill-content" (click)="removeSalesman()">John Doe</span>
+                <button class="pill-remove"><ion-icon name="close-circle" class="pill-close-icon"></ion-icon></button>
+            </div>
+            
+            <div class="pill-wrapper">
+                <span class="pill-content" (click)="removeSalesman()">John Doe Has A Long Name</span>
+                <button class="pill-remove"><ion-icon name="close-circle" class="pill-close-icon"></ion-icon></button>
+            </div>
+
+            <div class="pill-wrapper">
+                <span class="pill-content" (click)="removeSalesman()">Awesome John Doe</span>
+                <button class="pill-remove"><ion-icon name="close-circle" class="pill-close-icon"></ion-icon></button>
+            </div>
+
+            <div class="pill-wrapper">
+                <span class="pill-content" (click)="removeSalesman()">John Doe</span>
+                <button class="pill-remove"><ion-icon name="close-circle" class="pill-close-icon"></ion-icon></button>
+            </div> -->
+
+            
+            
           <ion-grid>
-            <button ion-button color="secondary"  (click)="updateUser()">Update
+            <button ion-button color="secondary"  (click)="updateUser()" class="update-btn">Update
               Customer<ion-spinner name="dots" *ngIf="showLoader"></ion-spinner></button>
           </ion-grid>
       </ion-col>
