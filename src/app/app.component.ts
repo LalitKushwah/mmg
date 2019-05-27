@@ -6,6 +6,9 @@ import { Nav, Platform, MenuController, Events, App } from 'ionic-angular';
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
 
+import { UserProfilePage } from '../pages/user-profile/user-profile';
+import { CustomerHomePage } from '../pages/customer-home/customer-home';
+
 import { HomePage } from '../pages/home/home';
 import { HeaderColor } from "@ionic-native/header-color";
 import { CustomerListOrderPage } from '../pages/customer-list-order/customer-list-order';
@@ -50,7 +53,8 @@ export class MyApp {
           ]
         } else {
           this.pages = [
-            {title: 'Home', component: HomePage, icon: 'home'},
+            {title: 'Shop', component: CustomerHomePage, icon: 'shopping-bag'},
+            {title: 'Profile', component: UserProfilePage, icon: 'customer'},
             {title: 'Your Orders', component: CustomerListOrderPage, icon: 'cart'},
             {title: 'Club Premier', component: ClubPremierPage, icon: 'loan'}
           ]

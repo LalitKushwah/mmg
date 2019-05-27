@@ -1,0 +1,190 @@
+<ion-header>
+
+  <ion-navbar hideBackButton="true">
+      <button ion-button menuToggle>
+        <ion-icon name="menu"></ion-icon>
+      </button>
+      <ion-title>Profile</ion-title>
+      <ion-buttons end>
+        <button ion-button icon-only (click)="presentPopover($event)">
+          <ion-icon name="more" ></ion-icon>
+        </button>
+      </ion-buttons>
+    </ion-navbar>
+
+</ion-header>
+
+<ion-content class="full-background">
+
+<ion-card class="profile-card">
+
+  <ion-card-header>
+    <ion-item class="profile-header">
+      <ion-avatar item-start>
+        <img src="assets/icon/customer-dark.svg">
+      </ion-avatar>
+      <ion-item>
+        User Details
+      </ion-item>
+    </ion-item>
+
+
+  </ion-card-header>
+</ion-card>
+  <!-- <ion-list> -->
+
+    
+    <!-- <ion-item class="profile-expand" padding>
+      <button ion-item (click)="openTarget()">
+        <ion-icon name="trophy" item-start></ion-icon>
+        Target vs Achievement
+        <ion-icon name="arrow-dropdown" item-end></ion-icon>
+      </button>
+    </ion-item> -->
+
+    <!-- <ion-item class="profile-expand" padding>
+      <button ion-item (click)="openOutstanding()">
+        <ion-icon name="md-cash" item-start></ion-icon>
+        Outstanding
+        <ion-icon name="arrow-dropdown" item-end></ion-icon>
+      </button>
+    </ion-item> -->
+
+    <!-- <ion-item class="profile-expand" padding>
+      <button ion-item (click)="toggleFuncOut();" class="accordion">
+        <ion-icon name="md-cash" item-start></ion-icon>
+        TK Currency
+        <ion-icon name="arrow-dropdown" item-end></ion-icon>
+      </button>
+
+      <div class="panel" [ngClass]="Outopened ? 'active' : ''">
+      
+          <ion-list style="margin-top: 15% !important" class="scroll">
+            <ion-item>
+                <ion-input class="input-field" name="firstName" type="text" placeholder="Second"></ion-input>
+              </ion-item>            
+          </ion-list>
+        </div>
+
+    </ion-item> -->
+
+    <ion-card class="profile-card">
+    <button (click)="toggleFunc();" class="accordion">
+        <ion-icon name="trophy" item-start></ion-icon>
+        Target vs Achievement
+        <ion-icon name="add" class="expand-icon" item-end></ion-icon>
+    </button>
+    <div class="panel" [ngClass]="opened ? 'active' : ''">
+      
+      <ion-list class="scroll">
+          <ion-grid>
+              <ion-row class="header">
+                <ion-col width-25>CATEGORY</ion-col>
+                <ion-col width-25>TARGET</ion-col>
+                <ion-col width-25>MTD ACH</ion-col>
+                <ion-col width-25>% ACH</ion-col>
+                <ion-col width-25>FTD</ion-col>
+                <ion-col width-25>Balance To Do</ion-col>
+              </ion-row>
+          
+              <ion-row class="table-content">
+                  <ion-col width-25>Laundry</ion-col>
+                  <ion-col width-25>100</ion-col>
+                  <ion-col width-25>55</ion-col>
+                  <ion-col width-25>55%</ion-col>
+                  <ion-col width-25>5</ion-col>
+                  <ion-col width-25>45</ion-col>
+              </ion-row>
+          
+              <ion-row class="table-content">
+                  <ion-col width-25>Personal Care</ion-col>
+                  <ion-col width-25>50</ion-col>
+                  <ion-col width-25>23</ion-col>
+                  <ion-col width-25>46%</ion-col>
+                  <ion-col width-25>3</ion-col>
+                  <ion-col width-25>27</ion-col>
+              </ion-row>
+          
+              <ion-row class="footer">
+                  <ion-col width-25>TOTAL</ion-col>
+                  <ion-col width-25>200</ion-col>
+                  <ion-col width-25>112</ion-col>
+                  <ion-col width-25>56%</ion-col>
+                  <ion-col width-25>11</ion-col>
+                  <ion-col width-25>88</ion-col>
+              </ion-row>
+          
+              <ion-row class="footnote">
+                  <ion-col col-12>MTD : Month till date </ion-col>
+                  <ion-col col-12>FTD: For the day</ion-col>
+              </ion-row>
+            </ion-grid>           
+      </ion-list>
+    
+    </div>
+    </ion-card>
+
+    <ion-card class="profile-card">
+    <button (click)="toggleFuncTK();" class="accordion">
+        <ion-icon name="md-cash" item-start></ion-icon>
+        Outstanding
+        <ion-icon name="add" class="expand-icon" item-end></ion-icon>
+        </button>
+    <div class="panel" [ngClass]="TKopened ? 'active' : ''">
+      
+      <ion-list class="scroll">
+          <ion-grid>
+              <ion-row>
+                <ion-col col-8>Total Credit Limit</ion-col>
+                <ion-col col-4>1000</ion-col>
+              </ion-row>
+          
+              <ion-row>
+                <ion-col col-8>Total Outstanding</ion-col>
+                <ion-col col-4>950</ion-col>
+              </ion-row>
+          
+              <ion-row>
+                  <ion-col col-8>> 30- Days Outstanding</ion-col>
+                  <ion-col col-4>450</ion-col>
+              </ion-row>
+          
+              <ion-row>
+                  <ion-col col-8>Available Credit Limit</ion-col>
+                  <ion-col col-4>50</ion-col>
+              </ion-row>
+          
+            </ion-grid>            
+      </ion-list>
+    </div>
+  </ion-card>
+
+<ion-card class="profile-card">
+    <button (click)="toggleFuncOut();" class="accordion">
+        <ion-icon name="md-cash" item-start></ion-icon>
+        TK Currency
+        <ion-icon name="add" class="expand-icon" item-end></ion-icon>
+      </button>
+    <div class="panel" [ngClass]="Outopened ? 'active' : ''">
+      
+      <ion-list class="scroll">
+          <ion-grid>
+              <ion-row>
+                <ion-col col-8>Total TK Points</ion-col>
+                <ion-col col-4>500</ion-col>
+              </ion-row>
+          
+              <ion-row>
+                <ion-col col-8>Total TK Currency</ion-col>
+                <ion-col col-4>500</ion-col>
+              </ion-row>
+            </ion-grid>
+      </ion-list>
+    </div>
+  </ion-card>
+
+  <!-- </ion-list> -->
+
+
+
+</ion-content>

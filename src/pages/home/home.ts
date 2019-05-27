@@ -9,6 +9,8 @@ import { LoginPage } from '../login/login';
 import { CustomerReviewSubmitOrderPage } from "../customer-review-submit-order/customer-review-submit-order";
 import { CONSTANTS } from "../../utils/constants";
 
+import { UserProfilePage } from '../user-profile/user-profile';
+
 @Component({
   selector: 'page-home',
   templateUrl: 'home.html'
@@ -36,7 +38,8 @@ export class HomePage {
           if (profile['userType'] === 'ADMIN') {
             this.navCtrl.setRoot(AdminHomePage)
           } else {
-            this.navCtrl.setRoot(CustomerHomePage)
+            //this.navCtrl.setRoot(CustomerHomePage)
+            this.navCtrl.setRoot(UserProfilePage)
           }
         }
       } else {

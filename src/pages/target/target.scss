@@ -1,0 +1,28 @@
+page-target {
+    ion-grid{
+        padding-top: 30px !important;
+        ion-row{
+            ion-col{
+                border: 1px dotted rgb(94, 156, 211);
+            }        
+        } 
+
+        .header, .footer{
+            background: #225F93;
+            color: #fff;
+            font-size: 12px;
+            font-weight: bold;
+        }
+        .table-content{
+            font-size: 12px;
+        }
+
+        .footnote{
+            margin-top: 30px;
+            color: rgb(92, 92, 92);
+            ion-col{
+                border: none !important;
+            }
+        }
+    }
+}

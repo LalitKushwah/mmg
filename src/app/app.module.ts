@@ -29,6 +29,9 @@ import { MyApp } from './app.component';
 import { HomePage } from '../pages/home/home';
 import { ListPage } from '../pages/list/list';
 
+import { UserProfilePage } from '../pages/user-profile/user-profile';
+
+
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
 import {IonicStorageModule} from "@ionic/storage";
@@ -81,12 +84,14 @@ import { EditUserPageModule } from '../pages/edit-user/edit-user.module';
 import { EditUserPage } from '../pages/edit-user/edit-user';
 import { AddSalesmanModalPageModule } from '../pages/add-salesman-modal/add-salesman-modal.module';
 import { AddSalesmanModalPage } from '../pages/add-salesman-modal/add-salesman-modal';
+import { UserProfilePageModule } from '../pages/user-profile/user-profile.module';
 
 @NgModule({
   declarations: [
     MyApp,
     HomePage,
-    ListPage
+    ListPage,
+    UserProfilePage
   ],
   imports: [
     BrowserModule,
@@ -166,7 +171,8 @@ import { AddSalesmanModalPage } from '../pages/add-salesman-modal/add-salesman-m
     SpecialProductsPage,
     ClubClassificationPage,
     GiftCheckoutPage,
-    AddSalesmanModalPage
+    AddSalesmanModalPage,
+    UserProfilePage,
   ],
   providers: [
     StatusBar,
