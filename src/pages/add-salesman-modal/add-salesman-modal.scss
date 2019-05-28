@@ -1,3 +1,11 @@
 page-add-salesman-modal {
-
+    .salesman-name{
+        text-transform: capitalize;
+    }
+    .button{
+        box-shadow: none;
+        ion-button{
+            padding-right: 10px;
+        }
+    }
 }

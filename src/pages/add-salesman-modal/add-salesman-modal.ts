@@ -71,5 +71,9 @@ export class AddSalesmanModalPage {
     });
     confirm.present();
   }
+
+  dismissModal(){
+    this.navCtrl.push(EditUserPage);
+  }
   
 }
