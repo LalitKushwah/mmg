@@ -8,6 +8,8 @@ import { SplashScreen } from '@ionic-native/splash-screen';
 
 import { UserProfilePage } from '../pages/user-profile/user-profile';
 import { CustomerHomePage } from '../pages/customer-home/customer-home';
+import { SalesmanSelectCustomerPage } from '../pages/salesman-select-customer/salesman-select-customer';
+
 
 import { HomePage } from '../pages/home/home';
 import { HeaderColor } from "@ionic-native/header-color";
@@ -52,12 +54,21 @@ export class MyApp {
             {title: 'Products', component: AdminListCategoryPage, icon: 'products'},
           ]
         } else {
-          this.pages = [
-            {title: 'Shop', component: CustomerHomePage, icon: 'shopping-bag'},
-            {title: 'Profile', component: UserProfilePage, icon: 'customer'},
-            {title: 'Your Orders', component: CustomerListOrderPage, icon: 'cart'},
-            {title: 'Club Premier', component: ClubPremierPage, icon: 'loan'}
-          ]
+          if ((profile['userType'] === 'SALESMAN')) {
+            this.pages = [
+              {title: 'Shop', component: SalesmanSelectCustomerPage, icon: 'shopping-bag'},
+              {title: 'Profile', component: UserProfilePage, icon: 'customer'},
+              {title: 'Your Orders', component: CustomerListOrderPage, icon: 'cart'},
+              {title: 'Club Premier', component: ClubPremierPage, icon: 'loan'},
+            ]
+          }else{
+            this.pages = [
+              {title: 'Shop', component: CustomerHomePage, icon: 'shopping-bag'},
+              {title: 'Profile', component: UserProfilePage, icon: 'customer'},
+              {title: 'Your Orders', component: CustomerListOrderPage, icon: 'cart'},
+              {title: 'Club Premier', component: ClubPremierPage, icon: 'loan'}
+            ]
+          }   
         }
       } else {
         this.app.getRootNav().setRoot('OracleConnectPage')
