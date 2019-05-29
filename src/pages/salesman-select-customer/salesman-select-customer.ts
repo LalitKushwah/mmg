@@ -4,6 +4,7 @@ import { ApiServiceProvider } from '../../providers/api-service/api-service';
 import { WidgetUtilService } from '../../utils/widget-utils';
 import { CONSTANTS } from '../../utils/constants';
 import { CustomerHomePage } from '../customer-home/customer-home';
+import { StorageServiceProvider } from './../../providers/storage-service/storage-service';
 
 @IonicPage()
 @Component({
@@ -19,11 +20,13 @@ export class SalesmanSelectCustomerPage {
   userListAvailable: Boolean = false
   searchQuery: string
   allCustomers = []
+  abc: any;
 
    constructor(public navCtrl: NavController, public navParams: NavParams,
               private apiService: ApiServiceProvider,
               private widgetUtil: WidgetUtilService,
-              private alertCtrl: AlertController) {
+              private alertCtrl: AlertController,
+              private storageService: StorageServiceProvider) {
     this.skipValue = 0
     this.limit = CONSTANTS.PAGINATION_LIMIT
     this.getUserList()
@@ -102,11 +105,13 @@ export class SalesmanSelectCustomerPage {
       }
     })
     alert.present(alert)
-  }
-
+  } 
   customerSelected(user) {
-    console.log(user);
-    this.navCtrl.push(CustomerHomePage);
+    //console.log(user)
+    //Set the Selected Customer to Storage
+    this.storageService.setToStorage('selectedCustomer', user)
+
+    this.navCtrl.push(CustomerHomePage)
   }
 
   searchCustomers(searchQuery) {
