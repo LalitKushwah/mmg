@@ -1,0 +1,56 @@
+<ion-header>
+  <ion-navbar>
+    <ion-title>Payment Details</ion-title>
+    <ion-buttons end>
+      <button ion-button (click)="closePayModal()"><ion-icon name="close-circle"></ion-icon>Close</button>
+    </ion-buttons>
+  </ion-navbar>
+</ion-header>
+<ion-content padding>
+  <ion-card>
+    <ion-card-header>
+
+    </ion-card-header>
+
+    <ion-item class="payItem">
+    <ion-label>Select Payment Mode</ion-label>
+      <ion-select [(ngModel)]="paymentMode" (ionChange)="paymentModeSelectionChanged($event)">
+          <ion-option value="cash">Cash</ion-option>
+          <ion-option value="cheque">Cheque</ion-option>
+          <ion-option value="online">Online</ion-option>
+      </ion-select> 
+    </ion-item>
+
+    <ion-item class="payItem">
+        <ion-label floating>Enter Amount</ion-label> 
+        <ion-input type="number" [(ngModel)]="paymentAmount"></ion-input>
+    </ion-item>
+
+    <ion-item class="payItem" id="chequeID" [ngClass]=" chequeIsSelected ? 'item-visible': 'item-hidden'">
+        <ion-label floating>Enter Cheque ID</ion-label> 
+        <ion-input type="text" [(ngModel)]="chequeID"></ion-input>
+    </ion-item>
+
+    <ion-item class="payItem" id="onlineID" [ngClass]=" onlineIsSelected ? 'item-visible': 'item-hidden'">
+        <ion-label floating>Enter Online Transaction ID</ion-label> 
+        <ion-input type="text" [(ngModel)]="onlineID"></ion-input>
+    </ion-item>
+
+    <ion-item class="payItem" id="selectSalesman" [ngClass]=" cashIsSelected ? 'item-visible': 'item-hidden'">
+        <ion-label>Select Salesman</ion-label>
+          <ion-select [(ngModel)]="selectedSalesman">
+              <ion-option value="sm">Test Salesman</ion-option>
+              <ion-option value="sm2">Test Salesman 2</ion-option>
+              <ion-option value="sm3">Test Salesman 3</ion-option>
+          </ion-select> 
+        </ion-item>
+
+    <div id="modalBtn">
+      <button ion-button round padding center [disabled]="!isEnabled" (click)="submitPayment()">
+          <ion-icon name="checkmark-circle"></ion-icon>
+          Add Payment
+      </button>
+    </div>
+
+  </ion-card>
+</ion-content>

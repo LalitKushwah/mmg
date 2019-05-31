@@ -1,0 +1,28 @@
+page-add-payment-modal {
+    
+        .item{
+            .item-inner{
+            border-bottom: 1px solid #000;
+            }
+        }
+    #modalBtn{
+        text-align: center;
+        margin-top: 30px;
+    }
+    .payItem{
+        border-bottom: 1px solid #e6e6e6;
+    }
+    // #chequeID,#onlineID{
+    //     display: none;
+    // }
+    #selectSalesman{
+        padding-top: 24px;
+    }
+
+    .item-visible{
+        display: block;
+    }
+    .item-hidden{
+        display: none;
+    }
+}
