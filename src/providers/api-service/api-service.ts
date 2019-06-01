@@ -129,8 +129,12 @@ export class ApiServiceProvider {
     return this.http.post(CONSTANTS.BASE_URL + 'api/order/create/gift/order', orderDetails)
   }
 
+  updateUser(data) {
+    return this.http.post(CONSTANTS.BASE_URL + 'api/user/update/user', data)
+  }
+
   updateProductInMongo() {
-    return this.http.post(CONSTANTS.BASE_URL + 'api/erp/get/customer/tgt_vs_ach', {})
+    return this.http.post(CONSTANTS.BASE_URL + 'api/erp/update/product/mongo', {})
   }
 
   updateProductStatInERP() {

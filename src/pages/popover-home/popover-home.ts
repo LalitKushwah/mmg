@@ -7,8 +7,6 @@ import { HomePage } from '../home/home';
 import { StorageServiceProvider } from '../../providers/storage-service/storage-service';
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams, App} from 'ionic-angular';
-import { EditUserPage } from '../edit-user/edit-user';
-import { SearchCustomerPage } from '../search-customer/search-customer';
 
 @IonicPage({
   name: 'PopoverHomePage'
@@ -69,9 +67,6 @@ export class PopoverHomePage {
     switch(name) {
       case 'Add User':
       this.addUser()
-      break
-      case 'Edit User':
-      this.editUser()
       break
       case 'Add Category':
       this.addCategory()

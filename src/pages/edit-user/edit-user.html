@@ -46,7 +46,7 @@
                 </ion-col>
             </ion-row>
           </ion-grid>
-            <p padding >No Association Found!</p>
+            <p padding *ngIf="!salesmanList.length">No Association Found!</p>
             <div class="pill-wrapper" *ngFor="let salesman of salesmanList">
               <span class="pill-content">{{salesman.name}}</span>
               <button class="pill-remove" (click)="removeSalesman(salesman)"><ion-icon name="close-circle" class="pill-close-icon"></ion-icon></button>

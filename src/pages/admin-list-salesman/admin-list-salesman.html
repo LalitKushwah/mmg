@@ -3,36 +3,36 @@
     <!-- <button ion-button menuToggle>
       <ion-icon name="menu"></ion-icon>
     </button> -->
-    <ion-title>Customer List</ion-title>
+    <ion-title>Salesman List</ion-title>
   </ion-navbar>
   <ion-toolbar>
-    <ion-searchbar  #q (ionChange)="searchCustomers(q.value)" placeholder="Search Customers"></ion-searchbar>
+    <ion-searchbar  #q (ionChange)="searchSalesman(q.value)" placeholder="Search Salesman"></ion-searchbar>
   </ion-toolbar>
 </ion-header>
 
 <ion-content class="full-background">
   <div class="search-spinner">
-    <ion-spinner name="crescent" *ngIf="!userListAvailable"></ion-spinner>
+    <ion-spinner name="crescent" *ngIf="!salesmanListAvailable"></ion-spinner>
   </div>
   <ion-refresher (ionRefresh)="doRefresh($event)" spinner="crescent">
     <ion-refresher-content></ion-refresher-content>
   </ion-refresher>
-  <ion-list *ngIf="userListAvailable && (userList.length > 0)">
-    <ion-item *ngFor="let user of filteredUserList" (click)="editCustomer(user)">
-      <span>{{user.externalId}}</span><span>{{user.name}}</span>
+  <ion-list *ngIf="salesmanListAvailable && (salesmanList.length > 0)">
+    <ion-item *ngFor="let salesman of filteredSalesmanList" (click)="editSalesman(salesman)">
+      <span>{{salesman.externalId}}</span><span>{{salesman.name}}</span>
       <!-- <button ion-button clear color="secondary" item-end><h1><ion-icon md="arrow-forward"></ion-icon></h1></button> -->
       <button ion-button clear color="secondary" item-end>
         <ion-icon name="create"></ion-icon>
       </button>
     </ion-item>
   </ion-list>
-  <ion-card *ngIf="userListAvailable && (userList.length < 1)">
+  <ion-card *ngIf="salesmanListAvailable && (salesmanList.length < 1)">
     <ion-card-header text-center>
       <h4>No record found</h4>
     </ion-card-header>
   </ion-card>
-  <ion-infinite-scroll (ionInfinite)="doInfinite($event)">
+  <!-- <ion-infinite-scroll (ionInfinite)="doInfinite($event)">
     <ion-infinite-scroll-content></ion-infinite-scroll-content>
-  </ion-infinite-scroll>
+  </ion-infinite-scroll> -->
 </ion-content>
 

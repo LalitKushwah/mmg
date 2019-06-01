@@ -1,5 +1,5 @@
 import { Component, ViewChild } from '@angular/core';
-import { IonicPage, NavController,Navbar, NavParams, ModalController, AlertController } from 'ionic-angular';
+import { IonicPage, NavController,Navbar, NavParams, ModalController, AlertController, LoadingController } from 'ionic-angular';
 import { StorageServiceProvider } from '../../providers/storage-service/storage-service';
 import { ApiServiceProvider} from '../../providers/api-service/api-service'
 import { WidgetUtilService} from '../../utils/widget-utils'
@@ -41,7 +41,8 @@ export class EditUserPage {
               private widgetUtil: WidgetUtilService,
               private strorageService: StorageServiceProvider,
               private modalCtrl: ModalController,
-              private alertCtrl: AlertController) {
+              private alertCtrl: AlertController,
+              private loadingCtrl: LoadingController) {
     this.showCustomerForm = this.selectedUserType
     const toBeAddSalesMan = this.navParams.get('data')
     
@@ -59,18 +60,27 @@ export class EditUserPage {
       this.custCode = customer.externalId
       this.tkPoint = customer.tkPoints
       this.tkCurrency = customer.tkCurrency
-      this.salesmanList = customer.salesManList ? customer.salesManList : []
+      this.salesmanList = customer.associatedSalesmanList ? customer.associatedSalesmanList : []
     }
   }
 
   addSalesman(salesman) {
     this.strorageService.getFromStorage('editCustomerInfo').then(async (custInfoObj: any) => {
-      const salesmanList = custInfoObj.salesManList ? custInfoObj.salesManList : []
-      salesmanList.push(salesman)
-      custInfoObj.salesManList = salesmanList;
-      this.strorageService.setToStorage('editCustomerInfo', custInfoObj).then(res => {
-        this.salesmanList = res.salesManList
+      const salesmanList = custInfoObj.associatedSalesmanList ? custInfoObj.associatedSalesmanList : []
+      const res = salesmanList.filter(existingCust => {
+        return existingCust.externalId === salesman.externalId
       })
+      if (res.length === 0) {
+        console.log('===== 73 =====')
+        salesmanList.push({externalId:salesman.externalId,name:salesman.name})
+        custInfoObj.associatedSalesmanList = salesmanList;
+        this.strorageService.setToStorage('editCustomerInfo', custInfoObj).then(res => {
+          this.salesmanList = res.associatedSalesmanList
+        })
+      } else {
+        console.log('===== 80 ====')
+        this.widgetUtil.showToast('Customer already exists!!!')
+      }
     })
   }
 
@@ -80,15 +90,30 @@ export class EditUserPage {
   }
 
   updateUser() {
+    const loader = this.loadingCtrl.create({
+      content: "Please Wait...",
+    });
+    loader.present();
+    this.updatedUserObject.externalId = this.custCode
     this.updatedUserObject.name = this.custName
     this.updatedUserObject.province = this.selectedProvince
     this.updatedUserObject.tkPoints = this.tkPoint
     this.updatedUserObject.tkCurrency = this.tkCurrency
-    this.updatedUserObject.salesManList = this.salesmanList
-    console.log('======= 82 =======', this.updatedUserObject)
+    this.updatedUserObject.associatedSalesmanList = this.salesmanList
+    this.apiService.updateUser(this.updatedUserObject).subscribe((res:any) => {
+      if(res.body.nModified === 1) {
+        this.widgetUtil.showToast('User Updated Successfully')
+      } else {
+        this.widgetUtil.showToast('Error while updating user')
+      }
+      loader.dismiss()
+    }, (error) => {
+      loader.dismiss()
+      this.widgetUtil.showToast(`Error while updating user ${error}`)
+    })
   }
 
-  removeSalesman(salesman) {
+  async removeSalesman(salesman) {
 
     const confirm = this.alertCtrl.create({
       title: 'Remove salesman?',
@@ -104,7 +129,7 @@ export class EditUserPage {
           text: 'Agree',
           handler: () => {
             const updatedSalesmanList = this.salesmanList.filter(data => {
-              return (data.userLoginId !== salesman.userLoginId)
+              return (data.externalId !== salesman.externalId)
             })
 
             this.strorageService.getFromStorage('editCustomerInfo').then(async (custInfoObj: any) => {
