@@ -4,8 +4,7 @@ page-edit-user {
         margin-top: 15px;
     }
     .custom-title{
-        font-size: 16px;
-        letter-spacing: 1px;
+        font-size: 14px;
     }
     .pill-wrapper{
         //background-color: #c9e1ff;
@@ -38,5 +37,14 @@ page-edit-user {
 
     .associated-salesman{
         box-shadow: none;
+
+        ion-col{
+            button{
+                font-size: 0.8em
+            }
+            ion-label{
+                margin-right: 0px;
+            }
+        }
     }
 }
