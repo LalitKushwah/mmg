@@ -89,6 +89,10 @@ export class ApiServiceProvider {
     return this.http.get(CONSTANTS.BASE_URL + 'api/user/list/all/salesman')
   }
 
+  getCustomersByProvince(province) {
+    return this.http.get(CONSTANTS.BASE_URL + 'api/user/list/by/province/customer?province='+province.toString())
+  }
+
   getAllCategoryList(skip: number, limit:number): any {
     return this.http.get(CONSTANTS.BASE_URL + 'api/category/list?skip='+skip.toString() + "&limit="+ limit.toString())
   }
@@ -126,7 +130,7 @@ export class ApiServiceProvider {
   }
 
   updateProductInMongo() {
-    return this.http.post(CONSTANTS.BASE_URL + 'api/erp/update/product/mongo', {})
+    return this.http.post(CONSTANTS.BASE_URL + 'api/erp/get/customer/tgt_vs_ach', {})
   }
 
   updateProductStatInERP() {

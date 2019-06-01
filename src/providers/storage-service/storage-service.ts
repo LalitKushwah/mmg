@@ -5,6 +5,22 @@ import {Storage} from "@ionic/storage";
 export class StorageServiceProvider {
 
   private _giftProductCart = []
+  private editCustomer: any = {}
+
+  async getEditCustomerData() {
+    const response = await this.getFromStorage('salesmanList')
+    console.log('============ 12 ============', response)
+    if (response) {
+      this.editCustomer.salesmanList = response
+    } else {
+      await this.setToStorage('salesmanList', this.editCustomer.salesmanList)
+    }
+    return this.editCustomer
+  }
+
+  setEditCustomerData(data) {
+    this.editCustomer = data
+  }
 
   getGiftProductCart(): any[] {
     return this._giftProductCart;

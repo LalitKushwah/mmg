@@ -18,10 +18,10 @@
     <ion-refresher-content></ion-refresher-content>
   </ion-refresher>
   <ion-list *ngIf="userListAvailable && (userList.length > 0)">
-    <ion-item *ngFor="let user of filteredUserList">
+    <ion-item *ngFor="let user of filteredUserList" (click)="editCustomer(user)">
       <span>{{user.externalId}}</span><span>{{user.name}}</span>
       <!-- <button ion-button clear color="secondary" item-end><h1><ion-icon md="arrow-forward"></ion-icon></h1></button> -->
-      <button ion-button clear color="secondary" item-end (click)="resetPasswordModel(user)">
+      <button ion-button clear color="secondary" item-end>
         <img src="assets/imgs/key.svg">
       </button>
     </ion-item>

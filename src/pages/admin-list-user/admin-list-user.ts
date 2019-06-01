@@ -3,6 +3,8 @@ import { IonicPage, NavController, NavParams, AlertController } from 'ionic-angu
 import { ApiServiceProvider } from '../../providers/api-service/api-service';
 import { WidgetUtilService } from '../../utils/widget-utils';
 import { CONSTANTS } from '../../utils/constants';
+import { EditUserPage } from '../edit-user/edit-user';
+import { StorageServiceProvider } from '../../providers/storage-service/storage-service';
 
 @IonicPage({
   name: 'AdminListUserPage'
@@ -24,7 +26,8 @@ export class AdminListUserPage {
   constructor(public navCtrl: NavController, public navParams: NavParams,
               private apiService: ApiServiceProvider,
               private widgetUtil: WidgetUtilService,
-              private alertCtrl: AlertController) {
+              private alertCtrl: AlertController,
+              private storageService: StorageServiceProvider) {
     this.skipValue = 0
     this.limit = CONSTANTS.PAGINATION_LIMIT
     this.getUserList()
@@ -128,4 +131,9 @@ export class AdminListUserPage {
       this.filteredUserList = this.allCustomers.filter(user =>
         user.name.toLowerCase().includes(searchQuery.toLowerCase())
       )}
+
+ async editCustomer(user) {
+    await this.storageService.setToStorage('editCustomerInfo', user)
+    this.navCtrl.push(EditUserPage)
+  }
 }

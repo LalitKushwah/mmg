@@ -1,9 +1,10 @@
-import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams, ModalController, AlertController } from 'ionic-angular';
+import { Component, ViewChild } from '@angular/core';
+import { IonicPage, NavController,Navbar, NavParams, ModalController, AlertController } from 'ionic-angular';
 import { StorageServiceProvider } from '../../providers/storage-service/storage-service';
 import { ApiServiceProvider} from '../../providers/api-service/api-service'
 import { WidgetUtilService} from '../../utils/widget-utils'
 import { AddSalesmanModalPage } from '../add-salesman-modal/add-salesman-modal';
+import { AdminListUserPage } from '../admin-list-user/admin-list-user';
  /**
  * Generated class for the EditUserPage page.
  *
@@ -19,6 +20,7 @@ import { AddSalesmanModalPage } from '../add-salesman-modal/add-salesman-modal';
   templateUrl: 'edit-user.html',
 })
 export class EditUserPage {
+  @ViewChild(Navbar) navBar: Navbar;
   showLoader = false;
   provinceList: Array<any> =  [ 'BOTSWANA', 'COPPERBELT', 'DRC', 'EASTERN', 'KENYA', 'LUAPULA', 'LUSAKA', 'MALAWI', 'MOZAMBIQUE', 'NORTH WESTERN', 'NORTHERN'
   ,'SOUTH AFRICA', 'SOUTHERN', 'TANZANIA', 'WESTERN', 'ZIMBABWE' ]
@@ -31,7 +33,7 @@ export class EditUserPage {
   tkPoint: string='';
   tkCurrency: string='';
   salesmanList = []
-  updatedUserObject: any
+  updatedUserObject: any = {}
 
   constructor(public navCtrl: NavController, 
               public navParams: NavParams, 
@@ -42,28 +44,37 @@ export class EditUserPage {
               private alertCtrl: AlertController) {
     this.showCustomerForm = this.selectedUserType
     const toBeAddSalesMan = this.navParams.get('data')
+    
+    this.prepareEditCustomerData()
+
     if (toBeAddSalesMan) {
-      if(this.salesmanList.length < 5) {
-        this.salesmanList.push(toBeAddSalesMan)
-      } else {
-        console.log('===== Full =====')
-      }
+      this.addSalesman(toBeAddSalesMan)
     }
   }
 
-  async ngOnInit() {
-    const profile: any = await this.strorageService.getFromStorage('profile')
-    if (profile) {
-      this.updatedUserObject = profile
-      this.custName = profile.name
-      this.custCode = profile.externalId
-      this.tkPoint = profile.tkPoints
-      this.tkCurrency = profile.tkCurrency
-      this.selectedProvince = profile.province
+  async prepareEditCustomerData() {
+    const customer: any = await this.strorageService.getFromStorage('editCustomerInfo')
+    if (customer) {
+      this.custName = customer.name
+      this.custCode = customer.externalId
+      this.tkPoint = customer.tkPoints
+      this.tkCurrency = customer.tkCurrency
+      this.salesmanList = customer.salesManList ? customer.salesManList : []
     }
   }
 
-  addSalesman() {
+  addSalesman(salesman) {
+    this.strorageService.getFromStorage('editCustomerInfo').then(async (custInfoObj: any) => {
+      const salesmanList = custInfoObj.salesManList ? custInfoObj.salesManList : []
+      salesmanList.push(salesman)
+      custInfoObj.salesManList = salesmanList;
+      this.strorageService.setToStorage('editCustomerInfo', custInfoObj).then(res => {
+        this.salesmanList = res.salesManList
+      })
+    })
+  }
+
+  opneSalesmanModalPage() {
     const modal = this.modalCtrl.create(AddSalesmanModalPage);
     modal.present();
   }
@@ -71,14 +82,14 @@ export class EditUserPage {
   updateUser() {
     this.updatedUserObject.name = this.custName
     this.updatedUserObject.province = this.selectedProvince
-    this.updatedUserObject.salesManList = []
-    this.salesmanList.map((obj: any) => {
-      this.updatedUserObject.salesManList.push(obj.userLoginId)
-    })
-    console.log('======= 73 ======', this.updatedUserObject)
+    this.updatedUserObject.tkPoints = this.tkPoint
+    this.updatedUserObject.tkCurrency = this.tkCurrency
+    this.updatedUserObject.salesManList = this.salesmanList
+    console.log('======= 82 =======', this.updatedUserObject)
   }
 
-  removeSalesman() {
+  removeSalesman(salesman) {
+
     const confirm = this.alertCtrl.create({
       title: 'Remove salesman?',
       message: 'Are you sure to remove this salesman association to customer?',
@@ -92,12 +103,27 @@ export class EditUserPage {
         {
           text: 'Agree',
           handler: () => {
-            console.log('Agree Clicked');
+            const updatedSalesmanList = this.salesmanList.filter(data => {
+              return (data.userLoginId !== salesman.userLoginId)
+            })
+
+            this.strorageService.getFromStorage('editCustomerInfo').then(async (custInfoObj: any) => {
+              custInfoObj.salesManList = updatedSalesmanList;
+              this.strorageService.setToStorage('editCustomerInfo', custInfoObj).then(res => {
+                this.salesmanList = res.salesManList
+              })
+            })
           }
         }
       ]
     });
     confirm.present();
   }
+
+  ionViewDidLoad() {
+    this.navBar.backButtonClick = () => {
+	    this.navCtrl.setRoot(AdminListUserPage);
+	}
+}
 
 }
