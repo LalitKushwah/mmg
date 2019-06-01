@@ -30,6 +30,7 @@ import { HomePage } from '../pages/home/home';
 import { ListPage } from '../pages/list/list';
 
 import { UserProfilePage } from '../pages/user-profile/user-profile';
+import { SalesmanSelectCustomerPage } from '../pages/salesman-select-customer/salesman-select-customer';
 
 
 import { StatusBar } from '@ionic-native/status-bar';
@@ -85,13 +86,15 @@ import { EditUserPage } from '../pages/edit-user/edit-user';
 import { AddSalesmanModalPageModule } from '../pages/add-salesman-modal/add-salesman-modal.module';
 import { AddSalesmanModalPage } from '../pages/add-salesman-modal/add-salesman-modal';
 import { UserProfilePageModule } from '../pages/user-profile/user-profile.module';
+import { SalesmanSelectCustomerPageModule } from '../pages/salesman-select-customer/salesman-select-customer.module';
 
 @NgModule({
   declarations: [
     MyApp,
     HomePage,
     ListPage,
-    UserProfilePage
+    UserProfilePage,
+    SalesmanSelectCustomerPage
   ],
   imports: [
     BrowserModule,
@@ -173,6 +176,7 @@ import { UserProfilePageModule } from '../pages/user-profile/user-profile.module
     GiftCheckoutPage,
     AddSalesmanModalPage,
     UserProfilePage,
+    SalesmanSelectCustomerPage
   ],
   providers: [
     StatusBar,

@@ -85,6 +85,13 @@ export class CustomerReviewSubmitOrderPage {
     let profile = await this.storageService.getFromStorage('profile')
     let totalTkPoints = await this.storageService.getTkPointsFromStorage()
     this.showLoader = true
+
+    //Replacing the Profile with Selected Customer Profile if userType = SALESMAN
+    if ((profile['userType'] === 'SALESMAN')) {
+      profile = await this.storageService.getFromStorage('selectedCustomer')
+    }
+
+
     let orderObj = {
       productList: this.cartItems.map((value) => {
         return {
@@ -106,6 +113,10 @@ export class CustomerReviewSubmitOrderPage {
       this.showLoader = false
       this.storageService.setToStorage('cart', [])
       this.storageService.removeFromStorage('tkpoint')
+      
+      //Removing the key-value after the order has been placed
+      this.storageService.removeFromStorage('selectedCustomer')
+
       this.widgetUtil.showToast(CONSTANTS.ORDER_PLACED)
       this.navCtrl.setRoot(HomePage)
     }, (error) => {

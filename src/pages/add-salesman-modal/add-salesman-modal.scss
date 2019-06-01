@@ -1,13 +1,27 @@
 page-add-salesman-modal {
     .salesman-name{
         text-transform: capitalize;
+        font-size: 1.2em;
     }
     .button{
         box-shadow: none;
         float: right;
         font-size: 25px;
+        margin-right: -20px;
         ion-button{
-            padding-right: 10px;
+            .button-md{
+                padding: 0.4em !important;
+            }
+            ion-icon{
+                margin-right: -5px;
+            }
         }
     }
+        .toolbar{
+            padding: 5px 15px 5px 15px;
+            .toolbar-content {
+                border-bottom: none !important;
+                padding-bottom: 0 !important;
+            }
+        }
 }

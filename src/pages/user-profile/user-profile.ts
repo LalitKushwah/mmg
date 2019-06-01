@@ -1,6 +1,6 @@
 import { WidgetUtilService } from '../../utils/widget-utils';
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { IonicPage, NavController, NavParams,ModalController } from 'ionic-angular';
 
 import { PopoverHomePage } from '../popover-home/popover-home';
 
@@ -31,7 +31,7 @@ export class UserProfilePage {
   TKopened: boolean = false;
   Outopened: boolean = false;
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, private widgetUtil: WidgetUtilService) {
+  constructor(public navCtrl: NavController, public navParams: NavParams, private widgetUtil: WidgetUtilService, private modal:ModalController) {
   }
 
   // ionViewDidLoad() {
@@ -85,6 +85,12 @@ export class UserProfilePage {
     if(this.TKopened){
       this.TKopened = !this.TKopened 
     }
+  }
+
+  openPaymentModal(){
+    const payModal = this.modal.create('AddPaymentModalPage')
+
+    payModal.present();
   }
 
 }
