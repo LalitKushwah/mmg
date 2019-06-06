@@ -80,6 +80,14 @@ export class ApiServiceProvider {
 
   getCustomerList(skip: number, limit:number): any {
     return this.http.get(CONSTANTS.BASE_URL + 'api/user/list/customer?skip='+skip.toString() + "&limit="+ limit.toString())
+  } 
+
+  getAssociatedCustomersListBySalesman(externalId) {
+    return this.http.get(CONSTANTS.BASE_URL + 'api/user/list/associated/customer?externalId='+externalId.toString())
+  }
+
+  getDashboardData(customerCode) {
+    return this.http.get(CONSTANTS.BASE_URL + 'api/user/get/dashboard?externalId='+customerCode.toString())
   }
 
   getAllCustomers(): any {

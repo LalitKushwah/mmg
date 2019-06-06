@@ -5,6 +5,7 @@ import { WidgetUtilService } from '../../utils/widget-utils';
 import { CONSTANTS } from '../../utils/constants';
 import { CustomerHomePage } from '../customer-home/customer-home';
 import { StorageServiceProvider } from './../../providers/storage-service/storage-service';
+import { UserProfilePage } from '../user-profile/user-profile';
 
 @IonicPage()
 @Component({
@@ -32,22 +33,25 @@ export class SalesmanSelectCustomerPage {
     this.getUserList()
   }
 
-  ionViewWillEnter() {
-    this.apiService.getAllCustomers().subscribe((result) => {
-      if (result.body && result.body.length > 0) {
-        this.allCustomers = result.body
-      }
-    }, (error) => {
-      if (error.statusText === 'Unknown Error') {
-        this.widgetUtil.showToast(CONSTANTS.INTERNET_ISSUE)
-      } else {
-        this.widgetUtil.showToast(CONSTANTS.SERVER_ERROR)
-      }
-    })
-  }
-  getUserList() {
-    this.apiService.getCustomerList(this.skipValue, this.limit).subscribe((result) => {
+  // ionViewWillEnter() {
+  //   let profile = await this.storageService.getFromStorage('profile')
+  //   this.apiService.getAssociatedCustomersListBySalesman().subscribe((result) => {
+  //     if (result.body && result.body.length > 0) {
+  //       this.allCustomers = result.body
+  //     }
+  //   }, (error) => {
+  //     if (error.statusText === 'Unknown Error') {
+  //       this.widgetUtil.showToast(CONSTANTS.INTERNET_ISSUE)
+  //     } else {
+  //       this.widgetUtil.showToast(CONSTANTS.SERVER_ERROR)
+  //     }
+  //   })
+  // }
+  async getUserList() {
+    let profile: any = await this.storageService.getFromStorage('profile')
+    this.apiService.getAssociatedCustomersListBySalesman(profile.externalId).subscribe((result: any) => {
       this.userList = result.body
+      this.allCustomers = this.userList
       this.filteredUserList = this.userList
       this.userListAvailable = true
     }, (error) => {
@@ -111,7 +115,7 @@ export class SalesmanSelectCustomerPage {
     //Set the Selected Customer to Storage
     this.storageService.setToStorage('selectedCustomer', user)
 
-    this.navCtrl.push(CustomerHomePage)
+    this.navCtrl.push(UserProfilePage)
   }
 
   searchCustomers(searchQuery) {
