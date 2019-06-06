@@ -34,6 +34,7 @@ export class EditUserPage {
   tkCurrency: string='';
   salesmanList = []
   updatedUserObject: any = {}
+  userData: any = {}
 
   constructor(public navCtrl: NavController, 
               public navParams: NavParams, 
@@ -55,6 +56,8 @@ export class EditUserPage {
 
   async prepareEditCustomerData() {
     const customer: any = await this.strorageService.getFromStorage('editCustomerInfo')
+    this.userData = customer
+    console.log('======= 60 =======', this.userData)
     if (customer) {
       this.custName = customer.name
       this.custCode = customer.externalId

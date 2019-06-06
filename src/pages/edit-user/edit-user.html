@@ -37,7 +37,7 @@
               <ion-input type="text" [(ngModel)]="tkCurrency"></ion-input>
           </ion-item>
           <ion-grid>
-            <ion-row class='associated-salesman'>
+            <ion-row class='associated-salesman' *ngIf="userData.userType === 'CUSTOMER' ">
                 <ion-col col-8>
                     <ion-label class="custom-title">Associated Salesman </ion-label>
                 </ion-col>
@@ -46,7 +46,7 @@
                 </ion-col>
             </ion-row>
           </ion-grid>
-            <p padding *ngIf="!salesmanList.length">No Association Found!</p>
+            <p padding *ngIf="!salesmanList.length && userData.userType === 'CUSTOMER'">No Association Found!</p>
             <div class="pill-wrapper" *ngFor="let salesman of salesmanList">
               <span class="pill-content">{{salesman.name}}</span>
               <button class="pill-remove" (click)="removeSalesman(salesman)"><ion-icon name="close-circle" class="pill-close-icon"></ion-icon></button>
