@@ -1,27 +1,33 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams, AlertController } from 'ionic-angular';
+import { CONSTANTS } from '../../utils/constants';
+import { StorageServiceProvider } from '../../providers/storage-service/storage-service';
 import { ApiServiceProvider } from '../../providers/api-service/api-service';
 import { WidgetUtilService } from '../../utils/widget-utils';
-import { CONSTANTS } from '../../utils/constants';
-import { EditUserPage } from '../edit-user/edit-user';
-import { StorageServiceProvider } from '../../providers/storage-service/storage-service';
+
+
+/**
+ * Generated class for the AdminListSalesmanPage page.
+ *
+ * See https://ionicframework.com/docs/components/#navigation for more info on
+ * Ionic pages and navigation.
+ */
 
 @IonicPage({
-  name: 'AdminListUserPage'
+  name: 'AdminListSalesmanPage'
 })
 @Component({
-  selector: 'page-admin-list-user',
-  templateUrl: 'admin-list-user.html',
+  selector: 'page-admin-list-salesman',
+  templateUrl: 'admin-list-salesman.html',
 })
-export class AdminListUserPage {
-
+export class AdminListSalesmanPage {
   skipValue: number = 0
   limit: number = CONSTANTS.PAGINATION_LIMIT
-  userList: Array<any> = [];
-  filteredUserList: Array<any> = [];
-  userListAvailable: Boolean = false
+  salesmanList: Array<any> = [];
+  filteredSalesmanList: Array<any> = [];
+  salesmanListAvailable: Boolean = false
   searchQuery: string
-  allCustomers = []
+  allSalesman = []
 
   constructor(public navCtrl: NavController, public navParams: NavParams,
               private apiService: ApiServiceProvider,
@@ -34,9 +40,9 @@ export class AdminListUserPage {
   }
 
   ionViewWillEnter() {
-    this.apiService.getAllCustomers().subscribe((result) => {
+    this.apiService.getAllSalesman().subscribe((result) => {
       if (result.body && result.body.length > 0) {
-        this.allCustomers = result.body
+        this.allSalesman = result.body
       }
     }, (error) => {
       if (error.statusText === 'Unknown Error') {
@@ -47,47 +53,47 @@ export class AdminListUserPage {
     })
   }
   getUserList() {
-    this.apiService.getCustomerList(this.skipValue, this.limit).subscribe((result) => {
-      this.userList = result.body
-      this.filteredUserList = this.userList
-      this.userListAvailable = true
+    this.apiService.getAllSalesman().subscribe((result) => {
+      this.salesmanList = result.body
+      this.filteredSalesmanList = this.salesmanList
+      this.salesmanListAvailable = true
     }, (error) => {
       if (error.statusText === 'Unknown Error') {
         this.widgetUtil.showToast(CONSTANTS.INTERNET_ISSUE)
       } else {
         this.widgetUtil.showToast(CONSTANTS.SERVER_ERROR)
       }
-      this.userListAvailable = true
+      this.salesmanListAvailable = true
     })
   }
 
-  doInfinite(infiniteScroll) {
-    this.skipValue = this.skipValue + this.limit
-    this.apiService.getCustomerList(this.skipValue, this.limit).subscribe((result) => {
-      if(result.body.length > 0) {
-        result.body.map( (value) => {
-          this.userList.push(value)
-        })
-      } else {
-        this.skipValue = this.limit
-      }
-      infiniteScroll.complete();
-    }, (error) => {
-      infiniteScroll.complete();
-      if (error.statusText === 'Unknown Error') {
-        this.widgetUtil.showToast(CONSTANTS.INTERNET_ISSUE)
-      } else {
-        this.widgetUtil.showToast(CONSTANTS.SERVER_ERROR)
-      }
-    })
-  }
+  // doInfinite(infiniteScroll) {
+  //   this.skipValue = this.skipValue + this.limit
+  //   this.apiService.getCustomerList(this.skipValue, this.limit).subscribe((result) => {
+  //     if(result.body.length > 0) {
+  //       result.body.map( (value) => {
+  //         this.salesmanList.push(value)
+  //       })
+  //     } else {
+  //       this.skipValue = this.limit
+  //     }
+  //     infiniteScroll.complete();
+  //   }, (error) => {
+  //     infiniteScroll.complete();
+  //     if (error.statusText === 'Unknown Error') {
+  //       this.widgetUtil.showToast(CONSTANTS.INTERNET_ISSUE)
+  //     } else {
+  //       this.widgetUtil.showToast(CONSTANTS.SERVER_ERROR)
+  //     }
+  //   })
+  // }
 
-  doRefresh(refresher) : void {
-    this.getUserList()
-    setTimeout(() => {
-      refresher.complete();
-    }, 1000);
-  }
+  // doRefresh(refresher) : void {
+  //   this.getUserList()
+  //   setTimeout(() => {
+  //     refresher.complete();
+  //   }, 1000);
+  // }
 
   resetPasswordModel(user) {
     /* const resetPasswordConfirm = this.modal.create('ResetPasswordModelPage', {message: 'Are you sure you want to reset password for ' +  customerName})
@@ -127,14 +133,34 @@ export class AdminListUserPage {
     })
   }
 
-  searchCustomers(searchQuery) {
-      this.filteredUserList = this.allCustomers.filter(user =>
+  searchSalesman(searchQuery) {
+      this.filteredSalesmanList = this.allSalesman.filter(user =>
         user.name.toLowerCase().includes(searchQuery.toLowerCase())
       )}
 
- async editCustomer(user) {
-    const res = await this.storageService.setToStorage('editCustomerInfo', user)
-    console.log('====== 137 =====', res)
-    this.navCtrl.push(EditUserPage)
-  }
+ async editSalesman(salesman) {
+  const confirm = this.alertCtrl.create({
+    title: 'Edit Customer Information',
+    message: 'Are you sure to edit?',
+    buttons: [
+      {
+        text: 'Dismiss',
+        handler: () => {
+          console.log('Disagree clicked');
+        }
+      },
+      {
+        text: 'Confirm',
+        // handler: () => {
+        //   this.navCtrl.push(, {customerData: customer})
+        // }
+      }
+    ]
+  });
+  confirm.present();
+}
+    // await this.storageService.setToStorage('editCustomerInfo', user)
+    // this.navCtrl.push(EditUserPage)
+  
+
 }

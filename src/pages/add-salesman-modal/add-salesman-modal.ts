@@ -1,7 +1,8 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams, AlertController } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, AlertController, LoadingController } from 'ionic-angular';
 import { ApiServiceProvider } from '../../providers/api-service/api-service';
 import { EditUserPage } from '../edit-user/edit-user';
+import { WidgetUtilService } from '../../utils/widget-utils';
 
 /**
  * Generated class for the AddSalesmanModalPage page.
@@ -24,13 +25,11 @@ export class AddSalesmanModalPage {
   constructor(public navCtrl: NavController, 
               public navParams: NavParams,
               private apiService: ApiServiceProvider,
-              private alertCtrl: AlertController) {
+              private alertCtrl: AlertController,
+              private loadingCtrl: LoadingController,
+              private widgetUtils: WidgetUtilService) {
               
                 this.getAllSalesmanList()
-  }
-
-  ionViewWillEnter() {
-    this.getAllSalesmanList()
   }
 
   ionViewDidLoad() {
@@ -38,13 +37,21 @@ export class AddSalesmanModalPage {
   }
 
   getAllSalesmanList() {
+    const loader = this.loadingCtrl.create({
+      content: "Fetching Salesman List...",
+    });
+    loader.present()
     this.apiService.getAllSalesman().subscribe(response => {
       this.salesmanList = response.body
       this.filteredSalesmanList = this.salesmanList
+      loader.dismiss()
+    }, error => {
+      loader.dismiss()
+      this.widgetUtils.showToast(`Error while fetching salesman ${error}`)
     })
   }
 
-  searchProducts(value) {
+  searchSalesman(value) {
     this.filteredSalesmanList = this.salesmanList.filter(salesman =>
       salesman.name.toLowerCase().includes(value.toLowerCase())
     )
@@ -77,3 +84,4 @@ export class AddSalesmanModalPage {
   }
   
 }
+  

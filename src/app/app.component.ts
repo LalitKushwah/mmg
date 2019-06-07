@@ -15,6 +15,7 @@ import { HomePage } from '../pages/home/home';
 import { HeaderColor } from "@ionic-native/header-color";
 import { CustomerListOrderPage } from '../pages/customer-list-order/customer-list-order';
 import { ClubPremierPage } from '../pages/club-premier/club-premier';
+import { AdminListSalesmanPage } from '../pages/admin-list-salesman/admin-list-salesman';
 
 @Component({
   templateUrl: 'app.html'
@@ -51,6 +52,7 @@ export class MyApp {
           this.pages = [
             {title: 'Home', component: HomePage, icon: 'home'},
             {title: 'Customers', component: AdminListUserPage, icon: 'customer'},
+            {title: 'Salesman', component: AdminListSalesmanPage, icon: 'customer'},
             {title: 'Products', component: AdminListCategoryPage, icon: 'products'},
           ]
         } else {
