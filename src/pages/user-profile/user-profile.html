@@ -4,7 +4,7 @@
       <button ion-button menuToggle>
         <ion-icon name="menu"></ion-icon>
       </button>
-      <ion-title>Profile</ion-title>
+      <ion-title>Dashboard</ion-title>
       <ion-buttons end>
         <button ion-button icon-only (click)="presentPopover($event)">
           <ion-icon name="more" ></ion-icon>
@@ -15,9 +15,124 @@
 </ion-header>
 
 <ion-content class="full-background">
+  <button ion-button full padding class="paymentBtn">SELECT CUSTOMER</button>
 
-<ion-card class="profile-card">
+  <ion-card class="tabs-wrapper">
+      <ion-card-header class="card-title">
+        TARGET vs ACHIEVEMENT
+      </ion-card-header>
+      
+          <ion-row>
+            <ion-col class="tabs">
+                <ion-item class="tab-label-sm">
+                  Target
+                </ion-item>
+                <ion-item class="tab-label-lg">
+                  200
+                </ion-item>
+            </ion-col>
+            <ion-col class="tabs">
+                <ion-item class="tab-label-sm">
+                    MTD Achieved
+                  </ion-item>
+                  <ion-item class="tab-label-lg">
+                    112
+                </ion-item>
+            </ion-col>
+          </ion-row>
 
+          <ion-row>
+              <ion-col class="tabs">
+                  <ion-item class="tab-label-sm">
+                    % Achieved
+                  </ion-item>
+                  <ion-item class="tab-label-lg">
+                    56%
+                  </ion-item>
+              </ion-col>
+              <ion-col class="tabs">
+                  <ion-item class="tab-label-sm">
+                      Balance To Do
+                    </ion-item>
+                    <ion-item class="tab-label-lg">
+                      88
+                  </ion-item>
+              </ion-col>
+            </ion-row>
+  </ion-card>
+
+  <ion-card class="tabs-wrapper">
+      <ion-card-header class="card-title">
+        OUTSTANDING
+      </ion-card-header>
+      
+          <ion-row>
+            <ion-col class="tabs">
+                <ion-item class="tab-label-sm">
+                    Total Credit Limit
+                </ion-item>
+                <ion-item class="tab-label-lg">
+                  1,000
+                </ion-item>
+            </ion-col>
+            <ion-col class="tabs">
+                <ion-item class="tab-label-sm">
+                    Total Outstanding
+                  </ion-item>
+                  <ion-item class="tab-label-lg">
+                    950
+                </ion-item>
+            </ion-col>
+          </ion-row>
+
+          <ion-row>
+              <ion-col class="tabs">
+                  <ion-item class="tab-label-sm">
+                      > 30- Days Outstanding
+                  </ion-item>
+                  <ion-item class="tab-label-lg">
+                    450
+                  </ion-item>
+              </ion-col>
+              <ion-col class="tabs">
+                  <ion-item class="tab-label-sm">
+                      Available Credit Limit
+                    </ion-item>
+                    <ion-item class="tab-label-lg">
+                      50
+                  </ion-item>
+              </ion-col>
+            </ion-row>
+  </ion-card>
+
+  <ion-card class="tabs-wrapper">
+      <ion-card-header class="card-title">
+        TK CURRENCY
+      </ion-card-header>
+      
+          <ion-row>
+            <ion-col class="tabs">
+                <ion-item class="tab-label-sm">
+                  Total TK Points
+                </ion-item>
+                <ion-item class="tab-label-lg">
+                  500
+                </ion-item>
+            </ion-col>
+            <ion-col class="tabs">
+                <ion-item class="tab-label-sm">
+                    Total TK Currency
+                  </ion-item>
+                  <ion-item class="tab-label-lg">
+                    500
+                </ion-item>
+            </ion-col>
+          </ion-row>
+  </ion-card>
+
+<!-- <ion-card class="profile-card">
+
+  
   <ion-card-header>
     <ion-item class="profile-header">
       <ion-avatar item-start>
@@ -31,42 +146,7 @@
 
   </ion-card-header>
 </ion-card>
-  <!-- <ion-list> -->
-
-    
-    <!-- <ion-item class="profile-expand" padding>
-      <button ion-item (click)="openTarget()">
-        <ion-icon name="trophy" item-start></ion-icon>
-        Target vs Achievement
-        <ion-icon name="arrow-dropdown" item-end></ion-icon>
-      </button>
-    </ion-item> -->
-
-    <!-- <ion-item class="profile-expand" padding>
-      <button ion-item (click)="openOutstanding()">
-        <ion-icon name="md-cash" item-start></ion-icon>
-        Outstanding
-        <ion-icon name="arrow-dropdown" item-end></ion-icon>
-      </button>
-    </ion-item> -->
-
-    <!-- <ion-item class="profile-expand" padding>
-      <button ion-item (click)="toggleFuncOut();" class="accordion">
-        <ion-icon name="md-cash" item-start></ion-icon>
-        TK Currency
-        <ion-icon name="arrow-dropdown" item-end></ion-icon>
-      </button>
-
-      <div class="panel" [ngClass]="Outopened ? 'active' : ''">
-      
-          <ion-list style="margin-top: 15% !important" class="scroll">
-            <ion-item>
-                <ion-input class="input-field" name="firstName" type="text" placeholder="Second"></ion-input>
-              </ion-item>            
-          </ion-list>
-        </div>
-
-    </ion-item> -->
+  
 
     <ion-card class="profile-card">
     <button (click)="toggleFunc();" class="accordion">
@@ -181,14 +261,14 @@
             </ion-grid>
       </ion-list>
     </div>
-  </ion-card>
+  </ion-card> -->
 
   <!-- </ion-list> -->
 
-  <button ion-button padding class="paymentBtn" (click)="openPaymentModal()">
+  <!-- <button ion-button padding class="paymentBtn" (click)="openPaymentModal()">
       <ion-icon name="cash"></ion-icon>
       Add Payment
-  </button>
+  </button> -->
 
 
 

@@ -1,14 +1,14 @@
 page-user-profile {
-    .profile-card{
-        margin-top: 20px;
-        margin-bottom: 5px;
-        border-radius: 5px;
-        box-shadow: 0px 0px 5px 0px rgba(0,0,0,0.1);
+    // .profile-card{
+    //     margin-top: 20px;
+    //     margin-bottom: 5px;
+    //     border-radius: 5px;
+    //     box-shadow: 0px 0px 5px 0px rgba(0,0,0,0.1);
 
-        button{
-            font-size: 1.2em;
-        }
-    }
+    //     button{
+    //         font-size: 1.2em;
+    //     }
+    // }
     // .profile-item{
     //     border-bottom: 1px solid #e6e6e6;
     // }
@@ -22,77 +22,107 @@ page-user-profile {
     // }
 
     /* Style the buttons that are used to open and close the accordion panel */
-.accordion {
-    background-color: #fff;
-    color: #444;
-    cursor: pointer;
-    padding: 18px;
-    width: 100%;
-    text-align: left;
-    border: none;
-    outline: none;
-    transition: 0.4s;
-  }
+// .accordion {
+//     background-color: #fff;
+//     color: #444;
+//     cursor: pointer;
+//     padding: 18px;
+//     width: 100%;
+//     text-align: left;
+//     border: none;
+//     outline: none;
+//     transition: 0.4s;
+//   }
   
-  /* Add a background color to the button if it is clicked on (add the .active class with JS), and when you move the mouse over it (hover) */
-  .active, .accordion:hover {
-    background-color: #d2eaff;
-  }
+//   /* Add a background color to the button if it is clicked on (add the .active class with JS), and when you move the mouse over it (hover) */
+//   .active, .accordion:hover {
+//     background-color: #d2eaff;
+//   }
   
-  /* Style the accordion panel. Note: hidden by default */
-  .panel {
-    padding: 0 18px;
-    background-color: white;
-    display: none;
-    overflow: hidden;
+//   /* Style the accordion panel. Note: hidden by default */
+//   .panel {
+//     padding: 0 18px;
+//     background-color: white;
+//     display: none;
+//     overflow: hidden;
 
-    ion-list{
-        ion-grid{
-            padding-top: 30px !important;
-            padding-bottom: 30px !important;
-            ion-row{
-                ion-col{
-                    border: 1px solid rgb(94, 156, 211);
-                }       
-            }
+//     ion-list{
+//         ion-grid{
+//             padding-top: 30px !important;
+//             padding-bottom: 30px !important;
+//             ion-row{
+//                 ion-col{
+//                     border: 1px solid rgb(94, 156, 211);
+//                 }       
+//             }
             
-            .header, .footer{
-                background: #225F93;
-                color: #fff;
-                font-size: 12px;
-                // font-weight: bold;
-            }
-            .table-content{
-                font-size: 12px;
-            }
+//             .header, .footer{
+//                 background: #225F93;
+//                 color: #fff;
+//                 font-size: 12px;
+//                 // font-weight: bold;
+//             }
+//             .table-content{
+//                 font-size: 12px;
+//             }
     
-            .footnote{
-                margin-top: 10px;
-                color: rgb(92, 92, 92);
-                ion-col{
-                    border: none !important;
-                }
-            }
+//             .footnote{
+//                 margin-top: 10px;
+//                 color: rgb(92, 92, 92);
+//                 ion-col{
+//                     border: none !important;
+//                 }
+//             }
 
+//         }
+//     }
+
+//   }
+  
+//   .panel.active {
+//     padding: 0 18px;
+//     background-color: white;
+//     display: block;
+//     overflow: visible;
+//   }
+
+//   .expand-icon{
+//     float: right;
+//   }
+
+    ion-card{
+        card{
+            border-bottom: none !important;
         }
     }
-
-  }
-  
-  .panel.active {
-    padding: 0 18px;
-    background-color: white;
-    display: block;
-    overflow: visible;
-  }
-
-  .expand-icon{
-    float: right;
-  }
-
   .paymentBtn{
-      position: fixed;
-      bottom: 5%;
-      right: 5%;
+      background-color: #3d9ef0;
+      border-radius: 3px;
+      margin-top: 16px;
+  }
+
+  .tabs-wrapper{
+    margin:0;
+    width: 100% !important;
+    border-bottom: none;
+  }
+  .card-title{
+    padding-left:0;
+  }
+
+  .tabs{
+      border: 1px solid #D5D5D5;
+      text-align: center;
+      margin: 3%;
+      width: 44%;
+      border-radius: 3px;
+  }
+  .tab-label-sm{
+      font-size: 8px;
+      color: #7D7D7D;
+      margin: 0 auto;
+  }
+  .tab-label-sm{
+    font-size: 14px;
   }
 }

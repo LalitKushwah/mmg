@@ -57,14 +57,14 @@ export class MyApp {
           if ((profile['userType'] === 'SALESMAN')) {
             this.pages = [
               {title: 'Shop', component: SalesmanSelectCustomerPage, icon: 'shopping-bag'},
-              {title: 'Profile', component: UserProfilePage, icon: 'customer'},
+              {title: 'Dashboard', component: UserProfilePage, icon: 'customer'},
               {title: 'Your Orders', component: CustomerListOrderPage, icon: 'cart'},
               {title: 'Club Premier', component: ClubPremierPage, icon: 'loan'},
             ]
           }else{
             this.pages = [
               {title: 'Shop', component: CustomerHomePage, icon: 'shopping-bag'},
-              {title: 'Profile', component: UserProfilePage, icon: 'customer'},
+              {title: 'Dashboard', component: UserProfilePage, icon: 'customer'},
               {title: 'Your Orders', component: CustomerListOrderPage, icon: 'cart'},
               {title: 'Club Premier', component: ClubPremierPage, icon: 'loan'}
             ]

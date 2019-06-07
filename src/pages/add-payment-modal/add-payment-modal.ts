@@ -4,7 +4,7 @@ import { IonicPage, NavParams, ViewController } from 'ionic-angular';
 @IonicPage()
 @Component({
   selector: 'page-add-payment-modal',
-  templateUrl: 'add-payment-modal.html',
+  templateUrl: 'add-payment-modal.html'
 })
 export class AddPaymentModalPage {
 
