@@ -23,7 +23,7 @@ import { CustomerHomePageModule } from '../pages/customer-home/customer-home.mod
 import { WidgetUtilService } from '../utils/widget-utils';
 import { BrowserModule } from '@angular/platform-browser';
 import { ErrorHandler, NgModule } from '@angular/core';
-import { IonicApp, IonicErrorHandler, IonicModule } from 'ionic-angular';
+import { IonicApp, IonicErrorHandler, IonicModule, Navbar } from 'ionic-angular';
 
 import { MyApp } from './app.component';
 import { HomePage } from '../pages/home/home';
@@ -87,6 +87,7 @@ import { AddSalesmanModalPageModule } from '../pages/add-salesman-modal/add-sale
 import { AddSalesmanModalPage } from '../pages/add-salesman-modal/add-salesman-modal';
 import { UserProfilePageModule } from '../pages/user-profile/user-profile.module';
 import { SalesmanSelectCustomerPageModule } from '../pages/salesman-select-customer/salesman-select-customer.module';
+import { AdminListSalesmanPage } from '../pages/admin-list-salesman/admin-list-salesman';
 
 @NgModule({
   declarations: [
@@ -94,7 +95,8 @@ import { SalesmanSelectCustomerPageModule } from '../pages/salesman-select-custo
     HomePage,
     ListPage,
     UserProfilePage,
-    SalesmanSelectCustomerPage
+    SalesmanSelectCustomerPage,
+    AdminListSalesmanPage
   ],
   imports: [
     BrowserModule,
@@ -176,7 +178,8 @@ import { SalesmanSelectCustomerPageModule } from '../pages/salesman-select-custo
     GiftCheckoutPage,
     AddSalesmanModalPage,
     UserProfilePage,
-    SalesmanSelectCustomerPage
+    SalesmanSelectCustomerPage,
+    AdminListSalesmanPage
   ],
   providers: [
     StatusBar,

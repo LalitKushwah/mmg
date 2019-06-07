@@ -1,9 +1,10 @@
-import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams, ModalController, AlertController } from 'ionic-angular';
+import { Component, ViewChild } from '@angular/core';
+import { IonicPage, NavController,Navbar, NavParams, ModalController, AlertController, LoadingController } from 'ionic-angular';
 import { StorageServiceProvider } from '../../providers/storage-service/storage-service';
 import { ApiServiceProvider} from '../../providers/api-service/api-service'
 import { WidgetUtilService} from '../../utils/widget-utils'
 import { AddSalesmanModalPage } from '../add-salesman-modal/add-salesman-modal';
+import { AdminListUserPage } from '../admin-list-user/admin-list-user';
  /**
  * Generated class for the EditUserPage page.
  *
@@ -19,6 +20,7 @@ import { AddSalesmanModalPage } from '../add-salesman-modal/add-salesman-modal';
   templateUrl: 'edit-user.html',
 })
 export class EditUserPage {
+  @ViewChild(Navbar) navBar: Navbar;
   showLoader = false;
   provinceList: Array<any> =  [ 'BOTSWANA', 'COPPERBELT', 'DRC', 'EASTERN', 'KENYA', 'LUAPULA', 'LUSAKA', 'MALAWI', 'MOZAMBIQUE', 'NORTH WESTERN', 'NORTHERN'
   ,'SOUTH AFRICA', 'SOUTHERN', 'TANZANIA', 'WESTERN', 'ZIMBABWE' ]
@@ -31,7 +33,7 @@ export class EditUserPage {
   tkPoint: string='';
   tkCurrency: string='';
   salesmanList = []
-  updatedUserObject: any
+  updatedUserObject: any = {}
 
   constructor(public navCtrl: NavController, 
               public navParams: NavParams, 
@@ -39,46 +41,80 @@ export class EditUserPage {
               private widgetUtil: WidgetUtilService,
               private strorageService: StorageServiceProvider,
               private modalCtrl: ModalController,
-              private alertCtrl: AlertController) {
+              private alertCtrl: AlertController,
+              private loadingCtrl: LoadingController) {
     this.showCustomerForm = this.selectedUserType
     const toBeAddSalesMan = this.navParams.get('data')
+    
+    this.prepareEditCustomerData()
+
     if (toBeAddSalesMan) {
-      if(this.salesmanList.length < 5) {
-        this.salesmanList.push(toBeAddSalesMan)
+      this.addSalesman(toBeAddSalesMan)
+    }
+  }
+
+  async prepareEditCustomerData() {
+    const customer: any = await this.strorageService.getFromStorage('editCustomerInfo')
+    if (customer) {
+      this.custName = customer.name
+      this.custCode = customer.externalId
+      this.tkPoint = customer.tkPoints
+      this.tkCurrency = customer.tkCurrency
+      this.salesmanList = customer.associatedSalesmanList ? customer.associatedSalesmanList : []
+    }
+  }
+
+  addSalesman(salesman) {
+    this.strorageService.getFromStorage('editCustomerInfo').then(async (custInfoObj: any) => {
+      const salesmanList = custInfoObj.associatedSalesmanList ? custInfoObj.associatedSalesmanList : []
+      const res = salesmanList.filter(existingCust => {
+        return existingCust.externalId === salesman.externalId
+      })
+      if (res.length === 0) {
+        console.log('===== 73 =====')
+        salesmanList.push({externalId:salesman.externalId,name:salesman.name})
+        custInfoObj.associatedSalesmanList = salesmanList;
+        this.strorageService.setToStorage('editCustomerInfo', custInfoObj).then(res => {
+          this.salesmanList = res.associatedSalesmanList
+        })
       } else {
-        console.log('===== Full =====')
+        console.log('===== 80 ====')
+        this.widgetUtil.showToast('Customer already exists!!!')
       }
-    }
+    })
   }
 
-  async ngOnInit() {
-    const profile: any = await this.strorageService.getFromStorage('profile')
-    if (profile) {
-      this.updatedUserObject = profile
-      this.custName = profile.name
-      this.custCode = profile.externalId
-      this.tkPoint = profile.tkPoints
-      this.tkCurrency = profile.tkCurrency
-      this.selectedProvince = profile.province
-    }
-  }
-
-  addSalesman() {
+  opneSalesmanModalPage() {
     const modal = this.modalCtrl.create(AddSalesmanModalPage);
     modal.present();
   }
 
   updateUser() {
+    const loader = this.loadingCtrl.create({
+      content: "Please Wait...",
+    });
+    loader.present();
+    this.updatedUserObject.externalId = this.custCode
     this.updatedUserObject.name = this.custName
     this.updatedUserObject.province = this.selectedProvince
-    this.updatedUserObject.salesManList = []
-    this.salesmanList.map((obj: any) => {
-      this.updatedUserObject.salesManList.push(obj.userLoginId)
+    this.updatedUserObject.tkPoints = this.tkPoint
+    this.updatedUserObject.tkCurrency = this.tkCurrency
+    this.updatedUserObject.associatedSalesmanList = this.salesmanList
+    this.apiService.updateUser(this.updatedUserObject).subscribe((res:any) => {
+      if(res.body.nModified === 1) {
+        this.widgetUtil.showToast('User Updated Successfully')
+      } else {
+        this.widgetUtil.showToast('Error while updating user')
+      }
+      loader.dismiss()
+    }, (error) => {
+      loader.dismiss()
+      this.widgetUtil.showToast(`Error while updating user ${error}`)
     })
-    console.log('======= 73 ======', this.updatedUserObject)
   }
 
-  removeSalesman() {
+  async removeSalesman(salesman) {
+
     const confirm = this.alertCtrl.create({
       title: 'Remove salesman?',
       message: 'Are you sure to remove this salesman association to customer?',
@@ -92,12 +128,27 @@ export class EditUserPage {
         {
           text: 'Agree',
           handler: () => {
-            console.log('Agree Clicked');
+            const updatedSalesmanList = this.salesmanList.filter(data => {
+              return (data.externalId !== salesman.externalId)
+            })
+
+            this.strorageService.getFromStorage('editCustomerInfo').then(async (custInfoObj: any) => {
+              custInfoObj.salesManList = updatedSalesmanList;
+              this.strorageService.setToStorage('editCustomerInfo', custInfoObj).then(res => {
+                this.salesmanList = res.salesManList
+              })
+            })
           }
         }
       ]
     });
     confirm.present();
   }
+
+  ionViewDidLoad() {
+    this.navBar.backButtonClick = () => {
+	    this.navCtrl.setRoot(AdminListUserPage);
+	}
+}
 
 }

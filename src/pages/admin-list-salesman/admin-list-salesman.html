@@ -6,24 +6,27 @@
     <ion-title>Salesman List</ion-title>
   </ion-navbar>
   <ion-toolbar>
-    <ion-searchbar  #q (ionChange)="searchSalesman(q.value)" placeholder="Add Salesman"></ion-searchbar>
+    <ion-searchbar  #q (ionChange)="searchSalesman(q.value)" placeholder="Search Salesman"></ion-searchbar>
   </ion-toolbar>
 </ion-header>
 
 <ion-content class="full-background">
-  <!-- <ion-refresher (ionRefresh)="doRefresh($event)" spinner="crescent">
+  <div class="search-spinner">
+    <ion-spinner name="crescent" *ngIf="!salesmanListAvailable"></ion-spinner>
+  </div>
+  <ion-refresher (ionRefresh)="doRefresh($event)" spinner="crescent">
     <ion-refresher-content></ion-refresher-content>
-  </ion-refresher> -->
-  <ion-list *ngIf="salesmanList && (salesmanList.length > 0)">
-    <ion-item *ngFor="let salesman of filteredSalesmanList" (click)="addSalesMan(salesman)">
+  </ion-refresher>
+  <ion-list *ngIf="salesmanListAvailable && (salesmanList.length > 0)">
+    <ion-item *ngFor="let salesman of filteredSalesmanList" (click)="editSalesman(salesman)">
       <span>{{salesman.externalId}}</span><span>{{salesman.name}}</span>
       <!-- <button ion-button clear color="secondary" item-end><h1><ion-icon md="arrow-forward"></ion-icon></h1></button> -->
       <button ion-button clear color="secondary" item-end>
-        <ion-icon name="add"></ion-icon>
+        <ion-icon name="create"></ion-icon>
       </button>
     </ion-item>
   </ion-list>
-  <ion-card *ngIf="salesmanList && (salesmanList.length < 1)">
+  <ion-card *ngIf="salesmanListAvailable && (salesmanList.length < 1)">
     <ion-card-header text-center>
       <h4>No record found</h4>
     </ion-card-header>

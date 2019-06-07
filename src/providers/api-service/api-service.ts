@@ -80,6 +80,14 @@ export class ApiServiceProvider {
 
   getCustomerList(skip: number, limit:number): any {
     return this.http.get(CONSTANTS.BASE_URL + 'api/user/list/customer?skip='+skip.toString() + "&limit="+ limit.toString())
+  } 
+
+  getAssociatedCustomersListBySalesman(externalId) {
+    return this.http.get(CONSTANTS.BASE_URL + 'api/user/list/associated/customer?externalId='+externalId.toString())
+  }
+
+  getDashboardData(customerCode) {
+    return this.http.get(CONSTANTS.BASE_URL + 'api/user/get/dashboard?externalId='+customerCode.toString())
   }
 
   getAllCustomers(): any {
@@ -87,6 +95,10 @@ export class ApiServiceProvider {
   }
   getAllSalesman(): any {
     return this.http.get(CONSTANTS.BASE_URL + 'api/user/list/all/salesman')
+  }
+
+  getCustomersByProvince(province) {
+    return this.http.get(CONSTANTS.BASE_URL + 'api/user/list/by/province/customer?province='+province.toString())
   }
 
   getAllCategoryList(skip: number, limit:number): any {
@@ -123,6 +135,10 @@ export class ApiServiceProvider {
 
   submitGiftOrder(orderDetails: Object): any {
     return this.http.post(CONSTANTS.BASE_URL + 'api/order/create/gift/order', orderDetails)
+  }
+
+  updateUser(data) {
+    return this.http.post(CONSTANTS.BASE_URL + 'api/user/update/user', data)
   }
 
   updateProductInMongo() {

@@ -85,7 +85,8 @@ export class AddUserPage implements OnInit {
     this.addSalesmanForm = new FormGroup({
       name: this.name,
       userLoginId: this.userLoginId,
-      password: this.password
+      password: this.password,
+      externalId: this.externalId,
     });
   }
 
@@ -135,7 +136,8 @@ export class AddUserPage implements OnInit {
       userDetails['password'] = this.password.value.trim()
       userDetails['userType'] = this.selectedUserType
       userDetails['country'] = this.selectedCountry.trim()
-      userDetails['province'] = this.selectedProvince.trim()      
+      userDetails['province'] = this.selectedProvince.trim()  
+      userDetails['externalId'] = this.externalId.value.trim()    
     }
     this.apiService.createUser(userDetails).subscribe((result) => {
       this.widgetUtil.showToast(message)
