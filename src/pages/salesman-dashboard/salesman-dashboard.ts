@@ -1,5 +1,5 @@
 import { WidgetUtilService } from '../../utils/widget-utils';
-import { Component } from '@angular/core';
+import { Component, ViewChild } from '@angular/core';
 import { IonicPage, NavController, NavParams,ModalController } from 'ionic-angular';
 import { PopoverHomePage } from '../popover-home/popover-home';
 // import { TargetGraphPage } from '../target-graph/target-graph';
@@ -8,6 +8,10 @@ import { PopoverHomePage } from '../popover-home/popover-home';
 // import { OutstandingPage} from '../outstanding/outstanding';
 import { StorageServiceProvider } from '../../providers/storage-service/storage-service';
 import { SalesmanSelectCustomerPage } from '../salesman-select-customer/salesman-select-customer';
+
+// import { ChartOptions, ChartType, ChartDataSets } from 'chart.js';
+// import { Label } from 'ng2-charts';
+import { Chart } from 'chart.js';
 
 @IonicPage({
   name: 'SalesmanDashboardPage'
@@ -18,16 +22,60 @@ import { SalesmanSelectCustomerPage } from '../salesman-select-customer/salesman
 })
 export class SalesmanDashboardPage {
 
+  @ViewChild('pieCanvas') pieCanvas;
+  mtdAchieved: number;
+  target: number;
+  pieChart: any;
+  showChart: boolean = false;
   partyName: any;
   targetCategory: any = 'Total';
 
   constructor(public navCtrl: NavController, public navParams: NavParams,
      private widgetUtil: WidgetUtilService, private modal:ModalController,
       private storageService: StorageServiceProvider) {
+
+        this.mtdAchieved = 20;
+        this.target = 30;
   }
+
+  displayChart() {
+    this.pieChart = new Chart(this.pieCanvas.nativeElement, {
+      type: 'pie',
+      data: {
+        datasets: [{
+          data: [this.mtdAchieved, this.target],
+          backgroundColor: [
+            '#225F93',
+            '#E7ECFF'
+          ]
+        }],
+        labels: [
+          'MTD Achieved',
+          'Target'
+      ]
+      },
+      options: {
+        legend: {
+          display: true
+        },
+        tooltips: {
+          enabled: true
+        },
+        title: {
+          display: false,
+          fontStyle: 'bold',
+          fontSize: 18
+        }
+      },
+ 
+    });
+  }
+
 
   ionViewDidLoad() {
     this.getData()
+    this.displayChart()
+    
   }
   async getData() {
     try{
@@ -113,8 +161,12 @@ export class SalesmanDashboardPage {
     this.navCtrl.push(SalesmanSelectCustomerPage);
   }
 
-  toggleView(){
-    console.log('toggle clicked!')
-  }
+  // toggleView(){
+  //   console.log('toggle clicked!')
+  //   console.log(this.showChart);
+  //   this.showChart = !this.showChart;
+  //   console.log(this.showChart);
+  //   this.displayChart()
+  // }
 
 }

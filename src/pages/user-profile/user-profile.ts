@@ -1,5 +1,5 @@
 import { WidgetUtilService } from '../../utils/widget-utils';
-import { Component } from '@angular/core';
+import { Component, ViewChild } from '@angular/core';
 import { IonicPage, NavController, NavParams,ModalController } from 'ionic-angular';
 import { PopoverHomePage } from '../popover-home/popover-home';
 // import { TargetGraphPage } from '../target-graph/target-graph';
@@ -10,6 +10,8 @@ import { StorageServiceProvider } from '../../providers/storage-service/storage-
 // import { SalesmanSelectCustomerPage } from '../salesman-select-customer/salesman-select-customer';
 import { CustomerHomePage } from '../customer-home/customer-home';
 
+import { Chart } from 'chart.js';
+
 @IonicPage({
   name: 'UserProfilePage'
 })
@@ -18,7 +20,11 @@ import { CustomerHomePage } from '../customer-home/customer-home';
   templateUrl: 'user-profile.html'
 })
 export class UserProfilePage {
-
+  
+  @ViewChild('pieCanvas') pieCanvas;
+  mtdAchieved: number;
+  target: number;
+  pieChart: any;
   // opened: boolean = false;
   // TKopened: boolean = false;
   // Outopened: boolean = false;
@@ -29,11 +35,50 @@ export class UserProfilePage {
   
   // customerDashboard:boolean=false;
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, private widgetUtil: WidgetUtilService, private modal:ModalController, private storageService: StorageServiceProvider) {
+  constructor(public navCtrl: NavController, public navParams: NavParams,
+     private widgetUtil: WidgetUtilService, private modal:ModalController,
+      private storageService: StorageServiceProvider) {
+    
+        this.mtdAchieved = 20;
+        this.target = 30;
+  }
+
+  displayChart() {
+    this.pieChart = new Chart(this.pieCanvas.nativeElement, {
+      type: 'pie',
+      data: {
+        datasets: [{
+          data: [this.mtdAchieved, this.target],
+          backgroundColor: [
+            '#225F93',
+            '#E7ECFF'
+          ]
+        }],
+        labels: [
+          'MTD Achieved',
+          'Target'
+      ]
+      },
+      options: {
+        legend: {
+          display: true
+        },
+        tooltips: {
+          enabled: true
+        },
+        title: {
+          display: false,
+          fontStyle: 'bold',
+          fontSize: 18
+        }
+      },
+ 
+    });
   }
 
   ionViewDidLoad() {
     this.getData()
+    this.displayChart()
   }
   async getData() {
     try{

@@ -27,6 +27,7 @@ export class CustomerReviewSubmitOrderPage {
   orderType: any = 'self';
   salesmanName: any = 0;
   salesmanId: any = 0;
+  salesmanCode: any = 0;
 
   constructor(public navCtrl: NavController,
               public navParams: NavParams,
@@ -95,11 +96,13 @@ export class CustomerReviewSubmitOrderPage {
       this.salesmanProfile = profile;
       this.salesmanId = this.salesmanProfile['_id'],
       this.salesmanName = this.salesmanProfile['name'],
+      this.salesmanCode = this.salesmanProfile['externalId'],
       this.orderType = 'salesman';
       console.log(this.salesmanProfile);
       console.log(this.salesmanId);
       console.log(this.salesmanName);
       console.log(this.orderType);
+      console.log(this.salesmanCode);
       profile = await this.storageService.getFromStorage('selectedCustomer')
     }
 
@@ -117,6 +120,7 @@ export class CustomerReviewSubmitOrderPage {
       // orderType: this.orderType,
       // salesmanId: this.salesmanId,
       // salesmanName: this.salesmanName,
+      //salesmanCode: this.salesmanCode,
       orderId: 'ORD' + Math.floor(Math.random() * 90000) + Math.floor(Math.random() * 90000),
       orderTotal: parseFloat(this.orderTotal.toString()),
       totalTkPoints: parseFloat(totalTkPoints.toString()),

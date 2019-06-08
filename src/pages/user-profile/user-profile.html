@@ -81,12 +81,20 @@
               </ion-col>
             </ion-row>
 
+            <div>
+                <ion-row>
+                  <div>
+                      <canvas #pieCanvas style="width: 100%"> </canvas>
+                  </div>
+                </ion-row>
+              </div>
+
             <ion-row class="targetBottom">
               <p class="targetFootnote">*MTD: Month Till Date</p>
-              <p class="toggleView" (click)="toggleView()">
+              <!-- <p class="toggleView" (click)="toggleView()">
                   <ion-icon slot="start" name="podium"></ion-icon>
                 Visualize Data
-              </p>
+              </p> -->
             </ion-row>
   </ion-card>
 

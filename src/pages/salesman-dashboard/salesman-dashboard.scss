@@ -13,6 +13,20 @@ page-salesman-dashboard {
           margin-top: 16px;
           font-size: 1em;
       }
+
+    //   .target-graph-card{
+    //     margin-top: 50%;
+    //     box-shadow: 0 0 20px 5px rgba(0, 0, 0, 0.1);
+    // }
+    // canvas{
+    //     .pieChartCanvas{
+    //         .chart-render-monitor{
+    //                 width: 100% !important;
+    //                 height: 100% !important;
+    //         }
+    //     }
+    // }
+
     
       .tabs-wrapper{
         margin:0;
@@ -27,6 +41,14 @@ page-salesman-dashboard {
       
       .switchCategory{
           float: right;
+      }
+
+      .item-visible{
+        display: inline-block;
+      }
+    
+      .item-hidden{
+          display: none;
       }
 
       ion-select{
