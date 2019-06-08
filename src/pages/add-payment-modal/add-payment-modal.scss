@@ -12,6 +12,9 @@ page-add-payment-modal {
     .payItem{
         border-bottom: 1px solid #e6e6e6;
     }
+    .salesmanName{
+        text-transform: capitalize;
+    }
     // #chequeID,#onlineID{
     //     display: none;
     // }

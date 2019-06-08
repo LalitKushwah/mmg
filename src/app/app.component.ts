@@ -8,7 +8,8 @@ import { SplashScreen } from '@ionic-native/splash-screen';
 
 import { UserProfilePage } from '../pages/user-profile/user-profile';
 import { CustomerHomePage } from '../pages/customer-home/customer-home';
-import { SalesmanSelectCustomerPage } from '../pages/salesman-select-customer/salesman-select-customer';
+import { SalesmanDashboardPage } from '../pages/salesman-dashboard/salesman-dashboard';
+// import { SalesmanSelectCustomerPage } from '../pages/salesman-select-customer/salesman-select-customer';
 
 
 import { HomePage } from '../pages/home/home';
@@ -58,14 +59,14 @@ export class MyApp {
         } else {
           if ((profile['userType'] === 'SALESMAN')) {
             this.pages = [
-              {title: 'Shop', component: SalesmanSelectCustomerPage, icon: 'shopping-bag'},
-              {title: 'Dashboard', component: UserProfilePage, icon: 'customer'},
+              // {title: 'Shop', component: SalesmanSelectCustomerPage, icon: 'shopping-bag'},
+              {title: 'Dashboard', component: SalesmanDashboardPage, icon: 'customer'},
               {title: 'Your Orders', component: CustomerListOrderPage, icon: 'cart'},
               {title: 'Club Premier', component: ClubPremierPage, icon: 'loan'},
             ]
           }else{
             this.pages = [
-              {title: 'Shop', component: CustomerHomePage, icon: 'shopping-bag'},
+              // {title: 'Shop', component: CustomerHomePage, icon: 'shopping-bag'},
               {title: 'Dashboard', component: UserProfilePage, icon: 'customer'},
               {title: 'Your Orders', component: CustomerListOrderPage, icon: 'cart'},
               {title: 'Club Premier', component: ClubPremierPage, icon: 'loan'}

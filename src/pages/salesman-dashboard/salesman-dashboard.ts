@@ -7,29 +7,23 @@ import { PopoverHomePage } from '../popover-home/popover-home';
 // import { TkCurrencyPage} from '../tk-currency/tk-currency';
 // import { OutstandingPage} from '../outstanding/outstanding';
 import { StorageServiceProvider } from '../../providers/storage-service/storage-service';
-// import { SalesmanSelectCustomerPage } from '../salesman-select-customer/salesman-select-customer';
-import { CustomerHomePage } from '../customer-home/customer-home';
+import { SalesmanSelectCustomerPage } from '../salesman-select-customer/salesman-select-customer';
 
 @IonicPage({
-  name: 'UserProfilePage'
+  name: 'SalesmanDashboardPage'
 })
 @Component({
-  selector: 'page-user-profile',
-  templateUrl: 'user-profile.html'
+  selector: 'page-salesman-dashboard',
+  templateUrl: 'salesman-dashboard.html',
 })
-export class UserProfilePage {
+export class SalesmanDashboardPage {
 
-  // opened: boolean = false;
-  // TKopened: boolean = false;
-  // Outopened: boolean = false;
-  // btnLabel: string = '';
   partyName: any;
-  selectedCustomerprofile: any;
-  userTypeCustomer: boolean = false;
-  
-  // customerDashboard:boolean=false;
+  targetCategory: any = 'Total';
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, private widgetUtil: WidgetUtilService, private modal:ModalController, private storageService: StorageServiceProvider) {
+  constructor(public navCtrl: NavController, public navParams: NavParams,
+     private widgetUtil: WidgetUtilService, private modal:ModalController,
+      private storageService: StorageServiceProvider) {
   }
 
   ionViewDidLoad() {
@@ -37,16 +31,8 @@ export class UserProfilePage {
   }
   async getData() {
     try{
-      let profile = await this.storageService.getFromStorage('profile')
-      // this.partyName = profile['name']
-      if ((profile['userType'] === 'SALESMAN')){
-        let selectedCustomerprofile = await this.storageService.getFromStorage('selectedCustomer')
-        this.partyName = selectedCustomerprofile['name']
-      }
-      else{
-        this.partyName = profile['name']
-        this.userTypeCustomer = true;
-      }
+      let profile = await this.storageService.getFromStorage('profile');
+      this.partyName = profile['name']
     }
     catch (err) {
       console.log('Error: Profile Details could not Load', err)
@@ -54,6 +40,27 @@ export class UserProfilePage {
   }
   presentPopover(myEvent) {
     this.widgetUtil.presentPopover(myEvent, PopoverHomePage)
+  }
+
+  targetCategorySelectionChanged(selectedValue: any){
+
+      switch (this.targetCategory) {
+        case 'category-1':
+          console.log(selectedValue)
+            break;
+        case 'category-2':
+          console.log(selectedValue)
+            break;
+        case 'category-3':
+          console.log(selectedValue)
+            break;
+        case 'category-4':
+          console.log(selectedValue)
+            break;
+        default:
+          console.log(selectedValue) 
+    }
+    // console.log(selectedValue);
   }
 
   // openGraph() {
@@ -102,24 +109,8 @@ export class UserProfilePage {
   //   }
   // }
 
-  // async openBtnModal(){
-  //   let profile = await this.storageService.getFromStorage('profile')
-  //   //console.log(profile['userType'])
-  //   if ((profile['userType'] === 'SALESMAN')){
-  //     this.openSelectCustomer()
-  //   }
-  //   else{
-  //     this.openPaymentModal()
-  //   }
-  // }
-
-  openPaymentModal(){
-    const payModal = this.modal.create('AddPaymentModalPage')
-    payModal.present();
-  }
-
-  openShopPage(){
-    this.navCtrl.push(CustomerHomePage);
+  openCustomerSelectionModal(){
+    this.navCtrl.push(SalesmanSelectCustomerPage);
   }
 
   toggleView(){

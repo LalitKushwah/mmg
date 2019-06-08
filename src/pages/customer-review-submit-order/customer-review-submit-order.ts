@@ -22,7 +22,11 @@ export class CustomerReviewSubmitOrderPage {
   totalTK = 0;
   showLoader: boolean = false
   showClearCartLoader: boolean = false
+  salesmanProfile: any
   expanded = false;
+  orderType: any = 'self';
+  salesmanName: any = 0;
+  salesmanId: any = 0;
 
   constructor(public navCtrl: NavController,
               public navParams: NavParams,
@@ -88,6 +92,14 @@ export class CustomerReviewSubmitOrderPage {
 
     //Replacing the Profile with Selected Customer Profile if userType = SALESMAN
     if ((profile['userType'] === 'SALESMAN')) {
+      this.salesmanProfile = profile;
+      this.salesmanId = this.salesmanProfile['_id'],
+      this.salesmanName = this.salesmanProfile['name'],
+      this.orderType = 'salesman';
+      console.log(this.salesmanProfile);
+      console.log(this.salesmanId);
+      console.log(this.salesmanName);
+      console.log(this.orderType);
       profile = await this.storageService.getFromStorage('selectedCustomer')
     }
 
@@ -102,6 +114,9 @@ export class CustomerReviewSubmitOrderPage {
         }
       }),
       userId: profile['_id'],
+      // orderType: this.orderType,
+      // salesmanId: this.salesmanId,
+      // salesmanName: this.salesmanName,
       orderId: 'ORD' + Math.floor(Math.random() * 90000) + Math.floor(Math.random() * 90000),
       orderTotal: parseFloat(this.orderTotal.toString()),
       totalTkPoints: parseFloat(totalTkPoints.toString()),
@@ -114,6 +129,7 @@ export class CustomerReviewSubmitOrderPage {
       this.storageService.setToStorage('cart', [])
       this.storageService.removeFromStorage('tkpoint')
       
+      console.log(orderObj)
       //Removing the key-value after the order has been placed
       this.storageService.removeFromStorage('selectedCustomer')
 

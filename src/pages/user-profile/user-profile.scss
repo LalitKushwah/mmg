@@ -89,16 +89,42 @@ page-user-profile {
 //   .expand-icon{
 //     float: right;
 //   }
-
+  ion-title{
+    text-transform: capitalize;
+  }
     ion-card{
         card{
             border-bottom: none !important;
         }
     }
-  .paymentBtn{
-      background-color: #3d9ef0;
-      border-radius: 3px;
-      margin-top: 16px;
+  // .salesmanDashboardBtn{
+  //     background-color: #3d9ef0;
+  //     border-radius: 3px;
+  //     margin-top: 16px;
+  //     font-size: 1em;
+  // }
+  .customerdashboardBtn{
+    background-color: #3d9ef0;
+    border-radius: 3px;
+    margin-top: 16px;
+    font-size: 1em;
+    width: calc(50% - 8px);
+  }
+
+  // .item-in-salesman{
+  //   width: 100%;
+  // }
+
+  // .item-in-customer{
+  //   width: calc(50% - 8px);
+  // }
+
+  .item-visible{
+    display: inline-block;
+  }
+
+  .item-hidden{
+      display: none;
   }
 
   .tabs-wrapper{
@@ -108,21 +134,57 @@ page-user-profile {
   }
   .card-title{
     padding-left:0;
+    font-weight: bold;
+    font-size: 1em;
+  }
+  
+  .switchCategory{
+      float: right;
   }
 
+  ion-select{
+    font-size: 0.7em;
+    padding-left: 0 !important;
+    margin-top: 5px;
+  }
+  ion-item{
+      .item-inner{
+        .input-wrapper{
+            ion-label{
+                font-weight: bold;
+                font-size: 0.9em;
+                color: #333;
+            }
+        }
+      }
+  }
   .tabs{
       border: 1px solid #D5D5D5;
       text-align: center;
-      margin: 3%;
-      width: 44%;
+      margin: 2%;
+      width: 46%;
       border-radius: 3px;
   }
   .tab-label-sm{
-      font-size: 8px;
+      font-size: 1em;
       color: #7D7D7D;
       margin: 0 auto;
   }
-  .tab-label-sm{
-    font-size: 14px;
+  .tab-label-lg{
+    font-size: 1.6em;
+  }
+
+  .targetBottom{
+      margin-top: 10px;
+      .targetFootnote{
+        font-size: 0.8em;
+    }
+    .toggleView{
+        font-size: 0.9em;
+        color: #225F93;
+        margin-left: 10%;
+        position: fixed;
+        right: 8%;
+    }
   }
 }

@@ -15,17 +15,19 @@
 </ion-header>
 
 <ion-content class="full-background">
-  <!-- <button ion-button full padding class="salesmanDashboardBtn" (click)="openBtnModal()"
+  <button ion-button full padding class="salesmanDashboardBtn" (click)="openCustomerSelectionModal()"
       [ngClass]=" customerDashboard ? 'item-hidden': 'item-visible'">
-      {{btnLabel}}
-  </button> -->
+      SELECT CUSTOMER
+  </button>
 
-  <button ion-button  padding class="customerdashboardBtn" (click)="openPaymentModal()">
-    Add Payment
+  <!-- <button ion-button  padding class="customerdashboardBtn" (click)="openBtnModal()" 
+      [ngClass]=" customerDashboard ? 'item-visible': 'item-hidden'">
+      Add Payment
   </button>
-  <button ion-button  padding class="customerdashboardBtn" (click)="openShopPage()">
-    Shop
-  </button>
+  <button ion-button  padding class="customerdashboardBtn" (click)="openBtnModal()" 
+      [ngClass]=" customerDashboard ? 'item-visible': 'item-hidden'">
+      Shop
+  </button> -->
 
   <ion-card class="tabs-wrapper">
       <ion-card-header class="card-title">

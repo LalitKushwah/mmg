@@ -88,6 +88,7 @@ import { AddSalesmanModalPage } from '../pages/add-salesman-modal/add-salesman-m
 import { UserProfilePageModule } from '../pages/user-profile/user-profile.module';
 import { SalesmanSelectCustomerPageModule } from '../pages/salesman-select-customer/salesman-select-customer.module';
 import { AdminListSalesmanPage } from '../pages/admin-list-salesman/admin-list-salesman';
+import { SalesmanDashboardPage } from '../pages/salesman-dashboard/salesman-dashboard';
 
 @NgModule({
   declarations: [
@@ -96,7 +97,8 @@ import { AdminListSalesmanPage } from '../pages/admin-list-salesman/admin-list-s
     ListPage,
     UserProfilePage,
     SalesmanSelectCustomerPage,
-    AdminListSalesmanPage
+    AdminListSalesmanPage,
+    SalesmanDashboardPage
   ],
   imports: [
     BrowserModule,
@@ -179,7 +181,8 @@ import { AdminListSalesmanPage } from '../pages/admin-list-salesman/admin-list-s
     AddSalesmanModalPage,
     UserProfilePage,
     SalesmanSelectCustomerPage,
-    AdminListSalesmanPage
+    AdminListSalesmanPage,
+    SalesmanDashboardPage
   ],
   providers: [
     StatusBar,

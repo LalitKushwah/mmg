@@ -36,14 +36,24 @@
         <ion-input type="text" [(ngModel)]="onlineID"></ion-input>
     </ion-item>
 
-    <ion-item class="payItem" id="selectSalesman" [ngClass]=" cashIsSelected ? 'item-visible': 'item-hidden'">
+
+    <!-- Hide Select Customer Dropdown when loggen in as Customer
+    Instead, show the customer list in label -->
+    <ion-item class="payItem" id="selectSalesman" [ngClass]=" cashIsSelected && !userTypeSalesman ? 'item-visible': 'item-hidden'">
         <ion-label>Select Salesman</ion-label>
           <ion-select [(ngModel)]="selectedSalesman">
               <ion-option value="sm">Test Salesman</ion-option>
               <ion-option value="sm2">Test Salesman 2</ion-option>
               <ion-option value="sm3">Test Salesman 3</ion-option>
           </ion-select> 
-        </ion-item>
+    </ion-item>
+
+    <ion-item class="payItem" [ngClass]=" userTypeSalesman ? 'item-visible': 'item-hidden'">
+        <ion-label floating>Salesman: {{salesmanName}}</ion-label>
+        <ion-label floating class="salesmanName">{{salesmanName}}</ion-label> 
+    </ion-item>
+
+
 
     <div id="modalBtn">
       <button ion-button padding center [disabled]="!isEnabled" (click)="submitPayment()">
