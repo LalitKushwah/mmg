@@ -5,6 +5,7 @@ import { ApiServiceProvider} from '../../providers/api-service/api-service'
 import { WidgetUtilService} from '../../utils/widget-utils'
 import { AddSalesmanModalPage } from '../add-salesman-modal/add-salesman-modal';
 import { AdminListUserPage } from '../admin-list-user/admin-list-user';
+import { AdminHomePage } from '../admin-home/admin-home';
  /**
  * Generated class for the EditUserPage page.
  *
@@ -147,7 +148,9 @@ export class EditUserPage {
 
   ionViewDidLoad() {
     this.navBar.backButtonClick = () => {
-	    this.navCtrl.setRoot(AdminListUserPage);
+      // this.navCtrl.setRoot(AdminListUserPage);
+      //this.navCtrl.setRoot(AdminHomePage);
+      this.navCtrl.push(AdminListUserPage)
 	}
 }
 
