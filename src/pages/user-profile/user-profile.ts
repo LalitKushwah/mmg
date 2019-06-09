@@ -32,6 +32,7 @@ export class UserProfilePage {
   partyName: any;
   selectedCustomerprofile: any;
   userTypeCustomer: boolean = false;
+  targetCategory: any = 'Total';
   
   // customerDashboard:boolean=false;
 
@@ -170,5 +171,24 @@ export class UserProfilePage {
   toggleView(){
     console.log('toggle clicked!')
   }
+
+  targetCategorySelectionChanged(selectedValue: any){
+    switch (this.targetCategory) {
+      case 'category-1':
+        console.log(selectedValue)
+          break;
+      case 'category-2':
+        console.log(selectedValue)
+          break;
+      case 'category-3':
+        console.log(selectedValue)
+          break;
+      case 'category-4':
+        console.log(selectedValue)
+          break;
+      default:
+        console.log(selectedValue) 
+  }
+}
 
 }
