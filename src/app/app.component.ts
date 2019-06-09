@@ -27,12 +27,12 @@ export class MyApp {
   rootPage: any = HomePage;
   partyName: string = ''
 
-  pages: Array<{ title: string, component: any, icon: string }>;
+  pages: Array<{ title: string, component: any, icon: string, class: string }>;
 
   constructor(public platform: Platform, public statusBar: StatusBar, public splashScreen: SplashScreen
   , private headerColor : HeaderColor, private menuController: MenuController, private storageService: StorageServiceProvider,
   private zone: NgZone,  public events: Events, private app: App) {
-    this.pages = [{ title: 'Home', component: HomePage, icon :'home'}]
+    this.pages = [{ title: 'Home', component: HomePage, icon :'home', class: 'default'}]
     this.menuController.swipeEnable(true)
     this.initializeApp();
     this.events.subscribe('updateScreen', () => {
@@ -51,25 +51,25 @@ export class MyApp {
       if(profile['userLoginId'] !== 'R0001') {
         if ((profile['userType'] === 'ADMIN')) {
           this.pages = [
-            {title: 'Home', component: HomePage, icon: 'home'},
-            {title: 'Customers', component: AdminListUserPage, icon: 'customer'},
-            {title: 'Salesman', component: AdminListSalesmanPage, icon: 'customer'},
-            {title: 'Products', component: AdminListCategoryPage, icon: 'products'},
+            {title: 'Home', component: HomePage, icon: 'home', class: 'default'},
+            {title: 'Customers', component: AdminListUserPage, icon: 'customer', class: 'default'},
+            {title: 'Salesman', component: AdminListSalesmanPage, icon: 'customer', class: 'default'},
+            {title: 'Products', component: AdminListCategoryPage, icon: 'products', class: 'default'},
           ]
         } else {
           if ((profile['userType'] === 'SALESMAN')) {
             this.pages = [
               // {title: 'Shop', component: SalesmanSelectCustomerPage, icon: 'shopping-bag'},
-              {title: 'Dashboard', component: SalesmanDashboardPage, icon: 'customer'},
-              {title: 'Your Orders', component: CustomerListOrderPage, icon: 'cart'},
-              {title: 'Club Premier', component: ClubPremierPage, icon: 'loan'},
+              {title: 'Dashboard', component: SalesmanDashboardPage, icon: 'customer', class: 'default'},
+              {title: 'Your Orders', component: CustomerListOrderPage, icon: 'cart', class: 'default'},
+              {title: '', component: ClubPremierPage, icon: 'club-premier', class:'custom-side-icon'},
             ]
           }else{
             this.pages = [
               // {title: 'Shop', component: CustomerHomePage, icon: 'shopping-bag'},
-              {title: 'Dashboard', component: UserProfilePage, icon: 'customer'},
-              {title: 'Your Orders', component: CustomerListOrderPage, icon: 'cart'},
-              {title: 'Club Premier', component: ClubPremierPage, icon: 'loan'}
+              {title: 'Dashboard', component: UserProfilePage, icon: 'customer', class: 'default'},
+              {title: 'Your Orders', component: CustomerListOrderPage, icon: 'cart', class: 'default'},
+              {title: '', component: ClubPremierPage, icon: 'club-premier', class: 'custom-side-icon'}
             ]
           }   
         }

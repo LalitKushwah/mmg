@@ -33,6 +33,10 @@ ion-icon {
   margin-right: 5px;
 }
 
+.custom-side-icon{
+  width: 110%;
+}
+
 .search-spinner{
   top:45%;
   left: 45%;
@@ -218,7 +222,7 @@ ion-menu {
     }
   }
   img {
-    width: 45px;
+    width: 100px;// width: 45px;
     margin: 20px 0 5px;
     color: #fff;
   }
