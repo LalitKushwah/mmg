@@ -1,5 +1,4 @@
 <ion-header>
-
   <ion-navbar hideBackButton="true">
       <button ion-button menuToggle>
         <ion-icon name="menu"></ion-icon>
@@ -11,14 +10,13 @@
         </button>
       </ion-buttons>
     </ion-navbar>
-
 </ion-header>
 
 <ion-content class="full-background">
-  <button ion-button full padding class="salesmanDashboardBtn" (click)="openCustomerSelectionModal()"
+  <!-- <button ion-button full padding class="salesmanDashboardBtn" (click)="openCustomerSelectionModal()"
       [ngClass]=" customerDashboard ? 'item-hidden': 'item-visible'">
       SELECT CUSTOMER
-  </button>
+  </button> -->
 
   <!-- <button ion-button  padding class="customerdashboardBtn" (click)="openBtnModal()" 
       [ngClass]=" customerDashboard ? 'item-visible': 'item-hidden'">
@@ -311,6 +309,10 @@
       Add Payment
   </button> -->
 
-
-
 </ion-content>
+<ion-footer>
+  <button ion-button full padding class="salesmanDashboardBtn" (click)="openCustomerSelectionModal()"
+      [ngClass]=" customerDashboard ? 'item-hidden': 'item-visible'">
+      SELECT CUSTOMER
+  </button>
+</ion-footer>

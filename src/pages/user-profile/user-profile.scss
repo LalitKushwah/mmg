@@ -105,10 +105,12 @@ page-user-profile {
   // }
   .customerdashboardBtn{
     background-color: #3d9ef0;
-    border-radius: 3px;
-    margin-top: 16px;
+    // border-radius: 3px;
+    // margin-top: 16px;
     font-size: 1em;
-    width: calc(50% - 8px);
+    // width: calc(50% - 8px);
+    width: 48%;
+    border-right: 1px solid #D5D5D5;
   }
 
   // .item-in-salesman{
