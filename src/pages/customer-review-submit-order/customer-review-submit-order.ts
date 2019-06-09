@@ -120,7 +120,7 @@ export class CustomerReviewSubmitOrderPage {
       // orderType: this.orderType,
       // salesmanId: this.salesmanId,
       // salesmanName: this.salesmanName,
-      //salesmanCode: this.salesmanCode,
+      salesmanCode: this.salesmanCode ? this.salesmanCode : undefined,
       orderId: 'ORD' + Math.floor(Math.random() * 90000) + Math.floor(Math.random() * 90000),
       orderTotal: parseFloat(this.orderTotal.toString()),
       totalTkPoints: parseFloat(totalTkPoints.toString()),
