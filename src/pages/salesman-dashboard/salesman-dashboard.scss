@@ -1,0 +1,99 @@
+page-salesman-dashboard {
+    ion-title{
+        text-transform: capitalize;
+      }
+        ion-card{
+            card{
+                border-bottom: none !important;
+            }
+        }
+      .salesmanDashboardBtn{
+          background-color: #3d9ef0;
+          border-radius: 3px;
+          margin-top: 16px;
+          font-size: 1em;
+      }
+
+    //   .target-graph-card{
+    //     margin-top: 50%;
+    //     box-shadow: 0 0 20px 5px rgba(0, 0, 0, 0.1);
+    // }
+    // canvas{
+    //     .pieChartCanvas{
+    //         .chart-render-monitor{
+    //                 width: 100% !important;
+    //                 height: 100% !important;
+    //         }
+    //     }
+    // }
+
+    
+      .tabs-wrapper{
+        margin:0;
+        width: 100% !important;
+        border-bottom: none;
+      }
+      .card-title{
+        padding-left:0;
+        font-weight: bold;
+        font-size: 1em;
+      }
+      
+      .switchCategory{
+          float: right;
+      }
+
+      .item-visible{
+        display: inline-block;
+      }
+    
+      .item-hidden{
+          display: none;
+      }
+
+      ion-select{
+        font-size: 0.7em;
+        padding-left: 0 !important;
+        margin-top: 5px;
+      }
+      ion-item{
+          .item-inner{
+            .input-wrapper{
+                ion-label{
+                    font-weight: bold;
+                    font-size: 0.9em;
+                    color: #333;
+                }
+            }
+          }
+      }
+      .tabs{
+          border: 1px solid #D5D5D5;
+          text-align: center;
+          margin: 2%;
+          width: 46%;
+          border-radius: 3px;
+      }
+      .tab-label-sm{
+          font-size: 1em;
+          color: #7D7D7D;
+          margin: 0 auto;
+      }
+      .tab-label-lg{
+        font-size: 1.6em;
+      }
+
+      .targetBottom{
+          margin-top: 10px;
+          .targetFootnote{
+            font-size: 0.8em;
+        }
+        .toggleView{
+            font-size: 0.9em;
+            color: #225F93;
+            margin-left: 10%;
+            position: fixed;
+            right: 8%;
+        }
+      }
+}

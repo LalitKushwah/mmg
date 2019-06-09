@@ -15,17 +15,19 @@
 </ion-header>
 
 <ion-content class="full-background">
-  <!-- <button ion-button full padding class="salesmanDashboardBtn" (click)="openBtnModal()"
+  <button ion-button full padding class="salesmanDashboardBtn" (click)="openCustomerSelectionModal()"
       [ngClass]=" customerDashboard ? 'item-hidden': 'item-visible'">
-      {{btnLabel}}
-  </button> -->
+      SELECT CUSTOMER
+  </button>
 
-  <button ion-button  padding class="customerdashboardBtn" (click)="openPaymentModal()">
-    Add Payment
+  <!-- <button ion-button  padding class="customerdashboardBtn" (click)="openBtnModal()" 
+      [ngClass]=" customerDashboard ? 'item-visible': 'item-hidden'">
+      Add Payment
   </button>
-  <button ion-button  padding class="customerdashboardBtn" (click)="openShopPage()">
-    Shop
-  </button>
+  <button ion-button  padding class="customerdashboardBtn" (click)="openBtnModal()" 
+      [ngClass]=" customerDashboard ? 'item-visible': 'item-hidden'">
+      Shop
+  </button> -->
 
   <ion-card class="tabs-wrapper">
       <ion-card-header class="card-title">
@@ -42,7 +44,7 @@
             </ion-select> 
           </ion-item>
       </ion-card-header>
-      
+      <div>
           <ion-row>
             <ion-col class="tabs" align-items-center>
                 <p class="tab-label-sm" align-items-center>
@@ -80,20 +82,24 @@
                   </p>
               </ion-col>
             </ion-row>
-
-            <div>
-                <ion-row>
-                  <div>
-                      <canvas #pieCanvas style="width: 100%"> </canvas>
-                  </div>
-                </ion-row>
+          </div>
+          <div>
+            <ion-row>
+              <div>
+                  <canvas #pieCanvas style="width: 100%"> </canvas>
               </div>
+            </ion-row>
+          </div>
 
             <ion-row class="targetBottom">
               <p class="targetFootnote">*MTD: Month Till Date</p>
-              <!-- <p class="toggleView" (click)="toggleView()">
+              <!-- <p class="toggleView" (click)="toggleView()" [ngClass]=" showChart ? 'item-hidden': 'item-visible'">
                   <ion-icon slot="start" name="podium"></ion-icon>
                 Visualize Data
+              </p>
+              <p class="toggleView" (click)="toggleView()" [ngClass]=" showChart ? 'item-visible': 'item-hidden'">
+                  <ion-icon slot="start" name="podium"></ion-icon>
+                Textual Data
               </p> -->
             </ion-row>
   </ion-card>

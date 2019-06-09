@@ -1,10 +1,11 @@
-import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams, AlertController } from 'ionic-angular';
+import { Component, ViewChild } from '@angular/core';
+import { IonicPage, NavController, Navbar, NavParams, AlertController } from 'ionic-angular';
 import { ApiServiceProvider } from '../../providers/api-service/api-service';
 import { WidgetUtilService } from '../../utils/widget-utils';
 import { CONSTANTS } from '../../utils/constants';
 import { EditUserPage } from '../edit-user/edit-user';
 import { StorageServiceProvider } from '../../providers/storage-service/storage-service';
+import { AdminHomePage } from '../admin-home/admin-home';
 
 @IonicPage({
   name: 'AdminListUserPage'
@@ -14,7 +15,8 @@ import { StorageServiceProvider } from '../../providers/storage-service/storage-
   templateUrl: 'admin-list-user.html',
 })
 export class AdminListUserPage {
-
+  @ViewChild(Navbar) navBar: Navbar;
+  
   skipValue: number = 0
   limit: number = CONSTANTS.PAGINATION_LIMIT
   userList: Array<any> = [];
@@ -136,5 +138,11 @@ export class AdminListUserPage {
     const res = await this.storageService.setToStorage('editCustomerInfo', user)
     console.log('====== 137 =====', res)
     this.navCtrl.push(EditUserPage)
+  }
+  ionViewDidLoad() {
+    this.navBar.backButtonClick = () => {
+      this.navCtrl.setRoot(AdminHomePage)
+      //this.navCtrl.push(AdminHomePage)
+    }
   }
 }
