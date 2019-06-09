@@ -1,10 +1,11 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavParams, ViewController } from 'ionic-angular';
+import { StorageServiceProvider } from '../../providers/storage-service/storage-service';
 
 @IonicPage()
 @Component({
   selector: 'page-add-payment-modal',
-  templateUrl: 'add-payment-modal.html',
+  templateUrl: 'add-payment-modal.html'
 })
 export class AddPaymentModalPage {
 
@@ -17,12 +18,28 @@ export class AddPaymentModalPage {
   cashIsSelected:boolean=false;
   chequeIsSelected:boolean=false;
   onlineIsSelected:boolean=false;
+  salesmanName: any;
+  userTypeSalesman: boolean = false;
 
-  constructor(private navParams: NavParams, private view:ViewController) {
+  constructor(private navParams: NavParams, private view:ViewController,  private storageService: StorageServiceProvider) {
   }
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad AddPaymentModalPage');
+    this.getData()
+  }
+  async getData(){
+    try{
+      let profile = await this.storageService.getFromStorage('profile')
+      console.log(profile['name'])
+      if ((profile['userType'] === 'SALESMAN')) {
+      this.salesmanName = profile['name']
+      this.userTypeSalesman = true
+      }
+    }
+    catch (err) {
+      console.log('Error: Profile Details could not Load', err)
+    }
   }
 
   closePayModal(){
