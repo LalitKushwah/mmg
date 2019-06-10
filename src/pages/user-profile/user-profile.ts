@@ -1,6 +1,6 @@
 import { WidgetUtilService } from '../../utils/widget-utils';
 import { Component, ViewChild } from '@angular/core';
-import { IonicPage, NavController, NavParams,ModalController } from 'ionic-angular';
+import { IonicPage, NavController, NavParams,ModalController, LoadingController } from 'ionic-angular';
 import { PopoverHomePage } from '../popover-home/popover-home';
 // import { TargetGraphPage } from '../target-graph/target-graph';
 // import { TargetPage } from '../target/target';
@@ -11,6 +11,7 @@ import { StorageServiceProvider } from '../../providers/storage-service/storage-
 import { CustomerHomePage } from '../customer-home/customer-home';
 
 import { Chart } from 'chart.js';
+import { ApiServiceProvider } from '../../providers/api-service/api-service';
 
 @IonicPage({
   name: 'UserProfilePage'
@@ -33,15 +34,23 @@ export class UserProfilePage {
   selectedCustomerprofile: any;
   userTypeCustomer: boolean = false;
   targetCategory: any = 'Total';
-  
+  dashboardData: any;
+  categoryList: any = []
+  data: any = {}
+  loader: any
+  externalId: string = ''
   // customerDashboard:boolean=false;
 
-  constructor(public navCtrl: NavController, public navParams: NavParams,
-     private widgetUtil: WidgetUtilService, private modal:ModalController,
-      private storageService: StorageServiceProvider) {
+  constructor(public navCtrl: NavController, 
+              public navParams: NavParams,
+              private widgetUtil: WidgetUtilService, 
+              private modal:ModalController,
+              private storageService: StorageServiceProvider,
+              private apiService: ApiServiceProvider,
+              private loadingCtrl: LoadingController) {
     
-        this.mtdAchieved = 20;
-        this.target = 30;
+        // this.mtdAchieved = 20;
+        // this.target = 30;
   }
 
   displayChart() {
@@ -64,9 +73,6 @@ export class UserProfilePage {
         legend: {
           display: true
         },
-        tooltips: {
-          enabled: true
-        },
         title: {
           display: false,
           fontStyle: 'bold',
@@ -79,85 +85,46 @@ export class UserProfilePage {
 
   ionViewDidLoad() {
     this.getData()
-    this.displayChart()
   }
   async getData() {
-    try{
+    this.loader = this.loadingCtrl.create({
+      content: "Fetching Data...",
+    });
+    this.loader.present()
+    try {
       let profile = await this.storageService.getFromStorage('profile')
       // this.partyName = profile['name']
-      if ((profile['userType'] === 'SALESMAN')){
+      if ((profile['userType'] === 'SALESMAN')) {
         let selectedCustomerprofile = await this.storageService.getFromStorage('selectedCustomer')
         this.partyName = selectedCustomerprofile['name']
+        this.externalId = selectedCustomerprofile['externalId']
       }
-      else{
+      else {
         this.partyName = profile['name']
+        this.externalId = profile['externalId']
         this.userTypeCustomer = true;
       }
+      this.apiService.getDashboardData(this.externalId).subscribe((res: any) => {
+        this.dashboardData = res.body[0]
+        this.apiService.getParentCategoryList(0,20).subscribe((res:any) => {
+          this.categoryList = res.body
+          this.prepareData('Total')
+          this.loader.dismiss()
+        })
+      })
     }
     catch (err) {
       console.log('Error: Profile Details could not Load', err)
+      this.loader.dismiss()
     }
   }
   presentPopover(myEvent) {
     this.widgetUtil.presentPopover(myEvent, PopoverHomePage)
   }
 
-  // openGraph() {
-  //   this.navCtrl.push('TargetGraphPage');
-  // }
-
-  // openTarget() {
-  //   this.navCtrl.push('TargetPage');
-  // }
-
-  // openOutstanding() {
-  //   this.navCtrl.push('OutstandingPage');
-  // }
-
-  // openTkCurrency() {
-  //   this.navCtrl.push('TkCurrencyPage');
-  // }
-
-  // toggleFunc() {
-  //   this.opened = !this.opened;
-  //   if(this.TKopened){
-  //     this.TKopened = !this.TKopened 
-  //   }
-  //   if(this.Outopened){
-  //     this.Outopened = !this.Outopened 
-  //   }
-  // }
-
-  // toggleFuncTK() {
-  //   this.TKopened = !this.TKopened;
-  //   if(this.opened){
-  //     this.opened = !this.opened 
-  //   }
-  //   if(this.Outopened){
-  //     this.Outopened = !this.Outopened 
-  //   }
-  // }
-
-  // toggleFuncOut() {
-  //   this.Outopened = !this.Outopened;
-  //   if(this.opened){
-  //     this.opened = !this.opened 
-  //   }
-  //   if(this.TKopened){
-  //     this.TKopened = !this.TKopened 
-  //   }
-  // }
-
-  // async openBtnModal(){
-  //   let profile = await this.storageService.getFromStorage('profile')
-  //   //console.log(profile['userType'])
-  //   if ((profile['userType'] === 'SALESMAN')){
-  //     this.openSelectCustomer()
-  //   }
-  //   else{
-  //     this.openPaymentModal()
-  //   }
-  // }
+  totalCategorySelected() {
+    this.prepareData('Total')
+  }
 
   openPaymentModal(){
     const payModal = this.modal.create('AddPaymentModalPage')
@@ -173,8 +140,10 @@ export class UserProfilePage {
   }
 
   targetCategorySelectionChanged(selectedValue: any){
-    switch (this.targetCategory) {
-      case 'category-1':
+
+    this.prepareData(selectedValue)
+    switch (selectedValue.name) {
+      case 'Confectionary':
         console.log(selectedValue)
           break;
       case 'category-2':
@@ -189,6 +158,32 @@ export class UserProfilePage {
       default:
         console.log(selectedValue) 
   }
+}
+prepareData (selectedValue) {
+  if (selectedValue !== 'Total') {
+    this.data.target = this.dashboardData['target' + selectedValue.name.charAt(0)]
+    this.data.achievement = this.dashboardData['achive' + selectedValue.name.charAt(0)]
+  } else {
+    this.data.target = (this.dashboardData['targetC']  + this.dashboardData['targetP'] + this.dashboardData['targetH'] + this.dashboardData['targetL'])/4
+    this.data.achievement = (this.dashboardData['achiveC']  + this.dashboardData['achiveP'] + this.dashboardData['achiveH'] + this.dashboardData['achiveL'])/4
+  }
+
+  this.mtdAchieved = this.data.achievement
+  this.target = this.data.target
+
+  this.data.achievedPercentage = (this.data.achievement/this.data.target) * 100
+  this.data.balanceToDo = this.data.target - this.data.achievement
+  this.data.creditLimit = this.dashboardData.creditLimit
+  this.data.currentOutStanding = this.dashboardData.currentOutStanding
+  this.data.thirtyDaysOutStanding = this.dashboardData.thirtyDaysOutStanding
+  this.data.availableCreditLimit = this.dashboardData.creditLimit - this.data.currentOutStanding
+  this.data.tkPoints = this.dashboardData.tkPoints
+  this.data.tkCurrency = this.dashboardData.tkCurrency
+  this.displayChart()
+}
+
+ionViewWillUnload() {
+  this.loader.dismiss()
 }
 
 }

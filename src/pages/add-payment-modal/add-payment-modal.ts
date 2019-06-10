@@ -74,7 +74,7 @@ export class AddPaymentModalPage {
           this.cashIsSelected=false; 
           this.onlineIsSelected=false; 
             break;
-        case 'online':
+        case 'bank transfer':
           this.onlineIsSelected=true;
           this.chequeIsSelected=false; 
           this.cashIsSelected=false; 

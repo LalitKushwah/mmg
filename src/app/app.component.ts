@@ -62,7 +62,6 @@ export class MyApp {
               // {title: 'Shop', component: SalesmanSelectCustomerPage, icon: 'shopping-bag'},
               {title: 'Dashboard', component: SalesmanDashboardPage, icon: 'customer', class: 'default'},
               {title: 'Your Orders', component: CustomerListOrderPage, icon: 'cart', class: 'default'},
-              {title: '', component: ClubPremierPage, icon: 'club-premier', class:'custom-side-icon'},
             ]
           }else{
             this.pages = [
