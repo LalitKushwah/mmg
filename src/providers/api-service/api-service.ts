@@ -62,6 +62,10 @@ export class ApiServiceProvider {
     return this.http.post(CONSTANTS.BASE_URL + 'api/user/', userDetails)
   }
 
+  createPayment(data) {
+    return this.http.post(CONSTANTS.BASE_URL + 'api/user/create/payment', data)
+  }
+
   addProduct(productDetails: Object): any {
     return this.http.post(CONSTANTS.BASE_URL + 'api/product/', productDetails)
   }
@@ -84,6 +88,10 @@ export class ApiServiceProvider {
 
   getAssociatedCustomersListBySalesman(externalId) {
     return this.http.get(CONSTANTS.BASE_URL + 'api/user/list/associated/customer?externalId='+externalId.toString())
+  }
+
+  getAssociatedSalesmanListBySalesman(externalId) {
+    return this.http.get(CONSTANTS.BASE_URL + 'api/user/list/associated/salesman?externalId='+externalId.toString())
   }
 
   getDashboardData(customerCode) {

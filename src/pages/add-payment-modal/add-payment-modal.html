@@ -14,7 +14,7 @@
 
     <ion-item class="payItem">
     <ion-label>Select Payment Mode</ion-label>
-      <ion-select [(ngModel)]="paymentMode" (ionChange)="paymentModeSelectionChanged($event)">
+      <ion-select [(ngModel)]="paymentMode" (ionChange)="paymentModeSelectionChanged()">
           <ion-option value="cash">Cash</ion-option>
           <ion-option value="cheque">Cheque</ion-option>
           <ion-option value="online">Online</ion-option>
@@ -41,10 +41,10 @@
     Instead, show the customer list in label -->
     <ion-item class="payItem" id="selectSalesman" [ngClass]=" cashIsSelected && !userTypeSalesman ? 'item-visible': 'item-hidden'">
         <ion-label>Select Salesman</ion-label>
-          <ion-select [(ngModel)]="selectedSalesman">
-              <ion-option value="sm">Test Salesman</ion-option>
-              <ion-option value="sm2">Test Salesman 2</ion-option>
-              <ion-option value="sm3">Test Salesman 3</ion-option>
+          <ion-select>
+              <ion-option *ngFor="let salesman of salesmanList" [value] = "salesman" (ionSelect)="selectSalesman(salesman)">{{salesman.name}}</ion-option>
+              <!-- <ion-option value="sm2">Test Salesman 2</ion-option> -->
+              <!-- <ion-option value="sm3">Test Salesman 3</ion-option> -->
           </ion-select> 
     </ion-item>
 

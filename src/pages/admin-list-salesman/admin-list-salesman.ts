@@ -4,6 +4,7 @@ import { CONSTANTS } from '../../utils/constants';
 import { StorageServiceProvider } from '../../providers/storage-service/storage-service';
 import { ApiServiceProvider } from '../../providers/api-service/api-service';
 import { WidgetUtilService } from '../../utils/widget-utils';
+import { EditUserPage } from '../edit-user/edit-user';
 
 
 /**
@@ -140,7 +141,7 @@ export class AdminListSalesmanPage {
 
  async editSalesman(salesman) {
   const confirm = this.alertCtrl.create({
-    title: 'Edit Customer Information',
+    title: 'Edit Salesman Information',
     message: 'Are you sure to edit?',
     buttons: [
       {
@@ -151,9 +152,12 @@ export class AdminListSalesmanPage {
       },
       {
         text: 'Confirm',
-        // handler: () => {
-        //   this.navCtrl.push(, {customerData: customer})
-        // }
+        handler: () => {
+              this.storageService.setToStorage('editCustomerInfo', salesman).then(() => {
+                this.navCtrl.push(EditUserPage)
+              })
+              
+        }
       }
     ]
   });

@@ -29,7 +29,7 @@ export class AddSalesmanModalPage {
               private loadingCtrl: LoadingController,
               private widgetUtils: WidgetUtilService) {
               
-                this.getAllSalesmanList()
+              this.getAllSalesmanList()
   }
 
   ionViewDidLoad() {
