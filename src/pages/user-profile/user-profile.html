@@ -31,12 +31,12 @@
         <!-- <ion-icon></ion-icon> -->
         <ion-item class="switchCategory">
           <ion-label>TARGET vs ACHIEVEMENT</ion-label>
-            <ion-select [(ngModel)]="targetCategory" (ionChange)="targetCategorySelectionChanged($event)" placeholder="Total">
-                <ion-option value="total">Total</ion-option>  
-                <ion-option value="category-1" true>Category 1</ion-option>
-                <ion-option value="category-2">Category 2</ion-option>
+            <ion-select placeholder="Total">
+                <ion-option value="total" (ionSelect)="totalCategorySelected()">Total</ion-option>  
+                <ion-option *ngFor="let category of categoryList" [value]="category" (ionSelect)="targetCategorySelectionChanged(category)">{{category.name}}</ion-option>
+                <!-- <ion-option value="category-2">Category 2</ion-option>
                 <ion-option value="category-3">Category 3</ion-option>
-                <ion-option value="category-4">Category 4</ion-option>
+                <ion-option value="category-4">Category 4</ion-option> -->
             </ion-select> 
           </ion-item>
       </ion-card-header>
@@ -47,7 +47,7 @@
                   Target
                 </p>
                 <p class="tab-label-lg" align-items-center>
-                  200
+                  {{data.target}}
                 </p>
             </ion-col>
             <ion-col class="tabs">
@@ -55,7 +55,7 @@
                     MTD Achieved
                   </p>
                   <p class="tab-label-lg">
-                    112
+                    {{data.achievement}}
                 </p>
             </ion-col>
           </ion-row>
@@ -66,7 +66,7 @@
                     % Achieved
                   </p>
                   <p class="tab-label-lg">
-                    56%
+                    {{data.achievedPercentage}}%
                   </p>
               </ion-col>
               <ion-col class="tabs">
@@ -74,7 +74,7 @@
                       Balance To Do
                     </p>
                     <p class="tab-label-lg">
-                      88
+                      {{data.balanceToDo}}
                   </p>
               </ion-col>
             </ion-row>
@@ -96,7 +96,7 @@
             </ion-row>
   </ion-card>
 
-  <ion-card class="tabs-wrapper">
+  <ion-card class="tabs-wrapper" *ngIf="data.creditLimit !== undefined">
       <ion-card-header class="card-title">
         OUTSTANDING
       </ion-card-header>
@@ -107,7 +107,7 @@
                     Total Credit Limit
                 </p>
                 <p class="tab-label-lg">
-                  1,000
+                  {{data.creditLimit}}
                 </p>
             </ion-col>
             <ion-col class="tabs">
@@ -115,18 +115,18 @@
                     Total Outstanding
                   </p>
                   <p class="tab-label-lg">
-                    950
+                    {{data.currentOutStanding}}
                 </p>
             </ion-col>
           </ion-row>
 
-          <ion-row>
+          <ion-row *ngIf="data.thirtyDaysOutStanding !== undefined">
               <ion-col class="tabs">
                   <p class="tab-label-sm">
                       > 30- Days Outstanding
                   </p>
                   <p class="tab-label-lg">
-                    450
+                    {{data.thirtyDaysOutStanding}}
                   </p>
               </ion-col>
               <ion-col class="tabs">
@@ -134,13 +134,13 @@
                       Available Credit Limit
                     </p>
                     <p class="tab-label-lg">
-                      50
+                      {{data.availableCreditLimit}}
                   </p>
               </ion-col>
             </ion-row>
   </ion-card>
 
-  <ion-card class="tabs-wrapper">
+  <ion-card class="tabs-wrapper" *ngIf="data.tkPoints !== undefined">
       <ion-card-header class="card-title">
         TK CURRENCY
       </ion-card-header>
@@ -151,7 +151,7 @@
                   Total TK Points
                 </p>
                 <p class="tab-label-lg">
-                  500
+                  {{data.tkPoints}}
                 </p>
             </ion-col>
             <ion-col class="tabs">
@@ -159,7 +159,7 @@
                     Total TK Currency
                   </p>
                   <p class="tab-label-lg">
-                    500
+                    {{data.tkCurrency}}
                 </p>
             </ion-col>
           </ion-row>
@@ -306,5 +306,5 @@
 </ion-content>
 <ion-footer>
   <button ion-button  padding class="customerdashboardBtn" (click)="openPaymentModal()">Add Payment</button>
-  <button ion-button  padding class="customerdashboardBtn" (click)="openShopPage()">Shop</button>
+  <button ion-button  padding class="customerdashboardBtn" (click)="openShopPage()">Place Order</button>
 </ion-footer>
