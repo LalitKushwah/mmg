@@ -61,6 +61,12 @@
     <ion-card>
       <ion-card-header text-center>
         <ion-row>
+          <ion-col col-12 [ngClass]=" showSalesmanLabel ? 'item-visible': 'item-hidden'">
+            <strong>
+              <ion-icon name="star"></ion-icon> Salesman: {{salesmanName}}
+            </strong>
+          </ion-col>
+
           <ion-col col-12>
             <strong>
               <ion-icon name="cash"></ion-icon> Order Total: {{orderTotal}} ZMW

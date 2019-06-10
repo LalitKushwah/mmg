@@ -104,13 +104,18 @@ page-user-profile {
   //     font-size: 1em;
   // }
   .customerdashboardBtn{
-    background-color: #3d9ef0;
-    // border-radius: 3px;
+    background-color: #225F93;
+    border-radius: 0;
     // margin-top: 16px;
     font-size: 1em;
     // width: calc(50% - 8px);
-    width: 48%;
-    border-right: 1px solid #D5D5D5;
+    width: 47%;
+    box-shadow: none;
+  }
+
+  .btn-left{
+    box-shadow: 1px 0 0 rgba(225, 241, 255, 0.5);
+    width: 49%;
   }
 
   // .item-in-salesman{
@@ -188,5 +193,9 @@ page-user-profile {
         position: fixed;
         right: 8%;
     }
+  }
+  ion-footer{
+    box-shadow: 0 0px 10px rgba(34, 95, 147, 0.5);
+    background: #225f93;
   }
 }
