@@ -25,9 +25,10 @@ export class CustomerReviewSubmitOrderPage {
   salesmanProfile: any
   expanded = false;
   orderType: any = 'self';
-  salesmanName: any = 0;
+  salesmanName: any ;
   salesmanId: any = 0;
   salesmanCode: any = 0;
+  showSalesmanLabel: boolean = false;
 
   constructor(public navCtrl: NavController,
               public navParams: NavParams,
@@ -40,6 +41,9 @@ export class CustomerReviewSubmitOrderPage {
     this.showLoader = false
     this.orderTotal = (parseFloat((Math.round(this.navParams.get("orderTotal") * 100) / 100).toString()).toFixed(2))
     this.getCartItems()
+
+    //Function to show Salesman Name in Review Order Page
+    this.showSalesman()
   }
 
   ionViewDidEnter(){
@@ -47,6 +51,20 @@ export class CustomerReviewSubmitOrderPage {
     this.storageService.getTkPointsFromStorage().then((res: any) => {
       this.totalTK = res
     })
+  }
+
+  async showSalesman(){
+    let profile = await this.storageService.getFromStorage('profile')
+    if ((profile['userType'] === 'SALESMAN')) {
+      this.salesmanProfile = profile
+      // this.salesmanId = this.salesmanProfile['_id'],
+      this.salesmanName = this.salesmanProfile['name']
+      // this.salesmanCode = this.salesmanProfile['externalId'],
+      // this.orderType = 'salesman';
+      this.showSalesmanLabel = true
+      // console.log(this.salesmanProfile);
+      // console.log(this.showSalesmanLabel)
+    }
   }
 
   async getCartItems() {
@@ -93,19 +111,8 @@ export class CustomerReviewSubmitOrderPage {
 
     //Replacing the Profile with Selected Customer Profile if userType = SALESMAN
     if ((profile['userType'] === 'SALESMAN')) {
-      this.salesmanProfile = profile;
-      this.salesmanId = this.salesmanProfile['_id'],
-      this.salesmanName = this.salesmanProfile['name'],
-      this.salesmanCode = this.salesmanProfile['externalId'],
-      this.orderType = 'salesman';
-      console.log(this.salesmanProfile);
-      console.log(this.salesmanId);
-      console.log(this.salesmanName);
-      console.log(this.orderType);
-      console.log(this.salesmanCode);
       profile = await this.storageService.getFromStorage('selectedCustomer')
     }
-
 
     let orderObj = {
       productList: this.cartItems.map((value) => {

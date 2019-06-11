@@ -31,12 +31,9 @@
         <!-- <ion-icon></ion-icon> -->
         <ion-item class="switchCategory">
           <ion-label>TARGET vs ACHIEVEMENT</ion-label>
-            <ion-select placeholder="Total">
+            <ion-select placeholder="Total"  interface="popover">
                 <ion-option value="total" (ionSelect)="totalCategorySelected()">Total</ion-option>  
                 <ion-option *ngFor="let category of categoryList" [value]="category" (ionSelect)="targetCategorySelectionChanged(category)">{{category.name}}</ion-option>
-                <!-- <ion-option value="category-2">Category 2</ion-option>
-                <ion-option value="category-3">Category 3</ion-option>
-                <ion-option value="category-4">Category 4</ion-option> -->
             </ion-select> 
           </ion-item>
       </ion-card-header>
@@ -305,6 +302,6 @@
 
 </ion-content>
 <ion-footer>
-  <button ion-button  padding class="customerdashboardBtn" (click)="openPaymentModal()">Add Payment</button>
-  <button ion-button  padding class="customerdashboardBtn" (click)="openShopPage()">Place Order</button>
+  <button ion-button  padding class="customerdashboardBtn btn-left" (click)="openPaymentModal()"><ion-icon name="cash"></ion-icon>Add Payment</button>
+  <button ion-button  padding class="customerdashboardBtn" (click)="openShopPage()"><ion-icon name="cart"></ion-icon>Place Order</button>
 </ion-footer>

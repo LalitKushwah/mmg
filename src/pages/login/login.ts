@@ -20,6 +20,8 @@ export class LoginPage implements OnInit {
   passwordLogin: FormControl;
   userLoginId: FormControl;
   showLoginLoader = false;
+  isActive:boolean = false;
+  passwordFieldType: string = 'password';
 
   constructor(public navCtrl: NavController,
               public navParams: NavParams,
@@ -75,5 +77,14 @@ export class LoginPage implements OnInit {
         this.widgetUtil.showToast(CONSTANTS.AUTH_FAIL)
       }
     })
+   }
+
+   showPassword(){
+    this.isActive = !this.isActive; 
+    console.log('pass-eye Clicked!')
+    if(this.passwordFieldType === 'password')
+      this.passwordFieldType = 'text';
+    else
+    this.passwordFieldType = 'password';
    }
 }

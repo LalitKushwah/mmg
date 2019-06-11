@@ -15,9 +15,9 @@
       <ion-row>
         <ion-item>
           <ion-label floating>Password</ion-label>
-          <ion-input type="password" formControlName="passwordLogin"></ion-input>
+          <ion-input type="{{passwordFieldType}}" formControlName="passwordLogin"></ion-input>
         </ion-item>
-        <ion-icon name="lock"></ion-icon>
+        <ion-icon name="eye" (click)="showPassword()" [ngClass]=" isActive ? 'item-active': 'item-inactive'"></ion-icon>
       </ion-row>
       <p *ngIf="passwordLogin.hasError('required') && passwordLogin.touched" class="error">*Password is required</p>
     </ion-grid>

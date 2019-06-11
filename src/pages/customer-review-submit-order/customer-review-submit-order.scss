@@ -58,4 +58,14 @@ page-customer-review-submit-order {
     .collapsed {
         height: 0;
     }
+
+    .item-visible{
+        display: inline-block;
+        text-transform: capitalize;
+        color: #6b6b6b;
+      }
+    
+      .item-hidden{
+          display: none;
+      }
 }

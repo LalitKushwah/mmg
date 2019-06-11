@@ -66,7 +66,7 @@ export class UserProfilePage {
         }],
         labels: [
           'MTD Achieved',
-          'Target'
+          'Balance To Do'
       ]
       },
       options: {
@@ -77,7 +77,11 @@ export class UserProfilePage {
           display: false,
           fontStyle: 'bold',
           fontSize: 18
-        }
+        },
+        tooltips: {
+          enabled: false
+        },
+        events: []
       },
  
     });
@@ -106,6 +110,7 @@ export class UserProfilePage {
       }
       this.apiService.getDashboardData(this.externalId).subscribe((res: any) => {
         this.dashboardData = res.body[0]
+        // console.log(this.dashboardData)
         this.apiService.getParentCategoryList(0,20).subscribe((res:any) => {
           this.categoryList = res.body
           this.prepareData('Total')
@@ -135,9 +140,9 @@ export class UserProfilePage {
     this.navCtrl.push(CustomerHomePage);
   }
 
-  toggleView(){
-    console.log('toggle clicked!')
-  }
+  // toggleView(){
+  //   console.log('toggle clicked!')
+  // }
 
   targetCategorySelectionChanged(selectedValue: any){
 
@@ -168,8 +173,6 @@ prepareData (selectedValue) {
     this.data.achievement = (this.dashboardData['achiveC']  + this.dashboardData['achiveP'] + this.dashboardData['achiveH'] + this.dashboardData['achiveL'])/4
   }
 
-  this.mtdAchieved = this.data.achievement
-  this.target = this.data.target
 
   this.data.achievedPercentage = (this.data.achievement/this.data.target) * 100
   this.data.balanceToDo = this.data.target - this.data.achievement
@@ -179,6 +182,10 @@ prepareData (selectedValue) {
   this.data.availableCreditLimit = this.dashboardData.creditLimit - this.data.currentOutStanding
   this.data.tkPoints = this.dashboardData.tkPoints
   this.data.tkCurrency = this.dashboardData.tkCurrency
+
+  //Preparing Data for Graph
+  this.mtdAchieved = this.data.achievement
+  this.target = this.data.balanceToDo
   this.displayChart()
 }
 

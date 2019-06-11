@@ -8,10 +8,11 @@ page-salesman-dashboard {
             }
         }
       .salesmanDashboardBtn{
-          background-color: #3d9ef0;
-          // border-radius: 3px;
+          background-color: #225F93;
+          border-radius: 0;
           // margin-top: 16px;
           font-size: 1em;
+          box-shadow: none;
       }
 
     //   .target-graph-card{
@@ -95,5 +96,9 @@ page-salesman-dashboard {
             position: fixed;
             right: 8%;
         }
+      }
+      ion-footer{
+        box-shadow: 0 0px 10px rgba(34, 95, 147, 0.5);
+        background: #225f93;
       }
 }
