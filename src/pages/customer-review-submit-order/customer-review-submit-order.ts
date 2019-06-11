@@ -29,6 +29,7 @@ export class CustomerReviewSubmitOrderPage {
   salesmanId: any = 0;
   salesmanCode: any = 0;
   showSalesmanLabel: boolean = false;
+  customerName: any;
 
   constructor(public navCtrl: NavController,
               public navParams: NavParams,
@@ -56,14 +57,18 @@ export class CustomerReviewSubmitOrderPage {
   async showSalesman(){
     let profile = await this.storageService.getFromStorage('profile')
     if ((profile['userType'] === 'SALESMAN')) {
+
+      let customerProfile = await this.storageService.getFromStorage('selectedCustomer')
       this.salesmanProfile = profile
       // this.salesmanId = this.salesmanProfile['_id'],
       this.salesmanName = this.salesmanProfile['name']
+      console.log(customerProfile)
       // this.salesmanCode = this.salesmanProfile['externalId'],
       // this.orderType = 'salesman';
       this.showSalesmanLabel = true
       // console.log(this.salesmanProfile);
       // console.log(this.showSalesmanLabel)
+      this.customerName = customerProfile['name']
     }
   }
 
