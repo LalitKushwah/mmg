@@ -63,6 +63,7 @@ export class AdminHomePage {
       order: order
     }
     this.navCtrl.push(CustomerOrderDetailPage, orderObj)
+    console.log(orderObj)
   }
 
   async doInfinite(infiniteScroll) {
