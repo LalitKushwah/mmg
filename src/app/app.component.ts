@@ -17,6 +17,7 @@ import { HeaderColor } from "@ionic-native/header-color";
 import { CustomerListOrderPage } from '../pages/customer-list-order/customer-list-order';
 import { ClubPremierPage } from '../pages/club-premier/club-premier';
 import { AdminListSalesmanPage } from '../pages/admin-list-salesman/admin-list-salesman';
+import { UserPaymentHistoryPage } from '../pages/user-payment-history/user-payment-history';
 
 @Component({
   templateUrl: 'app.html'
@@ -60,14 +61,15 @@ export class MyApp {
           if ((profile['userType'] === 'SALESMAN')) {
             this.pages = [
               // {title: 'Shop', component: SalesmanSelectCustomerPage, icon: 'shopping-bag'},
-              {title: 'Dashboard', component: SalesmanDashboardPage, icon: 'dashboard', class: 'default'},
+              {title: 'Dashboard', component: SalesmanDashboardPage, icon: 'dashboard-new', class: 'default'},
               {title: 'Your Orders', component: CustomerListOrderPage, icon: 'cart', class: 'default'},
             ]
           }else{
             this.pages = [
               // {title: 'Shop', component: CustomerHomePage, icon: 'shopping-bag'},
-              {title: 'Dashboard', component: UserProfilePage, icon: 'dashboard', class: 'default'},
+              {title: 'Dashboard', component: UserProfilePage, icon: 'dashboard-new', class: 'default'},
               {title: 'Your Orders', component: CustomerListOrderPage, icon: 'cart', class: 'default'},
+              {title: 'Payment History', component: UserPaymentHistoryPage, icon: 'payment', class: 'default'},
               {title: '', component: ClubPremierPage, icon: 'club-premier', class: 'custom-side-icon'}
             ]
           }   

@@ -31,6 +31,7 @@ import { ListPage } from '../pages/list/list';
 
 import { UserProfilePage } from '../pages/user-profile/user-profile';
 import { SalesmanSelectCustomerPage } from '../pages/salesman-select-customer/salesman-select-customer';
+import { UserPaymentHistoryPage } from '../pages/user-payment-history/user-payment-history';
 
 
 import { StatusBar } from '@ionic-native/status-bar';
@@ -89,6 +90,7 @@ import { UserProfilePageModule } from '../pages/user-profile/user-profile.module
 import { SalesmanSelectCustomerPageModule } from '../pages/salesman-select-customer/salesman-select-customer.module';
 import { AdminListSalesmanPage } from '../pages/admin-list-salesman/admin-list-salesman';
 import { SalesmanDashboardPage } from '../pages/salesman-dashboard/salesman-dashboard';
+import { UserPaymentHistoryPageModule } from '../pages/user-payment-history/user-payment-history.module';
 
 @NgModule({
   declarations: [
@@ -142,7 +144,8 @@ import { SalesmanDashboardPage } from '../pages/salesman-dashboard/salesman-dash
     SpecialProductsPageModule,
     ClubClassificationPageModule,
     GiftCheckoutPageModule,
-    AddSalesmanModalPageModule
+    AddSalesmanModalPageModule,
+    UserPaymentHistoryPageModule
   ],
   bootstrap: [IonicApp],
   entryComponents: [

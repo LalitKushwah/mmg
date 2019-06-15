@@ -151,28 +151,55 @@ export class SalesmanDashboardPage {
 }
 
 prepareData (selectedValue) {
-  if (selectedValue !== 'Total') {
-    this.data.target = this.dashboardData['target' + selectedValue.name.charAt(0)]
-    this.data.achievement = this.dashboardData['achive' + selectedValue.name.charAt(0)]
-  } else {
-    this.data.target = (this.dashboardData['targetC']  + this.dashboardData['targetP'] + this.dashboardData['targetH'] + this.dashboardData['targetL'])/4
-    this.data.achievement = (this.dashboardData['achiveC']  + this.dashboardData['achiveP'] + this.dashboardData['achiveH'] + this.dashboardData['achiveL'])/4
+
+  if(!this.dashboardData){
+    console.log('No data found')
+    this.data.target = 0
+    this.data.achievement = 0
+
+    this.data.achievedPercentage = 0
+    this.data.balanceToDo = 0
+    this.data.creditLimit = 0
+    this.data.currentOutStanding = 0
+    this.data.thirtyDaysOutStanding = 0
+    this.data.availableCreditLimit = 0
+    this.data.tkPoints = 0
+    this.data.tkCurrency = 0
+
+    //Preparing Data for Graph
+    this.mtdAchieved = this.data.achievement
+    //this.target = this.data.balanceToDo
+    this.target = 1
+    this.displayChart()
   }
 
+  else{
+    console.log('executing else')
+    if (selectedValue !== 'Total') {
+      this.data.target = this.dashboardData['target' + selectedValue.name.charAt(0)]
+      this.data.achievement = this.dashboardData['achive' + selectedValue.name.charAt(0)]
 
-  this.data.achievedPercentage = (this.data.achievement/this.data.target) * 100
-  this.data.balanceToDo = this.data.target - this.data.achievement
-  this.data.creditLimit = this.dashboardData.creditLimit
-  this.data.currentOutStanding = this.dashboardData.currentOutStanding
-  this.data.thirtyDaysOutStanding = this.dashboardData.thirtyDaysOutStanding
-  this.data.availableCreditLimit = this.dashboardData.creditLimit - this.data.currentOutStanding
-  this.data.tkPoints = this.dashboardData.tkPoints
-  this.data.tkCurrency = this.dashboardData.tkCurrency
+    } else {
+      this.data.target = (this.dashboardData['targetC']  + this.dashboardData['targetP'] + this.dashboardData['targetH'] + this.dashboardData['targetL'])/4
+      this.data.achievement = (this.dashboardData['achiveC']  + this.dashboardData['achiveP'] + this.dashboardData['achiveH'] + this.dashboardData['achiveL'])/4
+    }
 
-  //Preparing Data for Graph
-  this.mtdAchieved = this.data.achievement
-  this.target = this.data.balanceToDo
-  this.displayChart()
+    this.data.achievedPercentage = (this.data.achievement/this.data.target) * 100
+    this.data.balanceToDo = this.data.target - this.data.achievement
+    this.data.creditLimit = this.dashboardData.creditLimit
+    this.data.currentOutStanding = this.dashboardData.currentOutStanding
+    this.data.thirtyDaysOutStanding = this.dashboardData.thirtyDaysOutStanding
+    this.data.availableCreditLimit = this.dashboardData.creditLimit - this.data.currentOutStanding
+    this.data.tkPoints = this.dashboardData.tkPoints
+    this.data.tkCurrency = this.dashboardData.tkCurrency
+
+    //Preparing Data for Graph
+    this.mtdAchieved = this.data.achievement
+    this.target = this.data.balanceToDo
+    this.displayChart()
+
+  }
+  
 }
 
   openCustomerSelectionModal(){

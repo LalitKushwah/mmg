@@ -1,0 +1,94 @@
+<ion-header>
+  <ion-navbar>
+    <ion-title>Payment History</ion-title>
+  </ion-navbar>
+</ion-header>
+<ion-content class="full-background">
+
+    <ion-card>
+      <ion-card-content>
+
+        <ion-row>
+          <ion-col text-center>
+              <ion-icon color="grey" name="calendar"></ion-icon> Payment Date: <strong text-uppercase>{{paymentDate}}</strong>
+          </ion-col>
+        </ion-row>
+
+        <ion-row>
+          <ion-col text-center>
+              <ion-icon color="grey" name="cash"></ion-icon> Amount: <strong text-uppercase>{{paymentAmt}} ZMW</strong>
+          </ion-col>
+        </ion-row>
+
+        <ion-row>
+          <ion-col col-12 text-center>
+            <ion-icon color="grey" name="card"></ion-icon>
+            Payment Mode: <strong text-uppercase>{{paymentMode}}</strong>
+          </ion-col>
+        </ion-row>
+
+        <ion-row [ngClass]="modeIsCash ? 'item-visible': 'item-hidden'">
+          <ion-col col-12 text-center>
+              <ion-icon color="grey" name="star"></ion-icon>Salesman: <strong text-uppercase>{{salesmanName}}</strong>
+          </ion-col>
+        </ion-row>
+
+        <ion-row [ngClass]="modeIsOnline ? 'item-visible': 'item-hidden'">
+        <ion-col col-12 text-center>
+            <ion-icon color="grey" name="information-circle-outline"></ion-icon>Transaction ID: <strong text-uppercase>{{onlineId}}</strong>
+        </ion-col>
+        </ion-row>
+
+        <ion-row [ngClass]="modeIsCheque ? 'item-visible': 'item-hidden'">
+          <ion-col col-12 text-center>
+              <ion-icon color="grey" name="information-circle-outline"></ion-icon>Cheque ID: <strong text-uppercase>{{chequeId}}</strong>
+          </ion-col>
+          </ion-row>
+
+      </ion-card-content>
+    </ion-card>
+
+    <ion-card>
+        <ion-card-content>
+  
+          <ion-row>
+            <ion-col text-center>
+                <ion-icon color="grey" name="calendar"></ion-icon> Payment Date: 01/01/2019
+            </ion-col>
+          </ion-row>
+  
+          <ion-row>
+            <ion-col text-center>
+                <ion-icon color="grey" name="cash"></ion-icon> Amount: 123.00 ZMW
+            </ion-col>
+          </ion-row>
+  
+          <ion-row>
+            <ion-col col-12 text-center>
+              <ion-icon color="grey" name="card"></ion-icon>
+              Payment Mode: <strong text-uppercase>Cash</strong>
+            </ion-col>
+          </ion-row>
+  
+          <ion-row>
+            <ion-col col-12 text-center>
+                <ion-icon color="grey" name="star"></ion-icon>Salesman: <strong text-uppercase>John Doe</strong>
+            </ion-col>
+          </ion-row>
+  
+          <ion-row>
+          <ion-col col-12 text-center>
+              <ion-icon color="grey" name="information-circle-outline"></ion-icon>Transaction ID: <strong text-uppercase>12QWERTY34</strong>
+          </ion-col>
+          </ion-row>
+  
+          <ion-row>
+            <ion-col col-12 text-center>
+                <ion-icon color="grey" name="information-circle-outline"></ion-icon>Cheque ID: <strong text-uppercase>12345</strong>
+            </ion-col>
+            </ion-row>
+  
+        </ion-card-content>
+      </ion-card>
+
+</ion-content>
