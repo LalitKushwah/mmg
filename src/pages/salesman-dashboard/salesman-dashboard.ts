@@ -38,7 +38,7 @@ export class SalesmanDashboardPage {
   loader: any
   externalId: string = '3'
 
-  constructor(public navCtrl: NavController, 
+  constructor (public navCtrl: NavController, 
               public navParams: NavParams,
               private widgetUtil: WidgetUtilService, 
               private modal:ModalController,
@@ -50,7 +50,7 @@ export class SalesmanDashboardPage {
         // this.target = 30;
   }
 
-  displayChart() {
+  displayChart () {
     this.pieChart = new Chart(this.pieCanvas.nativeElement, {
       type: 'pie',
       data: {
@@ -85,30 +85,22 @@ export class SalesmanDashboardPage {
   }
 
 
-  ionViewDidLoad() {
+  ionViewDidLoad () {
     this.getData() 
   }
-  async getData() {
+  async getData () {
     this.loader = this.loadingCtrl.create({
       content: "Fetching Data...",
     });
     this.loader.present()
     try {
       let profile = await this.storageService.getFromStorage('profile')
-      // this.partyName = profile['name']
-      if ((profile['userType'] === 'SALESMAN')) {
-        let selectedCustomerprofile = await this.storageService.getFromStorage('selectedCustomer')
-        this.partyName = selectedCustomerprofile['name']
-        this.externalId = selectedCustomerprofile['externalId']
-      }
-      else {
-        this.partyName = profile['name']
-        this.externalId = profile['externalId']
-        this.userTypeCustomer = true;
-      }
-      this.apiService.getDashboardData(this.externalId).subscribe((res: any) => {
+      this.partyName = profile['name']
+      console.log('======= 99 =======', profile)
+
+      // TODO update in argument
+      this.apiService.getDashboardData(3).subscribe((res: any) => {
         this.dashboardData = res.body[0]
-        // console.log(this.dashboardData)
         this.apiService.getParentCategoryList(0,20).subscribe((res:any) => {
           this.categoryList = res.body
           this.prepareData('Total')
@@ -121,15 +113,15 @@ export class SalesmanDashboardPage {
       this.loader.dismiss()
     }
   }
-  presentPopover(myEvent) {
+  presentPopover (myEvent) {
     this.widgetUtil.presentPopover(myEvent, PopoverHomePage)
   }
 
-  totalCategorySelected() {
+  totalCategorySelected () {
     this.prepareData('Total')
   }
 
-  targetCategorySelectionChanged(selectedValue: any){
+  targetCategorySelectionChanged (selectedValue: any){
 
     this.prepareData(selectedValue)
     switch (selectedValue.name) {
@@ -202,11 +194,11 @@ prepareData (selectedValue) {
   
 }
 
-  openCustomerSelectionModal(){
+  openCustomerSelectionModal (){
     this.navCtrl.push(SalesmanSelectCustomerPage);
   }
 
-  ionViewWillUnload() {
+  ionViewWillUnload () {
     this.loader.dismiss()
   }
 

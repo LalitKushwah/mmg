@@ -6,6 +6,7 @@ import { StorageServiceProvider } from '../../providers/storage-service/storage-
 import { Component } from '@angular/core';
 import {IonicPage, NavController, NavParams, ModalController, AlertController} from 'ionic-angular';
 import { CONSTANTS } from '../../utils/constants';
+import { SalesmanDashboardPage } from '../salesman-dashboard/salesman-dashboard';
 
 @IonicPage({
   name: 'CustomerReviewSubmitOrderPage'
@@ -30,14 +31,15 @@ export class CustomerReviewSubmitOrderPage {
   salesmanCode: any = 0;
   showSalesmanLabel: boolean = false;
   customerName: any;
+  salesmanData: any = {};
 
-  constructor(public navCtrl: NavController,
-              public navParams: NavParams,
-              private storageService: StorageServiceProvider,
-              private apiService: ApiServiceProvider,
-              private widgetUtil: WidgetUtilService,
-              private modalController: ModalController,
-              private alertController: AlertController) {
+  constructor (public navCtrl: NavController,
+                public navParams: NavParams,
+                private storageService: StorageServiceProvider,
+                private apiService: ApiServiceProvider,
+                private widgetUtil: WidgetUtilService,
+                private modalController: ModalController,
+                private alertController: AlertController) {
 
     this.showLoader = false
     this.orderTotal = (parseFloat((Math.round(this.navParams.get("orderTotal") * 100) / 100).toString()).toFixed(2))
@@ -47,32 +49,27 @@ export class CustomerReviewSubmitOrderPage {
     this.showSalesman()
   }
 
-  ionViewDidEnter(){
+  ionViewDidEnter () {
     this.calculateOrderTotal()
     this.storageService.getTkPointsFromStorage().then((res: any) => {
       this.totalTK = res
     })
   }
 
-  async showSalesman(){
+  async showSalesman () {
     let profile = await this.storageService.getFromStorage('profile')
     if ((profile['userType'] === 'SALESMAN')) {
 
       let customerProfile = await this.storageService.getFromStorage('selectedCustomer')
       this.salesmanProfile = profile
-      // this.salesmanId = this.salesmanProfile['_id'],
       this.salesmanName = this.salesmanProfile['name']
-      console.log(customerProfile)
-      // this.salesmanCode = this.salesmanProfile['externalId'],
-      // this.orderType = 'salesman';
+      this.salesmanCode = this.salesmanProfile['externalId'],
       this.showSalesmanLabel = true
-      // console.log(this.salesmanProfile);
-      // console.log(this.showSalesmanLabel)
       this.customerName = customerProfile['name']
     }
   }
 
-  async getCartItems() {
+  async getCartItems () {
     this.cartItems = await this.storageService.getCartFromStorage()
     this.cartItems.map((value) => {
       value.price = (parseFloat((Math.round(value.price * 100) / 100).toString()).toFixed(2))
@@ -80,14 +77,14 @@ export class CustomerReviewSubmitOrderPage {
     })
   }
 
-  doRefresh(refresher): void {
+  doRefresh (refresher): void {
     this.getCartItems()
     setTimeout(() => {
       refresher.complete();
     }, 1000);
   }
 
-  confirmSubmitOrder() {
+  confirmSubmitOrder () {
     const alert = this.alertController.create({
       title: 'Information',
       subTitle: 'TK points will convert into TK currency post target achievement of QTR',
@@ -109,7 +106,7 @@ export class CustomerReviewSubmitOrderPage {
     alert.present();
   }
 
-  async submitOrder() {
+  async submitOrder () {
     let profile = await this.storageService.getFromStorage('profile')
     let totalTkPoints = await this.storageService.getTkPointsFromStorage()
     this.showLoader = true
@@ -129,9 +126,7 @@ export class CustomerReviewSubmitOrderPage {
         }
       }),
       userId: profile['_id'],
-      // orderType: this.orderType,
-      // salesmanId: this.salesmanId,
-      // salesmanName: this.salesmanName,
+      salesmanName: this.salesmanName ? this.salesmanName : undefined,
       salesmanCode: this.salesmanCode ? this.salesmanCode : undefined,
       orderId: 'ORD' + Math.floor(Math.random() * 90000) + Math.floor(Math.random() * 90000),
       orderTotal: parseFloat(this.orderTotal.toString()),
@@ -140,6 +135,7 @@ export class CustomerReviewSubmitOrderPage {
       province: profile['province'],
       lastUpdatedAt: Date.now()
     }
+
     this.apiService.submitOrder(orderObj).subscribe((result) => {
       this.showLoader = false
       this.storageService.setToStorage('cart', [])
@@ -148,9 +144,13 @@ export class CustomerReviewSubmitOrderPage {
       console.log(orderObj)
       //Removing the key-value after the order has been placed
       this.storageService.removeFromStorage('selectedCustomer')
-
+      
       this.widgetUtil.showToast(CONSTANTS.ORDER_PLACED)
-      this.navCtrl.setRoot(HomePage)
+      if((profile['userType'] === 'SALESMAN')) {
+        this.navCtrl.setRoot(SalesmanDashboardPage)
+      } else {
+        this.navCtrl.setRoot(HomePage)
+      }
     }, (error) => {
       this.showLoader = false
       if (error.statusText === 'Unknown Error') {
@@ -161,7 +161,7 @@ export class CustomerReviewSubmitOrderPage {
     })
   }
 
-  async clearCart() {
+  async clearCart () {
     this.showClearCartLoader = true
     await this.storageService.setToStorage('cart', [])
     await this.storageService.removeFromStorage('tkpoint')
@@ -172,7 +172,7 @@ export class CustomerReviewSubmitOrderPage {
     this.widgetUtil.showToast('All items removed from cart')
   }
 
-  removeFromCart(product) {
+  removeFromCart (product) {
     this.widgetUtil.showToast(`${product.name} removed from cart`)
     if (this.cartItems.length > 0) {
       this.cartItems.map((value, index) => {
@@ -191,7 +191,7 @@ export class CustomerReviewSubmitOrderPage {
     }
   }
 
-  decrementQty(product) {
+  decrementQty (product) {
     this.cartItems.map((value) => {
       if (value['_id'] === product['_id']) {
         let qty = parseInt(value.quantity) - 1
@@ -215,7 +215,7 @@ export class CustomerReviewSubmitOrderPage {
     return (product.quantity)
   }
 
-  incrementQty(product) {
+  incrementQty (product) {
     this.cartItems.map((value) => {
       if (value['_id'] === product['_id']) {
         let qty = parseInt(value.quantity) + 1
@@ -237,7 +237,7 @@ export class CustomerReviewSubmitOrderPage {
     return (product.quantity)
   }
 
-  updateCart(product) {
+  updateCart (product) {
     this.cartItems.map((value) => {
       if (value['_id'] === product['_id']) {
         let qty = parseInt(product.quantity);
@@ -260,7 +260,7 @@ export class CustomerReviewSubmitOrderPage {
   }
 
 
-  async calculateOrderTotal() {
+  async calculateOrderTotal () {
     if (this.cartItems.length > 0) {
       let updatedTotal = 0
       this.cartItems.map((value) => {
@@ -273,12 +273,12 @@ export class CustomerReviewSubmitOrderPage {
     await this.storageService.setToStorage('orderTotal', this.orderTotal)
   }
 
-  openCategoryTotalModal() {
+  openCategoryTotalModal () {
     const modal = this.modalController.create(CategoryTotalModalPage, {cartItems: this.cartItems})
     modal.present()
   }
 
-  expandItem(event: any) {
+  expandItem (event: any) {
     if (event.target.parentElement && event.target.parentElement.nextElementSibling) {
       event.target.parentElement.classList.toggle('expand')
       event.target.parentElement.nextElementSibling.classList.toggle('expand-wrapper')

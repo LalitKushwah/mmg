@@ -25,12 +25,12 @@ export class AddPaymentModalPage {
   customerCode = ''
   salesmanList = []
 
-  constructor(private view:ViewController,
+  constructor (private view:ViewController,
               private storageService: StorageServiceProvider,
               private apiService: ApiServiceProvider) {
   }
 
-  ionViewDidLoad() {
+  ionViewDidLoad () {
     console.log('ionViewDidLoad AddPaymentModalPage');
     this.getData()
   }
@@ -57,11 +57,11 @@ export class AddPaymentModalPage {
     }
   }
 
-  closePayModal(){
+  closePayModal (){
     this.view.dismiss();
   }
 
-  paymentModeSelectionChanged(){
+  paymentModeSelectionChanged (){
     this.isEnabled=true;
       switch (this.paymentMode) {
         case 'cash':
@@ -97,7 +97,6 @@ export class AddPaymentModalPage {
     paymentObj.customerCode = this.customerCode
     paymentObj.salesmanCode = this.selectedSalesman && this.selectedSalesman.externalId ? this.selectedSalesman.externalId : undefined
     this.apiService.createPayment(paymentObj).subscribe(res => {
-      console.log('======= 100 =======', res)
     })
   }
 

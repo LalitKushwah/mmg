@@ -30,7 +30,7 @@ export class MyApp {
 
   pages: Array<{ title: string, component: any, icon: string, class: string }>;
 
-  constructor(public platform: Platform, public statusBar: StatusBar, public splashScreen: SplashScreen
+  constructor (public platform: Platform, public statusBar: StatusBar, public splashScreen: SplashScreen
   , private headerColor : HeaderColor, private menuController: MenuController, private storageService: StorageServiceProvider,
   private zone: NgZone,  public events: Events, private app: App) {
     this.pages = [{ title: 'Home', component: HomePage, icon :'home', class: 'default'}]
@@ -41,11 +41,11 @@ export class MyApp {
     })
   }
 
-  ionViewDidEnter() {
+  ionViewDidEnter () {
     this.getData()
   }
 
-  async getData() {
+  async getData () {
     try {
       /* { title: 'Categories', component: AdminListCategoryPage, icon :'list-box'}, */
       let profile = await this.storageService.getFromStorage('profile')
@@ -86,7 +86,7 @@ export class MyApp {
     this.events.publish('updateScreen')
   }
 
-  initializeApp() {
+  initializeApp () {
     this.platform.ready().then(() => {
       // Okay, so the platform is ready and our plugins are available.
       // Here you can do any higher level native things you might need.
@@ -97,7 +97,7 @@ export class MyApp {
     });
   }
 
-  openPage(page) {
+  openPage (page) {
     if (page.component.name === 'HomePage') {
       this.app.getRootNav().setRoot(page.component)
     } else {

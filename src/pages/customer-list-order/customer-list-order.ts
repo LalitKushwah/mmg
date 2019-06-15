@@ -22,7 +22,7 @@ export class CustomerListOrderPage {
   limit: number = CONSTANTS.PAGINATION_LIMIT
   userId: string = ''
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, private storageService: StorageServiceProvider, private apiService: ApiServiceProvider,
+  constructor (public navCtrl: NavController, public navParams: NavParams, private storageService: StorageServiceProvider, private apiService: ApiServiceProvider,
     private widgetUtil: WidgetUtilService) {
       this.skipValue = 0
       this.limit = CONSTANTS.PAGINATION_LIMIT
@@ -30,11 +30,12 @@ export class CustomerListOrderPage {
       this.getUserOrderList()
   }
 
-  async getUserOrderList() {
-    this.userId = (await this.storageService.getFromStorage('profile'))['_id']
-    this.apiService.getOrderListByUser(this.userId, this.skipValue, this.limit).subscribe((result) => {
+  async getUserOrderList () {
+    const profile = await this.storageService.getFromStorage('profile')
+    this.userId = profile['userType'] === 'SALESMAN' ? profile['externalId'] : profile['_id']
+    const isSalesman = profile['userType'] === 'SALESMAN' ? true : false
+    this.apiService.getOrderListByUser(this.userId, this.skipValue, this.limit, isSalesman).subscribe((result) => {
       this.orderList = result.body
-      console.log('===== 37 ====', this.orderList)
       this.orderList.map((value) => {
         value.orderTotal = parseFloat((Math.round(value.orderTotal * 100) / 100).toString()).toFixed(2)
         value.lastUpdatedAt = this.formatDate(value.lastUpdatedAt)
@@ -46,16 +47,18 @@ export class CustomerListOrderPage {
     })
   }
 
-  getOrderDetial(order) {
+  getOrderDetial (order) {
     let orderObj = {
       order: order
     }
     this.navCtrl.push(CustomerOrderDetailPage, orderObj)
   }
 
-  doInfinite(infiniteScroll) {
+  async doInfinite (infiniteScroll) {
     this.skipValue = this.skipValue + this.limit
-    this.apiService.getOrderListByUser(this.userId, this.skipValue, this.limit).subscribe((result) => {
+    const profile = await this.storageService.getFromStorage('profile')
+    const isSalesman = profile['userType'] === 'SALESMAN' ? true : false
+    this.apiService.getOrderListByUser(this.userId, this.skipValue, this.limit, isSalesman).subscribe((result) => {
       if(result.body.length > 0) {
         result.body.map( (value) => {
           this.orderList.push(value)
@@ -74,7 +77,7 @@ export class CustomerListOrderPage {
     })
   }
 
-  doRefresh(refresher) : void {
+  doRefresh (refresher) : void {
     this.skipValue = 0
     this.limit = CONSTANTS.PAGINATION_LIMIT
     this.getUserOrderList()
@@ -83,7 +86,7 @@ export class CustomerListOrderPage {
     }, 1000);
   }
 
-  formatDate(date) {
+  formatDate (date) {
     let d = new Date(date),
         month = '' + (d.getMonth() + 1),
         day = '' + d.getDate(),

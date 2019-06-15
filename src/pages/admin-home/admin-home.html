@@ -56,6 +56,12 @@
               Customer: {{order.userDetail.name}} [{{order.userDetail.externalId}}]
           </ion-col>
         </ion-row>
+        <ion-row *ngIf="order.salesmanCode && order.salesmanName">
+          <ion-col text-center>
+              <ion-icon color="grey" name=help-buoy></ion-icon>
+              Salesman: {{order.salesmanName}} [{{order.salesmanCode}}]
+          </ion-col>
+        </ion-row>
         <ion-row>
           <ion-col col-12 text-center>
             <ion-icon name="pin" color="grey"></ion-icon> Province: <span>{{order.userDetail.country}} [ {{order.userDetail.province}} ]</span>

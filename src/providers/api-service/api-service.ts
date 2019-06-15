@@ -5,163 +5,163 @@ import { Injectable } from '@angular/core';
 @Injectable()
 export class ApiServiceProvider {
 
-  constructor(public http: HttpClient) {
+  constructor (public http: HttpClient) {
   }
 
-  login(credentials: Object): any {
+  login (credentials: Object): any {
     return this.http.post(CONSTANTS.BASE_URL + 'api/user/authenticate', credentials)
   }
 
-  getParentCategoryList(skip: number, limit:number): any {
+  getParentCategoryList (skip: number, limit:number): any {
     return this.http.get(CONSTANTS.BASE_URL + 'api/category/list/parent?skip='+skip.toString() + "&limit="+ limit.toString())
   }
 
-  getCategoryListForProduct(): any {
+  getCategoryListForProduct (): any {
     return this.http.get(CONSTANTS.BASE_URL + 'api/category/list/child/')
   }
 
-  getChildCategoryList(parentCategoryId: string, skip:number, limit:number): any {
+  getChildCategoryList (parentCategoryId: string, skip:number, limit:number): any {
     return this.http.get(CONSTANTS.BASE_URL + 'api/category/list/child/' + parentCategoryId + '?skip='+skip.toString() + "&limit="+ limit.toString())
   }
 
-  getProductListByCategory(categoryId: string, skip:number, limit:number): any {
+  getProductListByCategory (categoryId: string, skip:number, limit:number): any {
     return this.http.get(CONSTANTS.BASE_URL + 'api/product/list/category/' + categoryId + '?skip='+skip.toString() + "&limit="+ limit.toString())
   }
 
-  getAllProductsByCategory(categoryId: string): any {
+  getAllProductsByCategory (categoryId: string): any {
     return this.http.get(CONSTANTS.BASE_URL + 'api/product/list/category/all/' + categoryId)
   }
 
-  submitOrder(orderDetails: Object): any {
+  submitOrder (orderDetails: Object): any {
     return this.http.post(CONSTANTS.BASE_URL + 'api/order/', orderDetails)
   }
 
-  createOrderToErp(orderId) {
+  createOrderToErp (orderId) {
     return this.http.post(CONSTANTS.BASE_URL + 'api/erp/createOrderToERP', [ {
       '_id': orderId
     }])
   }
 
-  getData(obj) {
+  getData (obj) {
     return this.http.post(CONSTANTS.BASE_URL + 'api/user/products', obj)
   }
 
-  getOrderList(skip:number, limit:number): any {
+  getOrderList (skip:number, limit:number): any {
     return this.http.get(CONSTANTS.BASE_URL + 'api/order/list/' + '?skip='+skip.toString() + "&limit="+ limit.toString())
   }
 
-  getProvinceOrderList(province: string, skip:number, limit:number): any {
+  getProvinceOrderList (province: string, skip:number, limit:number): any {
     return this.http.get(CONSTANTS.BASE_URL + 'api/order/list/province/' + province + '?skip='+skip.toString() + "&limit="+ limit.toString())
   }
 
-  getOrderListByUser(userId: string, skip:number, limit:number): any {
-    return this.http.get(CONSTANTS.BASE_URL + 'api/order/list/user/' + userId + '?skip='+skip.toString() + "&limit="+ limit.toString())
+  getOrderListByUser (userId: string, skip:number, limit:number, isSalesman): any {
+    return this.http.get(CONSTANTS.BASE_URL + 'api/order/list/user/' + userId + '?skip='+skip.toString() + "&limit="+ limit.toString() + "&isSalesman=" + isSalesman)
   }
 
-  createUser(userDetails: Object): any {
+  createUser (userDetails: Object): any {
     return this.http.post(CONSTANTS.BASE_URL + 'api/user/', userDetails)
   }
 
-  createPayment(data) {
+  createPayment (data) {
     return this.http.post(CONSTANTS.BASE_URL + 'api/user/create/payment', data)
   }
 
-  addProduct(productDetails: Object): any {
+  addProduct (productDetails: Object): any {
     return this.http.post(CONSTANTS.BASE_URL + 'api/product/', productDetails)
   }
 
-  addCategory(categoryDetails: Object): any {
+  addCategory (categoryDetails: Object): any {
     return this.http.post(CONSTANTS.BASE_URL + 'api/category/', categoryDetails)
   }
 
-  getOrderDetail(orderId: string): any {
+  getOrderDetail (orderId: string): any {
     return this.http.get(CONSTANTS.BASE_URL + 'api/order/detail/' + orderId)
   }
 
-  changeOrderStatus(orderId: string, statusObj: Object): any {
+  changeOrderStatus (orderId: string, statusObj: Object): any {
     return this.http.post(CONSTANTS.BASE_URL + 'api/order/status/' + orderId, statusObj)
   }
 
-  getCustomerList(skip: number, limit:number): any {
+  getCustomerList (skip: number, limit:number): any {
     return this.http.get(CONSTANTS.BASE_URL + 'api/user/list/customer?skip='+skip.toString() + "&limit="+ limit.toString())
   } 
 
-  getAssociatedCustomersListBySalesman(externalId) {
+  getAssociatedCustomersListBySalesman (externalId) {
     return this.http.get(CONSTANTS.BASE_URL + 'api/user/list/associated/customer?externalId='+externalId.toString())
   }
 
-  getAssociatedSalesmanListBySalesman(externalId) {
+  getAssociatedSalesmanListBySalesman (externalId) {
     return this.http.get(CONSTANTS.BASE_URL + 'api/user/list/associated/salesman?externalId='+externalId.toString())
   }
 
-  getDashboardData(customerCode) {
+  getDashboardData (customerCode) {
     return this.http.get(CONSTANTS.BASE_URL + 'api/user/get/dashboard?externalId='+customerCode.toString())
   }
 
-  getAllCustomers(): any {
+  getAllCustomers (): any {
     return this.http.get(CONSTANTS.BASE_URL + 'api/user/list/all/customer')
   }
-  getAllSalesman(): any {
+  getAllSalesman (): any {
     return this.http.get(CONSTANTS.BASE_URL + 'api/user/list/all/salesman')
   }
 
-  getCustomersByProvince(province) {
+  getCustomersByProvince (province) {
     return this.http.get(CONSTANTS.BASE_URL + 'api/user/list/by/province/customer?province='+province.toString())
   }
 
-  getAllCategoryList(skip: number, limit:number): any {
+  getAllCategoryList (skip: number, limit:number): any {
     return this.http.get(CONSTANTS.BASE_URL + 'api/category/list?skip='+skip.toString() + "&limit="+ limit.toString())
   }
 
-  getAllProductList(skip: number, limit:number): any {
+  getAllProductList (skip: number, limit:number): any {
     return this.http.get(CONSTANTS.BASE_URL + 'api/product/list?skip='+skip.toString() + "&limit="+ limit.toString())
   }
 
-  resetUserPassowrd(userId: string): any {
+  resetUserPassowrd (userId: string): any {
     return this.http.post(CONSTANTS.BASE_URL + 'api/user/resetPassword/' + userId, {})
   }
 
-  changePassword(data: Object): any {
+  changePassword (data: Object): any {
     return this.http.post(CONSTANTS.BASE_URL + 'api/user/changePassword', data)
   }
 
-  getUserDetails(userLoginId) : any {
+  getUserDetails (userLoginId) : any {
     return this.http.get(CONSTANTS.BASE_URL + 'api/user/getUserDetails/?userLoginId=' + userLoginId)
   }
 
-  updateProduct(updateDetails: Object): any {
+  updateProduct (updateDetails: Object): any {
     return this.http.post(CONSTANTS.BASE_URL + 'api/product/update', updateDetails)
   }
 
-  searchProductInParentCategory(skip: number, limit:number, parentCategoryId: string, keyword: string): any {
+  searchProductInParentCategory (skip: number, limit:number, parentCategoryId: string, keyword: string): any {
     return this.http.get(CONSTANTS.BASE_URL + 'api/product/search/parentCategory/' + parentCategoryId + '?skip='+skip.toString() + "&limit="+ limit.toString() + "&keyword="+ keyword)
   }
 
-  getGiftProducts(): any {
+  getGiftProducts (): any {
     return this.http.get(CONSTANTS.BASE_URL + 'api/product/list/gift/products',{})
   }
 
-  submitGiftOrder(orderDetails: Object): any {
+  submitGiftOrder (orderDetails: Object): any {
     return this.http.post(CONSTANTS.BASE_URL + 'api/order/create/gift/order', orderDetails)
   }
 
-  updateUser(data) {
+  updateUser (data) {
     return this.http.post(CONSTANTS.BASE_URL + 'api/user/update/user', data)
   }
 
-  updateProductInMongo() {
+  updateProductInMongo () {
     return this.http.post(CONSTANTS.BASE_URL + 'api/erp/update/product/mongo', {})
   }
 
-  updateProductStatInERP() {
+  updateProductStatInERP () {
     return this.http.post(CONSTANTS.BASE_URL + 'api/erp/update/product/erp', {})
   }
 
-  updateCustomerInMongo() {
+  updateCustomerInMongo () {
     return this.http.post(CONSTANTS.BASE_URL + 'api/erp/update/customer/mongo', {})
   }
 
-  updateCustomerStatInERP() {
+  updateCustomerStatInERP () {
     return this.http.post(CONSTANTS.BASE_URL + 'api/erp/update/customer/erp', {})
   }
 
@@ -173,7 +173,7 @@ export class ApiServiceProvider {
     return this.http.post(CONSTANTS.BASE_URL + 'api/erp/create/new/product/mongo', {})
   }
 
-  getVersion(): any {
+  getVersion (): any {
     return this.http.get(CONSTANTS.BASE_URL + 'api/user/version')
   }
 }

@@ -26,7 +26,7 @@ export class AdminHomePage {
   skipValue: number = 0
   limit: number = CONSTANTS.PAGINATION_LIMIT
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, private widgetUtil: WidgetUtilService
+  constructor (public navCtrl: NavController, public navParams: NavParams, private widgetUtil: WidgetUtilService
   , private apiService: ApiServiceProvider, private file: File, private alertCtrl: AlertController,
   private storageService: StorageServiceProvider) {
     this.skipValue = 0
@@ -34,7 +34,7 @@ export class AdminHomePage {
     this.getList()
   }
 
-  async getList() {
+  async getList () {
     let profile = await this.storageService.getFromStorage('profile')
     this.apiService.getProvinceOrderList(profile['province'], this.skipValue, this.limit).subscribe((result) => {
       this.orderList = result.body
@@ -58,7 +58,7 @@ export class AdminHomePage {
     })
   }
 
-  getOrderDetial(order) {
+  getOrderDetial (order) {
     let orderObj = {
       order: order
     }
@@ -66,7 +66,7 @@ export class AdminHomePage {
     console.log(orderObj)
   }
 
-  async doInfinite(infiniteScroll) {
+  async doInfinite (infiniteScroll) {
     let profile = await this.storageService.getFromStorage('profile')
     this.skipValue = this.skipValue + this.limit
     this.apiService.getProvinceOrderList(profile['province'], this.skipValue, this.limit).subscribe((result) => {
@@ -88,7 +88,7 @@ export class AdminHomePage {
     })
   }
 
-  doRefresh(refresher) : void {
+  doRefresh (refresher) : void {
     this.skipValue = 0
     this.limit = CONSTANTS.PAGINATION_LIMIT
     this.getList()
@@ -97,7 +97,7 @@ export class AdminHomePage {
     }, 1000);
   }
 
-  formatDate(date) {
+  formatDate (date) {
     let d = new Date(date),
         month = '' + (d.getMonth() + 1),
         day = '' + d.getDate(),
@@ -107,7 +107,7 @@ export class AdminHomePage {
     return [year, month, day].join('-')
   }
 
-  getDateForCSV() {
+  getDateForCSV () {
     var d = new Date,
     dformat = [d.getMonth()+1,
       d.getDate(),
@@ -119,7 +119,7 @@ export class AdminHomePage {
   }
 
   // Create order to ERP and mark received in mongo
-  importOrder(order) {
+  importOrder (order) {
     this.showLoader = true;
     this.apiService.createOrderToErp(order['_id']).subscribe(result => {
         this.getList()
@@ -135,7 +135,7 @@ export class AdminHomePage {
     })
   }
 
-  changeOrderStatus(newStatus, message, order) {
+  changeOrderStatus (newStatus, message, order) {
     this.showLoader = true
     this.apiService.changeOrderStatus(order['_id'], {status: newStatus}).subscribe((result) => {
       this.getList()
@@ -151,11 +151,11 @@ export class AdminHomePage {
     })
   }
 
-  presentPopover(myEvent) {
+  presentPopover (myEvent) {
     this.widgetUtil.presentPopover(myEvent, PopoverHomePage)
   }
 
-  filterOrderToExport() {
+  filterOrderToExport () {
     let alert = this.alertCtrl.create();
     alert.setTitle('Select Order Status');
     alert.addInput({
@@ -189,7 +189,7 @@ export class AdminHomePage {
     alert.present();
   }
 
-  exportToCsv(selectedStatus) {
+  exportToCsv (selectedStatus) {
     let csvList =  []
     this.orderList.map((value) => {
       if(selectedStatus.indexOf(value.status) >=0) {
