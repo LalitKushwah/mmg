@@ -2,12 +2,7 @@ import { WidgetUtilService } from '../../utils/widget-utils';
 import { Component, ViewChild } from '@angular/core';
 import { IonicPage, NavController, NavParams,ModalController, LoadingController } from 'ionic-angular';
 import { PopoverHomePage } from '../popover-home/popover-home';
-// import { TargetGraphPage } from '../target-graph/target-graph';
-// import { TargetPage } from '../target/target';
-// import { TkCurrencyPage} from '../tk-currency/tk-currency';
-// import { OutstandingPage} from '../outstanding/outstanding';
 import { StorageServiceProvider } from '../../providers/storage-service/storage-service';
-// import { SalesmanSelectCustomerPage } from '../salesman-select-customer/salesman-select-customer';
 import { CustomerHomePage } from '../customer-home/customer-home';
 
 import { Chart } from 'chart.js';
@@ -26,10 +21,6 @@ export class UserProfilePage {
   mtdAchieved: number;
   target: number;
   pieChart: any;
-  // opened: boolean = false;
-  // TKopened: boolean = false;
-  // Outopened: boolean = false;
-  // btnLabel: string = '';
   partyName: any;
   selectedCustomerprofile: any;
   userTypeCustomer: boolean = false;
@@ -39,9 +30,8 @@ export class UserProfilePage {
   data: any = {}
   loader: any
   externalId: string = ''
-  // customerDashboard:boolean=false;
 
-  constructor(public navCtrl: NavController, 
+  constructor (public navCtrl: NavController, 
               public navParams: NavParams,
               private widgetUtil: WidgetUtilService, 
               private modal:ModalController,
@@ -49,11 +39,9 @@ export class UserProfilePage {
               private apiService: ApiServiceProvider,
               private loadingCtrl: LoadingController) {
     
-        // this.mtdAchieved = 20;
-        // this.target = 30;
   }
 
-  displayChart() {
+  displayChart () {
     this.pieChart = new Chart(this.pieCanvas.nativeElement, {
       type: 'pie',
       data: {
@@ -87,10 +75,10 @@ export class UserProfilePage {
     });
   }
 
-  ionViewDidLoad() {
+  ionViewDidLoad () {
     this.getData()
   }
-  async getData() {
+  async getData () {
     this.loader = this.loadingCtrl.create({
       content: "Fetching Data...",
     });
@@ -110,7 +98,6 @@ export class UserProfilePage {
       }
       this.apiService.getDashboardData(this.externalId).subscribe((res: any) => {
         this.dashboardData = res.body[0]
-        //console.log(this.dashboardData)
         this.apiService.getParentCategoryList(0,20).subscribe((res:any) => {
           this.categoryList = res.body
           this.prepareData('Total')
@@ -123,20 +110,20 @@ export class UserProfilePage {
       this.loader.dismiss()
     }
   }
-  presentPopover(myEvent) {
+  presentPopover (myEvent) {
     this.widgetUtil.presentPopover(myEvent, PopoverHomePage)
   }
 
-  totalCategorySelected() {
+  totalCategorySelected () {
     this.prepareData('Total')
   }
 
-  openPaymentModal(){
+  openPaymentModal (){
     const payModal = this.modal.create('AddPaymentModalPage')
     payModal.present();
   }
 
-  openShopPage(){
+  openShopPage (){
     this.navCtrl.push(CustomerHomePage);
   }
 
@@ -144,28 +131,11 @@ export class UserProfilePage {
   //   console.log('toggle clicked!')
   // }
 
-  targetCategorySelectionChanged(selectedValue: any){
-
+  targetCategorySelectionChanged (selectedValue: any){
     this.prepareData(selectedValue)
-    switch (selectedValue.name) {
-      case 'Confectionary':
-        console.log(selectedValue)
-          break;
-      case 'category-2':
-        console.log(selectedValue)
-          break;
-      case 'category-3':
-        console.log(selectedValue)
-          break;
-      case 'category-4':
-        console.log(selectedValue)
-          break;
-      default:
-        console.log(selectedValue) 
-  }
 }
-prepareData (selectedValue) {
 
+prepareData (selectedValue) {
   if(!this.dashboardData){
     console.log('No data found')
     this.data.target = 0
@@ -216,7 +186,7 @@ prepareData (selectedValue) {
   
 }
 
-ionViewWillUnload() {
+ionViewWillUnload () {
   this.loader.dismiss()
 }
 
