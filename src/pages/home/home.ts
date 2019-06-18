@@ -20,7 +20,7 @@ export class HomePage {
 
   cart: any = [];
 
-  constructor(public navCtrl: NavController,
+  constructor (public navCtrl: NavController,
               private menuController: MenuController,
               private storageService: StorageServiceProvider,
               private widgetUtil: WidgetUtilService) {
@@ -28,7 +28,7 @@ export class HomePage {
     this.checkData()
   }
 
-  async checkData() {
+  async checkData () {
     try {
       let profile = await this.storageService.getFromStorage('profile')
       if (profile) {
@@ -55,16 +55,16 @@ export class HomePage {
     }
   }
 
-  gotToLogin() {
+  gotToLogin () {
     this.menuController.swipeEnable(false, 'main_menu')
     this.navCtrl.setRoot(LoginPage)
   }
 
-  presentPopover(myEvent) {
+  presentPopover (myEvent) {
     this.widgetUtil.presentPopover(myEvent, PopoverHomePage)
   }
 
-  async reviewAndSubmitOrder() {
+  async reviewAndSubmitOrder () {
     if (this.cart.length <= 0) {
       this.widgetUtil.showToast(CONSTANTS.CART_EMPTY)
     } else {
@@ -75,11 +75,11 @@ export class HomePage {
     }
   }
 
-  async getCardItems() {
+  async getCardItems () {
     this.cart = await this.storageService.getCartFromStorage()
   }
 
-  ionViewDidEnter() {
+  ionViewDidEnter () {
     this.getCardItems()
   }
 }
