@@ -21,9 +21,10 @@ export class AddPaymentModalPage {
   onlineIsSelected:boolean=false;
   salesmanName: any;
   userTypeSalesman: boolean = false;
-  salesmanCode = ''
+  salesmanCode: string
   customerCode = ''
   salesmanList = []
+  paymentObj: any = {}
 
   constructor (private view:ViewController,
               private storageService: StorageServiceProvider,
@@ -84,24 +85,27 @@ export class AddPaymentModalPage {
             this.chequeIsSelected=false; 
             this.cashIsSelected=false; 
     }
-    // console.log(selectedValue);
   }
 
   submitPayment () {
-    const paymentObj: any = {}
-    paymentObj.mode = this.paymentMode
-    paymentObj.amount = this.paymentAmount
-    this.onlineID ? paymentObj.transactionId = this.onlineID : undefined
-    this.chequeID ? paymentObj.chequeID = this.chequeID : undefined
-    this.paymentMode === 'cash' ? paymentObj.salesmanCode = this.salesmanCode : undefined
-    paymentObj.customerCode = this.customerCode
-    paymentObj.salesmanCode = this.selectedSalesman && this.selectedSalesman.externalId ? this.selectedSalesman.externalId : undefined
-    this.apiService.createPayment(paymentObj).subscribe(res => {
+    
+    this.paymentObj.mode = this.paymentMode
+    this.paymentObj.amount = this.paymentAmount
+    this.onlineID ? this.paymentObj.transactionId = this.onlineID : undefined
+    this.chequeID ? this.paymentObj.chequeID = this.chequeID : undefined
+    this.paymentObj.customerCode = this.customerCode
+    if (this.salesmanCode && this.salesmanName) {
+      this.paymentObj.salesmanCode = this.salesmanCode 
+      this.paymentObj.salesmanName = this.salesmanName
+    }
+    this.apiService.createPayment(this.paymentObj).subscribe(res => {
     })
   }
 
   selectSalesman (salesman) {
     this.selectedSalesman = salesman
+    this.paymentObj.salesmanCode = salesman.externalId
+    this.paymentObj.salesmanName = salesman.name
   }
 
 }

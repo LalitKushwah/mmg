@@ -1,5 +1,7 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { ApiServiceProvider } from '../../providers/api-service/api-service';
+import { StorageServiceProvider } from '../../providers/storage-service/storage-service';
 
 @IonicPage({
   name: 'UserPaymentHistoryPage'
@@ -21,14 +23,24 @@ export class UserPaymentHistoryPage {
   chequeId: any = '12345';
 
 
-  constructor(public navCtrl: NavController, public navParams: NavParams) {
+  constructor (public navCtrl: NavController, 
+               public navParams: NavParams,
+               private apiService: ApiServiceProvider,
+               private storageService: StorageServiceProvider) {
   }
 
-  ionViewDidLoad() {
+  ionViewDidLoad () {
     console.log('ionViewDidLoad UserPaymentHistoryPage');
     this.getData()
   }
-  async getData(){
+  async getData () {
+    let profile = await this.storageService.getFromStorage('profile')
+    if (profile['userType'] === 'SALESMAN') {
+      profile = await this.storageService.getFromStorage('selectedCustomer')
+    }
+    this.apiService.getPaymentHistory(profile['externalId']).subscribe(res => {
+      console.log('====== 43 ======', res)
+    })
     //Fetch Data here
     //..
     if(this.paymentMode==='cash'){
