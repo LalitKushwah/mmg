@@ -4,7 +4,6 @@ import { IonicPage, NavController, NavParams,ModalController, LoadingController 
 import { PopoverHomePage } from '../popover-home/popover-home';
 import { StorageServiceProvider } from '../../providers/storage-service/storage-service';
 import { CustomerHomePage } from '../customer-home/customer-home';
-
 import { Chart } from 'chart.js';
 import { ApiServiceProvider } from '../../providers/api-service/api-service';
 
@@ -18,8 +17,8 @@ import { ApiServiceProvider } from '../../providers/api-service/api-service';
 export class UserProfilePage {
   
   @ViewChild('pieCanvas') pieCanvas;
-  mtdAchieved: number;
-  target: number;
+  mtdAchieved: number = 0;
+  target: number = 1;
   pieChart: any;
   partyName: any;
   selectedCustomerprofile: any;
@@ -27,7 +26,19 @@ export class UserProfilePage {
   targetCategory: any = 'Total';
   dashboardData: any;
   categoryList: any = []
-  data: any = {}
+  data: any = {
+  target:0,
+  achievement: 0,
+  achievedPercentage:0,
+  balanceToDo:0,
+  creditLimit:0,
+  currentOutStanding:0,
+  thirtyDaysOutStanding:0,
+  availableCreditLimit:0,
+  tkPoints:0,
+  tkCurrency:0,
+  mtdAchieved:0,
+  }
   loader: any
   externalId: string = ''
 
@@ -38,7 +49,6 @@ export class UserProfilePage {
               private storageService: StorageServiceProvider,
               private apiService: ApiServiceProvider,
               private loadingCtrl: LoadingController) {
-    
   }
 
   displayChart () {
@@ -85,7 +95,6 @@ export class UserProfilePage {
     this.loader.present()
     try {
       let profile = await this.storageService.getFromStorage('profile')
-      // this.partyName = profile['name']
       if ((profile['userType'] === 'SALESMAN')) {
         let selectedCustomerprofile = await this.storageService.getFromStorage('selectedCustomer')
         this.partyName = selectedCustomerprofile['name']
@@ -127,38 +136,12 @@ export class UserProfilePage {
     this.navCtrl.push(CustomerHomePage);
   }
 
-  // toggleView(){
-  //   console.log('toggle clicked!')
-  // }
-
   targetCategorySelectionChanged (selectedValue: any){
+
     this.prepareData(selectedValue)
 }
 
-prepareData (selectedValue) {
-  if(!this.dashboardData){
-    console.log('No data found')
-    this.data.target = 0
-    this.data.achievement = 0
-
-    this.data.achievedPercentage = 0
-    this.data.balanceToDo = 0
-    this.data.creditLimit = 0
-    this.data.currentOutStanding = 0
-    this.data.thirtyDaysOutStanding = 0
-    this.data.availableCreditLimit = 0
-    this.data.tkPoints = 0
-    this.data.tkCurrency = 0
-
-    //Preparing Data for Graph
-    this.mtdAchieved = this.data.achievement
-    //this.target = this.data.balanceToDo
-    this.target = 1
-    this.displayChart()
-  }
-
-  else{
-    console.log('executing else')
+  if(this.dashboardData){
     if (selectedValue !== 'Total') {
       this.data.target = this.dashboardData['target' + selectedValue.name.charAt(0)]
       this.data.achievement = this.dashboardData['achive' + selectedValue.name.charAt(0)]
@@ -176,14 +159,11 @@ prepareData (selectedValue) {
     this.data.availableCreditLimit = this.dashboardData.creditLimit - this.data.currentOutStanding
     this.data.tkPoints = this.dashboardData.tkPoints
     this.data.tkCurrency = this.dashboardData.tkCurrency
-
     //Preparing Data for Graph
     this.mtdAchieved = this.data.achievement
-    this.target = this.data.balanceToDo
-    this.displayChart()
-
+    this.target = this.data.balanceToDo 
   }
-  
+    this.displayChart()
 }
 
 ionViewWillUnload () {
