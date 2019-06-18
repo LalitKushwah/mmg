@@ -1,7 +1,8 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavParams, ViewController } from 'ionic-angular';
+import { IonicPage, NavParams, ViewController, LoadingController, NavController } from 'ionic-angular';
 import { StorageServiceProvider } from '../../providers/storage-service/storage-service';
 import { ApiServiceProvider } from '../../providers/api-service/api-service';
+import { WidgetUtilService } from '../../utils/widget-utils';
 
 @IonicPage()
 @Component({
@@ -28,7 +29,10 @@ export class AddPaymentModalPage {
 
   constructor (private view:ViewController,
               private storageService: StorageServiceProvider,
-              private apiService: ApiServiceProvider) {
+              private apiService: ApiServiceProvider,
+              private loadingCtrl: LoadingController,
+              private widgetUtil: WidgetUtilService,
+              private navCtrl: NavController) {
   }
 
   ionViewDidLoad () {
@@ -36,6 +40,10 @@ export class AddPaymentModalPage {
     this.getData()
   }
   async getData () {
+    const loader = this.loadingCtrl.create({
+      content: "Fetching data...",
+    });
+    loader.present()
     try{
       let profile = await this.storageService.getFromStorage('profile')
       console.log(profile['name'])
@@ -49,11 +57,13 @@ export class AddPaymentModalPage {
       } else {
         this.apiService.getAssociatedSalesmanListBySalesman(profile['externalId']).subscribe((res: any) => {
           this.salesmanList = res.body
+          loader.dismiss()
         })
         this.customerCode = profile['externalId']
       }
     }
     catch (err) {
+      loader.dismiss()
       console.log('Error: Profile Details could not Load', err)
     }
   }
@@ -87,8 +97,7 @@ export class AddPaymentModalPage {
     }
   }
 
-  submitPayment () {
-    
+  submitPayment () {    
     this.paymentObj.mode = this.paymentMode
     this.paymentObj.amount = this.paymentAmount
     this.onlineID ? this.paymentObj.transactionId = this.onlineID : undefined
@@ -98,7 +107,13 @@ export class AddPaymentModalPage {
       this.paymentObj.salesmanCode = this.salesmanCode 
       this.paymentObj.salesmanName = this.salesmanName
     }
-    this.apiService.createPayment(this.paymentObj).subscribe(res => {
+    this.apiService.createPayment(this.paymentObj).subscribe((res : any)=> {
+      if (res.status === 200) {
+        this.widgetUtil.showToast('Payment created successfully...')
+        this.closePayModal()
+      } else {
+        this.widgetUtil.showToast('Error while creating payment...')
+      }
     })
   }
 
