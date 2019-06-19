@@ -96,12 +96,7 @@ import { UserPaymentHistoryPageModule } from '../pages/user-payment-history/user
   declarations: [
     MyApp,
     HomePage,
-    ListPage,
-    UserProfilePage,
-    SalesmanSelectCustomerPage,
-    AdminListSalesmanPage,
-    SalesmanDashboardPage
-  ],
+    ListPage],
   imports: [
     BrowserModule,
     IonicModule.forRoot(MyApp),

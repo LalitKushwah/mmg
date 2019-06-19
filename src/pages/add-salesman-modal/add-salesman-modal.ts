@@ -22,7 +22,7 @@ export class AddSalesmanModalPage {
   salesmanList = []
   filteredSalesmanList = []
 
-  constructor(public navCtrl: NavController, 
+  constructor (public navCtrl: NavController, 
               public navParams: NavParams,
               private apiService: ApiServiceProvider,
               private alertCtrl: AlertController,
@@ -32,11 +32,11 @@ export class AddSalesmanModalPage {
               this.getAllSalesmanList()
   }
 
-  ionViewDidLoad() {
+  ionViewDidLoad () {
     console.log('ionViewDidLoad AddSalesmanModalPage');
   }
 
-  getAllSalesmanList() {
+  getAllSalesmanList () {
     const loader = this.loadingCtrl.create({
       content: "Fetching Salesman List...",
     });
@@ -51,13 +51,13 @@ export class AddSalesmanModalPage {
     })
   }
 
-  searchSalesman(value) {
+  searchSalesman (value) {
     this.filteredSalesmanList = this.salesmanList.filter(salesman =>
       salesman.name.toLowerCase().includes(value.toLowerCase())
     )
   }
 
-  addSalesMan(salesman) {
+  addSalesMan (salesman) {
     const confirm = this.alertCtrl.create({
       title: 'Add salesman to customer?',
       message: 'Are you sure to add?',
@@ -79,7 +79,7 @@ export class AddSalesmanModalPage {
     confirm.present();
   }
 
-  dismissModal(){
+  dismissModal (){
     this.navCtrl.push(EditUserPage);
   }
   

@@ -1,7 +1,8 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, LoadingController } from 'ionic-angular';
 import { ApiServiceProvider } from '../../providers/api-service/api-service';
 import { StorageServiceProvider } from '../../providers/storage-service/storage-service';
+import { WidgetUtilService } from '../../utils/widget-utils';
 
 @IonicPage({
   name: 'UserPaymentHistoryPage'
@@ -21,12 +22,14 @@ export class UserPaymentHistoryPage {
   salesmanName: any = 'John Doe';
   onlineId: any = '12QWERTY34'; 
   chequeId: any = '12345';
-
+  data = []
 
   constructor (public navCtrl: NavController, 
                public navParams: NavParams,
                private apiService: ApiServiceProvider,
-               private storageService: StorageServiceProvider) {
+               private storageService: StorageServiceProvider,
+               private loadingCtrl: LoadingController,
+               private widgetCtrl: WidgetUtilService) {
   }
 
   ionViewDidLoad () {
@@ -34,19 +37,28 @@ export class UserPaymentHistoryPage {
     this.getData()
   }
   async getData () {
+    const loader = this.loadingCtrl.create({
+      content: "Fetching data...",
+    });
+    loader.present()
     let profile = await this.storageService.getFromStorage('profile')
     if (profile['userType'] === 'SALESMAN') {
       profile = await this.storageService.getFromStorage('selectedCustomer')
     }
-    this.apiService.getPaymentHistory(profile['externalId']).subscribe(res => {
-      console.log('====== 43 ======', res)
+    this.apiService.getPaymentHistory(profile['externalId']).subscribe((res: any) => {
+        if (res && res.body) {
+          this.data = res.body
+          this.widgetCtrl.showToast('Data Fetched Successfully...')
+        } else {
+          this.widgetCtrl.showToast('Problem while fetching data')
+        }
+        loader.dismiss()
     })
-    //Fetch Data here
-    //..
-    if(this.paymentMode==='cash'){
+
+    if (this.paymentMode==='cash') {
       this.modeIsCash = true
     }
-    else{
+    else {
       if(this.paymentMode==='online'){
         this.modeIsOnline = true
       }
