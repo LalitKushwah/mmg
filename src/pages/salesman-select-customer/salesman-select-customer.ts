@@ -93,30 +93,33 @@ export class SalesmanSelectCustomerPage {
   }
 
   selectCustomer(user) {
-    let alert = this.alertCtrl.create();
-    alert.setTitle('Confirm Customer!')
-    alert.setMessage('Are you sure you want to place order for ' +  user.name)
-    alert.addButton({
-      text: 'No',
-      role: 'cancel',
-      handler: () => {}
-    });
-    alert.addButton({
-      text: 'Yes',
-      cssClass: 'secondary',
-      handler: () => {
-        this.customerSelected(user)
-      }
-    })
-    alert.present(alert)
-  } 
-  customerSelected(user) {
-    //console.log(user)
-    //Set the Selected Customer to Storage
-    this.storageService.setToStorage('selectedCustomer', user)
+    // let alert = this.alertCtrl.create();
+    // alert.setTitle('Confirm Customer!')
+    // alert.setMessage('Are you sure you want to place order for ' +  user.name)
+    // alert.addButton({
+    //   text: 'No',
+    //   role: 'cancel',
+    //   handler: () => {}
+    // });
+    // alert.addButton({
+    //   text: 'Yes',
+    //   cssClass: 'secondary',
+    //   handler: () => {
+    //     this.customerSelected(user)
+    //   }
+    // })
+    // alert.present(alert)
 
+    this.storageService.setToStorage('selectedCustomer', user)
     this.navCtrl.push(UserProfilePage)
-  }
+  } 
+  // customerSelected(user) {
+  //   //console.log(user)
+  //   //Set the Selected Customer to Storage
+  //   this.storageService.setToStorage('selectedCustomer', user)
+
+  //   this.navCtrl.push(UserProfilePage)
+  // }
 
   searchCustomers(searchQuery) {
       this.filteredUserList = this.allCustomers.filter(user =>
