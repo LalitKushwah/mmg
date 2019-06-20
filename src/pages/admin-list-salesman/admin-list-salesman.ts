@@ -6,14 +6,6 @@ import { ApiServiceProvider } from '../../providers/api-service/api-service';
 import { WidgetUtilService } from '../../utils/widget-utils';
 import { EditUserPage } from '../edit-user/edit-user';
 
-
-/**
- * Generated class for the AdminListSalesmanPage page.
- *
- * See https://ionicframework.com/docs/components/#navigation for more info on
- * Ionic pages and navigation.
- */
-
 @IonicPage({
   name: 'AdminListSalesmanPage'
 })

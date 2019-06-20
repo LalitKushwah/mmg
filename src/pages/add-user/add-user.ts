@@ -17,6 +17,7 @@ export class AddUserPage implements OnInit {
   addAdminForm : FormGroup;
   addCustomerForm : FormGroup;
   addSalesmanForm: FormGroup;
+  addSalesmanagerForm: FormGroup;
   name: FormControl;
   password: FormControl;
   userLoginId: FormControl;
@@ -25,7 +26,7 @@ export class AddUserPage implements OnInit {
   channel: FormControl;
   province: FormControl;
   showLoader = false;
-  userTypeList: Array<any> =  [ 'CUSTOMER', 'ADMIN','SALESMAN']
+  userTypeList: Array<any> =  [ 'CUSTOMER', 'ADMIN','SALESMAN','SALESMANAGER']
   countryList: Array<any> =  [ 'ZAMBIA']
   provinceList: Array<any> =  [ 'BOTSWANA', 'COPPERBELT', 'DRC', 'EASTERN', 'KENYA', 'LUAPULA', 'LUSAKA', 'MALAWI', 'MOZAMBIQUE', 'NORTH WESTERN', 'NORTHERN'
   ,'SOUTH AFRICA', 'SOUTHERN', 'TANZANIA', 'WESTERN', 'ZIMBABWE' ]
@@ -34,19 +35,22 @@ export class AddUserPage implements OnInit {
   selectedProvince : string = 'BOTSWANA'
   showCustomerForm: string = 'CUSTOMER'
 
-  constructor(public navCtrl: NavController, public navParams: NavParams
+  constructor (public navCtrl: NavController, public navParams: NavParams
   , private apiService: ApiServiceProvider, private widgetUtil: WidgetUtilService) {
     this.showCustomerForm = this.selectedUserType
   }
 
-  ngOnInit(): void {
+  ngOnInit (): void {
     this.createFormControls()
     this.createAdminForm()
     this.createCustomerForm()
     this.createSalesmanForm()
+
+    //Salesmanager Form
+    this.createSalesmanagerForm()
   }
 
-  createFormControls() {
+  createFormControls () {
     this.userLoginId = new FormControl('', [
       Validators.required
     ]);
@@ -73,7 +77,7 @@ export class AddUserPage implements OnInit {
     ]);
   }
 
-  createAdminForm() {
+  createAdminForm () {
     this.addAdminForm = new FormGroup({
       name: this.name,
       userLoginId: this.userLoginId,
@@ -81,7 +85,7 @@ export class AddUserPage implements OnInit {
     });
   }
 
-  createSalesmanForm() {
+  createSalesmanForm () {
     this.addSalesmanForm = new FormGroup({
       name: this.name,
       userLoginId: this.userLoginId,
@@ -90,7 +94,17 @@ export class AddUserPage implements OnInit {
     });
   }
 
-  createCustomerForm() {
+  //Sa'esmanager Form
+  createSalesmanagerForm () {
+    this.addSalesmanagerForm = new FormGroup({
+      name: this.name,
+      userLoginId: this.userLoginId,
+      password: this.password,
+      externalId: this.externalId,
+    });
+  }
+
+  createCustomerForm () {
     this.addCustomerForm = new FormGroup({
       name: this.name,
       userLoginId: this.userLoginId,
@@ -100,7 +114,7 @@ export class AddUserPage implements OnInit {
     });
   }
 
-  onUserTypeSelect() {
+  onUserTypeSelect () {
     this.showCustomerForm = this.selectedUserType
     this.addAdminForm.reset()
     this.addCustomerForm.reset()
@@ -130,7 +144,18 @@ export class AddUserPage implements OnInit {
       userDetails['country'] = this.selectedCountry.trim()
       userDetails['province'] = this.selectedProvince.trim()
     } else {
-      message = CONSTANTS.SALESMAN_CREATED
+      
+      if(userType === 'salesmanager'){
+      message = CONSTANTS.SALESMANAGER_CREATED
+      // console.log('salesmanager created!')
+      // console.log(userType)
+      }
+
+      else{
+        message = CONSTANTS.SALESMAN_CREATED
+        // console.log('salesman created!')
+        // console.log(userType)
+      }
       userDetails['name'] = this.name.value.trim()
       userDetails['userLoginId'] = this.userLoginId.value.trim()
       userDetails['password'] = this.password.value.trim()
