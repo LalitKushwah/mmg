@@ -100,7 +100,7 @@ export class SalesmanDashboardPage {
       console.log('======= 99 =======', profile)
 
       // TODO update in argument
-      this.apiService.getDashboardData(3).subscribe((res: any) => {
+      this.apiService.getDashboardData(profile['externalId']).subscribe((res: any) => {
         this.dashboardData = res.body[0]
         this.apiService.getParentCategoryList(0,20).subscribe((res:any) => {
           this.categoryList = res.body

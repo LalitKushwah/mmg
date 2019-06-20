@@ -1,10 +1,11 @@
-import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams, AlertController } from 'ionic-angular';
+import { Component, ViewChild } from '@angular/core';
+import { IonicPage, NavController, NavParams, AlertController, Navbar } from 'ionic-angular';
 import { CONSTANTS } from '../../utils/constants';
 import { StorageServiceProvider } from '../../providers/storage-service/storage-service';
 import { ApiServiceProvider } from '../../providers/api-service/api-service';
 import { WidgetUtilService } from '../../utils/widget-utils';
 import { EditUserPage } from '../edit-user/edit-user';
+import { AdminHomePage } from '../admin-home/admin-home';
 
 
 /**
@@ -22,6 +23,7 @@ import { EditUserPage } from '../edit-user/edit-user';
   templateUrl: 'admin-list-salesman.html',
 })
 export class AdminListSalesmanPage {
+  @ViewChild(Navbar) navBar: Navbar;
   skipValue: number = 0
   limit: number = CONSTANTS.PAGINATION_LIMIT
   salesmanList: Array<any> = [];
@@ -30,7 +32,7 @@ export class AdminListSalesmanPage {
   searchQuery: string
   allSalesman = []
 
-  constructor(public navCtrl: NavController, public navParams: NavParams,
+  constructor (public navCtrl: NavController, public navParams: NavParams,
               private apiService: ApiServiceProvider,
               private widgetUtil: WidgetUtilService,
               private alertCtrl: AlertController,
@@ -40,7 +42,7 @@ export class AdminListSalesmanPage {
     this.getUserList()
   }
 
-  ionViewWillEnter() {
+  ionViewWillEnter () {
     this.apiService.getAllSalesman().subscribe((result) => {
       if (result.body && result.body.length > 0) {
         this.allSalesman = result.body
@@ -53,7 +55,7 @@ export class AdminListSalesmanPage {
       }
     })
   }
-  getUserList() {
+  getUserList () {
     this.apiService.getAllSalesman().subscribe((result) => {
       this.salesmanList = result.body
       this.filteredSalesmanList = this.salesmanList
@@ -96,7 +98,7 @@ export class AdminListSalesmanPage {
   //   }, 1000);
   // }
 
-  resetPasswordModel(user) {
+  resetPasswordModel (user) {
     /* const resetPasswordConfirm = this.modal.create('ResetPasswordModelPage', {message: 'Are you sure you want to reset password for ' +  customerName})
     resetPasswordConfirm.present()
     resetPasswordConfirm.onDidDismiss((result) => {
@@ -120,7 +122,7 @@ export class AdminListSalesmanPage {
     alert.present(alert)
   }
 
-  resetPassword(user) {
+  resetPassword (user) {
     console.log(user)
     this.apiService.resetUserPassowrd(user['_id']).subscribe((result) => {
       console.log(result)
@@ -134,12 +136,12 @@ export class AdminListSalesmanPage {
     })
   }
 
-  searchSalesman(searchQuery) {
+  searchSalesman (searchQuery) {
       this.filteredSalesmanList = this.allSalesman.filter(user =>
         user.name.toLowerCase().includes(searchQuery.toLowerCase())
       )}
 
- async editSalesman(salesman) {
+ async editSalesman (salesman) {
   const confirm = this.alertCtrl.create({
     title: 'Edit Salesman Information',
     message: 'Are you sure to edit?',
@@ -156,15 +158,18 @@ export class AdminListSalesmanPage {
               this.storageService.setToStorage('editCustomerInfo', salesman).then(() => {
                 this.navCtrl.push(EditUserPage)
               })
-              
         }
       }
     ]
   });
-  confirm.present();
+  confirm.present();  
 }
     // await this.storageService.setToStorage('editCustomerInfo', user)
     // this.navCtrl.push(EditUserPage)
-  
 
+  ionViewDidLoad () {
+    this.navBar.backButtonClick = () => {
+      this.navCtrl.setRoot(AdminHomePage);      
+    }
+  }
 }

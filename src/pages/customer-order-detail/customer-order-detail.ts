@@ -27,7 +27,7 @@ export class CustomerOrderDetailPage {
   headerRow: any[] = [];
   fileTransfer: FileTransferObject = this.transfer.create();
 
-  constructor(public navCtrl: NavController,
+  constructor (public navCtrl: NavController,
               public navParams: NavParams,
               private storageService: StorageServiceProvider,
               private apiService: ApiServiceProvider,
@@ -35,6 +35,7 @@ export class CustomerOrderDetailPage {
               private transfer: FileTransfer) {
 
     this.orderDetail = this.navParams.get('order')
+    console.log('======= 38 =======', this.orderDetail)
     this.orderItems = this.orderDetail.productList
     this.orderItems.map((value) => {
       value['subTotal'] = (parseFloat((Math.round((value.quantity * parseFloat(value.price.toString())) * 100) / 100).toString()).toFixed(2))
@@ -46,11 +47,11 @@ export class CustomerOrderDetailPage {
     this.showCancelOrder= false
   }
 
-  ionViewDidEnter(){
+  ionViewDidEnter (){
     this.checkData()
   }
 
-  async checkData() {
+  async checkData () {
     let profile = await this.storageService.getFromStorage('profile')
     /* if(!(window['cordova']) && (profile['userType'] === 'admin')) {
       this.showCsvButton = true
@@ -69,15 +70,15 @@ export class CustomerOrderDetailPage {
     }
   }
 
-  importOrder() {
+  importOrder () {
     this.changeOrderStatus(CONSTANTS.ORDER_STATUS_RECEIVED, CONSTANTS.ORDER_IMPORTED)
   }
 
-  cancelOrder() {
+  cancelOrder () {
     this.changeOrderStatus(CONSTANTS.ORDER_STATUS_CANCEL, CONSTANTS.ORDER_CANCELLED)
   }
 
-  changeOrderStatus(newStatus, message) {
+  changeOrderStatus (newStatus, message) {
     this.showLoader = true
     this.apiService.changeOrderStatus(this.orderDetail['_id'], {status: newStatus}).subscribe((result) => {
       this.getOrderDetail()
@@ -93,7 +94,7 @@ export class CustomerOrderDetailPage {
     })
   }
 
-  getOrderDetail() {
+  getOrderDetail () {
     this.apiService.getOrderDetail(this.orderDetail['_id']).subscribe((result) => {
       this.orderDetail = result.body[0]
       this.checkData()
@@ -109,13 +110,13 @@ export class CustomerOrderDetailPage {
     })
   }
 
-  doRefresh(refresher) : void {
+  doRefresh (refresher) : void {
     setTimeout(() => {
       refresher.complete();
     }, 1000);
   }
 
-  doInfinite(infiniteScroll) {
+  doInfinite (infiniteScroll) {
     setTimeout(() => {
       infiniteScroll.complete();
     }, 500);

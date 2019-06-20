@@ -50,17 +50,19 @@ export class AddPaymentModalPage {
       if ((profile['userType'] === 'SALESMAN')) {
       this.salesmanName = profile['name']
       this.salesmanCode = profile['externalId']
-      this.userTypeSalesman = true
-      
+      this.userTypeSalesman = true      
       let customer =  await this.storageService.getFromStorage('selectedCustomer')
       this.customerCode = customer['externalId']
       } else {
-        this.apiService.getAssociatedSalesmanListBySalesman(profile['externalId']).subscribe((res: any) => {
-          this.salesmanList = res.body
-          loader.dismiss()
-        })
         this.customerCode = profile['externalId']
       }
+      this.apiService.getAssociatedSalesmanListBySalesman(profile['externalId']).subscribe((res: any) => {
+        this.salesmanList = res.body
+        if (!this.salesmanList.length) {
+          this.widgetUtil.showToast('No salesman association found \n Please contact administration')
+        }
+        loader.dismiss()
+      })
     }
     catch (err) {
       loader.dismiss()
@@ -73,7 +75,7 @@ export class AddPaymentModalPage {
   }
 
   paymentModeSelectionChanged (){
-    this.isEnabled=true;
+    this.isEnabled=this.salesmanList.length ? true : false;
       switch (this.paymentMode) {
         case 'cash':
           this.cashIsSelected=true; 

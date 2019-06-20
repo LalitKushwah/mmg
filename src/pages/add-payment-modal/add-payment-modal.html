@@ -39,7 +39,7 @@
 
     <!-- Hide Select Customer Dropdown when loggen in as Customer
     Instead, show the customer list in label -->
-    <ion-item class="payItem" id="selectSalesman" [ngClass]=" cashIsSelected && !userTypeSalesman ? 'item-visible': 'item-hidden'">
+    <ion-item *ngIf="!userTypeSalesman && salesmanList.length" class="payItem" id="selectSalesman" [ngClass]=" cashIsSelected && !userTypeSalesman ? 'item-visible': 'item-hidden'">
         <ion-label>Select Salesman</ion-label>
           <ion-select>
               <ion-option *ngFor="let salesman of salesmanList" [value] = "salesman" (ionSelect)="selectSalesman(salesman)">{{salesman.name}}</ion-option>

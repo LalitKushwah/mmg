@@ -91,6 +91,8 @@ import { SalesmanSelectCustomerPageModule } from '../pages/salesman-select-custo
 import { AdminListSalesmanPage } from '../pages/admin-list-salesman/admin-list-salesman';
 import { SalesmanDashboardPage } from '../pages/salesman-dashboard/salesman-dashboard';
 import { UserPaymentHistoryPageModule } from '../pages/user-payment-history/user-payment-history.module';
+import { AdminListSalesmanPageModule } from '../pages/admin-list-salesman/admin-list-salesman.module';
+import { SalesmanDashboardPageModule } from '../pages/salesman-dashboard/salesman-dashboard.module';
 
 @NgModule({
   declarations: [
@@ -101,7 +103,7 @@ import { UserPaymentHistoryPageModule } from '../pages/user-payment-history/user
     BrowserModule,
     IonicModule.forRoot(MyApp),
     IonicStorageModule.forRoot(
-      {
+      { 
         name: '__tradekings',
         driverOrder: ['localstorage', 'sqlite', 'indexeddb']
       }
@@ -140,7 +142,11 @@ import { UserPaymentHistoryPageModule } from '../pages/user-payment-history/user
     ClubClassificationPageModule,
     GiftCheckoutPageModule,
     AddSalesmanModalPageModule,
-    UserPaymentHistoryPageModule
+    UserPaymentHistoryPageModule,
+    UserProfilePageModule,
+    SalesmanSelectCustomerPageModule,
+    AdminListSalesmanPageModule,
+    SalesmanDashboardPageModule
   ],
   bootstrap: [IonicApp],
   entryComponents: [
