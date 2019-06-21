@@ -99,12 +99,14 @@ export class AddPaymentModalPage {
     }
   }
 
-  submitPayment () {    
-    this.paymentObj.mode = this.paymentMode
-    this.paymentObj.amount = this.paymentAmount
-    this.onlineID ? this.paymentObj.transactionId = this.onlineID : undefined
-    this.chequeID ? this.paymentObj.chequeID = this.chequeID : undefined
+  submitPayment (mode,amt,chequeId,transactionId) {    
+
+    this.paymentObj.mode = mode.value.toUpperCase()
+    this.paymentObj.amount = amt ? amt.value : undefined
+    transactionId ? (this.paymentObj.transactionId = transactionId.value) : undefined
+    chequeId ? (this.paymentObj.chequeId = chequeId.value) : undefined
     this.paymentObj.customerCode = this.customerCode
+    this.paymentObj.lastUpdatedAt = Date.now()
     if (this.salesmanCode && this.salesmanName) {
       this.paymentObj.salesmanCode = this.salesmanCode 
       this.paymentObj.salesmanName = this.salesmanName
