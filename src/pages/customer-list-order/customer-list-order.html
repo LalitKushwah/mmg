@@ -35,6 +35,7 @@
         <ion-infinite-scroll-content></ion-infinite-scroll-content>
       </ion-infinite-scroll>
     </ion-card> -->
+    <div *ngIf="orderListAvailable && (orderList.length > 1)">
     <ion-card *ngFor="let order of orderList">
       <ion-card-content>
         <ion-row>
@@ -70,6 +71,13 @@
             </ion-col>
           </ion-row>
       </ion-card-content>
+    </ion-card>
+  </div>
+    <ion-card *ngIf="orderListAvailable && (orderList.length < 1)">
+      <ion-card-header text-center class="noDataView">
+          <ion-icon name="alert"></ion-icon>
+        <h4>No record found!</h4>
+      </ion-card-header>
     </ion-card>
     <!-- <ion-infinite-scroll (ionInfinite)="doInfinite($event)">
       <ion-infinite-scroll-content></ion-infinite-scroll-content>

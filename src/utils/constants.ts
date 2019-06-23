@@ -11,6 +11,7 @@ export const CONSTANTS = {
     CUSTOMER_CREATED: 'Customer created successfully',
     ADMIN_CREATED: 'Admin created successfully',
     SALESMAN_CREATED: 'Salesman created successfully',
+    SALESMANAGER_CREATED: 'Salesmanager created successfully',
     PRODUCT_CREATED: 'Product added successfully',
     PRODUCT_UPDATED: 'Product updated successfully',
     CATEGORY_CREATED: 'Category added successfully',

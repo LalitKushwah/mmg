@@ -7,14 +7,6 @@ import { WidgetUtilService } from '../../utils/widget-utils';
 import { EditUserPage } from '../edit-user/edit-user';
 import { AdminHomePage } from '../admin-home/admin-home';
 
-
-/**
- * Generated class for the AdminListSalesmanPage page.
- *
- * See https://ionicframework.com/docs/components/#navigation for more info on
- * Ionic pages and navigation.
- */
-
 @IonicPage({
   name: 'AdminListSalesmanPage'
 })

@@ -17,10 +17,14 @@ page-admin-list-salesman {
             padding-top: 15px;
             margin-right: 10px;
         }
-        &:last-child::first-letter {
-            font-size: 28px;
-            text-transform: uppercase;
-        }
+        // &:last-child::first-letter {
+        //     font-size: 28px;
+        //     text-transform: uppercase;
+        // }
+        &:nth-child(2)::first-letter {
+                font-size: 28px;
+                text-transform: uppercase;
+            }
     }
     ion-label.label {
         margin: 16px 8px 16px 0;
@@ -28,6 +32,31 @@ page-admin-list-salesman {
             width: 40px;
             margin-right: 20px;
             overflow: visible ;
+        }
+    }
+    .salesmanType{
+        background: #d3f2ff;
+        border-radius: 10px;
+        padding: 4px 8px 4px 8px;
+        margin-left: 5px;
+        color: black;
+        font-size: 12px;
+    }
+
+    .item-visible{
+        display: block;
+    }
+    .item-hidden{
+        display: none;
+    }
+    .noDataView{
+        padding: 20px;
+        margin-top: 30%;
+        font-size: 60px;
+        color: #225f93;
+
+        h4{
+            font-size: 2rem
         }
     }
 }

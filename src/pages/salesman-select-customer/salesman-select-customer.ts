@@ -116,8 +116,16 @@ export class SalesmanSelectCustomerPage {
     //Set the Selected Customer to Storage
     this.storageService.setToStorage('selectedCustomer', user)
 
+    this.storageService.setToStorage('selectedCustomer', user)
     this.navCtrl.push(UserProfilePage)
-  }
+  } 
+  // customerSelected(user) {
+  //   //console.log(user)
+  //   //Set the Selected Customer to Storage
+  //   this.storageService.setToStorage('selectedCustomer', user)
+
+  //   this.navCtrl.push(UserProfilePage)
+  // }
 
   searchCustomers (searchQuery) {
       this.filteredUserList = this.allCustomers.filter(user =>

@@ -35,8 +35,8 @@ export class SalesmanDashboardPage {
     currentOutStanding:0,
     thirtyDaysOutStanding:0,
     availableCreditLimit:0,
-    tkPoints:0,
-    tkCurrency:0,
+    // tkPoints:0,
+    // tkCurrency:0,
     mtdAchieved:0,
     }
   loader: any
@@ -161,8 +161,8 @@ prepareData (selectedValue) {
     this.data.currentOutStanding = this.dashboardData.currentOutStanding
     this.data.thirtyDaysOutStanding = this.dashboardData.thirtyDaysOutStanding
     this.data.availableCreditLimit = this.dashboardData.creditLimit - this.data.currentOutStanding
-    this.data.tkPoints = this.dashboardData.tkPoints
-    this.data.tkCurrency = this.dashboardData.tkCurrency
+    // this.data.tkPoints = this.dashboardData.tkPoints
+    // this.data.tkCurrency = this.dashboardData.tkCurrency
     //Preparing Data for Graph
     this.mtdAchieved = this.data.achievement
     this.target = this.data.balanceToDo 

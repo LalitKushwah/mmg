@@ -51,6 +51,7 @@ export class MyApp {
       let profile = await this.storageService.getFromStorage('profile')
       if(profile['userLoginId'] !== 'R0001') {
         if ((profile['userType'] === 'ADMIN')) {
+          this.partyName = 'Mr. ' + profile['name']
           this.pages = [
             {title: 'Home', component: HomePage, icon: 'home', class: 'default'},
             {title: 'Customers', component: AdminListUserPage, icon: 'shopping-bag-new', class: 'default'},
@@ -59,12 +60,14 @@ export class MyApp {
           ]
         } else {
           if ((profile['userType'] === 'SALESMAN')) {
+            this.partyName = 'Mr. ' + profile['name']
             this.pages = [
               // {title: 'Shop', component: SalesmanSelectCustomerPage, icon: 'shopping-bag'},
               {title: 'Dashboard', component: SalesmanDashboardPage, icon: 'dashboard-new', class: 'default'},
               {title: 'Your Orders', component: CustomerListOrderPage, icon: 'cart', class: 'default'},
             ]
           }else{
+            this.partyName = profile['name']
             this.pages = [
               // {title: 'Shop', component: CustomerHomePage, icon: 'shopping-bag'},
               {title: 'Dashboard', component: UserProfilePage, icon: 'dashboard-new', class: 'default'},
@@ -77,9 +80,9 @@ export class MyApp {
       } else {
         this.app.getRootNav().setRoot('OracleConnectPage')
       }
-      if(profile) {
-        this.partyName = profile['name']
-      }
+      // if(profile) {
+      //   this.partyName = 'Mr. ' + profile['name']
+      // }
     } catch (err) {
       console.log('Error: Home Page Component:', err)
     }
