@@ -6,6 +6,7 @@ import { WidgetUtilService} from '../../utils/widget-utils'
 import { AddSalesmanModalPage } from '../add-salesman-modal/add-salesman-modal';
 import { AdminListUserPage } from '../admin-list-user/admin-list-user';
 import { AdminHomePage } from '../admin-home/admin-home';
+import { AdminListSalesmanPage } from '../admin-list-salesman/admin-list-salesman';
  /**
  * Generated class for the EditUserPage page.
  *
@@ -37,7 +38,7 @@ export class EditUserPage {
   updatedUserObject: any = {}
   userData: any = {}
 
-  constructor(public navCtrl: NavController, 
+  constructor (public navCtrl: NavController, 
               public navParams: NavParams, 
               private apiService: ApiServiceProvider, 
               private widgetUtil: WidgetUtilService,
@@ -55,10 +56,10 @@ export class EditUserPage {
     }
   }
 
-  async prepareEditCustomerData() {
+  async prepareEditCustomerData () {
     const customer: any = await this.strorageService.getFromStorage('editCustomerInfo')
     this.userData = customer
-    console.log('======= 60 =======', this.userData)
+    console.log('======== 61 ========', this.userData)
     if (customer) {
       this.custName = customer.name
       this.custCode = customer.externalId
@@ -68,7 +69,7 @@ export class EditUserPage {
     }
   }
 
-  addSalesman(salesman) {
+  addSalesman (salesman) {
     this.strorageService.getFromStorage('editCustomerInfo').then(async (custInfoObj: any) => {
       const salesmanList = custInfoObj.associatedSalesmanList ? custInfoObj.associatedSalesmanList : []
       const res = salesmanList.filter(existingCust => {
@@ -88,12 +89,12 @@ export class EditUserPage {
     })
   }
 
-  opneSalesmanModalPage() {
+  opneSalesmanModalPage () {
     const modal = this.modalCtrl.create(AddSalesmanModalPage);
     modal.present();
   }
 
-  updateUser() {
+  updateUser () {
     const loader = this.loadingCtrl.create({
       content: "Please Wait...",
     });
@@ -117,7 +118,7 @@ export class EditUserPage {
     })
   }
 
-  async removeSalesman(salesman) {
+  async removeSalesman (salesman) {
 
     const confirm = this.alertCtrl.create({
       title: 'Remove salesman?',
@@ -149,11 +150,11 @@ export class EditUserPage {
     confirm.present();
   }
 
-  ionViewDidLoad() {
+  ionViewDidLoad () {
     this.navBar.backButtonClick = () => {
       // this.navCtrl.setRoot(AdminListUserPage);
       //this.navCtrl.setRoot(AdminHomePage);
-      this.navCtrl.push(AdminListUserPage)
+      this.userData.userType === 'CUSTOMER' ? this.navCtrl.push(AdminListUserPage) : this.navCtrl.push(AdminListSalesmanPage)
 	}
 }
 

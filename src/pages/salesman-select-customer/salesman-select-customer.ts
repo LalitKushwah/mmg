@@ -23,7 +23,7 @@ export class SalesmanSelectCustomerPage {
   allCustomers = []
   abc: any;
 
-   constructor(public navCtrl: NavController, public navParams: NavParams,
+   constructor (public navCtrl: NavController, public navParams: NavParams,
               private apiService: ApiServiceProvider,
               private widgetUtil: WidgetUtilService,
               private alertCtrl: AlertController,
@@ -47,7 +47,7 @@ export class SalesmanSelectCustomerPage {
   //     }
   //   })
   // }
-  async getUserList() {
+  async getUserList () {
     let profile: any = await this.storageService.getFromStorage('profile')
     this.apiService.getAssociatedCustomersListBySalesman(profile.externalId).subscribe((result: any) => {
       this.userList = result.body
@@ -64,7 +64,7 @@ export class SalesmanSelectCustomerPage {
     })
   }
 
-  doInfinite(infiniteScroll) {
+  doInfinite (infiniteScroll) {
     this.skipValue = this.skipValue + this.limit
     this.apiService.getCustomerList(this.skipValue, this.limit).subscribe((result) => {
       if(result.body.length > 0) {
@@ -85,14 +85,15 @@ export class SalesmanSelectCustomerPage {
     })
   }
 
-  doRefresh(refresher) : void {
+  doRefresh (refresher) : void {
     this.getUserList()
     setTimeout(() => {
       refresher.complete();
     }, 1000);
   }
 
-  selectCustomer(user) {
+  selectCustomer (user) {
+    this.customerSelected(user)
     // let alert = this.alertCtrl.create();
     // alert.setTitle('Confirm Customer!')
     // alert.setMessage('Are you sure you want to place order for ' +  user.name)
@@ -109,6 +110,11 @@ export class SalesmanSelectCustomerPage {
     //   }
     // })
     // alert.present(alert)
+  } 
+  customerSelected (user) {
+    //console.log(user)
+    //Set the Selected Customer to Storage
+    this.storageService.setToStorage('selectedCustomer', user)
 
     this.storageService.setToStorage('selectedCustomer', user)
     this.navCtrl.push(UserProfilePage)
@@ -121,7 +127,7 @@ export class SalesmanSelectCustomerPage {
   //   this.navCtrl.push(UserProfilePage)
   // }
 
-  searchCustomers(searchQuery) {
+  searchCustomers (searchQuery) {
       this.filteredUserList = this.allCustomers.filter(user =>
         user.name.toLowerCase().includes(searchQuery.toLowerCase())
       )}

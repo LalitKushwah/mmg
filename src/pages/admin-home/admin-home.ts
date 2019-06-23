@@ -58,7 +58,7 @@ export class AdminHomePage {
     })
   }
 
-  getOrderDetial (order) {
+  getOrderDetail (order) {
     let orderObj = {
       order: order
     }
@@ -73,6 +73,15 @@ export class AdminHomePage {
       if(result.body.length > 0) {
         result.body.map( (value) => {
           this.orderList.push(value)
+          this.orderList.map((value) => {
+            value.lastUpdatedAt = this.formatDate(value.lastUpdatedAt)
+            value.orderTotal = parseFloat((Math.round(value.orderTotal * 100) / 100).toString()).toFixed(2)
+            if((value.status != CONSTANTS.ORDER_STATUS_RECEIVED) && (value.status != CONSTANTS.ORDER_STATUS_CANCEL)) {
+              value.showImport = true
+            } else {
+              value.showImport = false
+            }
+          })
         })
       } else {
         this.skipValue = this.limit

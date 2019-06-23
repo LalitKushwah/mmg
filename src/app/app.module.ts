@@ -103,7 +103,7 @@ import { SalesmanDashboardPageModule } from '../pages/salesman-dashboard/salesma
     BrowserModule,
     IonicModule.forRoot(MyApp),
     IonicStorageModule.forRoot(
-      {
+      { 
         name: '__tradekings',
         driverOrder: ['localstorage', 'sqlite', 'indexeddb']
       }

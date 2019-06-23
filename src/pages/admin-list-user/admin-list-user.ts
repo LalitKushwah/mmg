@@ -25,7 +25,7 @@ export class AdminListUserPage {
   searchQuery: string
   allCustomers = []
 
-  constructor(public navCtrl: NavController, public navParams: NavParams,
+  constructor (public navCtrl: NavController, public navParams: NavParams,
               private apiService: ApiServiceProvider,
               private widgetUtil: WidgetUtilService,
               private alertCtrl: AlertController,
@@ -35,7 +35,7 @@ export class AdminListUserPage {
     this.getUserList()
   }
 
-  ionViewWillEnter() {
+  ionViewWillEnter () {
     this.apiService.getAllCustomers().subscribe((result) => {
       if (result.body && result.body.length > 0) {
         this.allCustomers = result.body
@@ -48,7 +48,7 @@ export class AdminListUserPage {
       }
     })
   }
-  getUserList() {
+  getUserList () {
     this.apiService.getCustomerList(this.skipValue, this.limit).subscribe((result) => {
       this.userList = result.body
       this.filteredUserList = this.userList
@@ -63,7 +63,7 @@ export class AdminListUserPage {
     })
   }
 
-  doInfinite(infiniteScroll) {
+  doInfinite (infiniteScroll) {
     this.skipValue = this.skipValue + this.limit
     this.apiService.getCustomerList(this.skipValue, this.limit).subscribe((result) => {
       if(result.body.length > 0) {
@@ -84,14 +84,14 @@ export class AdminListUserPage {
     })
   }
 
-  doRefresh(refresher) : void {
+  doRefresh (refresher) : void {
     this.getUserList()
     setTimeout(() => {
       refresher.complete();
     }, 1000);
   }
 
-  resetPasswordModel(user) {
+  resetPasswordModel (user) {
     /* const resetPasswordConfirm = this.modal.create('ResetPasswordModelPage', {message: 'Are you sure you want to reset password for ' +  customerName})
     resetPasswordConfirm.present()
     resetPasswordConfirm.onDidDismiss((result) => {
@@ -115,7 +115,7 @@ export class AdminListUserPage {
     alert.present(alert)
   }
 
-  resetPassword(user) {
+  resetPassword (user) {
     console.log(user)
     this.apiService.resetUserPassowrd(user['_id']).subscribe((result) => {
       console.log(result)
@@ -129,17 +129,17 @@ export class AdminListUserPage {
     })
   }
 
-  searchCustomers(searchQuery) {
+  searchCustomers (searchQuery) {
       this.filteredUserList = this.allCustomers.filter(user =>
         user.name.toLowerCase().includes(searchQuery.toLowerCase())
       )}
 
- async editCustomer(user) {
+ async editCustomer (user) {
     const res = await this.storageService.setToStorage('editCustomerInfo', user)
     console.log('====== 137 =====', res)
     this.navCtrl.push(EditUserPage)
   }
-  ionViewDidLoad() {
+  ionViewDidLoad () {
     this.navBar.backButtonClick = () => {
       this.navCtrl.setRoot(AdminHomePage)
       //this.navCtrl.push(AdminHomePage)

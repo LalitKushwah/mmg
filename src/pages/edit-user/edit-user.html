@@ -28,11 +28,11 @@
             <ion-label floating>Customer Code</ion-label>
             <ion-input disabled="true" type="text" [(ngModel)]="custCode"></ion-input>
           </ion-item>
-          <ion-item>
+          <ion-item *ngIf="userData.userType === 'CUSTOMER' ">
               <ion-label floating>TK Point</ion-label>
               <ion-input type="text" [(ngModel)]="tkPoint"></ion-input>
           </ion-item>
-          <ion-item>
+          <ion-item *ngIf="userData.userType === 'CUSTOMER' ">
               <ion-label floating>TK Currency</ion-label>
               <ion-input type="text" [(ngModel)]="tkCurrency"></ion-input>
           </ion-item>
@@ -52,8 +52,10 @@
               <button class="pill-remove" (click)="removeSalesman(salesman)"><ion-icon name="close-circle" class="pill-close-icon"></ion-icon></button>
             </div>
           <ion-grid>
-            <button ion-button color="secondary"  (click)="updateUser()" class="update-btn">Update
+            <button *ngIf="userData.userType === 'CUSTOMER'" ion-button color="secondary"  (click)="updateUser()" class="update-btn">Update
               Customer<ion-spinner name="dots" *ngIf="showLoader"></ion-spinner></button>
+              <button *ngIf="userData.userType === 'SALESMAN'" ion-button color="secondary"  (click)="updateUser()" class="update-btn">Update
+                Salesman<ion-spinner name="dots" *ngIf="showLoader"></ion-spinner></button>
           </ion-grid>
       </ion-col>
       </ion-row>

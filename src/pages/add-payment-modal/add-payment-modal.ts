@@ -50,17 +50,19 @@ export class AddPaymentModalPage {
       if ((profile['userType'] === 'SALESMAN')) {
       this.salesmanName = profile['name']
       this.salesmanCode = profile['externalId']
-      this.userTypeSalesman = true
-      
+      this.userTypeSalesman = true      
       let customer =  await this.storageService.getFromStorage('selectedCustomer')
       this.customerCode = customer['externalId']
       } else {
-        this.apiService.getAssociatedSalesmanListBySalesman(profile['externalId']).subscribe((res: any) => {
-          this.salesmanList = res.body
-          loader.dismiss()
-        })
         this.customerCode = profile['externalId']
       }
+      this.apiService.getAssociatedSalesmanListBySalesman(profile['externalId']).subscribe((res: any) => {
+        this.salesmanList = res.body
+        if (!this.salesmanList.length) {
+          this.widgetUtil.showToast('No salesman association found \n Please contact administration')
+        }
+        loader.dismiss()
+      })
     }
     catch (err) {
       loader.dismiss()
@@ -73,7 +75,7 @@ export class AddPaymentModalPage {
   }
 
   paymentModeSelectionChanged (){
-    this.isEnabled=true;
+    this.isEnabled=this.salesmanList.length ? true : false;
       switch (this.paymentMode) {
         case 'cash':
           this.cashIsSelected=true; 
@@ -97,12 +99,14 @@ export class AddPaymentModalPage {
     }
   }
 
-  submitPayment () {    
-    this.paymentObj.mode = this.paymentMode
-    this.paymentObj.amount = this.paymentAmount
-    this.onlineID ? this.paymentObj.transactionId = this.onlineID : undefined
-    this.chequeID ? this.paymentObj.chequeID = this.chequeID : undefined
+  submitPayment (mode,amt,chequeId,transactionId) {    
+
+    this.paymentObj.mode = mode.value.toUpperCase()
+    this.paymentObj.amount = amt ? amt.value : undefined
+    transactionId ? (this.paymentObj.transactionId = transactionId.value) : undefined
+    chequeId ? (this.paymentObj.chequeId = chequeId.value) : undefined
     this.paymentObj.customerCode = this.customerCode
+    this.paymentObj.lastUpdatedAt = Date.now()
     if (this.salesmanCode && this.salesmanName) {
       this.paymentObj.salesmanCode = this.salesmanCode 
       this.paymentObj.salesmanName = this.salesmanName
