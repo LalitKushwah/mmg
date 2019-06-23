@@ -6,4 +6,17 @@ page-user-payment-history {
     .item-hidden{
         display: none;
     }
+    .noDataView{
+        border-bottom: none;
+        ion-card-header{
+            padding: 20px;
+            margin-top: 30%;
+            font-size: 60px;
+            color: #225f93;
+
+            h4{
+                font-size: 2rem
+            }
+        }
+    }
 }

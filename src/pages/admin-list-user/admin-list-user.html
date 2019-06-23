@@ -26,10 +26,11 @@
       </button>
     </ion-item>
   </ion-list>
-  <ion-card *ngIf="userListAvailable && (userList.length < 1)">
+  <ion-card *ngIf="userListAvailable && (userList.length < 1)" class="noDataView">
     <ion-card-header text-center>
-      <h4>No record found</h4>
-    </ion-card-header>
+      <ion-icon name="alert"></ion-icon>
+        <h4>No record found!</h4>
+      </ion-card-header>
   </ion-card>
   <ion-infinite-scroll (ionInfinite)="doInfinite($event)">
     <ion-infinite-scroll-content></ion-infinite-scroll-content>

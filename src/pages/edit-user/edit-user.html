@@ -25,7 +25,9 @@
             <ion-input type="text" [(ngModel)]="custName"></ion-input>
           </ion-item>
           <ion-item>
-            <ion-label floating>Customer Code</ion-label>
+            <ion-label floating *ngIf="userData.userType === 'CUSTOMER'">Customer Code</ion-label>
+            <ion-label floating *ngIf="userData.userType === 'SALESMAN'">Salesman Code</ion-label>
+            <ion-label floating *ngIf="userData.userType === 'SALESMANAGER'">Salesmanager Code</ion-label>
             <ion-input disabled="true" type="text" [(ngModel)]="custCode"></ion-input>
           </ion-item>
           <ion-item *ngIf="userData.userType === 'CUSTOMER' ">
@@ -54,8 +56,10 @@
           <ion-grid>
             <button *ngIf="userData.userType === 'CUSTOMER'" ion-button color="secondary"  (click)="updateUser()" class="update-btn">Update
               Customer<ion-spinner name="dots" *ngIf="showLoader"></ion-spinner></button>
-              <button *ngIf="userData.userType === 'SALESMAN'" ion-button color="secondary"  (click)="updateUser()" class="update-btn">Update
-                Salesman<ion-spinner name="dots" *ngIf="showLoader"></ion-spinner></button>
+            <button *ngIf="userData.userType === 'SALESMAN'" ion-button color="secondary"  (click)="updateUser()" class="update-btn">Update
+              Salesman<ion-spinner name="dots" *ngIf="showLoader"></ion-spinner></button>
+            <button *ngIf="userData.userType === 'SALESMANAGER'" ion-button color="secondary"  (click)="updateUser()" class="update-btn">Update
+              Salesmanager<ion-spinner name="dots" *ngIf="showLoader"></ion-spinner></button>
           </ion-grid>
       </ion-col>
       </ion-row>

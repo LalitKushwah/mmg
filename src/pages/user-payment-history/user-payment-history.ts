@@ -23,6 +23,7 @@ export class UserPaymentHistoryPage {
   onlineId: any = '12QWERTY34'; 
   chequeId: any = '12345';
   data = []
+  paymentHistoryAvailable: boolean = false
 
   constructor (public navCtrl: NavController, 
                public navParams: NavParams,
@@ -49,8 +50,10 @@ export class UserPaymentHistoryPage {
         if (res && res.body) {
           this.data = res.body
           this.widgetCtrl.showToast('Data Fetched Successfully...')
+          this.paymentHistoryAvailable = true
         } else {
           this.widgetCtrl.showToast('Problem while fetching data')
+          this.paymentHistoryAvailable = true
         }
         loader.dismiss()
     })

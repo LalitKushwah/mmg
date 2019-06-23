@@ -135,11 +135,11 @@
             *Password is required
           </p>
           <ion-item>
-            <ion-label floating>Customer Code</ion-label>
+            <ion-label floating>Salesman Code</ion-label>
             <ion-input type="text" formControlName="externalId"></ion-input>
           </ion-item>
           <p class="error" *ngIf="externalId.hasError('required') && externalId.touched">
-            *Customer code is required
+            *Salesman code is required
           </p>
           <ion-grid>
             <button ion-button color="secondary" [disabled]="!(addSalesmanForm.controls.name.valid && addSalesmanForm.controls.userLoginId.valid && addSalesmanForm.controls.password.valid)"
@@ -173,11 +173,11 @@
             *Password is required
           </p>
           <ion-item>
-            <ion-label floating>Customer Code</ion-label>
+            <ion-label floating>Salesmanager Code</ion-label>
             <ion-input type="text" formControlName="externalId"></ion-input>
           </ion-item>
           <p class="error" *ngIf="externalId.hasError('required') && externalId.touched">
-            *Customer code is required
+            *Salesmanager code is required
           </p>
           <ion-grid>
             <button ion-button color="secondary" [disabled]="!(addSalesmanForm.controls.name.valid && addSalesmanForm.controls.userLoginId.valid && addSalesmanForm.controls.password.valid)"
