@@ -6,6 +6,7 @@ import { CONSTANTS } from '../../utils/constants';
 import { EditUserPage } from '../edit-user/edit-user';
 import { StorageServiceProvider } from '../../providers/storage-service/storage-service';
 import { AdminHomePage } from '../admin-home/admin-home';
+import { AdminDashboardPage } from '../admin-dashboard/admin-dashboard';
 
 @IonicPage({
   name: 'AdminListUserPage'
@@ -141,7 +142,7 @@ export class AdminListUserPage {
   }
   ionViewDidLoad () {
     this.navBar.backButtonClick = () => {
-      this.navCtrl.setRoot(AdminHomePage)
+      this.navCtrl.setRoot(AdminDashboardPage)
       //this.navCtrl.push(AdminHomePage)
     }
   }

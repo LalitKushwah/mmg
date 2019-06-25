@@ -11,6 +11,7 @@ import { CONSTANTS } from "../../utils/constants";
 
 import { UserProfilePage } from '../user-profile/user-profile';
 import { SalesmanDashboardPage } from '../salesman-dashboard/salesman-dashboard';
+import { AdminDashboardPage } from '../admin-dashboard/admin-dashboard';
 
 @Component({
   selector: 'page-home',
@@ -37,7 +38,7 @@ export class HomePage {
         } else {
           this.menuController.swipeEnable(true, 'main_menu')
           if (profile['userType'] === 'ADMIN') {
-            this.navCtrl.setRoot(AdminHomePage)
+            this.navCtrl.setRoot(AdminDashboardPage)
           } else {
             if (profile['userType'] === 'SALESMAN'){
               this.navCtrl.setRoot(SalesmanDashboardPage)

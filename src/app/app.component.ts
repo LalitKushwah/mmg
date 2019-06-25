@@ -18,6 +18,8 @@ import { CustomerListOrderPage } from '../pages/customer-list-order/customer-lis
 import { ClubPremierPage } from '../pages/club-premier/club-premier';
 import { AdminListSalesmanPage } from '../pages/admin-list-salesman/admin-list-salesman';
 import { UserPaymentHistoryPage } from '../pages/user-payment-history/user-payment-history';
+import { AdminDashboardPage } from '../pages/admin-dashboard/admin-dashboard'; 
+import { AdminHomePage } from '../pages/admin-home/admin-home';
 
 @Component({
   templateUrl: 'app.html'
@@ -53,7 +55,8 @@ export class MyApp {
         if ((profile['userType'] === 'ADMIN')) {
           this.partyName = 'Mr. ' + profile['name']
           this.pages = [
-            {title: 'Home', component: HomePage, icon: 'home', class: 'default'},
+            {title: 'Dashboard', component: AdminDashboardPage, icon: 'dashboard-new', class: 'default'},
+            {title: 'Your Orders', component: AdminHomePage, icon: 'cart', class: 'default'},
             {title: 'Customers', component: AdminListUserPage, icon: 'shopping-bag-new', class: 'default'},
             {title: 'Salesman', component: AdminListSalesmanPage, icon: 'briefcase', class: 'default'},
             {title: 'Products', component: AdminListCategoryPage, icon: 'products', class: 'default'},

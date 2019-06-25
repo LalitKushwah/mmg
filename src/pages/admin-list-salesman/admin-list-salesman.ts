@@ -6,6 +6,7 @@ import { ApiServiceProvider } from '../../providers/api-service/api-service';
 import { WidgetUtilService } from '../../utils/widget-utils';
 import { EditUserPage } from '../edit-user/edit-user';
 import { AdminHomePage } from '../admin-home/admin-home';
+import { AdminDashboardPage } from '../admin-dashboard/admin-dashboard';
 
 @IonicPage({
   name: 'AdminListSalesmanPage'
@@ -161,7 +162,7 @@ export class AdminListSalesmanPage {
 
   ionViewDidLoad () {
     this.navBar.backButtonClick = () => {
-      this.navCtrl.setRoot(AdminHomePage);      
+      this.navCtrl.setRoot(AdminDashboardPage);      
     }
   }
 }
