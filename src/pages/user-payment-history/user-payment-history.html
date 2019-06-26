@@ -47,7 +47,7 @@
         </ion-card-content>
       </ion-card>
 
-      <ion-card *ngIf="paymentHistoryAvailable && (data.length < 1)" class="noDataView">
+      <ion-card *ngIf="paymentHistoryAvailable && data && (data.length < 1)" class="noDataView">
         <ion-card-header text-center>
           <ion-icon name="alert"></ion-icon>
             <h4>No record found!</h4>

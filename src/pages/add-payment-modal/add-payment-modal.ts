@@ -57,7 +57,7 @@ export class AddPaymentModalPage {
         this.customerCode = profile['externalId']
       }
       this.apiService.getAssociatedSalesmanListBySalesman(profile['externalId']).subscribe((res: any) => {
-        this.salesmanList = res.body
+        this.salesmanList = res.body ? res.body : []
         if (!this.salesmanList.length) {
           this.widgetUtil.showToast('No salesman association found \n Please contact administration')
         }
@@ -100,11 +100,11 @@ export class AddPaymentModalPage {
   }
 
   submitPayment (mode,amt,chequeId,transactionId) {    
-
+    console.log('======= 103 =======', this.onlineID)
     this.paymentObj.mode = mode.value.toUpperCase()
     this.paymentObj.amount = amt ? amt.value : undefined
-    transactionId ? (this.paymentObj.transactionId = transactionId.value) : undefined
-    chequeId ? (this.paymentObj.chequeId = chequeId.value) : undefined
+    this.onlineID ? (this.paymentObj.transactionId = this.onlineID) : undefined
+    this.chequeID ? (this.paymentObj.chequeId = this.chequeID) : undefined
     this.paymentObj.customerCode = this.customerCode
     this.paymentObj.lastUpdatedAt = Date.now()
     if (this.salesmanCode && this.salesmanName) {
@@ -114,6 +114,8 @@ export class AddPaymentModalPage {
     this.apiService.createPayment(this.paymentObj).subscribe((res : any)=> {
       if (res.status === 200) {
         this.widgetUtil.showToast('Payment created successfully...')
+        this.onlineID = undefined;
+        this.chequeID = undefined;
         this.closePayModal()
       } else {
         this.widgetUtil.showToast('Error while creating payment...')
