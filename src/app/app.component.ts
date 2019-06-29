@@ -63,7 +63,7 @@ export class MyApp {
           ]
         } else {
           if ((profile['userType'] === 'ADMINHO')) {
-            this.partyName = 'Mr.. ' + profile['name']
+            this.partyName = 'Mr. ' + profile['name']
             this.pages = [
               {title: 'Dashboard', component: AdminDashboardPage, icon: 'dashboard-new', class: 'default'},
               {title: 'Orders', component: AdminHomePage, icon: 'cart', class: 'default'},
@@ -72,7 +72,7 @@ export class MyApp {
               {title: 'Products', component: AdminListCategoryPage, icon: 'products', class: 'default'},
             ]
           }else {
-          if ((profile['userType'] === 'SALESMAN')) {
+          if ((profile['userType'] === 'SALESMAN') || (profile['userType'] === 'SALESMANAGER')) {
             this.partyName = 'Mr. ' + profile['name']
             this.pages = [
               // {title: 'Shop', component: SalesmanSelectCustomerPage, icon: 'shopping-bag'},

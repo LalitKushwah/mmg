@@ -43,7 +43,7 @@ export class HomePage {
           if (profile['userType'] === 'ADMINHO') {
             this.navCtrl.setRoot(AdminDashboardPage)
           } else {
-            if (profile['userType'] === 'SALESMAN'){
+            if (profile['userType'] === 'SALESMAN' || profile['userType'] === 'SALESMANAGER'){
               this.navCtrl.setRoot(SalesmanDashboardPage)
             } else{
               //this.navCtrl.setRoot(CustomerHomePage)
