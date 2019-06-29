@@ -10,6 +10,7 @@ export const CONSTANTS = {
     PAGINATION_LIMIT: 20,
     CUSTOMER_CREATED: 'Customer created successfully',
     ADMIN_CREATED: 'Admin created successfully',
+    ADMINHO_CREATED: 'Admin HO created successfully',
     SALESMAN_CREATED: 'Salesman created successfully',
     SALESMANAGER_CREATED: 'Salesmanager created successfully',
     PRODUCT_CREATED: 'Product added successfully',

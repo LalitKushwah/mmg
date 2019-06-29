@@ -15,6 +15,7 @@ import { CONSTANTS } from '../../utils/constants';
 export class AddUserPage implements OnInit {
 
   addAdminForm : FormGroup;
+  addAdminHOForm : FormGroup;
   addCustomerForm : FormGroup;
   addSalesmanForm: FormGroup;
   addSalesmanagerForm: FormGroup;
@@ -26,7 +27,7 @@ export class AddUserPage implements OnInit {
   channel: FormControl;
   province: FormControl;
   showLoader = false;
-  userTypeList: Array<any> =  [ 'CUSTOMER', 'ADMIN','SALESMAN','SALESMANAGER']
+  userTypeList: Array<any> =  [ 'CUSTOMER', 'ADMIN','ADMINHO','SALESMAN','SALESMANAGER']
   countryList: Array<any> =  [ 'ZAMBIA']
   provinceList: Array<any> =  [ 'BOTSWANA', 'COPPERBELT', 'DRC', 'EASTERN', 'KENYA', 'LUAPULA', 'LUSAKA', 'MALAWI', 'MOZAMBIQUE', 'NORTH WESTERN', 'NORTHERN'
   ,'SOUTH AFRICA', 'SOUTHERN', 'TANZANIA', 'WESTERN', 'ZIMBABWE' ]
@@ -43,6 +44,7 @@ export class AddUserPage implements OnInit {
   ngOnInit (): void {
     this.createFormControls()
     this.createAdminForm()
+    this.createAdminHOForm()
     this.createCustomerForm()
     this.createSalesmanForm()
 
@@ -85,6 +87,15 @@ export class AddUserPage implements OnInit {
     });
   }
 
+  //ADMINHO Form
+  createAdminHOForm () {
+    this.addAdminHOForm = new FormGroup({
+      name: this.name,
+      userLoginId: this.userLoginId,
+      password: this.password
+    });
+  }
+
   createSalesmanForm () {
     this.addSalesmanForm = new FormGroup({
       name: this.name,
@@ -94,7 +105,7 @@ export class AddUserPage implements OnInit {
     });
   }
 
-  //Sa'esmanager Form
+  //Salesmanager Form
   createSalesmanagerForm () {
     this.addSalesmanagerForm = new FormGroup({
       name: this.name,
@@ -117,7 +128,10 @@ export class AddUserPage implements OnInit {
   onUserTypeSelect () {
     this.showCustomerForm = this.selectedUserType
     this.addAdminForm.reset()
+    this.addAdminHOForm.reset()
     this.addCustomerForm.reset()
+    this.addSalesmanForm.reset()
+    this.addSalesmanagerForm.reset()
   } 
 
   createUser (userType) {
@@ -137,6 +151,14 @@ export class AddUserPage implements OnInit {
       userDetails['externalId'] = this.externalId.value.trim()
     } else if(userType === 'admin') {
       message = CONSTANTS.ADMIN_CREATED
+      userDetails['name'] = this.name.value.trim()
+      userDetails['userLoginId'] = this.userLoginId.value.trim()
+      userDetails['password'] = this.password.value.trim()
+      userDetails['userType'] = this.selectedUserType
+      userDetails['country'] = this.selectedCountry.trim()
+      userDetails['province'] = this.selectedProvince.trim()
+    } else if(userType === 'ADMINHO') {
+      message = CONSTANTS.ADMINHO_CREATED
       userDetails['name'] = this.name.value.trim()
       userDetails['userLoginId'] = this.userLoginId.value.trim()
       userDetails['password'] = this.password.value.trim()

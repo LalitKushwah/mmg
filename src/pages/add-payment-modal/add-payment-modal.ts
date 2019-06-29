@@ -16,7 +16,7 @@ export class AddPaymentModalPage {
   onlineID;
   chequeID;
   selectedSalesman: any;
-  isEnabled:boolean=true;
+  isEnabled:boolean=false;
   cashIsSelected:boolean=false;
   chequeIsSelected:boolean=false;
   onlineIsSelected:boolean=false;
@@ -82,25 +82,35 @@ export class AddPaymentModalPage {
           this.cashIsSelected=true; 
           this.chequeIsSelected=false; 
           this.onlineIsSelected=false;
+          this.isEnabled=true;
             break;
         case 'cheque':
           this.chequeIsSelected=true; 
           this.cashIsSelected=false; 
-          this.onlineIsSelected=false; 
+          this.onlineIsSelected=false;
+          this.isEnabled=true;
             break;
         case 'bank transfer':
           this.onlineIsSelected=true;
           this.chequeIsSelected=false; 
-          this.cashIsSelected=false; 
+          this.cashIsSelected=false;
+          this.isEnabled=true;
             break;
         default:
             this.onlineIsSelected=false;
             this.chequeIsSelected=false; 
-            this.cashIsSelected=false; 
+            this.cashIsSelected=false;
+            this.isEnabled=false;
     }
   }
 
   submitPayment (mode,amt,chequeId,transactionId,comment,paidTo) {    
+    
+    //Payment Loader
+    const payLoader = this.loadingCtrl.create({
+      content: "Adding Payment...",
+    });
+    payLoader.present()
 
     this.paymentObj.mode = mode.value.toUpperCase()
     this.paymentObj.amount = amt ? amt.value : undefined
@@ -121,11 +131,14 @@ export class AddPaymentModalPage {
     console.log(this.paymentObj)
     this.apiService.createPayment(this.paymentObj).subscribe((res : any)=> {
       if (res.status === 200) {
+        payLoader.dismiss()
         this.widgetUtil.showToast('Payment created successfully...')
         this.closePayModal()
       } else {
+        payLoader.dismiss()
         this.widgetUtil.showToast('Error while creating payment...')
       }
+      payLoader.dismiss()
     })
   }
 

@@ -40,6 +40,9 @@ export class HomePage {
           if (profile['userType'] === 'ADMIN') {
             this.navCtrl.setRoot(AdminDashboardPage)
           } else {
+          if (profile['userType'] === 'ADMINHO') {
+            this.navCtrl.setRoot(AdminDashboardPage)
+          } else {
             if (profile['userType'] === 'SALESMAN'){
               this.navCtrl.setRoot(SalesmanDashboardPage)
             } else{
@@ -48,7 +51,8 @@ export class HomePage {
             }
           }
         }
-      } else {
+      }
+    } else {
         this.gotToLogin()
       }
     } catch (err) {

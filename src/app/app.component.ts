@@ -56,12 +56,22 @@ export class MyApp {
           this.partyName = 'Mr. ' + profile['name']
           this.pages = [
             {title: 'Dashboard', component: AdminDashboardPage, icon: 'dashboard-new', class: 'default'},
-            {title: 'Your Orders', component: AdminHomePage, icon: 'cart', class: 'default'},
+            {title: 'Orders', component: AdminHomePage, icon: 'cart', class: 'default'},
             {title: 'Customers', component: AdminListUserPage, icon: 'shopping-bag-new', class: 'default'},
             {title: 'Salesman', component: AdminListSalesmanPage, icon: 'briefcase', class: 'default'},
             {title: 'Products', component: AdminListCategoryPage, icon: 'products', class: 'default'},
           ]
         } else {
+          if ((profile['userType'] === 'ADMINHO')) {
+            this.partyName = 'Mr.. ' + profile['name']
+            this.pages = [
+              {title: 'Dashboard', component: AdminDashboardPage, icon: 'dashboard-new', class: 'default'},
+              {title: 'Orders', component: AdminHomePage, icon: 'cart', class: 'default'},
+              {title: 'Customers', component: AdminListUserPage, icon: 'shopping-bag-new', class: 'default'},
+              {title: 'Salesman', component: AdminListSalesmanPage, icon: 'briefcase', class: 'default'},
+              {title: 'Products', component: AdminListCategoryPage, icon: 'products', class: 'default'},
+            ]
+          }else {
           if ((profile['userType'] === 'SALESMAN')) {
             this.partyName = 'Mr. ' + profile['name']
             this.pages = [
@@ -80,7 +90,8 @@ export class MyApp {
             ]
           }   
         }
-      } else {
+      }
+    } else {
         this.app.getRootNav().setRoot('OracleConnectPage')
       }
       // if(profile) {
