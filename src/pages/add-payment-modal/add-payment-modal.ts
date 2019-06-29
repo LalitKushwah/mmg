@@ -16,7 +16,7 @@ export class AddPaymentModalPage {
   onlineID;
   chequeID;
   selectedSalesman: any;
-  isEnabled:boolean=false;
+  isEnabled:boolean=true;
   cashIsSelected:boolean=false;
   chequeIsSelected:boolean=false;
   onlineIsSelected:boolean=false;
@@ -56,13 +56,14 @@ export class AddPaymentModalPage {
       } else {
         this.customerCode = profile['externalId']
       }
-      this.apiService.getAssociatedSalesmanListBySalesman(profile['externalId']).subscribe((res: any) => {
-        this.salesmanList = res.body
-        if (!this.salesmanList.length) {
-          this.widgetUtil.showToast('No salesman association found \n Please contact administration')
-        }
-        loader.dismiss()
-      })
+      // this.apiService.getAssociatedSalesmanListBySalesman(profile['externalId']).subscribe((res: any) => {
+      //   this.salesmanList = res.body
+      //   if (!this.salesmanList.length) {
+      //     this.widgetUtil.showToast('No salesman association found \n Please contact administration')
+      //   }
+      //   loader.dismiss()
+      // })
+      loader.dismiss()
     }
     catch (err) {
       loader.dismiss()
@@ -75,7 +76,7 @@ export class AddPaymentModalPage {
   }
 
   paymentModeSelectionChanged (){
-    this.isEnabled=this.salesmanList.length ? true : false;
+    //this.isEnabled=this.salesmanList.length ? true : false;
       switch (this.paymentMode) {
         case 'cash':
           this.cashIsSelected=true; 
@@ -99,18 +100,25 @@ export class AddPaymentModalPage {
     }
   }
 
-  submitPayment (mode,amt,chequeId,transactionId) {    
+  submitPayment (mode,amt,chequeId,transactionId,comment,paidTo) {    
 
     this.paymentObj.mode = mode.value.toUpperCase()
     this.paymentObj.amount = amt ? amt.value : undefined
     transactionId ? (this.paymentObj.transactionId = transactionId.value) : undefined
     chequeId ? (this.paymentObj.chequeId = chequeId.value) : undefined
+
+    //Adding COMMENT to Payment Obj
+    this.paymentObj.comment = comment ? comment.value : undefined
+    //Adding salesman Name
+    this.paymentObj.paidTo = paidTo ? paidTo.value : undefined
+
     this.paymentObj.customerCode = this.customerCode
     this.paymentObj.lastUpdatedAt = Date.now()
     if (this.salesmanCode && this.salesmanName) {
       this.paymentObj.salesmanCode = this.salesmanCode 
       this.paymentObj.salesmanName = this.salesmanName
     }
+    console.log(this.paymentObj)
     this.apiService.createPayment(this.paymentObj).subscribe((res : any)=> {
       if (res.status === 200) {
         this.widgetUtil.showToast('Payment created successfully...')
@@ -121,10 +129,11 @@ export class AddPaymentModalPage {
     })
   }
 
-  selectSalesman (salesman) {
-    this.selectedSalesman = salesman
-    this.paymentObj.salesmanCode = salesman.externalId
-    this.paymentObj.salesmanName = salesman.name
-  }
+  //Removing Select Salesman Dropdown
+  // selectSalesman (salesman) {
+  //   this.selectedSalesman = salesman
+  //   this.paymentObj.salesmanCode = salesman.externalId
+  //   this.paymentObj.salesmanName = salesman.name
+  // }
 
 }
