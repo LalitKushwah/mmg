@@ -26,7 +26,7 @@ export class PopoverHomePage {
 
   async getData() {
     let profile = await this.storageService.getFromStorage('profile')
-    if (profile['userType'] === 'ADMIN') {
+    if (profile['userType'] === 'ADMIN' || profile['userType'] === 'ADMINHO') {
       this.popoverOptions = [
         {
           name: 'Add User',

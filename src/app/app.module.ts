@@ -32,6 +32,7 @@ import { ListPage } from '../pages/list/list';
 import { UserProfilePage } from '../pages/user-profile/user-profile';
 import { SalesmanSelectCustomerPage } from '../pages/salesman-select-customer/salesman-select-customer';
 import { UserPaymentHistoryPage } from '../pages/user-payment-history/user-payment-history';
+import { AdminDashboardPage } from '../pages/admin-dashboard/admin-dashboard';
 
 
 import { StatusBar } from '@ionic-native/status-bar';
@@ -93,6 +94,7 @@ import { SalesmanDashboardPage } from '../pages/salesman-dashboard/salesman-dash
 import { UserPaymentHistoryPageModule } from '../pages/user-payment-history/user-payment-history.module';
 import { AdminListSalesmanPageModule } from '../pages/admin-list-salesman/admin-list-salesman.module';
 import { SalesmanDashboardPageModule } from '../pages/salesman-dashboard/salesman-dashboard.module';
+import { AdminDashboardPageModule } from '../pages/admin-dashboard/admin-dashboard.module'
 
 @NgModule({
   declarations: [
@@ -146,7 +148,8 @@ import { SalesmanDashboardPageModule } from '../pages/salesman-dashboard/salesma
     UserProfilePageModule,
     SalesmanSelectCustomerPageModule,
     AdminListSalesmanPageModule,
-    SalesmanDashboardPageModule
+    SalesmanDashboardPageModule,
+    AdminDashboardPageModule
   ],
   bootstrap: [IonicApp],
   entryComponents: [
@@ -186,7 +189,8 @@ import { SalesmanDashboardPageModule } from '../pages/salesman-dashboard/salesma
     UserProfilePage,
     SalesmanSelectCustomerPage,
     AdminListSalesmanPage,
-    SalesmanDashboardPage
+    SalesmanDashboardPage,
+    AdminDashboardPage
   ],
   providers: [
     StatusBar,

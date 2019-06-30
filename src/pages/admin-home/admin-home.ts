@@ -36,26 +36,34 @@ export class AdminHomePage {
 
   async getList () {
     let profile = await this.storageService.getFromStorage('profile')
-    this.apiService.getProvinceOrderList(profile['province'], this.skipValue, this.limit).subscribe((result) => {
-      this.orderList = result.body
-      this.orderList.map((value) => {
-        value.lastUpdatedAt = this.formatDate(value.lastUpdatedAt)
-        value.orderTotal = parseFloat((Math.round(value.orderTotal * 100) / 100).toString()).toFixed(2)
-        if((value.status != CONSTANTS.ORDER_STATUS_RECEIVED) && (value.status != CONSTANTS.ORDER_STATUS_CANCEL)) {
-          value.showImport = true
+
+    //Handle Orders For ADMIN and ADMINHO
+    if(profile['userType']==='ADMINHO'){
+      console.log('Need to show Admin HO Orders Here')
+    }
+    else{
+      this.apiService.getProvinceOrderList(profile['province'], this.skipValue, this.limit).subscribe((result) => {
+        this.orderList = result.body
+        this.orderList.map((value) => {
+          value.lastUpdatedAt = this.formatDate(value.lastUpdatedAt)
+          value.orderTotal = parseFloat((Math.round(value.orderTotal * 100) / 100).toString()).toFixed(2)
+          if((value.status != CONSTANTS.ORDER_STATUS_RECEIVED) && (value.status != CONSTANTS.ORDER_STATUS_CANCEL)) {
+            value.showImport = true
+          } else {
+            value.showImport = false
+          }
+        })
+        this.orderListAvailable = true
+      }, (error) => {
+        if (error.statusText === 'Unknown Error') {
+          this.widgetUtil.showToast(CONSTANTS.INTERNET_ISSUE)
         } else {
-          value.showImport = false
+          this.widgetUtil.showToast(CONSTANTS.SERVER_ERROR)
         }
+        this.orderListAvailable = true
       })
-      this.orderListAvailable = true
-    }, (error) => {
-      if (error.statusText === 'Unknown Error') {
-        this.widgetUtil.showToast(CONSTANTS.INTERNET_ISSUE)
-      } else {
-        this.widgetUtil.showToast(CONSTANTS.SERVER_ERROR)
-      }
-      this.orderListAvailable = true
-    })
+    }
+    
   }
 
   getOrderDetail (order) {
