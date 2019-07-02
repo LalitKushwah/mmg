@@ -75,58 +75,68 @@ export class AddPaymentModalPage {
   }
 
   paymentModeSelectionChanged (){
-    this.isEnabled=this.salesmanList.length ? true : false;
       switch (this.paymentMode) {
         case 'cash':
           this.cashIsSelected=true; 
           this.chequeIsSelected=false; 
           this.onlineIsSelected=false;
+          this.isEnabled=true;
             break;
         case 'cheque':
           this.chequeIsSelected=true; 
           this.cashIsSelected=false; 
-          this.onlineIsSelected=false; 
+          this.onlineIsSelected=false;
+          this.isEnabled=true;
             break;
         case 'bank transfer':
           this.onlineIsSelected=true;
           this.chequeIsSelected=false; 
-          this.cashIsSelected=false; 
+          this.cashIsSelected=false;
+          this.isEnabled=true;
             break;
         default:
             this.onlineIsSelected=false;
             this.chequeIsSelected=false; 
-            this.cashIsSelected=false; 
+            this.cashIsSelected=false;
+            this.isEnabled=false;
     }
   }
 
-  submitPayment (mode,amt,chequeId,transactionId) {    
-    console.log('======= 103 =======', this.onlineID)
+  submitPayment (mode,amt,chequeId,transactionId,comment,paidTo) {    
+    
+    //Payment Loader
+    const payLoader = this.loadingCtrl.create({
+      content: "Adding Payment...",
+    });
+    payLoader.present()
+
     this.paymentObj.mode = mode.value.toUpperCase()
     this.paymentObj.amount = amt ? amt.value : undefined
-    this.onlineID ? (this.paymentObj.transactionId = this.onlineID) : undefined
-    this.chequeID ? (this.paymentObj.chequeId = this.chequeID) : undefined
+    transactionId ? (this.paymentObj.transactionId = transactionId.value) : undefined
+    chequeId ? (this.paymentObj.chequeId = chequeId.value) : undefined
+
+    //Adding COMMENT to Payment Obj
+    this.paymentObj.comment = comment ? comment.value : undefined
+    //Adding salesman Name
+    this.paymentObj.paidTo = paidTo ? paidTo.value : undefined
+
     this.paymentObj.customerCode = this.customerCode
     this.paymentObj.lastUpdatedAt = Date.now()
     if (this.salesmanCode && this.salesmanName) {
       this.paymentObj.salesmanCode = this.salesmanCode 
       this.paymentObj.salesmanName = this.salesmanName
     }
+    console.log(this.paymentObj)
     this.apiService.createPayment(this.paymentObj).subscribe((res : any)=> {
       if (res.status === 200) {
         this.widgetUtil.showToast('Payment created successfully...')
         this.onlineID = undefined;
         this.chequeID = undefined;
-        this.closePayModal()
+        // this.closePayModal()
       } else {
         this.widgetUtil.showToast('Error while creating payment...')
       }
+      payLoader.dismiss()
     })
   }
-
-  selectSalesman (salesman) {
-    this.selectedSalesman = salesman
-    this.paymentObj.salesmanCode = salesman.externalId
-    this.paymentObj.salesmanName = salesman.name
-  }
-
 }

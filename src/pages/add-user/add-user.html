@@ -111,6 +111,39 @@
           </ion-grid>
         </form>
       </ion-col>
+
+      <!-- Admin HO Form Begins -->
+      <ion-col *ngIf="showCustomerForm === 'ADMINHO'">
+        <form [formGroup]="addAdminHOForm">
+          <ion-item>
+            <ion-label floating>Name</ion-label>
+            <ion-input type="text" formControlName="name"></ion-input>
+          </ion-item>
+          <p class="error" *ngIf="name.hasError('required') && name.touched">
+            *Name is required
+          </p>
+          <ion-item>
+            <ion-label floating>User Login Id</ion-label>
+            <ion-input type="text" formControlName="userLoginId"></ion-input>
+          </ion-item>
+          <p class="error" *ngIf="userLoginId.hasError('required') && userLoginId.touched">
+            *User Login Id is required
+          </p>
+          <ion-item>
+            <ion-label floating>Password</ion-label>
+            <ion-input type="password" formControlName="password"></ion-input>
+          </ion-item>
+          <p class="error" *ngIf="password.hasError('required') && password.touched">
+            *Password is required
+          </p>
+          <ion-grid>
+            <button ion-button color="secondary" [disabled]="!(addAdminHOForm.controls.name.valid && addAdminHOForm.controls.userLoginId.valid && addAdminHOForm.controls.password.valid)"
+              (click)="createUser('ADMINHO');">Add Admin HO<ion-spinner name="dots" *ngIf="showLoader"></ion-spinner></button>
+          </ion-grid>
+        </form>
+      </ion-col>
+      <!-- Admin HO Form Ends -->
+
       <ion-col *ngIf="showCustomerForm === 'SALESMAN'">
         <form [formGroup]="addSalesmanForm">
           <ion-item>

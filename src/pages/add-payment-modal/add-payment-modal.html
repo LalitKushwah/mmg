@@ -37,26 +37,28 @@
     </ion-item>
 
 
-    <!-- Hide Select Customer Dropdown when loggen in as Customer
+    <!-- Hide Salesman when logged in as Customer
     Instead, show the customer list in label -->
-    <ion-item *ngIf="!userTypeSalesman && salesmanList.length" class="payItem" id="selectSalesman" [ngClass]=" cashIsSelected && !userTypeSalesman ? 'item-visible': 'item-hidden'">
-        <ion-label>Select Salesman</ion-label>
-          <ion-select>
+    <ion-item class="payItem" [ngClass]=" cashIsSelected && !userTypeSalesman ? 'item-visible': 'item-hidden'">
+        <ion-label floating>Salesman Name</ion-label>
+        <ion-input type="text" [(ngModel)]="payingToSalesman" #paidTo></ion-input>          
+        <!-- <ion-select>
               <ion-option *ngFor="let salesman of salesmanList" [value] = "salesman" (ionSelect)="selectSalesman(salesman)">{{salesman.name}}</ion-option>
-              <!-- <ion-option value="sm2">Test Salesman 2</ion-option> -->
-              <!-- <ion-option value="sm3">Test Salesman 3</ion-option> -->
-          </ion-select> 
+          </ion-select> -->
     </ion-item>
 
     <ion-item class="payItem" [ngClass]=" userTypeSalesman ? 'item-visible': 'item-hidden'">
-        <ion-label floating>Salesman: {{salesmanName}}</ion-label>
-        <ion-label floating class="salesmanName">{{salesmanName}}</ion-label> 
+        <ion-label>Salesman: {{salesmanName}}</ion-label>
+        <!-- <ion-label floating class="salesmanName">{{salesmanName}}</ion-label>  -->
     </ion-item>
 
-
+    <ion-item class="payItem" id="comment">
+      <ion-label floating>Comment</ion-label> 
+      <ion-input type="text" [(ngModel)]="paymentComment" #comment></ion-input>
+    </ion-item>
 
     <div id="modalBtn">
-      <button ion-button padding center [disabled]="!isEnabled" (click)="submitPayment(mode,amount,chequeId,trasactionId)">
+      <button ion-button padding center [disabled]="!isEnabled" (click)="submitPayment(mode,amount,chequeId,trasactionId,comment,paidTo)">
           <ion-icon name="checkmark-circle"></ion-icon>
           Add Payment
       </button>

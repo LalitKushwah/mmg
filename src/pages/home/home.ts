@@ -11,6 +11,7 @@ import { CONSTANTS } from "../../utils/constants";
 
 import { UserProfilePage } from '../user-profile/user-profile';
 import { SalesmanDashboardPage } from '../salesman-dashboard/salesman-dashboard';
+import { AdminDashboardPage } from '../admin-dashboard/admin-dashboard';
 
 @Component({
   selector: 'page-home',
@@ -37,9 +38,12 @@ export class HomePage {
         } else {
           this.menuController.swipeEnable(true, 'main_menu')
           if (profile['userType'] === 'ADMIN') {
-            this.navCtrl.setRoot(AdminHomePage)
+            this.navCtrl.setRoot(AdminDashboardPage)
           } else {
-            if (profile['userType'] === 'SALESMAN'){
+          if (profile['userType'] === 'ADMINHO') {
+            this.navCtrl.setRoot(AdminDashboardPage)
+          } else {
+            if (profile['userType'] === 'SALESMAN' || profile['userType'] === 'SALESMANAGER'){
               this.navCtrl.setRoot(SalesmanDashboardPage)
             } else{
               //this.navCtrl.setRoot(CustomerHomePage)
@@ -47,7 +51,8 @@ export class HomePage {
             }
           }
         }
-      } else {
+      }
+    } else {
         this.gotToLogin()
       }
     } catch (err) {
