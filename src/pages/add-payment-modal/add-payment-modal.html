@@ -23,7 +23,7 @@
 
     <ion-item class="payItem">
         <ion-label floating>Enter Amount</ion-label> 
-        <ion-input type="number" [(ngModel)]="paymentAmount" #amount></ion-input>
+        <ion-input type="number" [(ngModel)]="paymentAmount" (keyup)="checkAmount($event)" #amount></ion-input>
     </ion-item>
 
     <ion-item class="payItem" id="chequeID" [ngClass]=" chequeIsSelected ? 'item-visible': 'item-hidden'">
@@ -58,7 +58,7 @@
     </ion-item>
 
     <div id="modalBtn">
-      <button ion-button padding center [disabled]="!isEnabled" (click)="submitPayment(mode,amount,chequeId,trasactionId,comment,paidTo)">
+      <button ion-button padding center [disabled]="isEnabled && !amountIsZero ? false : true" (click)="submitPayment(mode,amount,chequeId,trasactionId,comment,paidTo)">
           <ion-icon name="checkmark-circle"></ion-icon>
           Add Payment
       </button>
