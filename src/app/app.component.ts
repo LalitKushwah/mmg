@@ -52,7 +52,7 @@ export class MyApp {
       /* { title: 'Categories', component: AdminListCategoryPage, icon :'list-box'}, */
       let profile = await this.storageService.getFromStorage('profile')
       if(profile['userLoginId'] !== 'R0001') {
-        if ((profile['userType'] === 'ADMIN')) {
+        if ((profile['userType'] === 'ADMIN') || (profile['userType'] === 'ADMINHO')) {
           this.partyName = 'Mr. ' + profile['name']
           this.pages = [
             {title: 'Dashboard', component: AdminDashboardPage, icon: 'dashboard-new', class: 'default'},
@@ -63,14 +63,14 @@ export class MyApp {
           ]
         } else {
           if ((profile['userType'] === 'ADMINHO')) {
-            this.partyName = 'Mr. ' + profile['name']
-            this.pages = [
-              {title: 'Dashboard', component: AdminDashboardPage, icon: 'dashboard-new', class: 'default'},
-              {title: 'Orders', component: AdminHomePage, icon: 'cart', class: 'default'},
-              {title: 'Customers', component: AdminListUserPage, icon: 'shopping-bag-new', class: 'default'},
-              {title: 'Salesman', component: AdminListSalesmanPage, icon: 'briefcase', class: 'default'},
-              {title: 'Products', component: AdminListCategoryPage, icon: 'products', class: 'default'},
-            ]
+            // this.partyName = 'Mr. ' + profile['name']
+            // this.pages = [
+            //   {title: 'Dashboard', component: AdminDashboardPage, icon: 'dashboard-new', class: 'default'},
+            //   {title: 'Orders', component: AdminHomePage, icon: 'cart', class: 'default'},
+            //   {title: 'Customers', component: AdminListUserPage, icon: 'shopping-bag-new', class: 'default'},
+            //   {title: 'Salesman', component: AdminListSalesmanPage, icon: 'briefcase', class: 'default'},
+            //   {title: 'Products', component: AdminListCategoryPage, icon: 'products', class: 'default'},
+            // ]
           }else {
           if ((profile['userType'] === 'SALESMAN') || (profile['userType'] === 'SALESMANAGER')) {
             this.partyName = 'Mr. ' + profile['name']

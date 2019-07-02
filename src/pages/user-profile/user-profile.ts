@@ -181,7 +181,6 @@ prepareData (selectedValue) {
     this.mtdAchieved = this.data.achievement
     this.target = this.data.balanceToDo
     this.displayChart()
-
   }
   
 }
