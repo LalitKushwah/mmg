@@ -49,7 +49,6 @@ export class MyApp {
 
   async getData () {
     try {
-      /* { title: 'Categories', component: AdminListCategoryPage, icon :'list-box'}, */
       let profile = await this.storageService.getFromStorage('profile')
       if(profile['userLoginId'] !== 'R0001') {
         if ((profile['userType'] === 'ADMIN') || (profile['userType'] === 'ADMINHO')) {
@@ -58,45 +57,29 @@ export class MyApp {
             {title: 'Dashboard', component: AdminDashboardPage, icon: 'dashboard-new', class: 'default'},
             {title: 'Orders', component: AdminHomePage, icon: 'cart', class: 'default'},
             {title: 'Customers', component: AdminListUserPage, icon: 'shopping-bag-new', class: 'default'},
-            {title: 'Salesman', component: AdminListSalesmanPage, icon: 'briefcase', class: 'default'},
+            {title: 'Sales Executive', component: AdminListSalesmanPage, icon: 'briefcase', class: 'default'},
             {title: 'Products', component: AdminListCategoryPage, icon: 'products', class: 'default'},
           ]
         } else {
-          if ((profile['userType'] === 'ADMINHO')) {
-            // this.partyName = 'Mr. ' + profile['name']
-            // this.pages = [
-            //   {title: 'Dashboard', component: AdminDashboardPage, icon: 'dashboard-new', class: 'default'},
-            //   {title: 'Orders', component: AdminHomePage, icon: 'cart', class: 'default'},
-            //   {title: 'Customers', component: AdminListUserPage, icon: 'shopping-bag-new', class: 'default'},
-            //   {title: 'Salesman', component: AdminListSalesmanPage, icon: 'briefcase', class: 'default'},
-            //   {title: 'Products', component: AdminListCategoryPage, icon: 'products', class: 'default'},
-            // ]
-          }else {
           if ((profile['userType'] === 'SALESMAN') || (profile['userType'] === 'SALESMANAGER')) {
             this.partyName = 'Mr. ' + profile['name']
             this.pages = [
-              // {title: 'Shop', component: SalesmanSelectCustomerPage, icon: 'shopping-bag'},
               {title: 'Dashboard', component: SalesmanDashboardPage, icon: 'dashboard-new', class: 'default'},
               {title: 'Your Orders', component: CustomerListOrderPage, icon: 'cart', class: 'default'},
             ]
           }else{
             this.partyName = profile['name']
             this.pages = [
-              // {title: 'Shop', component: CustomerHomePage, icon: 'shopping-bag'},
               {title: 'Dashboard', component: UserProfilePage, icon: 'dashboard-new', class: 'default'},
               {title: 'Your Orders', component: CustomerListOrderPage, icon: 'cart', class: 'default'},
               {title: 'Payment History', component: UserPaymentHistoryPage, icon: 'payment', class: 'default'},
               {title: '', component: ClubPremierPage, icon: 'club-premier', class: 'custom-side-icon'}
             ]
           }   
-        }
       }
     } else {
         this.app.getRootNav().setRoot('OracleConnectPage')
       }
-      // if(profile) {
-      //   this.partyName = 'Mr. ' + profile['name']
-      // }
     } catch (err) {
       console.log('Error: Home Page Component:', err)
     }

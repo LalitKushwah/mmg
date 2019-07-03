@@ -26,6 +26,7 @@ export class AddPaymentModalPage {
   customerCode = ''
   salesmanList = []
   paymentObj: any = {}
+  amountIsZero: boolean = true
 
   constructor (private view:ViewController,
               private storageService: StorageServiceProvider,
@@ -72,6 +73,16 @@ export class AddPaymentModalPage {
 
   closePayModal (){
     this.view.dismiss();
+  }
+
+  //Check if Amount is 0
+  checkAmount(keyCode){
+    //console.log('key upp...')
+    if(this.paymentAmount > 0)
+      this.amountIsZero = false;
+    else
+      this.amountIsZero = true;
+    //console.log(this.amountIsZero)
   }
 
   paymentModeSelectionChanged (){

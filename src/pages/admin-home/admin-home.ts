@@ -38,7 +38,7 @@ export class AdminHomePage {
     let profile = await this.storageService.getFromStorage('profile')
 
     //Handle Orders For ADMIN and ADMINHO
-    if(profile['userType']==='ADMINHO'){
+    if(profile['userType']==='ADMINHO') {
       this.apiService.getOrderList(this.skipValue, this.limit).subscribe((result) => {
         this.orderList = result.body
         this.orderList.map((value) => {
