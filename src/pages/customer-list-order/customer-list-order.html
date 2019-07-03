@@ -35,7 +35,7 @@
         <ion-infinite-scroll-content></ion-infinite-scroll-content>
       </ion-infinite-scroll>
     </ion-card> -->
-    <div *ngIf="orderListAvailable && (orderList.length > 1)">
+    <div *ngIf="orderListAvailable && (orderList.length > 0)">
     <ion-card *ngFor="let order of orderList">
       <ion-card-content>
         <ion-row>
