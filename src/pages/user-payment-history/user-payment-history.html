@@ -7,9 +7,9 @@
     <ion-card *ngFor="let payment of data">
         <ion-card-content>
   
-          <ion-row *ngIf="payment.date">
+          <ion-row *ngIf="payment.lastUpdatedAt">
             <ion-col text-center>
-                <ion-icon color="grey" name="calendar"></ion-icon> Payment Date: {{payment.date}}
+                <ion-icon color="grey" name="calendar"></ion-icon> Payment Date: {{payment.lastUpdatedAt}}
             </ion-col>
           </ion-row>
   
@@ -26,9 +26,9 @@
             </ion-col>
           </ion-row>
   
-          <ion-row *ngIf="payment.salesmanName">
+          <ion-row *ngIf="payment.paidTo">
             <ion-col col-12 text-center>
-                <ion-icon color="grey" name="star"></ion-icon>Salesman: <strong text-uppercase>{{payment.salesmanName}}</strong>
+                <ion-icon color="grey" name="star"></ion-icon>Salesman: <strong text-uppercase>{{payment.paidTo}}</strong>
             </ion-col>
           </ion-row>
   
@@ -42,6 +42,12 @@
             <ion-col col-12 text-center>
                 <ion-icon color="grey" name="information-circle-outline"></ion-icon>Cheque ID: <strong text-uppercase>{{payment.chequeId}}</strong>
             </ion-col>
+          </ion-row>
+
+          <ion-row *ngIf="payment.comment">
+              <ion-col col-12 text-center>
+                  <ion-icon color="grey" name="information-circle-outline"></ion-icon>Commment: <strong text-uppercase>{{payment.comment}}</strong>
+              </ion-col>
             </ion-row>
   
         </ion-card-content>
