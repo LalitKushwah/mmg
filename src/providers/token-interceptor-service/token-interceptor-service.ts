@@ -11,10 +11,10 @@ import {SessionExpiredPage} from "../../pages/session-expired/session-expired";
 @Injectable()
 export class TokenInterceptorServiceProvider implements HttpInterceptor {
 
-  constructor(private app: App) {
+  constructor (private app: App) {
   }
 
-  intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
+  intercept (req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
     if (localStorage.getItem('token') != null) {
       req = req.clone({
         setHeaders : {

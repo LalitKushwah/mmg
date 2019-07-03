@@ -5,7 +5,6 @@ import { ApiServiceProvider} from '../../providers/api-service/api-service'
 import { WidgetUtilService} from '../../utils/widget-utils'
 import { AddSalesmanModalPage } from '../add-salesman-modal/add-salesman-modal';
 import { AdminListUserPage } from '../admin-list-user/admin-list-user';
-import { AdminHomePage } from '../admin-home/admin-home';
 import { AdminListSalesmanPage } from '../admin-list-salesman/admin-list-salesman';
  /**
  * Generated class for the EditUserPage page.

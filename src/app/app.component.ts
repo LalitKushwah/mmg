@@ -7,7 +7,6 @@ import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
 
 import { UserProfilePage } from '../pages/user-profile/user-profile';
-import { CustomerHomePage } from '../pages/customer-home/customer-home';
 import { SalesmanDashboardPage } from '../pages/salesman-dashboard/salesman-dashboard';
 // import { SalesmanSelectCustomerPage } from '../pages/salesman-select-customer/salesman-select-customer';
 

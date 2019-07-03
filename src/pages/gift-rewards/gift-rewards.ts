@@ -1,4 +1,4 @@
-import {Component, ElementRef, ViewChild} from '@angular/core';
+import {Component, ViewChild} from '@angular/core';
 import {IonicPage, LoadingController, NavController, NavParams} from 'ionic-angular';
 import {ApiServiceProvider} from "../../providers/api-service/api-service";
 import {StorageServiceProvider} from "../../providers/storage-service/storage-service";

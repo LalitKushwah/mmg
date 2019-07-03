@@ -1,5 +1,3 @@
-import { AdminHomePage } from '../admin-home/admin-home';
-import { CustomerHomePage } from '../customer-home/customer-home';
 import { StorageServiceProvider } from '../../providers/storage-service/storage-service';
 import { WidgetUtilService } from '../../utils/widget-utils';
 import { PopoverHomePage } from '../popover-home/popover-home';

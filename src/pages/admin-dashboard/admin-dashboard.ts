@@ -1,6 +1,6 @@
 import { WidgetUtilService } from '../../utils/widget-utils';
 import { Component, ViewChild } from '@angular/core';
-import { IonicPage, NavController, NavParams,ModalController, LoadingController } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, LoadingController } from 'ionic-angular';
 import { PopoverHomePage } from '../popover-home/popover-home';
 import { StorageServiceProvider } from '../../providers/storage-service/storage-service';
 import { Chart } from 'chart.js';

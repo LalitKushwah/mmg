@@ -5,7 +5,6 @@ import { StorageServiceProvider } from '../../providers/storage-service/storage-
 import { ApiServiceProvider } from '../../providers/api-service/api-service';
 import { WidgetUtilService } from '../../utils/widget-utils';
 import { EditUserPage } from '../edit-user/edit-user';
-import { AdminHomePage } from '../admin-home/admin-home';
 import { AdminDashboardPage } from '../admin-dashboard/admin-dashboard';
 
 @IonicPage({
