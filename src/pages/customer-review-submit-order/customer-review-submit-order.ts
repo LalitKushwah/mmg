@@ -58,7 +58,7 @@ export class CustomerReviewSubmitOrderPage {
 
   async showSalesman () {
     let profile = await this.storageService.getFromStorage('profile')
-    if ((profile['userType'] === 'SALESMAN')) {
+    if ((profile['userType'] === 'SALESMAN') || (profile['userType'] === 'SALESMANAGER')) {
 
       let customerProfile = await this.storageService.getFromStorage('selectedCustomer')
       this.salesmanProfile = profile
@@ -112,7 +112,7 @@ export class CustomerReviewSubmitOrderPage {
     this.showLoader = true
 
     //Replacing the Profile with Selected Customer Profile if userType = SALESMAN
-    if ((profile['userType'] === 'SALESMAN')) {
+    if ((profile['userType'] === 'SALESMAN') || (profile['userType'] === 'SALESMANAGER')) {
       profile = await this.storageService.getFromStorage('selectedCustomer')
     }
 
@@ -146,7 +146,7 @@ export class CustomerReviewSubmitOrderPage {
       this.storageService.removeFromStorage('selectedCustomer')
       
       this.widgetUtil.showToast(CONSTANTS.ORDER_PLACED)
-      if((profile['userType'] === 'SALESMAN')) {
+      if((profile['userType'] === 'SALESMAN') || (profile['userType'] === 'SALESMANAGER')) {
         this.navCtrl.setRoot(SalesmanDashboardPage)
       } else {
         this.navCtrl.setRoot(HomePage)

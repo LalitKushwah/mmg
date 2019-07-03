@@ -86,7 +86,7 @@ export class UserProfilePage {
     try {
       let profile = await this.storageService.getFromStorage('profile')
       // this.partyName = profile['name']
-      if ((profile['userType'] === 'SALESMAN')) {
+      if ((profile['userType'] === 'SALESMAN') || (profile['userType'] === 'SALESMANAGER')) {
         let selectedCustomerprofile = await this.storageService.getFromStorage('selectedCustomer')
         this.partyName = selectedCustomerprofile['name']
         this.externalId = selectedCustomerprofile['externalId']

@@ -43,12 +43,12 @@ export class AddPaymentModalPage {
     try{
       let profile = await this.storageService.getFromStorage('profile')
       console.log(profile['name'])
-      if ((profile['userType'] === 'SALESMAN')) {
-      this.salesmanName = profile['name']
-      this.salesmanCode = profile['externalId']
-      this.userTypeSalesman = true      
-      let customer =  await this.storageService.getFromStorage('selectedCustomer')
-      this.customerCode = customer['externalId']
+      if ((profile['userType'] === 'SALESMAN') || (profile['userType'] === 'SALESMANAGER')) {
+        this.salesmanName = profile['name']
+        this.salesmanCode = profile['externalId']
+        this.userTypeSalesman = true      
+        let customer =  await this.storageService.getFromStorage('selectedCustomer')
+        this.customerCode = customer['externalId']
       } else {
         this.customerCode = profile['externalId']
       }

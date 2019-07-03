@@ -97,6 +97,7 @@ export class CustomerOrderDetailPage {
   getOrderDetail () {
     this.apiService.getOrderDetail(this.orderDetail['_id']).subscribe((result) => {
       this.orderDetail = result.body[0]
+      console.log('=== 100 ====', this.orderDetail)
       this.checkData()
       this.showLoader = false
     }, (error) => {

@@ -54,8 +54,8 @@ export class ApiServiceProvider {
     return this.http.get(CONSTANTS.BASE_URL + 'api/order/list/province/' + province + '?skip='+skip.toString() + "&limit="+ limit.toString())
   }
 
-  getOrderListByUser (userId: string, skip:number, limit:number, isSalesman): any {
-    return this.http.get(CONSTANTS.BASE_URL + 'api/order/list/user/' + userId + '?skip='+skip.toString() + "&limit="+ limit.toString() + "&isSalesman=" + isSalesman)
+  getOrderListByUser (userId: string, skip:number, limit:number, isSalesman, salesmanCode): any {
+    return this.http.get(CONSTANTS.BASE_URL + 'api/order/list/user/' + userId + '?skip='+skip.toString() + "&limit="+ limit.toString() + "&isSalesman=" + isSalesman + "&salesmanCode=" + salesmanCode)
   }
 
   createUser (userDetails: Object): any {
