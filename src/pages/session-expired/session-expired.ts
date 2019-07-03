@@ -18,10 +18,10 @@ import {LoginPage} from "../login/login";
 })
 export class SessionExpiredPage {
 
-  constructor(public navCtrl: NavController, public navParams: NavParams) {
+  constructor (public navCtrl: NavController, public navParams: NavParams) {
   }
 
-  goToLogin() {
+  goToLogin () {
     this.navCtrl.setRoot(LoginPage)
   }
 

@@ -26,7 +26,7 @@ export class CustomerHomePage {
   tkPoint: any = 0
 
 
-  constructor(public navCtrl: NavController,
+  constructor (public navCtrl: NavController,
               public navParams: NavParams,
               private widgetUtil: WidgetUtilService,
               private apiService: ApiServiceProvider,
@@ -41,18 +41,18 @@ export class CustomerHomePage {
     this.getVersion()
   }
 
-  ionViewDidEnter(){
+  ionViewDidEnter (){
     this.getCardItems()
   }
 
-  async getCardItems() {
+  async getCardItems () {
     this.cart = await this.storageService.getCartFromStorage()
     this.storageService.getTkPointsFromStorage().then(res => {
       this.tkPoint = res
     })
   }
 
-  async reviewAndSubmitOrder() {
+  async reviewAndSubmitOrder () {
     if (this.cart.length <= 0) {
       this.widgetUtil.showToast(CONSTANTS.CART_EMPTY)
     }else {
@@ -63,7 +63,7 @@ export class CustomerHomePage {
     }
   }
 
-  getList() {
+  getList () {
     this.apiService.getParentCategoryList(this.skipValue, this.limit).subscribe((result) => {
       this.parentCategoryList = result.body
       this.categoryListAvailable = true
@@ -77,7 +77,7 @@ export class CustomerHomePage {
     })
   }
 
-  getChildCategory(category) {
+  getChildCategory (category) {
     const categoryObj = {
       'parentCategoryId' : category['_id'],
       'category' : category
@@ -85,21 +85,21 @@ export class CustomerHomePage {
     this.navCtrl.push(CustomerCategoryListPage, categoryObj)
   }
 
-  presentPopover(myEvent) {
+  presentPopover (myEvent) {
     this.widgetUtil.presentPopover(myEvent, PopoverHomePage)
   }
 
-  doRefresh(refresher) : void {
+  doRefresh (refresher) : void {
     setTimeout(() => {
       refresher.complete();
     }, 1000);
   }
 
-  showTkToast() {
+  showTkToast () {
     this.widgetUtil.showToast('TK points will convert into TK currency post target achievement of QTR')
   }
 
-  doInfinite(infiniteScroll) {
+  doInfinite (infiniteScroll) {
     this.skipValue = this.skipValue + this.limit
     this.apiService.getParentCategoryList(this.skipValue, this.limit).subscribe((result) => {
       if(result.body.length > 0) {
@@ -120,7 +120,7 @@ export class CustomerHomePage {
     })
   }
 
-  getVersion() {
+  getVersion () {
     this.apiService.getVersion().subscribe(res => {
       if (res.version !== 1.1) {
         const alert = this.alertCtrl.create({

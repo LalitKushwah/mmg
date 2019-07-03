@@ -24,17 +24,17 @@ export class AdminEditProductPage {
   tkPoint: FormControl;
   showLoader = false;
 
-  constructor(public navCtrl: NavController, public navParams: NavParams,
+  constructor (public navCtrl: NavController, public navParams: NavParams,
    private apiService: ApiServiceProvider, private widgetUtil: WidgetUtilService) {
     this.productDetail = this.navParams.get('product')
   }
 
-  ngOnInit(): void {
+  ngOnInit (): void {
     this.createFormControls()
     this.createProductForm()
   }
 
-  createFormControls() {
+  createFormControls () {
     this.name = new FormControl(this.productDetail.name, [
       Validators.required
     ]);
@@ -53,7 +53,7 @@ export class AdminEditProductPage {
     ])
   }
 
-  createProductForm() {
+  createProductForm () {
     this.editProductForm = new FormGroup({
       name: this.name,
       price: this.price,
@@ -63,7 +63,7 @@ export class AdminEditProductPage {
     });
   }
 
-  updateProduct() {
+  updateProduct () {
     let updateDetail = {}
     updateDetail['productId'] = this.productDetail['_id']
     updateDetail['name'] = this.name.value.trim()

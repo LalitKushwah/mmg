@@ -18,7 +18,7 @@ export class AdminListSubCategoryPage {
   skipValue: number = 0
   limit: number = CONSTANTS.PAGINATION_LIMIT
 
-  constructor(public navCtrl: NavController,
+  constructor (public navCtrl: NavController,
               public navParams: NavParams,
               private apiService: ApiServiceProvider,
               private widgetUtil: WidgetUtilService,) {
@@ -31,7 +31,7 @@ export class AdminListSubCategoryPage {
     this.getList()
   }
 
-  getList() {
+  getList () {
     this.apiService.getChildCategoryList(this.parentCategoryId, this.skipValue, this.limit).subscribe((result) => {
       this.childCategoryList = result.body
       this.categoryListAvailable = true
@@ -45,7 +45,7 @@ export class AdminListSubCategoryPage {
     })
   }
 
-  async getProducts(category) {
+  async getProducts (category) {
     const categoryObj = {
       'categoryId' : category['_id'],
       'category' : category
@@ -53,7 +53,7 @@ export class AdminListSubCategoryPage {
     this.navCtrl.push(AdminListProductPage, categoryObj)
   }
 
-  doInfinite(infiniteScroll) {
+  doInfinite (infiniteScroll) {
     this.skipValue = this.skipValue + this.limit
     this.apiService.getChildCategoryList(this.parentCategoryId, this.skipValue, this.limit).subscribe((result) => {
       if(result.body.length > 0) {
@@ -74,7 +74,7 @@ export class AdminListSubCategoryPage {
     })
   }
 
-  doRefresh(refresher) : void {
+  doRefresh (refresher) : void {
     this.getList()
     setTimeout(() => {
       refresher.complete();

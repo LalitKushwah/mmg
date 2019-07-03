@@ -25,18 +25,18 @@ export class ResetUserPasswordPage implements OnInit {
   reEnterPassword: FormControl;
   showLoader = false
 
-  constructor(public navCtrl: NavController, public navParams: NavParams,
+  constructor (public navCtrl: NavController, public navParams: NavParams,
               private apiService: ApiServiceProvider, private widgetUtil: WidgetUtilService,
               private storageService: StorageServiceProvider, public appCtrl: App,
               private viewController: ViewController) {
   }
 
-  ngOnInit(): void {
+  ngOnInit (): void {
     this.createFormControls();
     this.createForm();
   }
 
-  createFormControls() {
+  createFormControls () {
     this.oldPassword = new FormControl('', [
       Validators.required
     ]);
@@ -48,7 +48,7 @@ export class ResetUserPasswordPage implements OnInit {
     ]);
    }
 
-   createForm() {
+   createForm () {
     this.resetPasswordForm = new FormGroup({
       oldPassword: this.oldPassword,
       newPasssword: this.newPasssword,
@@ -56,7 +56,7 @@ export class ResetUserPasswordPage implements OnInit {
     });
    }
 
-   async changePassword() {
+   async changePassword () {
      if(this.reEnterPassword.value.trim() === this.newPasssword.value.trim()) {
         let user = await this.storageService.getFromStorage('profile')
         this.showLoader = true
@@ -84,7 +84,7 @@ export class ResetUserPasswordPage implements OnInit {
      }
    }
 
-   async logout() {
+   async logout () {
     this.storageService.clearStorage()
     localStorage.clear()
     this.widgetUtil.dismissPopover()

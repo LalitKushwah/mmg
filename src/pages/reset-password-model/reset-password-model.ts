@@ -12,11 +12,11 @@ export class ResetPasswordModelPage {
 
   message: any = ''
 
-  constructor(public view: ViewController, public navParams: NavParams) {
+  constructor (public view: ViewController, public navParams: NavParams) {
     this.message = this.navParams.get('message')
   }
 
-  dismissModel(result) {
+  dismissModel (result) {
     this.view.dismiss(result)
   }
 

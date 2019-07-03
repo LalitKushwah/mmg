@@ -22,7 +22,7 @@ export class ClubPremierPage {
   tkPoints = 0
   tkCurrency = 0
 
-  constructor(public navCtrl: NavController,
+  constructor (public navCtrl: NavController,
               public navParams: NavParams,
               private storageService: StorageServiceProvider,
               private apiService: ApiServiceProvider,
@@ -30,7 +30,7 @@ export class ClubPremierPage {
               private alertCtrl: AlertController) {
   }
 
-  ionViewDidLoad() {
+  ionViewDidLoad () {
     const loader = this.loadingCtrl.create({
       content: "Please Wait...",
     });
@@ -44,15 +44,15 @@ export class ClubPremierPage {
     })
   }
 
-  viewGuide() {
+  viewGuide () {
     this.navCtrl.push(ClubPremierGuidePage)
   }
 
-  viewRewards() {
+  viewRewards () {
     this.navCtrl.push(GiftRewardsPage)
   }
 
-  provideInfo() {
+  provideInfo () {
     const alert = this.alertCtrl.create({
       title: 'Information',
       subTitle: 'TK points will convert into TK currency post target achievement',

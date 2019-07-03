@@ -62,8 +62,6 @@ import { AdminEditProductPage } from '../pages/admin-edit-product/admin-edit-pro
 import { CategoryTotalModalPage } from '../pages/category-total-modal/category-total-modal';
 import { SessionExpiredPageModule } from '../pages/session-expired/session-expired.module';
 import {SessionExpiredPage} from "../pages/session-expired/session-expired";
-import {OracleConnectPageModule} from "../pages/oracle-connect/oracle-connect.module";
-import {OracleConnectPage} from "../pages/oracle-connect/oracle-connect";
 import { ClubPremierPage } from '../pages/club-premier/club-premier';
 import { ClubPremierPageModule } from '../pages/club-premier/club-premier.module';
 import { ClubPremierGuidePage } from '../pages/club-premier-guide/club-premier-guide';
@@ -133,7 +131,6 @@ import { AdminDashboardPageModule } from '../pages/admin-dashboard/admin-dashboa
     AdminEditProductPageModule,
     CategoryTotalModalPageModule,
     SessionExpiredPageModule,
-    OracleConnectPageModule,
     ClubPremierPageModule,
     ClubPremierGuidePageModule,
     GiftRewardsPageModule,
@@ -175,7 +172,6 @@ import { AdminDashboardPageModule } from '../pages/admin-dashboard/admin-dashboa
     AdminEditProductPage,
     CategoryTotalModalPage,
     SessionExpiredPage,
-    OracleConnectPage,
     ClubPremierPage,
     ClubPremierGuidePage,
     GiftRewardsPage,

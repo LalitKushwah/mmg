@@ -23,7 +23,7 @@ export class LoginPage implements OnInit {
   isActive:boolean = false;
   passwordFieldType: string = 'password';
 
-  constructor(public navCtrl: NavController,
+  constructor (public navCtrl: NavController,
               public navParams: NavParams,
               private apiService: ApiServiceProvider,
               private storageService: StorageServiceProvider,
@@ -32,15 +32,15 @@ export class LoginPage implements OnInit {
     this.checkData()
   }
 
-  async checkData() {
+  async checkData () {
   }
 
-  ngOnInit(): void {
+  ngOnInit (): void {
     this.createFormControls();
     this.createForm();
   }
 
-  createFormControls() {
+  createFormControls () {
     this.userLoginId = new FormControl('', [
       Validators.required
     ]);
@@ -49,7 +49,7 @@ export class LoginPage implements OnInit {
     ]);
    }
 
-   createForm() {
+   createForm () {
     this.userLoginForm = new FormGroup({
       userLoginId: this.userLoginId,
       passwordLogin: this.passwordLogin
@@ -57,7 +57,7 @@ export class LoginPage implements OnInit {
    }
 
 
-   login() {
+   login () {
     this.showLoginLoader = true;
     this.apiService.login({
       userLoginId: this.userLoginId.value.trim(),
@@ -79,7 +79,7 @@ export class LoginPage implements OnInit {
     })
    }
 
-   showPassword(){
+   showPassword (){
     this.isActive = !this.isActive; 
     console.log('pass-eye Clicked!')
     if(this.passwordFieldType === 'password')

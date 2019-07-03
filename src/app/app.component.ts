@@ -50,7 +50,6 @@ export class MyApp {
   async getData () {
     try {
       let profile = await this.storageService.getFromStorage('profile')
-      if(profile['userLoginId'] !== 'R0001') {
         if ((profile['userType'] === 'ADMIN') || (profile['userType'] === 'ADMINHO')) {
           this.partyName = 'Mr. ' + profile['name']
           this.pages = [
@@ -76,9 +75,6 @@ export class MyApp {
               {title: '', component: ClubPremierPage, icon: 'club-premier', class: 'custom-side-icon'}
             ]
           }   
-      }
-    } else {
-        this.app.getRootNav().setRoot('OracleConnectPage')
       }
     } catch (err) {
       console.log('Error: Home Page Component:', err)

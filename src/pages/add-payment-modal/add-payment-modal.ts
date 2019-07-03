@@ -76,7 +76,7 @@ export class AddPaymentModalPage {
   }
 
   //Check if Amount is 0
-  checkAmount(keyCode){
+  checkAmount (keyCode){
     //console.log('key upp...')
     if(this.paymentAmount > 0)
       this.amountIsZero = false;

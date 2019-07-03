@@ -27,7 +27,7 @@ export class GiftRewardsPage {
   totalTkCurrency
   leftTkCurrency
   giftProductsCart = []
-  constructor(public navCtrl: NavController,
+  constructor (public navCtrl: NavController,
               public navParams: NavParams,
               private apiService: ApiServiceProvider,
               private storageService: StorageServiceProvider,
@@ -38,11 +38,11 @@ export class GiftRewardsPage {
     this.getTKCurrency()
   }
 
-  ionViewWillEnter() {
+  ionViewWillEnter () {
     this.giftProductsCart = this.storageService.getGiftProductCart()
   }
 
-  getTKCurrency() {
+  getTKCurrency () {
     this.storageService.getFromStorage('profile').then((res: any) => {
       this.apiService.getUserDetails(res.userLoginId).subscribe(data => {
         this.totalTkPoints = data.body[0].tkPoints
@@ -54,7 +54,7 @@ export class GiftRewardsPage {
     })
   }
 
-  getGiftProducts() {
+  getGiftProducts () {
       const loader = this.loadingCtrl.create({
         content: "Fetching Products Please Wait...",
       });
@@ -68,7 +68,7 @@ export class GiftRewardsPage {
     })
   }
 
-  async addItemToGiftCart(product) {
+  async addItemToGiftCart (product) {
     if (product.brand === 'Tradekings') {
       product.tkCurrencyValue = parseFloat(this.tdprod.nativeElement.value)
     }
@@ -98,7 +98,7 @@ export class GiftRewardsPage {
     }
   }
 
-  moveToGiftCheckoutPage() {
+  moveToGiftCheckoutPage () {
     this.navCtrl.push(GiftCheckoutPage, { cart: this.giftProductsCart })
   }
 

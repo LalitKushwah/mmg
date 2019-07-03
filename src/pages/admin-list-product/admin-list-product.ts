@@ -20,7 +20,7 @@ export class AdminListProductPage {
   categoryId: string = ''
   categoryObj: any = {}
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, private apiService: ApiServiceProvider, private widgetUtil: WidgetUtilService) {
+  constructor (public navCtrl: NavController, public navParams: NavParams, private apiService: ApiServiceProvider, private widgetUtil: WidgetUtilService) {
     this.skipValue = 0
     this.limit = CONSTANTS.PAGINATION_LIMIT
     this.categoryId = this.navParams.get("categoryId")
@@ -28,7 +28,7 @@ export class AdminListProductPage {
     this.getProducList()
   }
 
-  getProducList() {
+  getProducList () {
     this.apiService.getProductListByCategory(this.categoryId, this.skipValue, this.limit).subscribe((result) => {
       result.body.map((value) => {
         value.price = parseFloat((Math.round(value.price * 100) / 100).toString()).toFixed(2)
@@ -45,7 +45,7 @@ export class AdminListProductPage {
     })
   }
 
-  doInfinite(infiniteScroll) {
+  doInfinite (infiniteScroll) {
     this.skipValue = this.skipValue + this.limit
     this.apiService.getProductListByCategory(this.categoryId, this.skipValue, this.limit).subscribe((result) => {
       if(result.body.length > 0) {
@@ -66,7 +66,7 @@ export class AdminListProductPage {
     })
   }
 
-  doRefresh(refresher) : void {
+  doRefresh (refresher) : void {
     this.skipValue = 0
     this.limit = CONSTANTS.PAGINATION_LIMIT
     this.getProducList()
@@ -75,7 +75,7 @@ export class AdminListProductPage {
     }, 1000);
   }
 
-  editProduct(product) {
+  editProduct (product) {
     let productInfo = {
       'product': product
     }

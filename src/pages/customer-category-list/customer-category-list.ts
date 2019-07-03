@@ -29,7 +29,7 @@ export class CustomerCategoryListPage {
   tkPoint: any = 0
   searchQuery: string = ''
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, private apiService: ApiServiceProvider, private widgetUtil: WidgetUtilService
+  constructor (public navCtrl: NavController, public navParams: NavParams, private apiService: ApiServiceProvider, private widgetUtil: WidgetUtilService
   , private storageService: StorageServiceProvider) {
     this.parentCategoryId = this.navParams.get("parentCategoryId")
     this.categoryObj = this.navParams.get("category")
@@ -40,7 +40,7 @@ export class CustomerCategoryListPage {
     this.getList()
   }
 
-  getList() {
+  getList () {
     this.apiService.getChildCategoryList(this.parentCategoryId, this.skipValue, this.limit).subscribe((result) => {
       this.childCategoryList = result.body
       this.categoryListAvailable = true
@@ -54,7 +54,7 @@ export class CustomerCategoryListPage {
     })
   }
 
-  async getProducts(category) {
+  async getProducts (category) {
     const categoryObj = {
       'categoryId' : category['_id'],
       'category': category,
@@ -68,16 +68,16 @@ export class CustomerCategoryListPage {
     }
   }
 
-  ionViewDidEnter(){
+  ionViewDidEnter (){
     this.getCardItems()
   }
 
-  async getCardItems() {
+  async getCardItems () {
     this.cart = await this.storageService.getCartFromStorage()
     this.tkPoint = await this.storageService.getTkPointsFromStorage()
   }
 
-  async reviewAndSubmitOrder() {
+  async reviewAndSubmitOrder () {
     if (this.cart.length <= 0) {
       this.widgetUtil.showToast(CONSTANTS.CART_EMPTY)
     }else {
@@ -88,7 +88,7 @@ export class CustomerCategoryListPage {
     }
   }
 
-  doInfinite(infiniteScroll) {
+  doInfinite (infiniteScroll) {
     this.skipValue = this.skipValue + this.limit
     this.apiService.getChildCategoryList(this.parentCategoryId, this.skipValue, this.limit).subscribe((result) => {
       if(result.body.length > 0) {
@@ -109,21 +109,21 @@ export class CustomerCategoryListPage {
     })
   }
 
-  doRefresh(refresher) : void {
+  doRefresh (refresher) : void {
     this.getList()
     setTimeout(() => {
       refresher.complete();
     }, 1000);
   }
 
-  getItems(ev: any) {
+  getItems (ev: any) {
     let val = ev.target.value
     this.searchQuery = val
     if (ev.type === "mousedown"){
     }
   }
 
-  async submitSearch(ev: any) {
+  async submitSearch (ev: any) {
     if (this.searchQuery && this.searchQuery.trim() != '') {
       let data = {
         'keyword': this.searchQuery,
@@ -140,11 +140,11 @@ export class CustomerCategoryListPage {
       }
     }
   }
-  presentPopover(myEvent) {
+  presentPopover (myEvent) {
     this.widgetUtil.presentPopover(myEvent, PopoverHomePage)
   }
 
-  showTkToast() {
+  showTkToast () {
     this.widgetUtil.showToast('TK points will convert into TK currency post target achievement of QTR')
   }
 }

@@ -34,7 +34,7 @@ export class CustomerListProductPage {
   limit: number = CONSTANTS.PAGINATION_LIMIT;
   allProducts = []
 
-  constructor(public navCtrl: NavController, public navParams: NavParams,
+  constructor (public navCtrl: NavController, public navParams: NavParams,
     private apiService: ApiServiceProvider, private widgetUtil: WidgetUtilService
   , private storageService: StorageServiceProvider) {
     this.skipValue = 0
@@ -49,7 +49,7 @@ export class CustomerListProductPage {
     this.getList()
   }
 
-  ionViewWillEnter() {
+  ionViewWillEnter () {
     // INFO: get All products corresponding to category
     this.apiService.getAllProductsByCategory(this.categoryId).subscribe((result) => {
       if (result.body && result.body.length) {
@@ -67,14 +67,14 @@ export class CustomerListProductPage {
     })
   }
 
-  ionViewDidEnter(){
+  ionViewDidEnter (){
     this.getCartItems()
     this.storageService.getTkPointsFromStorage().then(res => {
       this.tkPoint = res
     })
   }
 
-  getList() {
+  getList () {
     if(!this.isSearch) {
       this.apiService.getProductListByCategory(this.categoryId, this.skipValue, this.limit).subscribe((result) => {
         this.productList = result.body
@@ -112,7 +112,7 @@ export class CustomerListProductPage {
     }
   }
 
-  async getCartItems() {
+  async getCartItems () {
     this.cart = await this.storageService.getCartFromStorage()
     this.tkPoint = await this.storageService.getTkPointsFromStorage()
     if(this.cart.length > 0) {
@@ -130,7 +130,7 @@ export class CustomerListProductPage {
     await this.storageService.setToStorage('orderTotal', this.orderTotal)
   }
 
-  reviewAndSubmitOrder() {
+  reviewAndSubmitOrder () {
     if (this.cart.length <= 0) {
       this.widgetUtil.showToast(CONSTANTS.CART_EMPTY)
     }else {
@@ -140,7 +140,7 @@ export class CustomerListProductPage {
     }
   }
 
-  async addToCart(product, qty) {
+  async addToCart (product, qty) {
     if(parseInt(qty) > 0) {
       this.widgetUtil.showToast(`${product.name} added to cart!`)
       delete product['categoryId']
@@ -185,7 +185,7 @@ export class CustomerListProductPage {
     }
   }
 
-  async removeFromCart(product) {
+  async removeFromCart (product) {
     this.widgetUtil.showToast(`${product.name} removed from cart`)
     if (this.cart.length > 0) {
       this.cart.map((value, index) => {
@@ -197,18 +197,18 @@ export class CustomerListProductPage {
     }
   }
 
-  decrementQty(qty) {
+  decrementQty (qty) {
     if(parseInt(qty) > 1) {
       return (parseInt(qty) - 1)
     }
     return parseInt(qty)
   }
 
-  incrementQty(qty) {
+  incrementQty (qty) {
     return (parseInt(qty) + 1)
   }
 
-  doInfinite(infiniteScroll) {
+  doInfinite (infiniteScroll) {
     this.skipValue = this.skipValue + this.limit
     if(!this.isSearch) {
       this.apiService.getProductListByCategory(this.categoryId, this.skipValue, this.limit).subscribe((result) => {
@@ -252,7 +252,7 @@ export class CustomerListProductPage {
     // this.searchProducts()
   }
 
-  doRefresh(refresher) : void {
+  doRefresh (refresher) : void {
     this.getList()
     this.getCartItems()
     setTimeout(() => {
@@ -260,16 +260,16 @@ export class CustomerListProductPage {
     }, 1000);
   }
 
-  presentPopover(myEvent) {
+  presentPopover (myEvent) {
     this.widgetUtil.presentPopover(myEvent, PopoverHomePage)
   }
 
-  searchProducts(searchQuery) {
+  searchProducts (searchQuery) {
     this.filteredProductList = this.allProducts.filter(product =>
       product.name.toLowerCase().includes(searchQuery.toLowerCase())
     )}
 
-  showTkToast() {
+  showTkToast () {
     this.widgetUtil.showToast('TK points will convert into TK currency post target achievement of QTR')
   }
 }
