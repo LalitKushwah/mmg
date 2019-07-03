@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavParams, ViewController, LoadingController, NavController } from 'ionic-angular';
+import { IonicPage, ViewController, LoadingController } from 'ionic-angular';
 import { StorageServiceProvider } from '../../providers/storage-service/storage-service';
 import { ApiServiceProvider } from '../../providers/api-service/api-service';
 import { WidgetUtilService } from '../../utils/widget-utils';
@@ -32,8 +32,7 @@ export class AddPaymentModalPage {
               private storageService: StorageServiceProvider,
               private apiService: ApiServiceProvider,
               private loadingCtrl: LoadingController,
-              private widgetUtil: WidgetUtilService,
-              private navCtrl: NavController) {
+              private widgetUtil: WidgetUtilService) {
   }
 
   ionViewDidLoad () {
@@ -77,12 +76,12 @@ export class AddPaymentModalPage {
 
   //Check if Amount is 0
   checkAmount (keyCode){
-    //console.log('key upp...')
-    if(this.paymentAmount > 0)
+    if(this.paymentAmount > 0) {
       this.amountIsZero = false;
-    else
+    }
+    else {
       this.amountIsZero = true;
-    //console.log(this.amountIsZero)
+    }
   }
 
   paymentModeSelectionChanged (){

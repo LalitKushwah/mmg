@@ -23,7 +23,7 @@ import { CustomerHomePageModule } from '../pages/customer-home/customer-home.mod
 import { WidgetUtilService } from '../utils/widget-utils';
 import { BrowserModule } from '@angular/platform-browser';
 import { ErrorHandler, NgModule } from '@angular/core';
-import { IonicApp, IonicErrorHandler, IonicModule, Navbar } from 'ionic-angular';
+import { IonicApp, IonicErrorHandler, IonicModule } from 'ionic-angular';
 
 import { MyApp } from './app.component';
 import { HomePage } from '../pages/home/home';
@@ -31,15 +31,13 @@ import { ListPage } from '../pages/list/list';
 
 import { UserProfilePage } from '../pages/user-profile/user-profile';
 import { SalesmanSelectCustomerPage } from '../pages/salesman-select-customer/salesman-select-customer';
-import { UserPaymentHistoryPage } from '../pages/user-payment-history/user-payment-history';
 import { AdminDashboardPage } from '../pages/admin-dashboard/admin-dashboard';
-
 
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
-import {IonicStorageModule} from "@ionic/storage";
-import {HeaderColor} from "@ionic-native/header-color";
-import {LoginPageModule} from "../pages/login/login.module";
+import { IonicStorageModule } from "@ionic/storage";
+import { HeaderColor } from "@ionic-native/header-color";
+import { LoginPageModule } from "../pages/login/login.module";
 import { ApiServiceProvider } from '../providers/api-service/api-service';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { StorageServiceProvider } from '../providers/storage-service/storage-service';
@@ -61,7 +59,7 @@ import { AdminListSubCategoryPage } from '../pages/admin-list-sub-category/admin
 import { AdminEditProductPage } from '../pages/admin-edit-product/admin-edit-product';
 import { CategoryTotalModalPage } from '../pages/category-total-modal/category-total-modal';
 import { SessionExpiredPageModule } from '../pages/session-expired/session-expired.module';
-import {SessionExpiredPage} from "../pages/session-expired/session-expired";
+import { SessionExpiredPage } from "../pages/session-expired/session-expired";
 import { ClubPremierPage } from '../pages/club-premier/club-premier';
 import { ClubPremierPageModule } from '../pages/club-premier/club-premier.module';
 import { ClubPremierGuidePage } from '../pages/club-premier-guide/club-premier-guide';
@@ -78,9 +76,9 @@ import { SpecialProductsPageModule } from '../pages/special-products/special-pro
 import { SpecialProductsPage } from '../pages/special-products/special-products';
 import { ClubClassificationPage } from '../pages/club-classification/club-classification';
 import { ClubClassificationPageModule } from '../pages/club-classification/club-classification.module';
-import {GiftCheckoutPage} from "../pages/gift-checkout/gift-checkout";
-import {GiftCheckoutPageModule} from "../pages/gift-checkout/gift-checkout.module";
-import {DatePipe} from "@angular/common";
+import { GiftCheckoutPage } from "../pages/gift-checkout/gift-checkout";
+import { GiftCheckoutPageModule } from "../pages/gift-checkout/gift-checkout.module";
+import { DatePipe } from "@angular/common";
 import { EditUserPageModule } from '../pages/edit-user/edit-user.module';
 import { EditUserPage } from '../pages/edit-user/edit-user';
 import { AddSalesmanModalPageModule } from '../pages/add-salesman-modal/add-salesman-modal.module';
