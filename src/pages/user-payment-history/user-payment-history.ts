@@ -45,7 +45,7 @@ export class UserPaymentHistoryPage {
     });
     loader.present()
     let profile = await this.storageService.getFromStorage('profile')
-    if (profile['userType'] === 'SALESMAN') {
+    if ((profile['userType'] === 'SALESMAN') || (profile['userType'] === 'SALESMANAGER')) {
       profile = await this.storageService.getFromStorage('selectedCustomer')
     }
     this.apiService.getPaymentHistory(profile['externalId']).subscribe((res: any) => {

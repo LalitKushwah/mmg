@@ -33,8 +33,8 @@ export class CustomerListOrderPage {
   async getUserOrderList () {
     const profile = await this.storageService.getFromStorage('profile')
     this.userId = profile['userType'] === 'SALESMAN' ? profile['externalId'] : profile['_id']
-    const isSalesman = profile['userType'] === 'SALESMAN' ? true : false
-    this.apiService.getOrderListByUser(this.userId, this.skipValue, this.limit, isSalesman).subscribe((result) => {
+    const isSalesman = ((profile['userType'] === 'SALESMAN') || (profile['userType'] === 'SALESMANAGER')) ? true : false
+    this.apiService.getOrderListByUser(this.userId, this.skipValue, this.limit, isSalesman, profile['externalId']).subscribe((result) => {
       this.orderList = result.body
       this.orderList.map((value) => {
         value.orderTotal = parseFloat((Math.round(value.orderTotal * 100) / 100).toString()).toFixed(2)
@@ -57,8 +57,8 @@ export class CustomerListOrderPage {
   async doInfinite (infiniteScroll) {
     this.skipValue = this.skipValue + this.limit
     const profile = await this.storageService.getFromStorage('profile')
-    const isSalesman = profile['userType'] === 'SALESMAN' ? true : false
-    this.apiService.getOrderListByUser(this.userId, this.skipValue, this.limit, isSalesman).subscribe((result) => {
+    const isSalesman = ((profile['userType'] === 'SALESMAN') || (profile['userType'] === 'SALESMANAGER')) ? true : false
+    this.apiService.getOrderListByUser(this.userId, this.skipValue, this.limit, isSalesman, profile['externalId']).subscribe((result) => {
       if(result.body.length > 0) {
         result.body.map( (value) => {
           this.orderList.push(value)

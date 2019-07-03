@@ -89,7 +89,7 @@ export class UserProfilePage {
       let profile = await this.storageService.getFromStorage('profile')
       console.log(profile)
       // this.partyName = profile['name']
-      if ((profile['userType'] === 'SALESMAN') || (profile['userType'] === 'SALESMANAGER') ) {
+      if ((profile['userType'] === 'SALESMAN') || (profile['userType'] === 'SALESMANAGER')) {
         let selectedCustomerprofile = await this.storageService.getFromStorage('selectedCustomer')
         console.log(this.selectedCustomerprofile)
         this.partyName = selectedCustomerprofile['name']
