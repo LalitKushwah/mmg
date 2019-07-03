@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavParams, ViewController, LoadingController, NavController } from 'ionic-angular';
+import { IonicPage, ViewController, LoadingController } from 'ionic-angular';
 import { StorageServiceProvider } from '../../providers/storage-service/storage-service';
 import { ApiServiceProvider } from '../../providers/api-service/api-service';
 import { WidgetUtilService } from '../../utils/widget-utils';
@@ -32,8 +32,7 @@ export class AddPaymentModalPage {
               private storageService: StorageServiceProvider,
               private apiService: ApiServiceProvider,
               private loadingCtrl: LoadingController,
-              private widgetUtil: WidgetUtilService,
-              private navCtrl: NavController) {
+              private widgetUtil: WidgetUtilService) {
   }
 
   ionViewDidLoad () {
@@ -57,14 +56,13 @@ export class AddPaymentModalPage {
       } else {
         this.customerCode = profile['externalId']
       }
-      // this.apiService.getAssociatedSalesmanListBySalesman(profile['externalId']).subscribe((res: any) => {
-      //   this.salesmanList = res.body
-      //   if (!this.salesmanList.length) {
-      //     this.widgetUtil.showToast('No salesman association found \n Please contact administration')
-      //   }
-      //   loader.dismiss()
-      // })
-      loader.dismiss()
+      this.apiService.getAssociatedSalesmanListBySalesman(profile['externalId']).subscribe((res: any) => {
+        this.salesmanList = res.body ? res.body : []
+        if (!this.salesmanList.length) {
+          this.widgetUtil.showToast('No salesman association found \n Please contact administration')
+        }
+        loader.dismiss()
+      })
     }
     catch (err) {
       loader.dismiss()
@@ -77,17 +75,16 @@ export class AddPaymentModalPage {
   }
 
   //Check if Amount is 0
-  checkAmount(keyCode){
-    //console.log('key upp...')
-    if(this.paymentAmount > 0)
+  checkAmount (keyCode){
+    if(this.paymentAmount > 0) {
       this.amountIsZero = false;
-    else
+    }
+    else {
       this.amountIsZero = true;
-    //console.log(this.amountIsZero)
+    }
   }
 
   paymentModeSelectionChanged (){
-    //this.isEnabled=this.salesmanList.length ? true : false;
       switch (this.paymentMode) {
         case 'cash':
           this.cashIsSelected=true; 
@@ -142,22 +139,14 @@ export class AddPaymentModalPage {
     console.log(this.paymentObj)
     this.apiService.createPayment(this.paymentObj).subscribe((res : any)=> {
       if (res.status === 200) {
-        payLoader.dismiss()
         this.widgetUtil.showToast('Payment created successfully...')
-        this.closePayModal()
+        this.onlineID = undefined;
+        this.chequeID = undefined;
+        // this.closePayModal()
       } else {
-        payLoader.dismiss()
         this.widgetUtil.showToast('Error while creating payment...')
       }
       payLoader.dismiss()
     })
   }
-
-  //Removing Select Salesman Dropdown
-  // selectSalesman (salesman) {
-  //   this.selectedSalesman = salesman
-  //   this.paymentObj.salesmanCode = salesman.externalId
-  //   this.paymentObj.salesmanName = salesman.name
-  // }
-
 }

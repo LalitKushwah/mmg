@@ -19,12 +19,12 @@ export class PopoverHomePage {
 
   popoverOptions: any = []
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, private storageService: StorageServiceProvider
+  constructor (public navCtrl: NavController, public navParams: NavParams, private storageService: StorageServiceProvider
   , public appCtrl: App, private widgetUtil: WidgetUtilService ) {
     this.getData()
   }
 
-  async getData() {
+  async getData () {
     let profile = await this.storageService.getFromStorage('profile')
     if (profile['userType'] === 'ADMIN' || profile['userType'] === 'ADMINHO') {
       this.popoverOptions = [
@@ -63,7 +63,7 @@ export class PopoverHomePage {
     }
   }
 
-  openPage(name)  {
+  openPage (name)  {
     switch(name) {
       case 'Add User':
       this.addUser()
@@ -83,34 +83,34 @@ export class PopoverHomePage {
     }
   }
 
-  addUser(){
+  addUser (){
     this.navCtrl.push(AddUserPage)
     this.dismissPopover()
   }
 
-  addCategory() {
+  addCategory () {
     this.navCtrl.push(AddCategoryPage)
     this.dismissPopover()
   }
 
-  addProduct() {
+  addProduct () {
     this.navCtrl.push(AddProductPage)
     this.dismissPopover()
   }
 
-  resetPassword() {
+  resetPassword () {
     this.navCtrl.push(ResetUserPasswordPage)
     this.dismissPopover()
   }
 
-  async logout() {
+  async logout () {
     this.storageService.clearStorage()
     localStorage.clear()
     this.appCtrl.getRootNav().push(HomePage)
     this.widgetUtil.dismissPopover()
   }
 
-  dismissPopover() {
+  dismissPopover () {
     this.widgetUtil.dismissPopover()
   }
 }

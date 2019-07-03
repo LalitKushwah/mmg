@@ -1,9 +1,8 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams, AlertController } from 'ionic-angular';
+import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { ApiServiceProvider } from '../../providers/api-service/api-service';
 import { WidgetUtilService } from '../../utils/widget-utils';
 import { CONSTANTS } from '../../utils/constants';
-import { CustomerHomePage } from '../customer-home/customer-home';
 import { StorageServiceProvider } from './../../providers/storage-service/storage-service';
 import { UserProfilePage } from '../user-profile/user-profile';
 
@@ -23,30 +22,16 @@ export class SalesmanSelectCustomerPage {
   allCustomers = []
   abc: any;
 
-   constructor (public navCtrl: NavController, public navParams: NavParams,
-              private apiService: ApiServiceProvider,
-              private widgetUtil: WidgetUtilService,
-              private alertCtrl: AlertController,
-              private storageService: StorageServiceProvider) {
+   constructor (public navCtrl: NavController, 
+                public navParams: NavParams,
+                private apiService: ApiServiceProvider,
+                private widgetUtil: WidgetUtilService,
+                private storageService: StorageServiceProvider) {
     this.skipValue = 0
     this.limit = CONSTANTS.PAGINATION_LIMIT
     this.getUserList()
   }
 
-  // ionViewWillEnter() {
-  //   let profile = await this.storageService.getFromStorage('profile')
-  //   this.apiService.getAssociatedCustomersListBySalesman().subscribe((result) => {
-  //     if (result.body && result.body.length > 0) {
-  //       this.allCustomers = result.body
-  //     }
-  //   }, (error) => {
-  //     if (error.statusText === 'Unknown Error') {
-  //       this.widgetUtil.showToast(CONSTANTS.INTERNET_ISSUE)
-  //     } else {
-  //       this.widgetUtil.showToast(CONSTANTS.SERVER_ERROR)
-  //     }
-  //   })
-  // }
   async getUserList () {
     let profile: any = await this.storageService.getFromStorage('profile')
     this.apiService.getAssociatedCustomersListBySalesman(profile.externalId).subscribe((result: any) => {
@@ -94,38 +79,14 @@ export class SalesmanSelectCustomerPage {
 
   selectCustomer (user) {
     this.customerSelected(user)
-    // let alert = this.alertCtrl.create();
-    // alert.setTitle('Confirm Customer!')
-    // alert.setMessage('Are you sure you want to place order for ' +  user.name)
-    // alert.addButton({
-    //   text: 'No',
-    //   role: 'cancel',
-    //   handler: () => {}
-    // });
-    // alert.addButton({
-    //   text: 'Yes',
-    //   cssClass: 'secondary',
-    //   handler: () => {
-    //     this.customerSelected(user)
-    //   }
-    // })
-    // alert.present(alert)
   } 
   customerSelected (user) {
-    //console.log(user)
     //Set the Selected Customer to Storage
     this.storageService.setToStorage('selectedCustomer', user)
 
     this.storageService.setToStorage('selectedCustomer', user)
     this.navCtrl.push(UserProfilePage)
-  } 
-  // customerSelected(user) {
-  //   //console.log(user)
-  //   //Set the Selected Customer to Storage
-  //   this.storageService.setToStorage('selectedCustomer', user)
-
-  //   this.navCtrl.push(UserProfilePage)
-  // }
+  }
 
   searchCustomers (searchQuery) {
       this.filteredUserList = this.allCustomers.filter(user =>

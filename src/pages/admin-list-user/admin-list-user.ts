@@ -5,7 +5,6 @@ import { WidgetUtilService } from '../../utils/widget-utils';
 import { CONSTANTS } from '../../utils/constants';
 import { EditUserPage } from '../edit-user/edit-user';
 import { StorageServiceProvider } from '../../providers/storage-service/storage-service';
-import { AdminHomePage } from '../admin-home/admin-home';
 import { AdminDashboardPage } from '../admin-dashboard/admin-dashboard';
 
 @IonicPage({

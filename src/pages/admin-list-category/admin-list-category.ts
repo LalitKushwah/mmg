@@ -20,7 +20,7 @@ export class AdminListCategoryPage {
   limit: number = CONSTANTS.PAGINATION_LIMIT
 
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, private widgetUtil: WidgetUtilService, private apiService: ApiServiceProvider) {
+  constructor (public navCtrl: NavController, public navParams: NavParams, private widgetUtil: WidgetUtilService, private apiService: ApiServiceProvider) {
     this.categoryListAvailable = false
     this.parentCategoryList = []
     this.skipValue = 0
@@ -28,7 +28,7 @@ export class AdminListCategoryPage {
     this.getList()
   }
 
-  getList() {
+  getList () {
     this.apiService.getParentCategoryList(this.skipValue, this.limit).subscribe((result) => {
       this.parentCategoryList = result.body
       this.categoryListAvailable = true
@@ -42,7 +42,7 @@ export class AdminListCategoryPage {
     })
   }
 
-  getChildCategory(category) {
+  getChildCategory (category) {
     const categoryObj = {
       'parentCategoryId' : category['_id'],
       'category': category
@@ -50,17 +50,17 @@ export class AdminListCategoryPage {
     this.navCtrl.push(AdminListSubCategoryPage, categoryObj)
   }
 
-  presentPopover(myEvent) {
+  presentPopover (myEvent) {
     this.widgetUtil.presentPopover(myEvent, PopoverHomePage)
   }
 
-  doRefresh(refresher) : void {
+  doRefresh (refresher) : void {
     setTimeout(() => {
       refresher.complete();
     }, 1000);
   }
 
-  doInfinite(infiniteScroll) {
+  doInfinite (infiniteScroll) {
     this.skipValue = this.skipValue + this.limit
     this.apiService.getParentCategoryList(this.skipValue, this.limit).subscribe((result) => {
       if(result.body.length > 0) {

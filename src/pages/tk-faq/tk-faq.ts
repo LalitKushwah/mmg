@@ -60,14 +60,14 @@ export class TkFaqPage {
       'ques': 'Can I choose multiple articles and club it with TK goods as well?',
       'ans': "Yes, this combination is permissible,  as long as there is a balance of TK currency in the respective customers account"
     }]
-  constructor(public navCtrl: NavController, public navParams: NavParams) {
+  constructor (public navCtrl: NavController, public navParams: NavParams) {
   }
 
-  ionViewDidLoad() {
+  ionViewDidLoad () {
     console.log('ionViewDidLoad TkFaqPage');
   }
 
-  expandItem(event: any) {
+  expandItem (event: any) {
     if (event.target.parentElement && event.target.parentElement.nextElementSibling) {
       event.target.parentElement.classList.toggle('expand')
       event.target.parentElement.nextElementSibling.classList.toggle('expand-wrapper')

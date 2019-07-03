@@ -21,26 +21,26 @@ import { ClubClassificationPage } from '../club-classification/club-classificati
 })
 export class ClubPremierGuidePage {
 
-  constructor(public navCtrl: NavController, public navParams: NavParams) {
+  constructor (public navCtrl: NavController, public navParams: NavParams) {
   }
 
-  ionViewDidLoad() {
+  ionViewDidLoad () {
     console.log('ionViewDidLoad ClubPremierGuidePage');
   }
 
-  goToTNC() {
+  goToTNC () {
     this.navCtrl.push(TermsAndConditionsPage);
   }
 
-  goToFAQ() {
+  goToFAQ () {
     this.navCtrl.push(TkFaqPage);
   }
 
-  goToProductList() {
+  goToProductList () {
     this.navCtrl.push(SpecialProductsPage)
   }
 
-  goToClubClassificationt() {
+  goToClubClassificationt () {
     this.navCtrl.push(ClubClassificationPage)
   }
 }

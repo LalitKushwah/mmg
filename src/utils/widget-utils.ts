@@ -6,11 +6,11 @@ export class WidgetUtilService {
 
   popoverInstance : any = {}
 
-  constructor(public alertController: AlertController, public toastController: ToastController
+  constructor (public alertController: AlertController, public toastController: ToastController
     , private popoverController: PopoverController) {
   }
 
-  showAlert(title, subTitle) {
+  showAlert (title, subTitle) {
     this.alertController.create({
         title: title,
         subTitle: subTitle,
@@ -18,7 +18,7 @@ export class WidgetUtilService {
       }).present();
   }
 
-  showToast(message) {
+  showToast (message) {
     let toast = this.toastController.create({
       message: message,
       duration: 1500,
@@ -27,11 +27,11 @@ export class WidgetUtilService {
     toast.present();
   }
 
-  dismissPopover() {
+  dismissPopover () {
     this.popoverInstance.dismiss()
   }
 
-  presentPopover(myEvent, page) {
+  presentPopover (myEvent, page) {
     this.popoverInstance = this.popoverController.create(page);
     this.popoverInstance.present({
       ev: myEvent

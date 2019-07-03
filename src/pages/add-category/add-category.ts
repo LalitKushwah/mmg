@@ -26,14 +26,14 @@ export class AddCategoryPage implements OnInit {
   showParentList = false
   allowAddingCategory = true
 
-  constructor(public navCtrl: NavController, public navParams: NavParams
+  constructor (public navCtrl: NavController, public navParams: NavParams
   , private apiService: ApiServiceProvider, private widgetUtil: WidgetUtilService) {
     this.showParentList = false
     this.categoryListAvailable = false
     this.getCategoryList()
   }
 
-  getCategoryList() {
+  getCategoryList () {
     this.apiService.getParentCategoryList(0 , 50).subscribe((result: any) => {
       this.categoryList = result.body
       this.selectedCategory = result.body[0]
@@ -49,24 +49,24 @@ export class AddCategoryPage implements OnInit {
     })
   }
 
-  ngOnInit(): void {
+  ngOnInit (): void {
     this.createFormControls()
     this.createProductForm()
   }
 
-  createFormControls() {
+  createFormControls () {
     this.name = new FormControl('', [
       Validators.required
     ]);
   }
 
-  createProductForm() {
+  createProductForm () {
     this.addCategoryForm = new FormGroup({
       name: this.name
     });
   }
 
-  addCategory() {
+  addCategory () {
     let categoryDetail = {}
     categoryDetail['name'] = this.name.value.trim()
     categoryDetail['lastUpdatedAt'] = Date.now()
@@ -92,7 +92,7 @@ export class AddCategoryPage implements OnInit {
     })
   }
 
-  onCategoryTypeSelect() {
+  onCategoryTypeSelect () {
     if (this.selectedCategoryType != 'parent') {
       if(this.categoryList.length > 0) {
         this.showParentList = true
@@ -109,7 +109,7 @@ export class AddCategoryPage implements OnInit {
     }
   }
 
-  compareFn(option1: any, option2: any) {
+  compareFn (option1: any, option2: any) {
     return option1.name === option2.name;
   }
 }

@@ -31,13 +31,13 @@ export class AddProductPage {
   priceTypeList: Array<any> =  [ 'Standard Price']
   selectedPriceType = 'Standard Price'
 
-  constructor(public navCtrl: NavController, public navParams: NavParams
+  constructor (public navCtrl: NavController, public navParams: NavParams
   , private apiService: ApiServiceProvider, private widgetUtil: WidgetUtilService) {
     this.categoryListAvailable = false
     this.getCategoryList()
   }
 
-  getCategoryList() {
+  getCategoryList () {
     this.apiService.getCategoryListForProduct().subscribe((result: any) => {
       this.categoryList = result.body
       this.selectedCategory = result.body[0]
@@ -53,12 +53,12 @@ export class AddProductPage {
     })
   }
 
-  ngOnInit(): void {
+  ngOnInit (): void {
     this.createFormControls()
     this.createProductForm()
   }
 
-  createFormControls() {
+  createFormControls () {
     this.name = new FormControl('', [
       Validators.required
     ]);
@@ -79,7 +79,7 @@ export class AddProductPage {
     ]);
   }
 
-  createProductForm() {
+  createProductForm () {
     this.addProductForm = new FormGroup({
       name: this.name,
       price: this.price,
@@ -90,7 +90,7 @@ export class AddProductPage {
     });
   }
 
-  addProduct() {
+  addProduct () {
     let productDetail = {}
     productDetail['name'] = this.name.value.trim()
     productDetail['price'] = parseFloat(this.price.value.trim())
@@ -119,7 +119,7 @@ export class AddProductPage {
       }
     })
   }
-  compareFn(option1: any, option2: any) {
+  compareFn (option1: any, option2: any) {
     return option1.name === option2.name;
   }
 

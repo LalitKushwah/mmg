@@ -1,6 +1,6 @@
 import { WidgetUtilService } from '../../utils/widget-utils';
 import { Component, ViewChild } from '@angular/core';
-import { IonicPage, NavController, NavParams,ModalController, LoadingController } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, LoadingController } from 'ionic-angular';
 import { PopoverHomePage } from '../popover-home/popover-home';
 import { StorageServiceProvider } from '../../providers/storage-service/storage-service';
 import { SalesmanSelectCustomerPage } from '../salesman-select-customer/salesman-select-customer';
@@ -43,12 +43,11 @@ export class SalesmanDashboardPage {
   externalId: string = '3'
 
   constructor (public navCtrl: NavController, 
-              public navParams: NavParams,
-              private widgetUtil: WidgetUtilService, 
-              private modal:ModalController,
-              private storageService: StorageServiceProvider,
-              private apiService: ApiServiceProvider,
-              private loadingCtrl: LoadingController) {
+               public navParams: NavParams,
+               private widgetUtil: WidgetUtilService, 
+               private storageService: StorageServiceProvider,
+               private apiService: ApiServiceProvider,
+               private loadingCtrl: LoadingController) {
   }
 
   displayChart () {
@@ -143,32 +142,32 @@ export class SalesmanDashboardPage {
   }
 }
 
-prepareData (selectedValue) {
+  prepareData (selectedValue) {
 
-  if(this.dashboardData){
-    if (selectedValue !== 'Total') {
-      this.data.target = this.dashboardData['target' + selectedValue.name.charAt(0)]
-      this.data.achievement = this.dashboardData['achive' + selectedValue.name.charAt(0)]
+    if(this.dashboardData){
+      if (selectedValue !== 'Total') {
+        this.data.target = this.dashboardData['target' + selectedValue.name.charAt(0)]
+        this.data.achievement = this.dashboardData['achive' + selectedValue.name.charAt(0)]
 
-    } else {
-      this.data.target = (this.dashboardData['targetC']  + this.dashboardData['targetP'] + this.dashboardData['targetH'] + this.dashboardData['targetL'])/4
-      this.data.achievement = (this.dashboardData['achiveC']  + this.dashboardData['achiveP'] + this.dashboardData['achiveH'] + this.dashboardData['achiveL'])/4
+      } else {
+        this.data.target = (this.dashboardData['targetC']  + this.dashboardData['targetP'] + this.dashboardData['targetH'] + this.dashboardData['targetL'])/4
+        this.data.achievement = (this.dashboardData['achiveC']  + this.dashboardData['achiveP'] + this.dashboardData['achiveH'] + this.dashboardData['achiveL'])/4
+      }
+
+      this.data.achievedPercentage = (this.data.achievement/this.data.target) * 100
+      this.data.balanceToDo = this.data.target - this.data.achievement
+      this.data.creditLimit = this.dashboardData.creditLimit
+      this.data.currentOutStanding = this.dashboardData.currentOutStanding
+      this.data.thirtyDaysOutStanding = this.dashboardData.thirtyDaysOutStanding
+      this.data.availableCreditLimit = this.dashboardData.creditLimit - this.data.currentOutStanding
+      // this.data.tkPoints = this.dashboardData.tkPoints
+      // this.data.tkCurrency = this.dashboardData.tkCurrency
+      //Preparing Data for Graph
+      this.mtdAchieved = this.data.achievement
+      this.target = this.data.balanceToDo 
     }
-
-    this.data.achievedPercentage = (this.data.achievement/this.data.target) * 100
-    this.data.balanceToDo = this.data.target - this.data.achievement
-    this.data.creditLimit = this.dashboardData.creditLimit
-    this.data.currentOutStanding = this.dashboardData.currentOutStanding
-    this.data.thirtyDaysOutStanding = this.dashboardData.thirtyDaysOutStanding
-    this.data.availableCreditLimit = this.dashboardData.creditLimit - this.data.currentOutStanding
-    // this.data.tkPoints = this.dashboardData.tkPoints
-    // this.data.tkCurrency = this.dashboardData.tkCurrency
-    //Preparing Data for Graph
-    this.mtdAchieved = this.data.achievement
-    this.target = this.data.balanceToDo 
+      this.displayChart()
   }
-    this.displayChart()
-}
 
   openCustomerSelectionModal (){
     this.navCtrl.push(SalesmanSelectCustomerPage);

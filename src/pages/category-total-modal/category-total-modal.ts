@@ -19,14 +19,14 @@ export class CategoryTotalModalPage {
   categoryListAvailable: boolean = false
   parentCategoryList: Array<any> = []
 
-  constructor(public viewController: ViewController, public navParams: NavParams,
+  constructor (public viewController: ViewController, public navParams: NavParams,
     private apiService: ApiServiceProvider, private widgetUtil: WidgetUtilService) {
       this.categoryListAvailable = false
     this.cartItems = this.navParams.get('cartItems')
     this.getParenCategoryList()
   }
 
-  getParenCategoryList() {
+  getParenCategoryList () {
     this.apiService.getParentCategoryList(this.skipValue, this.limit).subscribe((result) => {
       this.parentCategoryList = result.body
       this.cartItems.map(cartItem => {
@@ -58,7 +58,7 @@ export class CategoryTotalModalPage {
     })
   }
 
-  dismissModal() {
+  dismissModal () {
     this.viewController.dismiss()
   }
 

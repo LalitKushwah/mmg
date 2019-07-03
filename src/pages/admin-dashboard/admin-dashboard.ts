@@ -1,6 +1,6 @@
 import { WidgetUtilService } from '../../utils/widget-utils';
 import { Component, ViewChild } from '@angular/core';
-import { IonicPage, NavController, NavParams,ModalController, LoadingController } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, LoadingController } from 'ionic-angular';
 import { PopoverHomePage } from '../popover-home/popover-home';
 import { StorageServiceProvider } from '../../providers/storage-service/storage-service';
 import { Chart } from 'chart.js';
@@ -14,10 +14,10 @@ import { ApiServiceProvider } from '../../providers/api-service/api-service';
   templateUrl: 'admin-dashboard.html',
 })
 export class AdminDashboardPage {
-
+ 
   @ViewChild('pieCanvas') pieCanvas;
-  mtdAchieved: number = 0;
-  target: number = 1;
+  mtdAchieved: number;
+  target: number;
   pieChart: any;
   partyName: any;
   selectedCustomerprofile: any;
@@ -25,27 +25,17 @@ export class AdminDashboardPage {
   targetCategory: any = 'Total';
   dashboardData: any;
   categoryList: any = []
-  data: any = {
-    target:0,
-    achievement: 0,
-    achievedPercentage:0,
-    balanceToDo:0,
-    creditLimit:0,
-    currentOutStanding:0,
-    thirtyDaysOutStanding:0,
-    availableCreditLimit:0,
-    mtdAchieved:0,
-    }
+  data: any = {}
   loader: any
-  externalId: string = '3'
+  externalId: string = ''
 
   constructor (public navCtrl: NavController, 
-              public navParams: NavParams,
-              private widgetUtil: WidgetUtilService, 
-              private modal:ModalController,
-              private storageService: StorageServiceProvider,
-              private apiService: ApiServiceProvider,
-              private loadingCtrl: LoadingController) {
+               public navParams: NavParams,
+               private widgetUtil: WidgetUtilService, 
+               private storageService: StorageServiceProvider,
+               private apiService: ApiServiceProvider,
+               private loadingCtrl: LoadingController) {
+    
   }
 
   displayChart () {
@@ -68,13 +58,13 @@ export class AdminDashboardPage {
         legend: {
           display: true
         },
-        tooltips: {
-          enabled: false
-        },
         title: {
           display: false,
           fontStyle: 'bold',
           fontSize: 18
+        },
+        tooltips: {
+          enabled: false
         },
         events: []
       },
@@ -83,8 +73,9 @@ export class AdminDashboardPage {
   }
 
   ionViewDidLoad () {
-    this.getData() 
+    this.getData()
   }
+
   async getData () {
     this.loader = this.loadingCtrl.create({
       content: "Fetching Data...",
@@ -92,12 +83,18 @@ export class AdminDashboardPage {
     this.loader.present()
     try {
       let profile = await this.storageService.getFromStorage('profile')
-
-      this.partyName = profile['name']
-      console.log('======= 99 =======', profile)
-
-      // TODO update in argument
-      this.apiService.getDashboardData(profile['externalId']).subscribe((res: any) => {
+      // this.partyName = profile['name']
+      if ((profile['userType'] === 'SALESMAN')) {
+        let selectedCustomerprofile = await this.storageService.getFromStorage('selectedCustomer')
+        this.partyName = selectedCustomerprofile['name']
+        this.externalId = selectedCustomerprofile['externalId']
+      }
+      else {
+        this.partyName = profile['name']
+        this.externalId = profile['externalId']
+        this.userTypeCustomer = true;
+      }
+      this.apiService.getDashboardData(this.externalId).subscribe((res: any) => {
         this.dashboardData = res.body[0]
         this.apiService.getParentCategoryList(0,20).subscribe((res:any) => {
           this.categoryList = res.body
@@ -111,6 +108,7 @@ export class AdminDashboardPage {
       this.loader.dismiss()
     }
   }
+
   presentPopover (myEvent) {
     this.widgetUtil.presentPopover(myEvent, PopoverHomePage)
   }
@@ -119,50 +117,60 @@ export class AdminDashboardPage {
     this.prepareData('Total')
   }
 
-  targetCategorySelectionChanged (selectedValue: any){
-
+  targetCategorySelectionChanged (selectedValue: any) {
     this.prepareData(selectedValue)
-    switch (selectedValue.name) {
-      case 'Confectionary':
-        console.log(selectedValue)
-          break;
-      case 'category-2':
-        console.log(selectedValue)
-          break;
-      case 'category-3':
-        console.log(selectedValue)
-          break;
-      case 'category-4':
-        console.log(selectedValue)
-          break;
-      default:
-        console.log(selectedValue) 
   }
-}
 
-prepareData (selectedValue) {
-  if(this.dashboardData){
-    if (selectedValue !== 'Total') {
-      this.data.target = this.dashboardData['target' + selectedValue.name.charAt(0)]
-      this.data.achievement = this.dashboardData['achive' + selectedValue.name.charAt(0)]
+  prepareData (selectedValue) {
+    if(!this.dashboardData){
+      console.log('No data found')
+      this.data.target = 0
+      this.data.achievement = 0
 
-    } else {
-      this.data.target = (this.dashboardData['targetC']  + this.dashboardData['targetP'] + this.dashboardData['targetH'] + this.dashboardData['targetL'])/4
-      this.data.achievement = (this.dashboardData['achiveC']  + this.dashboardData['achiveP'] + this.dashboardData['achiveH'] + this.dashboardData['achiveL'])/4
+      this.data.achievedPercentage = 0
+      this.data.balanceToDo = 0
+      this.data.creditLimit = 0
+      this.data.currentOutStanding = 0
+      this.data.thirtyDaysOutStanding = 0
+      this.data.availableCreditLimit = 0
+      this.data.tkPoints = 0
+      this.data.tkCurrency = 0
+
+      //Preparing Data for Graph
+      this.mtdAchieved = this.data.achievement
+      //this.target = this.data.balanceToDo
+      this.target = 1
+      this.displayChart()
     }
 
-    this.data.achievedPercentage = (this.data.achievement/this.data.target) * 100
-    this.data.balanceToDo = this.data.target - this.data.achievement
-    this.data.creditLimit = this.dashboardData.creditLimit
-    this.data.currentOutStanding = this.dashboardData.currentOutStanding
-    this.data.thirtyDaysOutStanding = this.dashboardData.thirtyDaysOutStanding
-    this.data.availableCreditLimit = this.dashboardData.creditLimit - this.data.currentOutStanding
-    //Preparing Data for Graph
-    this.mtdAchieved = this.data.achievement
-    this.target = this.data.balanceToDo 
+    else{
+      console.log('executing else')
+      if (selectedValue !== 'Total') {
+        this.data.target = this.dashboardData['target' + selectedValue.name.charAt(0)]
+        this.data.achievement = this.dashboardData['achive' + selectedValue.name.charAt(0)]
+
+      } else {
+        this.data.target = (this.dashboardData['targetC']  + this.dashboardData['targetP'] + this.dashboardData['targetH'] + this.dashboardData['targetL'])/4
+        this.data.achievement = (this.dashboardData['achiveC']  + this.dashboardData['achiveP'] + this.dashboardData['achiveH'] + this.dashboardData['achiveL'])/4
+      }
+
+      this.data.achievedPercentage = (this.data.achievement/this.data.target) * 100
+      this.data.balanceToDo = this.data.target - this.data.achievement
+      this.data.creditLimit = this.dashboardData.creditLimit
+      this.data.currentOutStanding = this.dashboardData.currentOutStanding
+      this.data.thirtyDaysOutStanding = this.dashboardData.thirtyDaysOutStanding
+      this.data.availableCreditLimit = this.dashboardData.creditLimit - this.data.currentOutStanding
+      this.data.tkPoints = this.dashboardData.tkPoints
+      this.data.tkCurrency = this.dashboardData.tkCurrency
+
+      //Preparing Data for Graph
+      this.mtdAchieved = this.data.achievement
+      this.target = this.data.balanceToDo
+      this.displayChart()
+    }
+    
   }
-    this.displayChart()
-}
+
   ionViewWillUnload () {
     this.loader.dismiss()
   }

@@ -20,7 +20,7 @@ export class GiftCheckoutPage {
   showLoader: boolean = false
   customerCode
 
-  constructor(public navCtrl: NavController,
+  constructor (public navCtrl: NavController,
               public navParams: NavParams,
               private storageService: StorageServiceProvider,
               private apiService: ApiServiceProvider,
@@ -32,14 +32,14 @@ export class GiftCheckoutPage {
     this.calculateTotalTkCurrency()
   }
 
-  async ionViewWillEnter() {
+  async ionViewWillEnter () {
     let profile = await this.storageService.getFromStorage('profile')
     this.apiService.getUserDetails(profile['userLoginId']).subscribe(res => {
       this.customerCode = res.body[0].externalId
     })
   }
 
-  calculateTotalTkCurrency() {
+  calculateTotalTkCurrency () {
     this.totalTkCurrency = 0
     if (this.giftCartProducts.length) {
 
@@ -49,14 +49,14 @@ export class GiftCheckoutPage {
     }
   }
 
-  expandItem(event: any) {
+  expandItem (event: any) {
     if (event.target.parentElement && event.target.parentElement.nextElementSibling) {
       event.target.parentElement.classList.toggle('expand')
       event.target.parentElement.nextElementSibling.classList.toggle('expand-wrapper')
     }
   }
 
-  removeFromCart(product) {
+  removeFromCart (product) {
     this.widgetUtil.showToast(`${product.name} removed from cart`)
     if (this.giftCartProducts.length > 0) {
       this.giftCartProducts.map((value, index) => {
@@ -69,7 +69,7 @@ export class GiftCheckoutPage {
     }
   }
 
-  async clearCart() {
+  async clearCart () {
     this.giftCartProducts = []
     this.totalTkCurrency = 0
     this.storageService.setGiftProductCart(this.giftCartProducts)
@@ -77,7 +77,7 @@ export class GiftCheckoutPage {
     await this.storageService.setToStorage('leftTkCurrency', totalCurrency)
   }
 
-  async confirmSubmitOrder() {
+  async confirmSubmitOrder () {
     const alert = this.alertController.create({
       title: 'Disclaimer',
       subTitle: 'Gift Rewards shown in images may differ from actual products.',
@@ -99,7 +99,7 @@ export class GiftCheckoutPage {
     alert.present();
   }
 
-  async submitGiftOrder() {
+  async submitGiftOrder () {
     this.showLoader = true
     let profile = await this.storageService.getFromStorage('profile')
     let orderObj: any = {
@@ -112,6 +112,7 @@ export class GiftCheckoutPage {
         }
       }),
       userId: profile['_id'],
+      externalId: profile['externalId'],
       userName: profile['name'],
       userLoginId: profile['userLoginId'],
       orderId: 'GRD' + Math.floor(Math.random() * 90000) + Math.floor(Math.random() * 90000),
