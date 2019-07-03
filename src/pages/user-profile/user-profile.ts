@@ -8,6 +8,7 @@ import { CustomerHomePage } from '../customer-home/customer-home';
 import { Chart } from 'chart.js';
 import { ApiServiceProvider } from '../../providers/api-service/api-service';
 import { CustomerListOrderPage } from '../customer-list-order/customer-list-order';
+import { SelectedCustomerOrderListPage } from '../selected-customer-order-list/selected-customer-order-list';
 
 @IonicPage({
   name: 'UserProfilePage'
@@ -91,7 +92,6 @@ export class UserProfilePage {
       // this.partyName = profile['name']
       if ((profile['userType'] === 'SALESMAN') || (profile['userType'] === 'SALESMANAGER')) {
         let selectedCustomerprofile = await this.storageService.getFromStorage('selectedCustomer')
-        console.log(this.selectedCustomerprofile)
         this.partyName = selectedCustomerprofile['name']
         this.externalId = selectedCustomerprofile['externalId']
         this.customerDashboard = false
@@ -133,7 +133,7 @@ export class UserProfilePage {
   }
 
   openCustomerOrderList(){
-    this.navCtrl.push(CustomerListOrderPage);
+    this.navCtrl.push(SelectedCustomerOrderListPage);
   }
 
   // toggleView(){

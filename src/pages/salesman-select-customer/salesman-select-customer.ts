@@ -82,9 +82,13 @@ export class SalesmanSelectCustomerPage {
   } 
   customerSelected (user) {
     //Set the Selected Customer to Storage
-    this.storageService.setToStorage('selectedCustomer', user)
+    //this.storageService.setToStorage('selectedCustomer', user)
 
     this.storageService.setToStorage('selectedCustomer', user)
+
+    //Setting a flag to indicated that Customer Dashboard has been Navigated from Salesman Dashboard
+    //this.storageService.setToStorage('navigatedFromSalesman','true')
+    //console.log(user)
     this.navCtrl.push(UserProfilePage)
   }
 
