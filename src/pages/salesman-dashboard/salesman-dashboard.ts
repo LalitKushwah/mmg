@@ -153,22 +153,21 @@ export class SalesmanDashboardPage {
         this.data.target = (this.dashboardData['targetC']  + this.dashboardData['targetP'] + this.dashboardData['targetH'] + this.dashboardData['targetL'])/4
         this.data.achievement = (this.dashboardData['achiveC']  + this.dashboardData['achiveP'] + this.dashboardData['achiveH'] + this.dashboardData['achiveL'])/4
       }
-      if("creditLimit" in this.dashboardData){
-        console.log('Exectuting IF')
-        this.data.creditLimit = this.dashboardData.creditLimit
-        this.data.availableCreditLimit = this.dashboardData.creditLimit - this.data.currentOutStanding
-      }
-      //"creditLimit" in this.dashboardData ? console.log('key exists') : console.log('unknown key')
-      //console.log(this.data.creditLimit)
-      //console.log(this.dashboardData)
+      this.data.creditLimit = "creditLimit" in this.dashboardData ? this.dashboardData.creditLimit : 0
+      
       this.data.achievedPercentage = (this.data.achievement/this.data.target) * 100
       this.data.balanceToDo = this.data.target - this.data.achievement
-      // this.data.creditLimit = this.dashboardData.creditLimit
-      this.data.currentOutStanding = this.dashboardData.currentOutStanding
-      this.data.thirtyDaysOutStanding = this.dashboardData.thirtyDaysOutStanding
-      // this.data.availableCreditLimit = this.dashboardData.creditLimit - this.data.currentOutStanding
+      
+      this.data.currentOutStanding = "currentOutStanding" in this.dashboardData ? this.dashboardData.currentOutStanding : 0
+      //this.data.currentOutStanding = this.dashboardData.currentOutStanding
+      
+      this.data.thirtyDaysOutStanding = "thirtyDaysOutStanding" in this.dashboardData ? this.dashboardData.thirtyDaysOutStanding : 0
+      //this.data.thirtyDaysOutStanding = this.dashboardData.thirtyDaysOutStanding
+      
       // this.data.tkPoints = this.dashboardData.tkPoints
       // this.data.tkCurrency = this.dashboardData.tkCurrency
+
+      this.data.availableCreditLimit = this.data.creditLimit - this.data.currentOutStanding
       //Preparing Data for Graph
       this.mtdAchieved = this.data.achievement
       this.target = this.data.balanceToDo 
