@@ -40,10 +40,6 @@ export class AddPaymentModalPage {
     this.getData()
   }
   async getData () {
-    const loader = this.loadingCtrl.create({
-      content: "Fetching data...",
-    });
-    loader.present()
     try{
       let profile = await this.storageService.getFromStorage('profile')
       console.log(profile['name'])
@@ -56,16 +52,8 @@ export class AddPaymentModalPage {
       } else {
         this.customerCode = profile['externalId']
       }
-      this.apiService.getAssociatedSalesmanListBySalesman(profile['externalId']).subscribe((res: any) => {
-        this.salesmanList = res.body ? res.body : []
-        if (!this.salesmanList.length) {
-          this.widgetUtil.showToast('No salesman association found \n Please contact administration')
-        }
-        loader.dismiss()
-      })
     }
     catch (err) {
-      loader.dismiss()
       console.log('Error: Profile Details could not Load', err)
     }
   }
@@ -142,6 +130,8 @@ export class AddPaymentModalPage {
         this.widgetUtil.showToast('Payment created successfully...')
         this.onlineID = undefined;
         this.chequeID = undefined;
+        this.paymentMode = undefined
+        this.paymentAmount = 0;
         // this.closePayModal()
       } else {
         this.widgetUtil.showToast('Error while creating payment...')

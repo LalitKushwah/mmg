@@ -3,6 +3,7 @@ import { IonicPage, NavController, NavParams, LoadingController } from 'ionic-an
 import { ApiServiceProvider } from '../../providers/api-service/api-service';
 import { StorageServiceProvider } from '../../providers/storage-service/storage-service';
 import { WidgetUtilService } from '../../utils/widget-utils';
+import { DatePipe } from '@angular/common';
 
 @IonicPage({
   name: 'UserPaymentHistoryPage'
@@ -30,7 +31,8 @@ export class UserPaymentHistoryPage {
                private apiService: ApiServiceProvider,
                private storageService: StorageServiceProvider,
                private loadingCtrl: LoadingController,
-               private widgetCtrl: WidgetUtilService) {
+               private widgetCtrl: WidgetUtilService,
+               public datePipe: DatePipe) {
   }
 
   ionViewDidLoad () {
@@ -49,6 +51,11 @@ export class UserPaymentHistoryPage {
     this.apiService.getPaymentHistory(profile['externalId']).subscribe((res: any) => {
         if (res && res.body) {
           this.data = res.body
+          if (this.data.length) {
+            this.data.map(item => {
+              item.lastUpdatedAt = this.datePipe.transform(item.lastUpdatedAt, 'dd/MM/yyyy')
+            })
+          }
           this.widgetCtrl.showToast('Data Fetched Successfully...')
           this.paymentHistoryAvailable = true
         } else {
