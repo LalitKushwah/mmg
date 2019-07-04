@@ -32,6 +32,7 @@ import { ListPage } from '../pages/list/list';
 import { UserProfilePage } from '../pages/user-profile/user-profile';
 import { SalesmanSelectCustomerPage } from '../pages/salesman-select-customer/salesman-select-customer';
 import { AdminDashboardPage } from '../pages/admin-dashboard/admin-dashboard';
+import { SelectedCustomerOrderListPage } from '../pages/selected-customer-order-list/selected-customer-order-list';
 
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
@@ -91,6 +92,7 @@ import { UserPaymentHistoryPageModule } from '../pages/user-payment-history/user
 import { AdminListSalesmanPageModule } from '../pages/admin-list-salesman/admin-list-salesman.module';
 import { SalesmanDashboardPageModule } from '../pages/salesman-dashboard/salesman-dashboard.module';
 import { AdminDashboardPageModule } from '../pages/admin-dashboard/admin-dashboard.module'
+import { SelectedCustomerOrderListPageModule } from '../pages/selected-customer-order-list/selected-customer-order-list.module';
 
 @NgModule({
   declarations: [
@@ -144,7 +146,8 @@ import { AdminDashboardPageModule } from '../pages/admin-dashboard/admin-dashboa
     SalesmanSelectCustomerPageModule,
     AdminListSalesmanPageModule,
     SalesmanDashboardPageModule,
-    AdminDashboardPageModule
+    AdminDashboardPageModule,
+    SelectedCustomerOrderListPageModule
   ],
   bootstrap: [IonicApp],
   entryComponents: [
@@ -184,7 +187,8 @@ import { AdminDashboardPageModule } from '../pages/admin-dashboard/admin-dashboa
     SalesmanSelectCustomerPage,
     AdminListSalesmanPage,
     SalesmanDashboardPage,
-    AdminDashboardPage
+    AdminDashboardPage,
+    SelectedCustomerOrderListPage
   ],
   providers: [
     StatusBar,

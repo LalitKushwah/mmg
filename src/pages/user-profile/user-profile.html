@@ -13,10 +13,10 @@
 </ion-header>
 
 <ion-content class="full-background">
-  <!-- <button ion-button full padding class="salesmanDashboardBtn" (click)="openBtnModal()"
+  <button ion-button full padding class="salesmanDashboardBtn" (click)="openCustomerOrderList()"
       [ngClass]=" customerDashboard ? 'item-hidden': 'item-visible'">
-      {{btnLabel}}
-  </button> -->
+      View Customer Orders
+  </button>
 
   <!-- <button ion-button  padding class="customerdashboardBtn" (click)="openPaymentModal()">
     Add Payment
@@ -93,7 +93,7 @@
             </ion-row>
   </ion-card>
 
-  <ion-card class="tabs-wrapper" *ngIf="data.creditLimit !== undefined">
+  <ion-card class="tabs-wrapper">
       <ion-card-header class="card-title">
         OUTSTANDING
       </ion-card-header>

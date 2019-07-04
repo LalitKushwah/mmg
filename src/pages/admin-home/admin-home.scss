@@ -1,15 +1,25 @@
 page-admin-home{
+    ion-card{
+        ion-card-content{
+            padding: 10px 0 !important;
+        }
+    }
     ion-col{
         font-size: 1.2rem;
     }
     .order-status{
-        padding-left: 5px;
+       padding-top: 5px; 
     }
     .order-list-btn{
-        font-size: 14px;
+        font-size: 12px;
     }
     .order-list-label{
         color: #898989;
     }
-
+    // .buttonWrapper{
+    //     border-top: 1px solid #bebebe;
+    // }
+    .exportBtn{
+        font-size: 14px;
+    }
 }

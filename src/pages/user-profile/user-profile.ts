@@ -7,6 +7,8 @@ import { CustomerHomePage } from '../customer-home/customer-home';
 
 import { Chart } from 'chart.js';
 import { ApiServiceProvider } from '../../providers/api-service/api-service';
+import { CustomerListOrderPage } from '../customer-list-order/customer-list-order';
+import { SelectedCustomerOrderListPage } from '../selected-customer-order-list/selected-customer-order-list';
 
 @IonicPage({
   name: 'UserProfilePage'
@@ -30,6 +32,7 @@ export class UserProfilePage {
   data: any = {}
   loader: any
   externalId: string = ''
+  customerDashboard: boolean = true
 
   constructor (public navCtrl: NavController, 
               public navParams: NavParams,
@@ -85,11 +88,13 @@ export class UserProfilePage {
     this.loader.present()
     try {
       let profile = await this.storageService.getFromStorage('profile')
+      console.log(profile)
       // this.partyName = profile['name']
       if ((profile['userType'] === 'SALESMAN') || (profile['userType'] === 'SALESMANAGER')) {
         let selectedCustomerprofile = await this.storageService.getFromStorage('selectedCustomer')
         this.partyName = selectedCustomerprofile['name']
         this.externalId = selectedCustomerprofile['externalId']
+        this.customerDashboard = false
       }
       else {
         this.partyName = profile['name']
@@ -125,6 +130,10 @@ export class UserProfilePage {
 
   openShopPage (){
     this.navCtrl.push(CustomerHomePage);
+  }
+
+  openCustomerOrderList(){
+    this.navCtrl.push(SelectedCustomerOrderListPage);
   }
 
   // toggleView(){
@@ -167,15 +176,24 @@ prepareData (selectedValue) {
       this.data.target = (this.dashboardData['targetC']  + this.dashboardData['targetP'] + this.dashboardData['targetH'] + this.dashboardData['targetL'])/4
       this.data.achievement = (this.dashboardData['achiveC']  + this.dashboardData['achiveP'] + this.dashboardData['achiveH'] + this.dashboardData['achiveL'])/4
     }
+    this.data.creditLimit = "creditLimit" in this.dashboardData ? this.dashboardData.creditLimit : 0
 
     this.data.achievedPercentage = (this.data.achievement/this.data.target) * 100
     this.data.balanceToDo = this.data.target - this.data.achievement
-    this.data.creditLimit = this.dashboardData.creditLimit
-    this.data.currentOutStanding = this.dashboardData.currentOutStanding
-    this.data.thirtyDaysOutStanding = this.dashboardData.thirtyDaysOutStanding
-    this.data.availableCreditLimit = this.dashboardData.creditLimit - this.data.currentOutStanding
-    this.data.tkPoints = this.dashboardData.tkPoints
-    this.data.tkCurrency = this.dashboardData.tkCurrency
+    //this.data.creditLimit = this.dashboardData.creditLimit
+    
+    this.data.currentOutStanding = "currentOutStanding" in this.dashboardData ? this.dashboardData.currentOutStanding : 0
+    //this.data.currentOutStanding = this.dashboardData.currentOutStanding
+
+    this.data.thirtyDaysOutStanding = "thirtyDaysOutStanding" in this.dashboardData ? this.dashboardData.thirtyDaysOutStanding : 0
+    //this.data.thirtyDaysOutStanding = this.dashboardData.thirtyDaysOutStanding
+
+    this.data.availableCreditLimit = this.data.creditLimit - this.data.currentOutStanding
+    
+    this.data.tkPoints = "tkPoints" in this.dashboardData ? this.dashboardData.tkPoints : 0
+    //this.data.tkPoints = this.dashboardData.tkPoints
+    this.data.tkCurrency = "tkCurrency" in this.dashboardData ? this.dashboardData.tkCurrency : 0
+    //this.data.tkCurrency = this.dashboardData.tkCurrency
 
     //Preparing Data for Graph
     this.mtdAchieved = this.data.achievement
