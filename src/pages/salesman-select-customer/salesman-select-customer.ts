@@ -49,27 +49,6 @@ export class SalesmanSelectCustomerPage {
     })
   }
 
-  doInfinite (infiniteScroll) {
-    this.skipValue = this.skipValue + this.limit
-    this.apiService.getCustomerList(this.skipValue, this.limit).subscribe((result) => {
-      if(result.body.length > 0) {
-        result.body.map( (value) => {
-          this.userList.push(value)
-        })
-      } else {
-        this.skipValue = this.limit
-      }
-      infiniteScroll.complete();
-    }, (error) => {
-      infiniteScroll.complete();
-      if (error.statusText === 'Unknown Error') {
-        this.widgetUtil.showToast(CONSTANTS.INTERNET_ISSUE)
-      } else {
-        this.widgetUtil.showToast(CONSTANTS.SERVER_ERROR)
-      }
-    })
-  }
-
   doRefresh (refresher) : void {
     this.getUserList()
     setTimeout(() => {
