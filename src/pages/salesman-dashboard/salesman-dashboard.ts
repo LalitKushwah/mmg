@@ -96,7 +96,6 @@ export class SalesmanDashboardPage {
       let profile = await this.storageService.getFromStorage('profile')
 
       this.partyName = profile['name']
-      console.log('======= 99 =======', profile)
 
       // TODO update in argument
       this.apiService.getDashboardData(profile['externalId']).subscribe((res: any) => {
@@ -122,25 +121,8 @@ export class SalesmanDashboardPage {
   }
 
   targetCategorySelectionChanged (selectedValue: any){
-
     this.prepareData(selectedValue)
-    switch (selectedValue.name) {
-      case 'Confectionary':
-        console.log(selectedValue)
-          break;
-      case 'category-2':
-        console.log(selectedValue)
-          break;
-      case 'category-3':
-        console.log(selectedValue)
-          break;
-      case 'category-4':
-        console.log(selectedValue)
-          break;
-      default:
-        console.log(selectedValue) 
   }
-}
 
   prepareData (selectedValue) {
 
@@ -153,21 +135,14 @@ export class SalesmanDashboardPage {
         this.data.target = (this.dashboardData['targetC']  + this.dashboardData['targetP'] + this.dashboardData['targetH'] + this.dashboardData['targetL'])/4
         this.data.achievement = (this.dashboardData['achiveC']  + this.dashboardData['achiveP'] + this.dashboardData['achiveH'] + this.dashboardData['achiveL'])/4
       }
-      this.data.creditLimit = "creditLimit" in this.dashboardData ? this.dashboardData.creditLimit : 0
-      
-      this.data.achievedPercentage = (this.data.achievement/this.data.target) * 100
+      this.data.creditLimit = this.dashboardData.creditLimit ? this.dashboardData.creditLimit : 'NA'
+      let temp: any = (this.data.achievement/this.data.target).toFixed(2);
+      this.data.achievedPercentage = temp * 100;
       this.data.balanceToDo = this.data.target - this.data.achievement
-      
       this.data.currentOutStanding = "currentOutStanding" in this.dashboardData ? this.dashboardData.currentOutStanding : 0
-      //this.data.currentOutStanding = this.dashboardData.currentOutStanding
-      
       this.data.thirtyDaysOutStanding = "thirtyDaysOutStanding" in this.dashboardData ? this.dashboardData.thirtyDaysOutStanding : 0
-      //this.data.thirtyDaysOutStanding = this.dashboardData.thirtyDaysOutStanding
-      
-      // this.data.tkPoints = this.dashboardData.tkPoints
-      // this.data.tkCurrency = this.dashboardData.tkCurrency
-
-      this.data.availableCreditLimit = this.data.creditLimit - this.data.currentOutStanding
+      this.data.availableCreditLimit = this.data.creditLimit != 'NA' && this.data.currentOutStanding != 0 ? (this.data.creditLimit - this.data.currentOutStanding) : 'NA'
+     
       //Preparing Data for Graph
       this.mtdAchieved = this.data.achievement
       this.target = this.data.balanceToDo 
