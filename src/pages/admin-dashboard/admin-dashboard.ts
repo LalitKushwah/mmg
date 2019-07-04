@@ -156,12 +156,10 @@ export class AdminDashboardPage {
 
       this.data.achievedPercentage = (this.data.achievement/this.data.target) * 100
       this.data.balanceToDo = this.data.target - this.data.achievement
-      this.data.creditLimit = this.dashboardData.creditLimit
-      this.data.currentOutStanding = this.dashboardData.currentOutStanding
-      this.data.thirtyDaysOutStanding = this.dashboardData.thirtyDaysOutStanding
-      this.data.availableCreditLimit = this.dashboardData.creditLimit - this.data.currentOutStanding
-      this.data.tkPoints = this.dashboardData.tkPoints
-      this.data.tkCurrency = this.dashboardData.tkCurrency
+      this.data.creditLimit = this.dashboardData.creditLimit ? this.dashboardData.creditLimit : 0
+      this.data.currentOutStanding = this.dashboardData.currentOutStanding ? this.dashboardData.currentOutStanding : 0
+      this.data.thirtyDaysOutStanding = this.dashboardData.thirtyDaysOutStanding ? this.dashboardData.thirtyDaysOutStanding : 0
+      this.data.availableCreditLimit = this.data.creditLimit - this.data.currentOutStanding
 
       //Preparing Data for Graph
       this.mtdAchieved = this.data.achievement
