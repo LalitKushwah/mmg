@@ -132,7 +132,7 @@ export class UserProfilePage {
     this.navCtrl.push(CustomerHomePage);
   }
 
-  openCustomerOrderList(){
+  openCustomerOrderList (){
     this.navCtrl.push(SelectedCustomerOrderListPage);
   }
 
@@ -177,8 +177,8 @@ prepareData (selectedValue) {
       this.data.achievement = (this.dashboardData['achiveC']  + this.dashboardData['achiveP'] + this.dashboardData['achiveH'] + this.dashboardData['achiveL'])/4
     }
     this.data.creditLimit = "creditLimit" in this.dashboardData ? this.dashboardData.creditLimit : 0
-
-    this.data.achievedPercentage = (this.data.achievement/this.data.target) * 100
+    let temp: any = (this.data.achievement/this.data.target).toFixed(2);
+    this.data.achievedPercentage = temp * 100;
     this.data.balanceToDo = this.data.target - this.data.achievement
     //this.data.creditLimit = this.dashboardData.creditLimit
     

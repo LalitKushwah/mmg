@@ -32,7 +32,7 @@
         <ion-item class="switchCategory">
           <ion-label>TARGET vs ACHIEVEMENT</ion-label>
             <ion-select placeholder="Total"  interface="popover">
-                <ion-option value="total" (ionSelect)="totalCategorySelected()">Total</ion-option>  
+                <ion-option selected="true" value="total" (ionSelect)="totalCategorySelected()">Total</ion-option>  
                 <ion-option *ngFor="let category of categoryList" [value]="category" (ionSelect)="targetCategorySelectionChanged(category)">{{category.name}}</ion-option>
             </ion-select> 
           </ion-item>

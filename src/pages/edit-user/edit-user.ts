@@ -58,12 +58,12 @@ export class EditUserPage {
   async prepareEditCustomerData () {
     const customer: any = await this.strorageService.getFromStorage('editCustomerInfo')
     this.userData = customer
-    console.log('======== 61 ========', this.userData)
     if (customer) {
       this.custName = customer.name
       this.custCode = customer.externalId
       this.tkPoint = customer.tkPoints
       this.tkCurrency = customer.tkCurrency
+      this.selectedProvince = customer.province
       this.salesmanList = customer.associatedSalesmanList ? customer.associatedSalesmanList : []
     }
   }
@@ -75,14 +75,12 @@ export class EditUserPage {
         return existingCust.externalId === salesman.externalId
       })
       if (res.length === 0) {
-        console.log('===== 73 =====')
         salesmanList.push({externalId:salesman.externalId,name:salesman.name})
         custInfoObj.associatedSalesmanList = salesmanList;
         this.strorageService.setToStorage('editCustomerInfo', custInfoObj).then(res => {
           this.salesmanList = res.associatedSalesmanList
         })
       } else {
-        console.log('===== 80 ====')
         this.widgetUtil.showToast('Customer already exists!!!')
       }
     })
@@ -151,8 +149,6 @@ export class EditUserPage {
 
   ionViewDidLoad () {
     this.navBar.backButtonClick = () => {
-      // this.navCtrl.setRoot(AdminListUserPage);
-      //this.navCtrl.setRoot(AdminHomePage);
       this.userData.userType === 'CUSTOMER' ? this.navCtrl.push(AdminListUserPage) : this.navCtrl.push(AdminListSalesmanPage)
 	}
 }
