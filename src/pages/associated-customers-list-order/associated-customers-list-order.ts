@@ -41,9 +41,9 @@ export class AssociatedCustomersListOrderPage {
       this.orderList = result.body
 
       //Sorting Order List - Desc
-        // this.orderList.sort((a, b) => {
-        //   return <any>new Date(b.lastUpdatedAt) - <any>new Date(a.lastUpdatedAt);
-        // })
+        this.orderList.sort((a, b) => {
+          return <any>new Date(b.lastUpdatedAt) - <any>new Date(a.lastUpdatedAt);
+        })
 
       this.orderList.map((value) => {
         value.orderTotal = parseFloat((Math.round(value.orderTotal * 100) / 100).toString()).toFixed(2)
