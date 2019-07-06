@@ -23,6 +23,7 @@ export class AssociatedCustomersListOrderPage {
   skipValue: number = 0
   limit: number = CONSTANTS.PAGINATION_LIMIT
   userId: string = ''
+  slice: number = 20
 
   constructor (public navCtrl: NavController, public navParams: NavParams, private storageService: StorageServiceProvider, private apiService: ApiServiceProvider,
     private widgetUtil: WidgetUtilService) {
@@ -38,37 +39,11 @@ export class AssociatedCustomersListOrderPage {
     const isSalesman = ((profile['userType'] === 'SALESMAN') || (profile['userType'] === 'SALESMANAGER')) ? true : false
     this.apiService.getOrdersForSalesmanByAssociatedCustomers(this.userId, this.skipValue, this.limit).subscribe((result) => {
       this.orderList = result.body
-      
-      console.log(this.orderList)
-      console.log("Sorted List")
-      //console.log(this.orderList.sort((a, b) => this.orderList [a.lastUpdatedAt] - this.orderList [b.lastUpdatedAt]))
 
-        this.orderList.sort((a, b) => {
-          return <any>new Date(b.lastUpdatedAt) - <any>new Date(a.lastUpdatedAt);
-        })
-
-        console.log(this.orderList)
-
-      // var date_sort_desc = function (date1, date2) {
-      //   // DESCENDING order.
-      //   if (date1 > date2) return -1;
-      //   if (date1 < date2) return 1;
-      //   return 0;
-      // };
-
-      //this.orderList.sort(date_sort_desc);
-      // this.orderList.sort((a, b) => {//lastDate dsc
-
-      //   if (new Date(b.lastDate) > new Date(a.lastDate)) {
-      //     return 1;
-      //   }
-      //   if (new Date(b.lastDate) < new Date(a.lastDate)) {
-      //     return -1;
-      //   }
-  
-      //   return 0;
-      // });
-      //console.log(this.orderList)
+      //Sorting Order List - Desc
+        // this.orderList.sort((a, b) => {
+        //   return <any>new Date(b.lastUpdatedAt) - <any>new Date(a.lastUpdatedAt);
+        // })
 
       this.orderList.map((value) => {
         value.orderTotal = parseFloat((Math.round(value.orderTotal * 100) / 100).toString()).toFixed(2)
@@ -92,27 +67,35 @@ export class AssociatedCustomersListOrderPage {
     this.navCtrl.push(CustomerOrderDetailPage, orderObj)
   }
 
+  // async doInfinite (infiniteScroll) {
+  //   this.skipValue = this.skipValue + this.limit
+  //   const profile = await this.storageService.getFromStorage('profile')
+  //   const isSalesman = ((profile['userType'] === 'SALESMAN') || (profile['userType'] === 'SALESMANAGER')) ? true : false
+  //   this.apiService.getOrdersForSalesmanByAssociatedCustomers(this.userId, this.skipValue, this.limit).subscribe((result) => {
+  //     if(result.body.length > 0) {
+  //       result.body.map( (value) => {
+  //         this.orderList.push(value)
+  //       })
+  //     } else {
+  //       this.skipValue = this.limit
+  //     }
+  //     infiniteScroll.complete();
+  //   }, (error) => {
+  //     infiniteScroll.complete();
+  //     if (error.statusText === 'Unknown Error') {
+  //       this.widgetUtil.showToast(CONSTANTS.INTERNET_ISSUE)
+  //     } else {
+  //       this.widgetUtil.showToast(CONSTANTS.SERVER_ERROR)
+  //     }
+  //   })
+  // }
+
+  //Client Side Pagination
   async doInfinite (infiniteScroll) {
-    this.skipValue = this.skipValue + this.limit
-    const profile = await this.storageService.getFromStorage('profile')
-    const isSalesman = ((profile['userType'] === 'SALESMAN') || (profile['userType'] === 'SALESMANAGER')) ? true : false
-    this.apiService.getOrdersForSalesmanByAssociatedCustomers(this.userId, this.skipValue, this.limit).subscribe((result) => {
-      if(result.body.length > 0) {
-        result.body.map( (value) => {
-          this.orderList.push(value)
-        })
-      } else {
-        this.skipValue = this.limit
-      }
+    setTimeout(() => {
+      this.slice += 20;
       infiniteScroll.complete();
-    }, (error) => {
-      infiniteScroll.complete();
-      if (error.statusText === 'Unknown Error') {
-        this.widgetUtil.showToast(CONSTANTS.INTERNET_ISSUE)
-      } else {
-        this.widgetUtil.showToast(CONSTANTS.SERVER_ERROR)
-      }
-    })
+    }, 200);  
   }
 
   doRefresh (refresher) : void {
