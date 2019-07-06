@@ -8,16 +8,17 @@ import { ApiServiceProvider } from '../../providers/api-service/api-service';
 //import { _ } from 'underscore';
 
 @IonicPage({
-  name: 'CustomerListOrderPage'
+  name: 'AssociatedCustomersListOrderPage'
 })
 
 @Component({
-  selector: 'page-customer-list-order',
-  templateUrl: 'customer-list-order.html',
+  selector: 'page-associated-customers-list-order',
+  templateUrl: 'associated-customers-list-order.html',
 })
-export class CustomerListOrderPage {
+export class AssociatedCustomersListOrderPage {
 
   orderList: any = []
+  sortedOrderList: any = []
   orderListAvailable: Boolean = false
   skipValue: number = 0
   limit: number = CONSTANTS.PAGINATION_LIMIT
@@ -37,6 +38,38 @@ export class CustomerListOrderPage {
     const isSalesman = ((profile['userType'] === 'SALESMAN') || (profile['userType'] === 'SALESMANAGER')) ? true : false
     this.apiService.getOrdersForSalesmanByAssociatedCustomers(this.userId, this.skipValue, this.limit).subscribe((result) => {
       this.orderList = result.body
+      
+      console.log(this.orderList)
+      console.log("Sorted List")
+      //console.log(this.orderList.sort((a, b) => this.orderList [a.lastUpdatedAt] - this.orderList [b.lastUpdatedAt]))
+
+        this.orderList.sort((a, b) => {
+          return <any>new Date(b.lastUpdatedAt) - <any>new Date(a.lastUpdatedAt);
+        })
+
+        console.log(this.orderList)
+
+      // var date_sort_desc = function (date1, date2) {
+      //   // DESCENDING order.
+      //   if (date1 > date2) return -1;
+      //   if (date1 < date2) return 1;
+      //   return 0;
+      // };
+
+      //this.orderList.sort(date_sort_desc);
+      // this.orderList.sort((a, b) => {//lastDate dsc
+
+      //   if (new Date(b.lastDate) > new Date(a.lastDate)) {
+      //     return 1;
+      //   }
+      //   if (new Date(b.lastDate) < new Date(a.lastDate)) {
+      //     return -1;
+      //   }
+  
+      //   return 0;
+      // });
+      //console.log(this.orderList)
+
       this.orderList.map((value) => {
         value.orderTotal = parseFloat((Math.round(value.orderTotal * 100) / 100).toString()).toFixed(2)
         value.lastUpdatedAt = this.formatDate(value.lastUpdatedAt)
@@ -103,3 +136,4 @@ export class CustomerListOrderPage {
 
 
 }
+

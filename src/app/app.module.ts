@@ -33,6 +33,7 @@ import { UserProfilePage } from '../pages/user-profile/user-profile';
 import { SalesmanSelectCustomerPage } from '../pages/salesman-select-customer/salesman-select-customer';
 import { AdminDashboardPage } from '../pages/admin-dashboard/admin-dashboard';
 import { SelectedCustomerOrderListPage } from '../pages/selected-customer-order-list/selected-customer-order-list';
+import { AssociatedCustomersListOrderPage } from '../pages/associated-customers-list-order/associated-customers-list-order';
 
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
@@ -93,6 +94,7 @@ import { AdminListSalesmanPageModule } from '../pages/admin-list-salesman/admin-
 import { SalesmanDashboardPageModule } from '../pages/salesman-dashboard/salesman-dashboard.module';
 import { AdminDashboardPageModule } from '../pages/admin-dashboard/admin-dashboard.module'
 import { SelectedCustomerOrderListPageModule } from '../pages/selected-customer-order-list/selected-customer-order-list.module';
+import { AssociatedCustomersListOrderPageModule } from '../pages/associated-customers-list-order/associated-customers-list-order.module';
 
 @NgModule({
   declarations: [
@@ -147,7 +149,8 @@ import { SelectedCustomerOrderListPageModule } from '../pages/selected-customer-
     AdminListSalesmanPageModule,
     SalesmanDashboardPageModule,
     AdminDashboardPageModule,
-    SelectedCustomerOrderListPageModule
+    SelectedCustomerOrderListPageModule,
+    AssociatedCustomersListOrderPageModule
   ],
   bootstrap: [IonicApp],
   entryComponents: [
@@ -188,7 +191,8 @@ import { SelectedCustomerOrderListPageModule } from '../pages/selected-customer-
     AdminListSalesmanPage,
     SalesmanDashboardPage,
     AdminDashboardPage,
-    SelectedCustomerOrderListPage
+    SelectedCustomerOrderListPage,
+    AssociatedCustomersListOrderPage
   ],
   providers: [
     StatusBar,

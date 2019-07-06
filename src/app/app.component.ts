@@ -8,7 +8,7 @@ import { SplashScreen } from '@ionic-native/splash-screen';
 
 import { UserProfilePage } from '../pages/user-profile/user-profile';
 import { SalesmanDashboardPage } from '../pages/salesman-dashboard/salesman-dashboard';
-// import { SalesmanSelectCustomerPage } from '../pages/salesman-select-customer/salesman-select-customer';
+import { AssociatedCustomersListOrderPage } from '../pages/associated-customers-list-order/associated-customers-list-order';
 
 
 import { HomePage } from '../pages/home/home';
@@ -64,7 +64,7 @@ export class MyApp {
             this.partyName = 'Mr. ' + profile['name']
             this.pages = [
               {title: 'Dashboard', component: SalesmanDashboardPage, icon: 'dashboard-new', class: 'default'},
-              {title: 'Your Orders', component: CustomerListOrderPage, icon: 'cart', class: 'default'},
+              {title: 'Your Orders', component: AssociatedCustomersListOrderPage, icon: 'cart', class: 'default'},
             ]
           }else{
             this.partyName = profile['name']
