@@ -58,6 +58,10 @@ export class ApiServiceProvider {
     return this.http.get(CONSTANTS.BASE_URL + 'api/order/list/user/' + userId + '?skip='+skip.toString() + "&limit="+ limit.toString() + "&isSalesman=" + isSalesman + "&salesmanCode=" + salesmanCode)
   }
 
+  getOrdersForSalesmanByAssociatedCustomers (userId: string, skip:number, limit:number): any {
+    return this.http.get(CONSTANTS.BASE_URL + 'api/order/list/associated/user/' + userId + '?skip='+skip.toString() + "&limit="+ limit.toString())
+  }
+
   createUser (userDetails: Object): any {
     return this.http.post(CONSTANTS.BASE_URL + 'api/user/', userDetails)
   }
