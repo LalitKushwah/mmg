@@ -40,7 +40,7 @@
     <!-- Hide Salesman when logged in as Customer
     Instead, show the customer list in label -->
     <ion-item class="payItem" [ngClass]=" cashIsSelected && !userTypeSalesman ? 'item-visible': 'item-hidden'">
-        <ion-label floating>Salesman Name</ion-label>
+        <ion-label floating>SM Name</ion-label>
         <ion-input type="text" [(ngModel)]="payingToSalesman" #paidTo></ion-input>          
         <!-- <ion-select>
               <ion-option *ngFor="let salesman of salesmanList" [value] = "salesman" (ionSelect)="selectSalesman(salesman)">{{salesman.name}}</ion-option>
@@ -48,7 +48,7 @@
     </ion-item>
 
     <ion-item class="payItem" [ngClass]=" userTypeSalesman ? 'item-visible': 'item-hidden'">
-        <ion-label>Salesman: {{salesmanName}}</ion-label>
+        <ion-label>SM: {{salesmanName}}</ion-label>
         <!-- <ion-label floating class="salesmanName">{{salesmanName}}</ion-label>  -->
     </ion-item>
 

@@ -1,0 +1,143 @@
+<ion-header>
+  <ion-navbar hideBackButton="true">
+      <ion-title>{{partyName}}</ion-title>
+      <ion-buttons end>
+          <button ion-button (click)="closePayModal()"><ion-icon name="close-circle"></ion-icon>Close</button>
+        </ion-buttons>
+    </ion-navbar>
+</ion-header>
+
+<ion-content class="full-background">
+  <ion-card class="tabs-wrapper">
+      <ion-card-header class="card-title">
+        <!-- TARGET vs ACHIEVEMENT -->
+        <!-- <ion-icon></ion-icon> -->
+        <ion-item class="switchCategory">
+          <ion-label>TARGET vs ACHIEVEMENT</ion-label>
+            <ion-select placeholder="Total"  interface="popover">
+                <ion-option selected="true" value="total" (ionSelect)="totalCategorySelected()">Total</ion-option>  
+                <ion-option *ngFor="let category of categoryList" [value]="category" (ionSelect)="targetCategorySelectionChanged(category)">{{category.name}}</ion-option>
+            </ion-select> 
+          </ion-item>
+      </ion-card-header>
+      
+          <ion-row>
+            <ion-col class="tabs" align-items-center>
+                <p class="tab-label-sm" align-items-center>
+                  Target
+                </p>
+                <p class="tab-label-lg" align-items-center>
+                  {{data.target}}
+                </p>
+            </ion-col>
+            <ion-col class="tabs">
+                <p class="tab-label-sm">
+                    MTD Achieved
+                  </p>
+                  <p class="tab-label-lg">
+                    {{data.achievement}}
+                </p>
+            </ion-col>
+          </ion-row>
+
+          <ion-row>
+              <ion-col class="tabs">
+                  <p class="tab-label-sm">
+                    % Achieved
+                  </p>
+                  <p class="tab-label-lg">
+                    {{data.achievedPercentage}}%
+                  </p>
+              </ion-col>
+              <ion-col class="tabs">
+                  <p class="tab-label-sm">
+                      Balance To Do
+                    </p>
+                    <p class="tab-label-lg">
+                      {{data.balanceToDo}}
+                  </p>
+              </ion-col>
+            </ion-row>
+
+            <div>
+                <ion-row>
+                  <div>
+                      <canvas #pieCanvas style="width: 100%"> </canvas>
+                  </div>
+                </ion-row>
+              </div>
+
+            <ion-row class="targetBottom">
+              <p class="targetFootnote">*MTD: Month Till Date</p>
+            </ion-row>
+  </ion-card>
+
+  <ion-card class="tabs-wrapper">
+      <ion-card-header class="card-title">
+        OUTSTANDING
+      </ion-card-header>
+      
+          <ion-row>
+            <ion-col class="tabs">
+                <p class="tab-label-sm">
+                    Total Credit Limit
+                </p>
+                <p class="tab-label-lg">
+                  {{data.creditLimit}}
+                </p>
+            </ion-col>
+            <ion-col class="tabs">
+                <p class="tab-label-sm">
+                    Total Outstanding
+                  </p>
+                  <p class="tab-label-lg">
+                    {{data.currentOutStanding}}
+                </p>
+            </ion-col>
+          </ion-row>
+
+          <ion-row *ngIf="data.thirtyDaysOutStanding !== undefined">
+              <ion-col class="tabs">
+                  <p class="tab-label-sm">
+                      > 30- Days Outstanding
+                  </p>
+                  <p class="tab-label-lg">
+                    {{data.thirtyDaysOutStanding}}
+                  </p>
+              </ion-col>
+              <ion-col class="tabs">
+                  <p class="tab-label-sm">
+                      Available Credit Limit
+                    </p>
+                    <p class="tab-label-lg">
+                      {{data.availableCreditLimit}}
+                  </p>
+              </ion-col>
+            </ion-row>
+  </ion-card>
+
+  <ion-card class="tabs-wrapper" *ngIf="data.tkPoints !== undefined">
+      <ion-card-header class="card-title">
+        TK CURRENCY
+      </ion-card-header>
+      
+          <ion-row>
+            <ion-col class="tabs">
+                <p class="tab-label-sm">
+                  Total TK Points
+                </p>
+                <p class="tab-label-lg">
+                  {{data.tkPoints}}
+                </p>
+            </ion-col>
+            <ion-col class="tabs">
+                <p class="tab-label-sm">
+                    Total TK Currency
+                  </p>
+                  <p class="tab-label-lg">
+                    {{data.tkCurrency}}
+                </p>
+            </ion-col>
+          </ion-row>
+  </ion-card>
+</ion-content>
