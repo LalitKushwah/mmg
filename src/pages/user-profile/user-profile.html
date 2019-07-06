@@ -1,4 +1,4 @@
-<ion-header>
+<ion-header class="{{colorType}}">
   <ion-navbar hideBackButton="true">
       <button ion-button menuToggle>
         <ion-icon name="menu"></ion-icon>
@@ -13,10 +13,10 @@
 </ion-header>
 
 <ion-content class="full-background">
-  <button ion-button full padding class="salesmanDashboardBtn" (click)="openCustomerOrderList()"
+  <!-- <button ion-button full padding class="salesmanDashboardBtn" (click)="openCustomerOrderList()"
       [ngClass]=" customerDashboard ? 'item-hidden': 'item-visible'">
       View Customer Orders
-  </button>
+  </button> -->
 
   <!-- <button ion-button  padding class="customerdashboardBtn" (click)="openPaymentModal()">
     Add Payment
@@ -301,7 +301,7 @@
   </button> -->
 
 </ion-content>
-<ion-footer>
+<ion-footer class="{{colorType}}">
   <button ion-button  padding class="customerdashboardBtn btn-left" (click)="openPaymentModal()"><ion-icon name="cash"></ion-icon>Add Payment</button>
   <button ion-button  padding class="customerdashboardBtn" (click)="openShopPage()"><ion-icon name="cart"></ion-icon>Place Order</button>
 </ion-footer>

@@ -33,6 +33,7 @@ export class UserProfilePage {
   loader: any
   externalId: string = ''
   customerDashboard: boolean = true
+  colorType: any
 
   constructor (public navCtrl: NavController, 
               public navParams: NavParams,
@@ -95,11 +96,13 @@ export class UserProfilePage {
         this.partyName = selectedCustomerprofile['name']
         this.externalId = selectedCustomerprofile['externalId']
         this.customerDashboard = false
+        this.colorType = 'salesmanColor'
       }
       else {
         this.partyName = profile['name']
         this.externalId = profile['externalId']
-        this.userTypeCustomer = true;
+        this.userTypeCustomer = true
+        this.colorType = 'customerColor'
       }
       this.apiService.getDashboardData(this.externalId).subscribe((res: any) => {
         this.dashboardData = res.body[0]
