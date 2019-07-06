@@ -44,7 +44,8 @@ export class EditUserPage {
               private strorageService: StorageServiceProvider,
               private modalCtrl: ModalController,
               private alertCtrl: AlertController,
-              private loadingCtrl: LoadingController) {
+              private loadingCtrl: LoadingController,
+              private modal: ModalController) {
     this.showCustomerForm = this.selectedUserType
     const toBeAddSalesMan = this.navParams.get('data')
     
@@ -145,6 +146,11 @@ export class EditUserPage {
       ]
     });
     confirm.present();
+  }
+
+  openCustomerDashboardModel () {
+    const payModal = this.modal.create('ViewCustomerDataPage')
+    payModal.present();
   }
 
   ionViewDidLoad () {

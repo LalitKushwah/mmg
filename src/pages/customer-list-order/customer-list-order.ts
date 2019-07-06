@@ -5,7 +5,6 @@ import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { StorageServiceProvider } from '../../providers/storage-service/storage-service';
 import { WidgetUtilService } from '../../utils/widget-utils';
 import { ApiServiceProvider } from '../../providers/api-service/api-service';
-import { _ } from 'underscore';
 
 @IonicPage({
   name: 'CustomerListOrderPage'
@@ -33,18 +32,14 @@ export class CustomerListOrderPage {
 
   async getUserOrderList () {
     const profile = await this.storageService.getFromStorage('profile')
-    this.userId = (profile['userType'] === 'SALESMAN' || profile['userType'] === 'SALESMANAGER') ? profile['externalId'] : profile['_id']
+    this.userId = profile['userType'] === 'SALESMAN' ? profile['externalId'] : profile['_id']
     const isSalesman = ((profile['userType'] === 'SALESMAN') || (profile['userType'] === 'SALESMANAGER')) ? true : false
-    this.apiService.getOrdersForSalesmanByAssociatedCustomers(this.userId, this.skipValue, this.limit).subscribe((result) => {
+    this.apiService.getOrderListByUser(this.userId, this.skipValue, this.limit, isSalesman, profile['externalId']).subscribe((result) => {
       this.orderList = result.body
       this.orderList.map((value) => {
         value.orderTotal = parseFloat((Math.round(value.orderTotal * 100) / 100).toString()).toFixed(2)
         value.lastUpdatedAt = this.formatDate(value.lastUpdatedAt)
       })
-      // var sorted = _.sortBy(this.orderList,function (node){
-      //   return - (new Date(node.created_at).getTime());
-      // });
-      // console.log(sorted.reverse())
       this.orderListAvailable = true
     }, (error) => {
       this.orderListAvailable = true
@@ -63,7 +58,7 @@ export class CustomerListOrderPage {
     this.skipValue = this.skipValue + this.limit
     const profile = await this.storageService.getFromStorage('profile')
     const isSalesman = ((profile['userType'] === 'SALESMAN') || (profile['userType'] === 'SALESMANAGER')) ? true : false
-    this.apiService.getOrdersForSalesmanByAssociatedCustomers(this.userId, this.skipValue, this.limit).subscribe((result) => {
+    this.apiService.getOrderListByUser(this.userId, this.skipValue, this.limit, isSalesman, profile['externalId']).subscribe((result) => {
       if(result.body.length > 0) {
         result.body.map( (value) => {
           this.orderList.push(value)

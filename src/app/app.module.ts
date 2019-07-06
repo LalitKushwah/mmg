@@ -93,6 +93,8 @@ import { AdminListSalesmanPageModule } from '../pages/admin-list-salesman/admin-
 import { SalesmanDashboardPageModule } from '../pages/salesman-dashboard/salesman-dashboard.module';
 import { AdminDashboardPageModule } from '../pages/admin-dashboard/admin-dashboard.module'
 import { SelectedCustomerOrderListPageModule } from '../pages/selected-customer-order-list/selected-customer-order-list.module';
+import { ViewCustomerDataPage } from '../pages/view-customer-data/view-customer-data';
+import { ViewCustomerDataPageModule } from '../pages/view-customer-data/view-customer-data.module';
 
 @NgModule({
   declarations: [
@@ -147,7 +149,8 @@ import { SelectedCustomerOrderListPageModule } from '../pages/selected-customer-
     AdminListSalesmanPageModule,
     SalesmanDashboardPageModule,
     AdminDashboardPageModule,
-    SelectedCustomerOrderListPageModule
+    SelectedCustomerOrderListPageModule,
+    ViewCustomerDataPageModule
   ],
   bootstrap: [IonicApp],
   entryComponents: [
@@ -188,7 +191,8 @@ import { SelectedCustomerOrderListPageModule } from '../pages/selected-customer-
     AdminListSalesmanPage,
     SalesmanDashboardPage,
     AdminDashboardPage,
-    SelectedCustomerOrderListPage
+    SelectedCustomerOrderListPage,
+    ViewCustomerDataPage
   ],
   providers: [
     StatusBar,

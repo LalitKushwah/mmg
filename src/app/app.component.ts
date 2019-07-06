@@ -64,7 +64,7 @@ export class MyApp {
             this.partyName = 'Mr. ' + profile['name']
             this.pages = [
               {title: 'Dashboard', component: SalesmanDashboardPage, icon: 'dashboard-new', class: 'default'},
-              {title: 'Your Orders', component: CustomerListOrderPage, icon: 'cart', class: 'default'},
+              {title: 'Orders', component: CustomerListOrderPage, icon: 'cart', class: 'default'},
             ]
           }else{
             this.partyName = profile['name']
