@@ -11,7 +11,7 @@
       <ion-refresher-content></ion-refresher-content>
     </ion-refresher>
     <div *ngIf="orderListAvailable && (orderList.length > 0)"> 
-    <ion-card *ngFor="let order of orderList | slice:0:slice; let i=index">
+    <ion-card *ngFor="let order of orderList">
       <!-- <ion-card *ngFor="let order of orderList"> -->
       <ion-card-content>
         <ion-row>

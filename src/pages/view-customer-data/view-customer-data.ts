@@ -6,7 +6,6 @@ import { StorageServiceProvider } from '../../providers/storage-service/storage-
 
 import { Chart } from 'chart.js';
 import { ApiServiceProvider } from '../../providers/api-service/api-service';
-import { SelectedCustomerOrderListPage } from '../selected-customer-order-list/selected-customer-order-list';
 
 /**
  * Generated class for the ViewCustomerDataPage page.

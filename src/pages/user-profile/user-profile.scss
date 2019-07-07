@@ -174,7 +174,7 @@ page-user-profile {
   }
   ion-footer{
     box-shadow: 0 0px 10px rgba(34, 95, 147, 0.5);
-    // background: #225f93;
+    background: #225f93;
   }
 
   // .toolbar-background {
@@ -184,30 +184,30 @@ page-user-profile {
   //   background-color: rgb(0, 140, 255) !important;
   // }
 
-  .customerColor{
-    background: #225f93;
+  // .customerColor{
+  //   background: #225f93;
     
-    .toolbar-background{
-      background-color: #225F93;
-    }
+  //   .toolbar-background{
+  //     background-color: #225F93;
+  //   }
 
-    .salesmanDashboardBtn{
-      background-color: #3d9ef0;
-      border-radius: 3px;
-      margin-top: 16px;
-      font-size: 1em;
-  }
-  .customerdashboardBtn{
-    background-color: #225F93;
-    border-radius: 0;
-    // margin-top: 16px;
-    font-size: 1em;
-    // width: calc(50% - 8px);
-    width: 47%;
-    box-shadow: none;
-  }
+  //   .salesmanDashboardBtn{
+  //     background-color: #3d9ef0;
+  //     border-radius: 3px;
+  //     margin-top: 16px;
+  //     font-size: 1em;
+  // }
+  // .customerdashboardBtn{
+  //   background-color: #225F93;
+  //   border-radius: 0;
+  //   // margin-top: 16px;
+  //   font-size: 1em;
+  //   // width: calc(50% - 8px);
+  //   width: 47%;
+  //   box-shadow: none;
+  // }
 
-  }
+  // }
 
   .salesmanColor{
     background: #229BD0;
