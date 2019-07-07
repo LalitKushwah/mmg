@@ -36,6 +36,7 @@ export class EditUserPage {
   salesmanList = []
   updatedUserObject: any = {}
   userData: any = {}
+  userTypeLabel: string = 'CUSTOMER'
 
   constructor (public navCtrl: NavController, 
               public navParams: NavParams, 
@@ -59,6 +60,9 @@ export class EditUserPage {
   async prepareEditCustomerData () {
     const customer: any = await this.strorageService.getFromStorage('editCustomerInfo')
     this.userData = customer
+    if(this.userData['userType'] !='CUSTOMER'){
+      this.userTypeLabel = "SM"
+    }
     if (customer) {
       this.custName = customer.name
       this.custCode = customer.externalId
