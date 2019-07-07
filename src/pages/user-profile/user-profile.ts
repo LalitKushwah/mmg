@@ -9,6 +9,7 @@ import { Chart } from 'chart.js';
 import { ApiServiceProvider } from '../../providers/api-service/api-service';
 import { CustomerListOrderPage } from '../customer-list-order/customer-list-order';
 import { SelectedCustomerOrderListPage } from '../selected-customer-order-list/selected-customer-order-list';
+import { UserPaymentHistoryPage } from '../user-payment-history/user-payment-history';
 
 @IonicPage({
   name: 'UserProfilePage'
@@ -135,8 +136,8 @@ export class UserProfilePage {
     this.navCtrl.push(CustomerHomePage);
   }
 
-  openCustomerOrderList (){
-    this.navCtrl.push(SelectedCustomerOrderListPage);
+  openCustomerPaymentHistory (){
+    this.navCtrl.push(UserPaymentHistoryPage);
   }
 
   // toggleView(){
