@@ -12,38 +12,50 @@
     </ion-refresher>
     <div *ngIf="orderListAvailable && (orderList.length > 0)"> 
     <ion-card *ngFor="let order of orderList">
-      <!-- <ion-card *ngFor="let order of orderList"> -->
       <ion-card-content>
-        <ion-row>
-          <ion-col text-center>
-              <ion-icon color="grey" name="cart"></ion-icon> Order Id: {{order.orderId}}
-          </ion-col>
-        </ion-row>
           <ion-row>
-            <ion-col text-center>
-                <ion-icon color="grey" name="calendar"></ion-icon>
-                Date: {{order.lastUpdatedAt}}
-            </ion-col>
+              <ion-col>
+                  <ion-icon color="grey" name="calendar"></ion-icon>
+                  <span class="order-list-label">Date:</span> {{order.lastUpdatedAt}}
+              </ion-col>
+              <ion-col class="{{order.status}} order-status">
+                <ion-icon color="grey" name="radio-button-on"></ion-icon><span class="order-list-label">Status:</span> <strong text-uppercase>{{order.status}}</strong>
+              </ion-col>
           </ion-row>
           <ion-row>
-            <ion-col text-center>
-                <ion-icon color="grey" name="cash"></ion-icon> Total: {{order.orderTotal}} ZMW
-            </ion-col>
+              <ion-col>
+                  <ion-icon color="grey" name="cart"></ion-icon> <span class="order-list-label">Order Id:</span> {{order.orderId}}
+              </ion-col>
           </ion-row>
-        <ion-row>
-          <ion-col col-12 text-center>
-            <ion-icon color="grey" name="trophy"></ion-icon>
-            Total Tk-Points: <strong text-uppercase>{{order.totalTkPoints}}</strong>
-          </ion-col>
-        </ion-row>
           <ion-row>
-            <ion-col col-12 text-center class="{{order.status}}">
-                <ion-icon color="grey" name="podium"></ion-icon>Status: <strong text-uppercase>{{order.status}}</strong>
-            </ion-col>
+              <ion-col>
+                  <ion-icon color="grey" name=help-buoy></ion-icon>
+                  <span class="order-list-label">Customer:</span> {{order.userDetail.name}} [{{order.userDetail.externalId}}]
+              </ion-col>
+            </ion-row>
+            <ion-row *ngIf="order.salesmanCode && order.salesmanName">
+              <ion-col>
+                  <ion-icon color="grey" name=help-buoy></ion-icon>
+                  <span class="order-list-label">SM:</span> {{order.salesmanName}} [{{order.salesmanCode}}]
+              </ion-col>
+            </ion-row>
+            <ion-row>
+              <ion-col col-12>
+                <ion-icon name="pin" color="grey"></ion-icon> <span class="order-list-label">Province:</span> <span>{{order.userDetail.country}} [ {{order.userDetail.province}} ]</span>
+              </ion-col>
+            </ion-row>
+          <ion-row>
+              <ion-col>
+                  <ion-icon color="grey" name="cash"></ion-icon> <span class="order-list-label"></span> {{order.orderTotal}} ZMW
+              </ion-col>
+              <ion-col text-right>
+                <ion-icon color="grey" name="trophy"></ion-icon>
+                <span class="order-list-label">Tk-Points:</span> <strong text-uppercase>{{order.totalTkPoints}}</strong>
+              </ion-col>
           </ion-row>
           <ion-row>
             <ion-col col-12 text-center>
-              <button ion-button outline color="secondary" item-end (click)="getOrderDetial(order)">view order</button>
+              <button ion-button outline color="secondary" item-end (click)="getOrderDetial(order)" class="order-list-btn">VIEW ORDER</button>
             </ion-col>
           </ion-row>
       </ion-card-content>
