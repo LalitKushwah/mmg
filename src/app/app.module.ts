@@ -33,6 +33,7 @@ import { UserProfilePage } from '../pages/user-profile/user-profile';
 import { SalesmanSelectCustomerPage } from '../pages/salesman-select-customer/salesman-select-customer';
 import { AdminDashboardPage } from '../pages/admin-dashboard/admin-dashboard';
 import { SelectedCustomerOrderListPage } from '../pages/selected-customer-order-list/selected-customer-order-list';
+import { AssociatedCustomersListOrderPage } from '../pages/associated-customers-list-order/associated-customers-list-order';
 
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
@@ -93,6 +94,7 @@ import { AdminListSalesmanPageModule } from '../pages/admin-list-salesman/admin-
 import { SalesmanDashboardPageModule } from '../pages/salesman-dashboard/salesman-dashboard.module';
 import { AdminDashboardPageModule } from '../pages/admin-dashboard/admin-dashboard.module'
 import { SelectedCustomerOrderListPageModule } from '../pages/selected-customer-order-list/selected-customer-order-list.module';
+import { AssociatedCustomersListOrderPageModule } from '../pages/associated-customers-list-order/associated-customers-list-order.module';
 import { ViewCustomerDataPage } from '../pages/view-customer-data/view-customer-data';
 import { ViewCustomerDataPageModule } from '../pages/view-customer-data/view-customer-data.module';
 
@@ -150,6 +152,7 @@ import { ViewCustomerDataPageModule } from '../pages/view-customer-data/view-cus
     SalesmanDashboardPageModule,
     AdminDashboardPageModule,
     SelectedCustomerOrderListPageModule,
+    AssociatedCustomersListOrderPageModule,
     ViewCustomerDataPageModule
   ],
   bootstrap: [IonicApp],
@@ -192,6 +195,7 @@ import { ViewCustomerDataPageModule } from '../pages/view-customer-data/view-cus
     SalesmanDashboardPage,
     AdminDashboardPage,
     SelectedCustomerOrderListPage,
+    AssociatedCustomersListOrderPage,
     ViewCustomerDataPage
   ],
   providers: [
