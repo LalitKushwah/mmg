@@ -29,6 +29,23 @@
           </ion-row>
           <ion-row>
               <ion-col>
+                  <ion-icon color="grey" name=help-buoy></ion-icon>
+                  <span class="order-list-label">Customer:</span> {{order.userDetail.name}} [{{order.userDetail.externalId}}]
+              </ion-col>
+            </ion-row>
+            <ion-row *ngIf="order.salesmanCode && order.salesmanName">
+              <ion-col>
+                  <ion-icon color="grey" name=help-buoy></ion-icon>
+                  <span class="order-list-label">SM:</span> {{order.salesmanName}} [{{order.salesmanCode}}]
+              </ion-col>
+            </ion-row>
+            <ion-row>
+              <ion-col col-12>
+                <ion-icon name="pin" color="grey"></ion-icon> <span class="order-list-label">Province:</span> <span>{{order.userDetail.country}} [ {{order.userDetail.province}} ]</span>
+              </ion-col>
+            </ion-row>
+          <ion-row>
+              <ion-col>
                   <ion-icon color="grey" name="cash"></ion-icon> <span class="order-list-label"></span> {{order.orderTotal}} ZMW
               </ion-col>
               <ion-col text-right>
