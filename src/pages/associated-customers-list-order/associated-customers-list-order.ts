@@ -5,7 +5,6 @@ import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { StorageServiceProvider } from '../../providers/storage-service/storage-service';
 import { WidgetUtilService } from '../../utils/widget-utils';
 import { ApiServiceProvider } from '../../providers/api-service/api-service';
-//import { _ } from 'underscore';
 
 @IonicPage({
   name: 'AssociatedCustomersListOrderPage'
@@ -36,7 +35,6 @@ export class AssociatedCustomersListOrderPage {
   async getUserOrderList () {
     const profile = await this.storageService.getFromStorage('profile')
     this.userId = (profile['userType'] === 'SALESMAN' || profile['userType'] === 'SALESMANAGER') ? profile['externalId'] : profile['_id']
-    const isSalesman = ((profile['userType'] === 'SALESMAN') || (profile['userType'] === 'SALESMANAGER')) ? true : false
     this.apiService.getOrdersForSalesmanByAssociatedCustomers(this.userId, this.skipValue, this.limit).subscribe((result) => {
       this.orderList = result.body
 
@@ -92,10 +90,31 @@ export class AssociatedCustomersListOrderPage {
 
   //Client Side Pagination
   async doInfinite (infiniteScroll) {
-    setTimeout(() => {
-      this.slice += 20;
+    this.skipValue = this.skipValue + this.limit
+    const profile = await this.storageService.getFromStorage('profile')
+    this.userId = (profile['userType'] === 'SALESMAN' || profile['userType'] === 'SALESMANAGER') ? profile['externalId'] : profile['_id']
+    this.apiService.getOrdersForSalesmanByAssociatedCustomers(this.userId, this.skipValue, this.limit).subscribe((result) => {
+      if(result.body.length > 0) {
+        let tempList = result.body
+        tempList.sort((a, b) => {
+          return <any>new Date(b.lastUpdatedAt) - <any>new Date(a.lastUpdatedAt);
+        })
+        tempList.map(order => {
+          order.lastUpdatedAt = this.formatDate(order.lastUpdatedAt)
+          this.orderList.push(order)
+        })
+      } else {
+        this.skipValue = this.limit
+      }
       infiniteScroll.complete();
-    }, 200);  
+    }, (error) => {
+      infiniteScroll.complete();
+      if (error.statusText === 'Unknown Error') {
+        this.widgetUtil.showToast(CONSTANTS.INTERNET_ISSUE)
+      } else {
+        this.widgetUtil.showToast(CONSTANTS.SERVER_ERROR)
+      }
+    })
   }
 
   doRefresh (refresher) : void {
