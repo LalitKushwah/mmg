@@ -7,13 +7,6 @@ import { StorageServiceProvider } from '../../providers/storage-service/storage-
 import { Chart } from 'chart.js';
 import { ApiServiceProvider } from '../../providers/api-service/api-service';
 
-/**
- * Generated class for the ViewCustomerDataPage page.
- *
- * See https://ionicframework.com/docs/components/#navigation for more info on
- * Ionic pages and navigation.
- */
-
 @IonicPage({
   name: 'ViewCustomerDataPage'
 })
@@ -35,7 +28,7 @@ export class ViewCustomerDataPage {
   data: any = {}
   loader: any
   externalId: string = ''
-  customerDashboard: boolean = true
+  customerDashboard: boolean = false
 
   constructor (public navCtrl: NavController, 
               private view: ViewController,
@@ -93,9 +86,13 @@ export class ViewCustomerDataPage {
       let profile = await this.storageService.getFromStorage('profile')
       if ((profile['userType'] === 'ADMIN') || (profile['userType'] === 'ADMINHO')) {
         let selectedCustomerprofile = await this.storageService.getFromStorage('editCustomerInfo')
+        //console.log(selectedCustomerprofile)
+        if(selectedCustomerprofile['userType']==='CUSTOMER'){
+          this.customerDashboard = true
+        }
+
         this.partyName = selectedCustomerprofile['name']
         this.externalId = selectedCustomerprofile['externalId']
-        this.customerDashboard = false
       }
       this.apiService.getDashboardData(this.externalId).subscribe((res: any) => {
         this.dashboardData = res.body[0]
@@ -136,6 +133,9 @@ prepareData (selectedValue) {
     this.data.thirtyDaysOutStanding = 0
     this.data.availableCreditLimit = 0
 
+    this.data.tkPoints = 0
+    this.data.tkCurrency = 0
+    //console.log(this.data)
     //Preparing Data for Graph
     this.mtdAchieved = this.data.achievement
     //this.target = this.data.balanceToDo
@@ -170,6 +170,7 @@ prepareData (selectedValue) {
     this.mtdAchieved = this.data.achievement
     this.target = this.data.balanceToDo
     this.displayChart()
+    //console.log(this.data)
   }
   
 }
