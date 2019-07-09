@@ -122,7 +122,7 @@ export class CustomerHomePage {
 
   getVersion () {
     this.apiService.getVersion().subscribe(res => {
-      if (res.version !== 1.1) {
+      if (res.version !== 1.2) {
         const alert = this.alertCtrl.create({
           title: 'Information',
           subTitle: 'New Version of App is Available',
