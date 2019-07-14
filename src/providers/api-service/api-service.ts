@@ -181,6 +181,10 @@ export class ApiServiceProvider {
     return this.http.post(CONSTANTS.BASE_URL + 'api/erp/create/new/product/mongo', {})
   }
 
+  updateUserDashboardData () {
+    return this.http.get(CONSTANTS.BASE_URL + 'api/erp/update/dashboard/data', {})
+  }
+
   getVersion (): any {
     return this.http.get(CONSTANTS.BASE_URL + 'api/user/version')
   }
