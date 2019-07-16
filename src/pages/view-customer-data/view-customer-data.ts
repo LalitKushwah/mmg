@@ -86,7 +86,6 @@ export class ViewCustomerDataPage {
       let profile = await this.storageService.getFromStorage('profile')
       if ((profile['userType'] === 'ADMIN') || (profile['userType'] === 'ADMINHO')) {
         let selectedCustomerprofile = await this.storageService.getFromStorage('editCustomerInfo')
-        //console.log(selectedCustomerprofile)
         if(selectedCustomerprofile['userType']==='CUSTOMER'){
           this.customerDashboard = true
         }
@@ -122,7 +121,6 @@ export class ViewCustomerDataPage {
 
 prepareData (selectedValue) {
   if(!this.dashboardData){
-    //console.log('No data found')
     this.data.target = 0
     this.data.achievement = 0
 
@@ -135,7 +133,6 @@ prepareData (selectedValue) {
 
     this.data.tkPoints = 0
     this.data.tkCurrency = 0
-    //console.log(this.data)
     //Preparing Data for Graph
     this.mtdAchieved = this.data.achievement
     //this.target = this.data.balanceToDo
@@ -144,20 +141,21 @@ prepareData (selectedValue) {
   }
 
   else{
-    //console.log('executing else')
     if (selectedValue !== 'Total') {
       this.data.target = (this.dashboardData['target' + selectedValue.name.charAt(0)]).toFixed(2)
       this.data.achievement =( this.dashboardData['achive' + selectedValue.name.charAt(0)]).toFixed(2)
 
     } else {
-      this.data.target = ((this.dashboardData['targetC']  + this.dashboardData['targetP'] + this.dashboardData['targetH'] + this.dashboardData['targetL'])/4).toFixed(2)
-      this.data.achievement = ((this.dashboardData['achiveC']  + this.dashboardData['achiveP'] + this.dashboardData['achiveH'] + this.dashboardData['achiveL'])/4).toFixed(2)
+      this.data.target = (this.dashboardData['targetC']  + this.dashboardData['targetP'] + this.dashboardData['targetH'] + this.dashboardData['targetL']).toFixed(2)
+      this.data.achievement = (this.dashboardData['achiveC']  + this.dashboardData['achiveP'] + this.dashboardData['achiveH'] + this.dashboardData['achiveL']).toFixed(2)
     }
     this.data.creditLimit = "creditLimit" in this.dashboardData ? this.dashboardData.creditLimit : 0
     let temp: any = (this.data.achievement>0 && this.data.target>0) ? (this.data.achievement/this.data.target): 0;
     this.data.achievedPercentage = (temp * 100).toFixed(2);
-    console.log("Ok")
-    this.data.balanceToDo = (this.data.target > this.data.achievement) ? (this.data.target - this.data.achievement).toFixed(2) : 0
+    
+    let tempTodo = this.data.target - this.data.achievement
+    this.data.balanceToDo = (tempTodo > 0) ? (tempTodo.toFixed(2)) : 0
+    
     this.data.currentOutStanding = "currentOutStanding" in this.dashboardData ? this.dashboardData.currentOutStanding : 0
 
     this.data.thirtyDaysOutStanding = "thirtyDaysOutStanding" in this.dashboardData ? this.dashboardData.thirtyDaysOutStanding : 0
@@ -171,9 +169,7 @@ prepareData (selectedValue) {
     this.mtdAchieved = this.data.achievement
     this.target = this.data.balanceToDo
     this.displayChart()
-    //console.log(this.data)
   }
-  
 }
 
 closePayModal () {
