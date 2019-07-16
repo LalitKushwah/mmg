@@ -86,7 +86,6 @@ export class ViewCustomerDataPage {
       let profile = await this.storageService.getFromStorage('profile')
       if ((profile['userType'] === 'ADMIN') || (profile['userType'] === 'ADMINHO')) {
         let selectedCustomerprofile = await this.storageService.getFromStorage('editCustomerInfo')
-        //console.log(selectedCustomerprofile)
         if(selectedCustomerprofile['userType']==='CUSTOMER'){
           this.customerDashboard = true
         }
@@ -122,7 +121,6 @@ export class ViewCustomerDataPage {
 
 prepareData (selectedValue) {
   if(!this.dashboardData){
-    //console.log('No data found')
     this.data.target = 0
     this.data.achievement = 0
 
@@ -135,7 +133,6 @@ prepareData (selectedValue) {
 
     this.data.tkPoints = 0
     this.data.tkCurrency = 0
-    //console.log(this.data)
     //Preparing Data for Graph
     this.mtdAchieved = this.data.achievement
     //this.target = this.data.balanceToDo
@@ -144,7 +141,6 @@ prepareData (selectedValue) {
   }
 
   else{
-    //console.log('executing else')
     if (selectedValue !== 'Total') {
       this.data.target = (this.dashboardData['target' + selectedValue.name.charAt(0)]).toFixed(2)
       this.data.achievement =( this.dashboardData['achive' + selectedValue.name.charAt(0)]).toFixed(2)
@@ -173,9 +169,7 @@ prepareData (selectedValue) {
     this.mtdAchieved = this.data.achievement
     this.target = this.data.balanceToDo
     this.displayChart()
-    //console.log(this.data)
   }
-  
 }
 
 closePayModal () {

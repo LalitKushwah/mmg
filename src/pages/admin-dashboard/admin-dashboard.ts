@@ -123,7 +123,6 @@ export class AdminDashboardPage {
 
   prepareData (selectedValue) {
     if(!this.dashboardData){
-      console.log('No data found')
       this.data.target = 0
       this.data.achievement = 0
 
@@ -144,7 +143,6 @@ export class AdminDashboardPage {
     }
 
     else{
-      console.log('executing else')
       if (selectedValue !== 'Total') {
         this.data.target = (this.dashboardData['target' + selectedValue.name.charAt(0)]).toFixed(2)
         this.data.achievement = (this.dashboardData['achive' + selectedValue.name.charAt(0)]).toFixed(2)
