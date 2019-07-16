@@ -7,8 +7,8 @@ import { CustomerHomePage } from '../customer-home/customer-home';
 
 import { Chart } from 'chart.js';
 import { ApiServiceProvider } from '../../providers/api-service/api-service';
-import { CustomerListOrderPage } from '../customer-list-order/customer-list-order';
-import { SelectedCustomerOrderListPage } from '../selected-customer-order-list/selected-customer-order-list';
+//import { CustomerListOrderPage } from '../customer-list-order/customer-list-order';
+//import { SelectedCustomerOrderListPage } from '../selected-customer-order-list/selected-customer-order-list';
 import { UserPaymentHistoryPage } from '../user-payment-history/user-payment-history';
 
 @IonicPage({
@@ -54,8 +54,7 @@ export class UserProfilePage {
               private modal:ModalController,
               private storageService: StorageServiceProvider,
               private apiService: ApiServiceProvider,
-              private loadingCtrl: LoadingController) {
-    
+              private loadingCtrl: LoadingController) { 
   }
 
   displayChart () {
@@ -165,8 +164,8 @@ prepareData (selectedValue) {
     //console.log('No data found')
     //this.target = this.data.balanceToDo
     //this.target = 1
-    console.log('executing else')
-    //console.log(this.dashboardData)
+    // console.log('executing else')
+    // console.log(this.dashboardData)
     if (selectedValue !== 'Total') {
       this.data.target = (this.dashboardData['target' + selectedValue.name.charAt(0)]).toFixed(2)
       this.data.achievement = (this.dashboardData['achive' + selectedValue.name.charAt(0)]).toFixed(2)
@@ -175,21 +174,21 @@ prepareData (selectedValue) {
       this.data.target = ((this.dashboardData['targetC']  + this.dashboardData['targetP'] + this.dashboardData['targetH'] + this.dashboardData['targetL'])/4).toFixed(2)
       this.data.achievement = ((this.dashboardData['achiveC']  + this.dashboardData['achiveP'] + this.dashboardData['achiveH'] + this.dashboardData['achiveL'])/4).toFixed(2)
     }
-    console.log(this.data)
-    this.data.creditLimit = "creditLimit" in this.dashboardData ? (this.dashboardData.creditLimit).toFixed(2) : 0
-    let temp: any = (this.data.achievement>0 && this.data.target>0) ? (this.data.achievement/this.data.target).toFixed(2): 0;
-    console.log(temp)
-    this.data.achievedPercentage = temp * 100;
-    this.data.balanceToDo = (this.data.target - this.data.achievement).toFixed(2)
+    //console.log(this.data)
+    this.data.creditLimit = "creditLimit" in this.dashboardData ? this.dashboardData.creditLimit : 0
+    let temp: any = (this.data.achievement>0 && this.data.target>0) ? (this.data.achievement/this.data.target): 0;
+    //console.log(temp)
+    this.data.achievedPercentage = (temp * 100).toFixed(2);
+    this.data.balanceToDo = (this.data.target > this.data.achievement) ? (this.data.target - this.data.achievement).toFixed(2) : 0
     
-    this.data.currentOutStanding = "currentOutStanding" in this.dashboardData ? (this.dashboardData.currentOutStanding).toFixed(2) : 0
+    this.data.currentOutStanding = "currentOutStanding" in this.dashboardData ? this.dashboardData.currentOutStanding : 0
 
-    this.data.thirtyDaysOutStanding = "thirtyDaysOutStanding" in this.dashboardData ? (this.dashboardData.thirtyDaysOutStanding).toFixed(2) : 0
+    this.data.thirtyDaysOutStanding = "thirtyDaysOutStanding" in this.dashboardData ? this.dashboardData.thirtyDaysOutStanding: 0
 
     this.data.availableCreditLimit = (this.data.creditLimit - this.data.currentOutStanding).toFixed(2)
     
-    this.data.tkPoints = "tkPoints" in this.dashboardData ? (this.dashboardData.tkPoints).toFixed(2) : 0
-    this.data.tkCurrency = "tkCurrency" in this.dashboardData ? (this.dashboardData.tkCurrency).toFixed(2) : 0
+    this.data.tkPoints = "tkPoints" in this.dashboardData ? this.dashboardData.tkPoints : 0
+    this.data.tkCurrency = "tkCurrency" in this.dashboardData ? this.dashboardData.tkCurrency : 0
 
     //Preparing Data for Graph
     this.mtdAchieved = this.data.achievement
