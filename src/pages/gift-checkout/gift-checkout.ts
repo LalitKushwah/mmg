@@ -33,8 +33,8 @@ export class GiftCheckoutPage {
   }
 
   async ionViewWillEnter () {
-    let profile = await this.storageService.getFromStorage('profile')
-    this.apiService.getUserDetails(profile['userLoginId']).subscribe(res => {
+    let profile: any = await this.storageService.getFromStorage('profile')
+    this.apiService.getDashboardData(profile.externalId).subscribe((res: any) => {
       this.customerCode = res.body[0].externalId
     })
   }

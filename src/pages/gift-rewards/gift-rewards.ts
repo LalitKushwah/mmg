@@ -44,7 +44,7 @@ export class GiftRewardsPage {
 
   getTKCurrency () {
     this.storageService.getFromStorage('profile').then((res: any) => {
-      this.apiService.getUserDetails(res.userLoginId).subscribe(data => {
+      this.apiService.getDashboardData(res.externalId).subscribe((data:any) => {
         this.totalTkPoints = data.body[0].tkPoints
         this.totalTkCurrency = data.body[0].tkCurrency
         this.leftTkCurrency = this.totalTkCurrency

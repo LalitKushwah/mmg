@@ -36,7 +36,7 @@ export class ClubPremierPage {
     });
     loader.present();
     this.storageService.getFromStorage('profile').then((res: any) => {
-      this.apiService.getUserDetails(res.userLoginId).subscribe(data => {
+      this.apiService.getDashboardData(res.externalId).subscribe((data:any) => {
           loader.dismiss()
           this.tkPoints = data.body[0].tkPoints
           this.tkCurrency = data.body[0].tkCurrency
