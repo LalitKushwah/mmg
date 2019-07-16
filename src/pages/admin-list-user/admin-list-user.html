@@ -21,7 +21,7 @@
   <!-- <ion-list *ngIf="userListAvailable && (userList.length > 0)">
     <ion-item *ngFor="let user of filteredUserList" (click)="editCustomer(user)">
       <span>{{user.externalId}}</span><span>{{user.name}}</span>
-      
+
       <button ion-button clear color="secondary" item-end><h1><ion-icon md="arrow-forward"></ion-icon></h1></button>
 
       <button ion-button clear color="secondary" item-end>
@@ -31,15 +31,6 @@
   </ion-list> -->
 
   <ion-list *ngIf="userListAvailable && (userList.length > 0)">
-      <!-- <ion-item *ngFor="let user of filteredUserList"> -->
-        
-        
-        <!-- <button ion-button clear color="secondary" item-end><h1><ion-icon md="arrow-forward"></ion-icon></h1></button>
-  
-        <button ion-button clear color="secondary" item-end>
-          <ion-icon name="create"></ion-icon>
-        </button> -->
-
         <ion-card class="user-card" *ngFor="let user of filteredUserList">
             <ion-card-content>
               <ion-row>
@@ -60,36 +51,9 @@
                     <!-- </ion-row> -->
                 </ion-col>
               </ion-row>
-                
-                <!-- <ion-row>
-                  <ion-col>
-                      <ion-icon color="grey" name="cash"></ion-icon> <span class="order-list-label"></span> {{order.orderTotal}} ZMW
-                  </ion-col>
-                  <ion-col>
-                    <ion-icon color="grey" name="trophy"></ion-icon>
-                    <span class="order-list-label">Tk-Points:</span> <strong text-uppercase>{{order.totalTkPoints}}</strong>
-                  </ion-col>
-                </ion-row> -->
-      
-                <!-- <ion-row class="buttonWrapper">
-                  <ion-col text-center>
-                    <button ion-button outline color="secondary" item-end class="edit-user-btn" (click)="editCustomer(user)"><ion-icon name="create"></ion-icon>EDIT USER</button>
-                  </ion-col>
-                  <ion-col text-center>
-                    <button ion-button color="light" class="rest-pass-btn" (click)="resetPasswordModel(user)">RESET PASSWORD</button>
-                  </ion-col>
-                </ion-row> -->
-      
             </ion-card-content>
           </ion-card>
-
-      <!-- </ion-item> -->
     </ion-list>
-
-
-  
-
-
 
   <ion-card *ngIf="userListAvailable && (userList.length < 1)" class="noDataView">
     <ion-card-header text-center>
@@ -101,4 +65,3 @@
     <ion-infinite-scroll-content></ion-infinite-scroll-content>
   </ion-infinite-scroll>
 </ion-content>
-
