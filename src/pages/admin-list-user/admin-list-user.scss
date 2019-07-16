@@ -3,25 +3,25 @@ page-admin-list-user {
         width: 20px ;
         margin: 0 ;
     }
-    ion-label > span {
-        text-transform: lowercase;
-    }
-    ion-label > span {
-        &:first-child {
-            height: 50px;
-            width: 50px;
-            background: color($colors, secondary);
-            color: #fff;
-            border-radius: 25px;
-            text-align: center;
-            padding-top: 15px;
-            margin-right: 10px;
-        }
-        &:last-child::first-letter {
-            font-size: 28px;
-            text-transform: uppercase;
-        }
-    }
+    // ion-label > span {
+    //     text-transform: lowercase;
+    // }
+    // ion-label > span {
+    //     &:first-child {
+    //         height: 50px;
+    //         width: 50px;
+    //         background: color($colors, secondary);
+    //         color: #fff;
+    //         border-radius: 25px;
+    //         text-align: center;
+    //         padding-top: 15px;
+    //         margin-right: 10px;
+    //     }
+    //     &:last-child::first-letter {
+    //         font-size: 28px;
+    //         text-transform: uppercase;
+    //     }
+    // }
     ion-label.label {
         margin: 16px 8px 16px 0;
         img {
@@ -42,5 +42,47 @@ page-admin-list-user {
                 font-size: 2rem
             }
         }
+    }
+
+    .edit-user-btn{
+        font-size: 10px;
+    }
+
+
+    .rest-pass-btn{
+        margin-top:8px;
+        font-size: 10px;
+    }
+
+    .user-card{
+        margin: 0;
+        ion-card-content{
+            padding: 5px;
+        }
+    }
+    .user-name-col{
+        padding: 0;
+    }
+    .user-name {
+        font-size: 20px;
+        text-transform: capitalize;
+    }
+
+    .user-id-col{
+        text-align: center;
+        margin-top: auto;
+        margin-bottom: auto;
+    }
+
+    .user-id{
+        display: block;
+        height: 90px;
+        width: 90px;
+        background: color($colors, secondary);
+        color: #fff;
+        border-radius: 50px;
+        text-align: center;
+        padding: 35px 10px;
+        
     }
 }
