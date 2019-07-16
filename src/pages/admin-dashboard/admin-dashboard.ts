@@ -150,13 +150,16 @@ export class AdminDashboardPage {
         this.data.achievement = (this.dashboardData['achive' + selectedValue.name.charAt(0)]).toFixed(2)
 
       } else {
-        this.data.target = ((this.dashboardData['targetC']  + this.dashboardData['targetP'] + this.dashboardData['targetH'] + this.dashboardData['targetL'])/4).toFixed(2)
-        this.data.achievement = ((this.dashboardData['achiveC']  + this.dashboardData['achiveP'] + this.dashboardData['achiveH'] + this.dashboardData['achiveL'])/4).toFixed(2)
+        this.data.target = (this.dashboardData['targetC']  + this.dashboardData['targetP'] + this.dashboardData['targetH'] + this.dashboardData['targetL']).toFixed(2)
+        this.data.achievement = (this.dashboardData['achiveC']  + this.dashboardData['achiveP'] + this.dashboardData['achiveH'] + this.dashboardData['achiveL']).toFixed(2)
       }
       let temp: any = (this.data.achievement>0 && this.data.target>0) ? (this.data.achievement/this.data.target): 0;
       this.data.achievedPercentage = (temp * 100).toFixed(2);
       //this.data.achievedPercentage = (this.data.achievement/this.data.target) * 100
-      this.data.balanceToDo = (this.data.target > this.data.achievement) ? (this.data.target - this.data.achievement).toFixed(2) : 0
+      
+      let tempTodo = this.data.target - this.data.achievement
+      this.data.balanceToDo = (tempTodo > 0) ? (tempTodo.toFixed(2)) : 0
+
       this.data.creditLimit = this.dashboardData.creditLimit ? this.dashboardData.creditLimit : 'NA'
       this.data.currentOutStanding = this.dashboardData.currentOutStanding ? this.dashboardData.currentOutStanding : 0
       this.data.thirtyDaysOutStanding = this.dashboardData.thirtyDaysOutStanding ? this.dashboardData.thirtyDaysOutStanding : 0

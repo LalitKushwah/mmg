@@ -171,15 +171,22 @@ prepareData (selectedValue) {
       this.data.achievement = (this.dashboardData['achive' + selectedValue.name.charAt(0)]).toFixed(2)
 
     } else {
-      this.data.target = ((this.dashboardData['targetC']  + this.dashboardData['targetP'] + this.dashboardData['targetH'] + this.dashboardData['targetL'])/4).toFixed(2)
-      this.data.achievement = ((this.dashboardData['achiveC']  + this.dashboardData['achiveP'] + this.dashboardData['achiveH'] + this.dashboardData['achiveL'])/4).toFixed(2)
+      this.data.target = (this.dashboardData['targetC']  + this.dashboardData['targetP'] + this.dashboardData['targetH'] + this.dashboardData['targetL']).toFixed(2)
+      this.data.achievement = (this.dashboardData['achiveC']  + this.dashboardData['achiveP'] + this.dashboardData['achiveH'] + this.dashboardData['achiveL']).toFixed(2)
     }
     //console.log(this.data)
     this.data.creditLimit = "creditLimit" in this.dashboardData ? this.dashboardData.creditLimit : 0
     let temp: any = (this.data.achievement>0 && this.data.target>0) ? (this.data.achievement/this.data.target): 0;
     //console.log(temp)
     this.data.achievedPercentage = (temp * 100).toFixed(2);
-    this.data.balanceToDo = (this.data.target > this.data.achievement) ? (this.data.target - this.data.achievement).toFixed(2) : 0
+    console.log(this.data.target)
+    console.log(this.data.achievement) 
+    console.log(this.data.target > 175132.50)
+    console.log(this.data.target > this.data.achievement)
+
+    let tempTodo = this.data.target - this.data.achievement
+
+    this.data.balanceToDo = (tempTodo > 0) ? (tempTodo.toFixed(2)) : 0
     
     this.data.currentOutStanding = "currentOutStanding" in this.dashboardData ? this.dashboardData.currentOutStanding : 0
 
