@@ -58,6 +58,7 @@ export class MyApp {
             {title: 'Customers', component: AdminListUserPage, icon: 'shopping-bag-new', class: 'default'},
             {title: 'Sales Executive', component: AdminListSalesmanPage, icon: 'briefcase', class: 'default'},
             {title: 'Products', component: AdminListCategoryPage, icon: 'products', class: 'default'},
+            {title: '', component: ClubPremierPage, icon: 'club-premier', class: 'custom-side-icon'}
           ]
         } else {
           if ((profile['userType'] === 'SALESMAN') || (profile['userType'] === 'SALESMANAGER')) {
@@ -65,6 +66,7 @@ export class MyApp {
             this.pages = [
               {title: 'Dashboard', component: SalesmanDashboardPage, icon: 'dashboard-new', class: 'default'},
               {title: 'Orders', component: AssociatedCustomersListOrderPage, icon: 'cart', class: 'default'},
+              {title: '', component: ClubPremierPage, icon: 'club-premier', class: 'custom-side-icon'}
             ]
           }else{
             this.partyName = profile['name']

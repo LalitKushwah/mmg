@@ -1,5 +1,5 @@
 import { Component, ViewChild } from '@angular/core';
-import { IonicPage, NavController, Navbar, NavParams, AlertController, Searchbar } from 'ionic-angular';
+import { IonicPage, NavController, Navbar, NavParams, AlertController, Searchbar, ModalController } from 'ionic-angular';
 import { ApiServiceProvider } from '../../providers/api-service/api-service';
 import { WidgetUtilService } from '../../utils/widget-utils';
 import { CONSTANTS } from '../../utils/constants';
@@ -31,7 +31,8 @@ export class AdminListUserPage {
               private apiService: ApiServiceProvider,
               private widgetUtil: WidgetUtilService,
               private alertCtrl: AlertController,
-              private storageService: StorageServiceProvider) {
+              private storageService: StorageServiceProvider,
+              private modal: ModalController) {
     this.skipValue = 0
     this.limit = CONSTANTS.PAGINATION_LIMIT
     this.searchKeyword = navParams.get('searchedKeyword')
@@ -143,7 +144,6 @@ export class AdminListUserPage {
 
    async editCustomer (user) {
       const res = await this.storageService.setToStorage('editCustomerInfo', user)
-      console.log('====== 137 =====', res)
       this.navCtrl.push(EditUserPage, {searchedKeyword: this.searchbar.value})
     }
 
@@ -163,5 +163,11 @@ export class AdminListUserPage {
     if (this.searchKeyword) {
       this.searchbar.value = this.searchKeyword
     }
+  }
+
+async openCustomerDashboardModel (user) {
+    const res = await this.storageService.setToStorage('editCustomerInfo', user)
+    const payModal = this.modal.create('ViewCustomerDataPage')
+    payModal.present();
   }
 }

@@ -1,7 +1,7 @@
   <ion-header>
     <ion-navbar>
       <ion-title *ngIf="!isSearch">{{categoryObj.name}}</ion-title>
-      <ion-title *ngIf="isSearch">Search Result: {{keyword}}</ion-title>
+      <ion-title *ngIf="isSearch">Search Result</ion-title>
       <ion-buttons end>
         <button class="cart-btn" ion-button icon-only (click)="reviewAndSubmitOrder()">
           <ion-icon name="cart"></ion-icon>
@@ -16,8 +16,8 @@
         </button>
       </ion-buttons>
     </ion-navbar>
-    <ion-toolbar>
-        <ion-searchbar #q (ionChange)="searchProducts(q.value)" placeholder="Search any product in {{categoryObj.name}}"></ion-searchbar>
+    <ion-toolbar *ngIf="keyword && keyword !== ''">
+        <ion-label class="search-result">Matching Results For : <b>&nbsp;{{ keyword }}</b></ion-label>
     </ion-toolbar>
   </ion-header>
   <ion-content class="full-background">

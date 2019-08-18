@@ -6,6 +6,8 @@ import { WidgetUtilService} from '../../utils/widget-utils'
 import { AddSalesmanModalPage } from '../add-salesman-modal/add-salesman-modal';
 import { AdminListUserPage } from '../admin-list-user/admin-list-user';
 import { AdminListSalesmanPage } from '../admin-list-salesman/admin-list-salesman';
+import { CONSTANTS } from '../../utils/constants';
+
  /**
  * Generated class for the EditUserPage page.
  *
@@ -161,7 +163,40 @@ export class EditUserPage {
   ionViewDidLoad () {
     this.navBar.backButtonClick = () => {
       this.userData.userType === 'CUSTOMER' ? this.navCtrl.push(AdminListUserPage, {searchedKeyword: this.searchedKeyword}) : this.navCtrl.push(AdminListSalesmanPage)
-	}
-}
+	  }
+  }
+  
+  resetPasswordModel () {
+    let alert = this.alertCtrl.create();
+    alert.setTitle('Reset Password!')
+    alert.setMessage('Are you sure you want to reset password for ' +  this.userData.name)
+    alert.addButton({
+      text: 'No',
+      role: 'cancel',
+      handler: () => {}
+    });
+    alert.addButton({
+      text: 'Yes',
+      cssClass: 'secondary',
+      handler: () => {
+        this.resetPassword(this.userData)
+      }
+    })
+    alert.present(alert)
+  }
+
+  resetPassword (user) {
+    console.log(user)
+    this.apiService.resetUserPassowrd(user['_id']).subscribe((result) => {
+      console.log(result)
+      this.widgetUtil.showToast(`Password reset successfully. New password: ${CONSTANTS.DEFUALT_PASSWORD}`)
+    }, (error) => {
+      if (error.statusText === 'Unknown Error') {
+        this.widgetUtil.showToast(CONSTANTS.INTERNET_ISSUE)
+      } else {
+        this.widgetUtil.showToast(CONSTANTS.SERVER_ERROR)
+      }
+    })
+  }
 
 }
