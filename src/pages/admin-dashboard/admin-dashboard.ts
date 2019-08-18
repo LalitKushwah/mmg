@@ -166,6 +166,7 @@ export class AdminDashboardPage {
       //Preparing Data for Graph
       this.mtdAchieved = this.data.achievement
       this.target = this.data.balanceToDo
+      this.data.target = 123456789
       this.displayChart()
     }
     

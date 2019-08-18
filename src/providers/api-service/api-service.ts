@@ -181,8 +181,20 @@ export class ApiServiceProvider {
     return this.http.post(CONSTANTS.BASE_URL + 'api/erp/create/new/product/mongo', {})
   }
 
+  updateParentIdInUserDoc () {
+    return this.http.get(CONSTANTS.BASE_URL + 'api/erp/update/parent/mongo', {})
+  }
+
   updateUserDashboardData () {
     return this.http.get(CONSTANTS.BASE_URL + 'api/erp/update/dashboard/data', {})
+  }
+
+  updateNonCustomerDashboardData () {
+    return this.http.get(CONSTANTS.BASE_URL + 'api/erp/update/noncustomer/dashboard/data', {})
+  }
+
+  updateAssociatedSMListToMongo () {
+    return this.http.get(CONSTANTS.BASE_URL + 'api/erp/update/associated/sm/mongo', {})
   }
 
   getVersion (): any {

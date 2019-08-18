@@ -110,6 +110,21 @@ export class OracleConnectPage {
     })
   }
 
+  updateParentIdInUserDoc () {
+    const loader = this.loadingCtrl.create({
+      content: "Schedular is Running...",
+    });
+    loader.present();
+    this.apiService.updateParentIdInUserDoc().subscribe(res => {
+      loader.dismiss()
+      this.widgetUtil.showToast('Schedular completed successfully...')
+    }, error => {
+      this.widgetUtil.showToast(`Error while running schedular:  ${error}`)
+      loader.dismiss()
+    })
+  }
+
+
   updateUserDashboardData () {
     const loader = this.loadingCtrl.create({
       content: "Schedular is Running...",
@@ -122,5 +137,33 @@ export class OracleConnectPage {
       this.widgetUtil.showToast(`Error while running schedular:  ${error}`)
       loader.dismiss()
     })
+  }
+
+  updateNonUserDashboardData () {
+    const loader = this.loadingCtrl.create({
+      content: "Schedular is Running...",
+    });
+    loader.present();
+    this.apiService.updateNonCustomerDashboardData().subscribe(res => {
+      loader.dismiss()
+      this.widgetUtil.showToast('Schedular completed successfully...')
+    }, error => {
+      this.widgetUtil.showToast(`Error while running schedular:  ${error}`)
+      loader.dismiss()
+    })
+  }
+
+  updateAssociatedSMListToMongo () {
+    const loader = this.loadingCtrl.create({
+      content: "Schedular is Running...",
+    });
+    loader.present();
+    this.apiService.updateAssociatedSMListToMongo().subscribe(res => {
+      loader.dismiss()
+      this.widgetUtil.showToast('Schedular completed successfully...')
+    }, error => {
+      this.widgetUtil.showToast(`Error while running schedular:  ${error}`)
+      loader.dismiss()
+    })    
   }
 }
