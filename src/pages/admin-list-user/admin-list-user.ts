@@ -1,5 +1,5 @@
 import { Component, ViewChild } from '@angular/core';
-import { IonicPage, NavController, Navbar, NavParams, AlertController } from 'ionic-angular';
+import { IonicPage, NavController, Navbar, NavParams, AlertController, Searchbar } from 'ionic-angular';
 import { ApiServiceProvider } from '../../providers/api-service/api-service';
 import { WidgetUtilService } from '../../utils/widget-utils';
 import { CONSTANTS } from '../../utils/constants';
@@ -16,6 +16,7 @@ import { AdminDashboardPage } from '../admin-dashboard/admin-dashboard';
 })
 export class AdminListUserPage {
   @ViewChild(Navbar) navBar: Navbar;
+  @ViewChild('searchbar') searchbar : Searchbar;
   
   skipValue: number = 0
   limit: number = CONSTANTS.PAGINATION_LIMIT
@@ -24,6 +25,7 @@ export class AdminListUserPage {
   userListAvailable: Boolean = false
   searchQuery: string
   allCustomers = []
+  searchKeyword = ''
 
   constructor (public navCtrl: NavController, public navParams: NavParams,
               private apiService: ApiServiceProvider,
@@ -32,13 +34,20 @@ export class AdminListUserPage {
               private storageService: StorageServiceProvider) {
     this.skipValue = 0
     this.limit = CONSTANTS.PAGINATION_LIMIT
-    this.getUserList()
+    this.searchKeyword = navParams.get('searchedKeyword')
+    if (!this.searchKeyword) {
+      this.getUserList()
+    }
   }
 
   ionViewWillEnter () {
     this.apiService.getAllCustomers().subscribe((result) => {
       if (result.body && result.body.length > 0) {
         this.allCustomers = result.body
+        if (this.searchKeyword) {
+          // this.userListAvailable = true
+          this.searchCustomers(this.searchKeyword)
+        }
       }
     }, (error) => {
       if (error.statusText === 'Unknown Error') {
@@ -49,18 +58,18 @@ export class AdminListUserPage {
     })
   }
   getUserList () {
-    this.apiService.getCustomerList(this.skipValue, this.limit).subscribe((result) => {
-      this.userList = result.body
-      this.filteredUserList = this.userList
-      this.userListAvailable = true
-    }, (error) => {
-      if (error.statusText === 'Unknown Error') {
-        this.widgetUtil.showToast(CONSTANTS.INTERNET_ISSUE)
-      } else {
-        this.widgetUtil.showToast(CONSTANTS.SERVER_ERROR)
-      }
-      this.userListAvailable = true
-    })
+      this.apiService.getCustomerList(this.skipValue, this.limit).subscribe((result) => {
+        this.userList = result.body
+        this.filteredUserList = this.userList
+        this.userListAvailable = true
+      }, (error) => {
+        if (error.statusText === 'Unknown Error') {
+          this.widgetUtil.showToast(CONSTANTS.INTERNET_ISSUE)
+        } else {
+          this.widgetUtil.showToast(CONSTANTS.SERVER_ERROR)
+        }
+        this.userListAvailable = true
+      })
   }
 
   doInfinite (infiniteScroll) {
@@ -92,11 +101,6 @@ export class AdminListUserPage {
   }
 
   resetPasswordModel (user) {
-    /* const resetPasswordConfirm = this.modal.create('ResetPasswordModelPage', {message: 'Are you sure you want to reset password for ' +  customerName})
-    resetPasswordConfirm.present()
-    resetPasswordConfirm.onDidDismiss((result) => {
-      console.log('result', result)
-    }) */
     let alert = this.alertCtrl.create();
     alert.setTitle('Reset Password!')
     alert.setMessage('Are you sure you want to reset password for ' +  user.name)
@@ -132,17 +136,32 @@ export class AdminListUserPage {
   searchCustomers (searchQuery) {
       this.filteredUserList = this.allCustomers.filter(user =>
         user.name.toLowerCase().includes(searchQuery.toLowerCase())
-      )}
-
- async editCustomer (user) {
-    const res = await this.storageService.setToStorage('editCustomerInfo', user)
-    console.log('====== 137 =====', res)
-    this.navCtrl.push(EditUserPage)
+      )
+      this.userList = this.filteredUserList
+      this.userListAvailable = true
   }
-  ionViewDidLoad () {
+
+   async editCustomer (user) {
+      const res = await this.storageService.setToStorage('editCustomerInfo', user)
+      console.log('====== 137 =====', res)
+      this.navCtrl.push(EditUserPage, {searchedKeyword: this.searchbar.value})
+    }
+
+    ionViewDidLoad () {
+      this.navBar.backButtonClick = () => {
+        this.navCtrl.setRoot(AdminDashboardPage)
+      }
+      if (this.searchKeyword) {
+        this.searchbar.value = this.searchKeyword
+      }
+    }
+
+  ionViewDidEnter () {
     this.navBar.backButtonClick = () => {
       this.navCtrl.setRoot(AdminDashboardPage)
-      //this.navCtrl.push(AdminHomePage)
+    }
+    if (this.searchKeyword) {
+      this.searchbar.value = this.searchKeyword
     }
   }
 }

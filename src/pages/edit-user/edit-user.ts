@@ -37,6 +37,7 @@ export class EditUserPage {
   updatedUserObject: any = {}
   userData: any = {}
   userTypeLabel: string = 'CUSTOMER'
+  searchedKeyword = ''
 
   constructor (public navCtrl: NavController, 
               public navParams: NavParams, 
@@ -49,7 +50,7 @@ export class EditUserPage {
               private modal: ModalController) {
     this.showCustomerForm = this.selectedUserType
     const toBeAddSalesMan = this.navParams.get('data')
-    
+    this.searchedKeyword = this.navParams.get('searchedKeyword')
     this.prepareEditCustomerData()
 
     if (toBeAddSalesMan) {
@@ -159,7 +160,7 @@ export class EditUserPage {
 
   ionViewDidLoad () {
     this.navBar.backButtonClick = () => {
-      this.userData.userType === 'CUSTOMER' ? this.navCtrl.push(AdminListUserPage) : this.navCtrl.push(AdminListSalesmanPage)
+      this.userData.userType === 'CUSTOMER' ? this.navCtrl.push(AdminListUserPage, {searchedKeyword: this.searchedKeyword}) : this.navCtrl.push(AdminListSalesmanPage)
 	}
 }
 

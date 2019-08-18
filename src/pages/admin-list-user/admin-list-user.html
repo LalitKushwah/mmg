@@ -6,7 +6,7 @@
     <ion-title>Customer List</ion-title>
   </ion-navbar>
   <ion-toolbar>
-    <ion-searchbar  #q (ionChange)="searchCustomers(q.value)" placeholder="Search Customers"></ion-searchbar>
+    <ion-searchbar  #searchbar (ionChange)="searchCustomers(searchbar.value)" placeholder="Search Customers"></ion-searchbar>
   </ion-toolbar>
 </ion-header>
 

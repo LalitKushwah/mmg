@@ -66,6 +66,8 @@ page-admin-list-user {
     .user-name {
         font-size: 20px;
         text-transform: capitalize;
+        word-break: break-word;
+        display: block;
     }
 
     .user-id-col{
