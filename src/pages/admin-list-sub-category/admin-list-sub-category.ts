@@ -4,6 +4,7 @@ import { WidgetUtilService } from '../../utils/widget-utils';
 import { ApiServiceProvider } from '../../providers/api-service/api-service';
 import { CONSTANTS } from '../../utils/constants';
 import { AdminListProductPage } from '../admin-list-product/admin-list-product';
+import { StorageServiceProvider } from '../../providers/storage-service/storage-service';
 
 @IonicPage()
 @Component({
@@ -17,11 +18,13 @@ export class AdminListSubCategoryPage {
   childCategoryList: Array<any> = []
   skipValue: number = 0
   limit: number = CONSTANTS.PAGINATION_LIMIT
+  searchQuery: string = ''  
 
   constructor (public navCtrl: NavController,
               public navParams: NavParams,
               private apiService: ApiServiceProvider,
-              private widgetUtil: WidgetUtilService,) {
+              private widgetUtil: WidgetUtilService,
+              private storageService: StorageServiceProvider) {
     this.parentCategoryId = this.navParams.get("parentCategoryId")
     this.categoryObj = this.navParams.get("category")
     this.categoryListAvailable = false
@@ -79,5 +82,25 @@ export class AdminListSubCategoryPage {
     setTimeout(() => {
       refresher.complete();
     }, 1000);
+  }
+
+  getItems (ev: any) {
+    let val = ev.target.value
+    this.searchQuery = val
+    if (ev.type === "mousedown"){
+    }
+  }
+
+  async submitSearch (ev: any) {
+    if (this.searchQuery && this.searchQuery.trim() != '') {
+      let data = {
+        'keyword': this.searchQuery,
+        'parentCategoryId': this.parentCategoryId,
+        'isSearch': true,
+        'category': this.categoryObj
+      };
+      this.searchQuery  = ''
+        this.navCtrl.push(AdminListProductPage, data)
+    }
   }
 }

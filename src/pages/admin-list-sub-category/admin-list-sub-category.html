@@ -2,6 +2,11 @@
   <ion-navbar>
     <ion-title>{{categoryObj.name}}</ion-title>
   </ion-navbar>
+  <ion-toolbar>
+      <form (ngSubmit)="submitSearch($event)">
+        <ion-searchbar (ionInput)="getItems($event)" placeholder="Search any product in {{categoryObj.name}}"></ion-searchbar>
+      </form>
+  </ion-toolbar>
 </ion-header>
 <ion-content class="full-background">
   <div class="search-spinner">

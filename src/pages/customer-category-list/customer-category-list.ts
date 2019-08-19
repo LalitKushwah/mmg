@@ -27,7 +27,7 @@ export class CustomerCategoryListPage {
   limit: number = CONSTANTS.PAGINATION_LIMIT
   cart: any = []
   tkPoint: any = 0
-  searchQuery: string = ''
+  searchQuery: string = ''  
 
   constructor (public navCtrl: NavController, public navParams: NavParams, private apiService: ApiServiceProvider, private widgetUtil: WidgetUtilService
   , private storageService: StorageServiceProvider) {

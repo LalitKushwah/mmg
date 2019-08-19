@@ -19,30 +19,60 @@ export class AdminListProductPage {
   productListAvailable: Boolean = false
   categoryId: string = ''
   categoryObj: any = {}
+  keyword: string = ''
+  parentCategoryId: string = ''
+  isSearch: Boolean = false
+  filteredProductList: Array<any> = [];
+
 
   constructor (public navCtrl: NavController, public navParams: NavParams, private apiService: ApiServiceProvider, private widgetUtil: WidgetUtilService) {
     this.skipValue = 0
     this.limit = CONSTANTS.PAGINATION_LIMIT
-    this.categoryId = this.navParams.get("categoryId")
+    // this.categoryId = this.navParams.get("categoryId")
     this.categoryObj = this.navParams.get("category")
-    this.getProducList()
+    this.categoryId = this.categoryObj._id
+    this.parentCategoryId = this.navParams.get("parentCategoryId")
+    this.isSearch = this.navParams.get("isSearch")
+    this.keyword = this.navParams.get("keyword")
+    this.getProductList()
   }
 
-  getProducList () {
-    this.apiService.getProductListByCategory(this.categoryId, this.skipValue, this.limit).subscribe((result) => {
-      result.body.map((value) => {
-        value.price = parseFloat((Math.round(value.price * 100) / 100).toString()).toFixed(2)
+  getProductList () {
+    if(!this.isSearch) {
+      this.apiService.getProductListByCategory(this.categoryId, this.skipValue, this.limit).subscribe((result) => {
+        this.productList = result.body
+        this.productList.map(value => {
+          value.quantity = 1
+          value.price = (parseFloat((Math.round(value.price * 100) / 100).toString()).toFixed(2))
+        })
+        this.filteredProductList = this.productList
+        this.productListAvailable = true
+      }, (error) => {
+        if (error.statusText === 'Unknown Error') {
+          this.widgetUtil.showToast(CONSTANTS.INTERNET_ISSUE)
+        } else {
+          this.widgetUtil.showToast(CONSTANTS.SERVER_ERROR)
+        }
+        this.productListAvailable = true
       })
-      this.productList = result.body
-      this.productListAvailable = true
-    }, (error) => {
-      if (error.statusText === 'Unknown Error') {
-        this.widgetUtil.showToast(CONSTANTS.INTERNET_ISSUE)
-      } else {
-        this.widgetUtil.showToast(CONSTANTS.SERVER_ERROR)
-      }
-      this.productListAvailable = true
-    })
+    } else {
+      this.apiService.searchProductInParentCategory(this.skipValue, this.limit, this.parentCategoryId, this.keyword).subscribe((result) => {
+        this.productList = result.body
+        this.productList.map(value => {
+          value.quantity = 1
+          value.price = (parseFloat((Math.round(value.price * 100) / 100).toString()).toFixed(2))
+        })
+        this.filteredProductList = this.productList
+        this.productListAvailable = true
+      }, (error) => {
+        if (error.statusText === 'Unknown Error') {
+          this.widgetUtil.showToast(CONSTANTS.INTERNET_ISSUE)
+        } else {
+          this.widgetUtil.showToast(CONSTANTS.SERVER_ERROR)
+        }
+        this.productListAvailable = true
+      })
+    }
   }
 
   doInfinite (infiniteScroll) {
@@ -69,7 +99,7 @@ export class AdminListProductPage {
   doRefresh (refresher) : void {
     this.skipValue = 0
     this.limit = CONSTANTS.PAGINATION_LIMIT
-    this.getProducList()
+    this.getProductList()
     setTimeout(() => {
       refresher.complete();
     }, 1000);
