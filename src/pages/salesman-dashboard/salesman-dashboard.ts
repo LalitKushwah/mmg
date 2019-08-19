@@ -147,8 +147,14 @@ export class SalesmanDashboardPage {
       this.data.availableCreditLimit = this.data.creditLimit != 'NA' && this.data.currentOutStanding != 0 ? (this.data.creditLimit - this.data.currentOutStanding) : 'NA'
      
       //Preparing Data for Graph
+      if(!(this.data.achievement && this.data.balanceToDo)){
+        this.target = 0.1
+        console.log(this.target)
+      }
+      else{
+        this.target = this.data.balanceToDo
+      }
       this.mtdAchieved = this.data.achievement
-      this.target = this.data.balanceToDo 
     }
       this.displayChart()
   }
