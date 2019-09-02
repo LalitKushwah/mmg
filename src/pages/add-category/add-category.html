@@ -34,7 +34,7 @@
           <p class="error" *ngIf="name.hasError('required') && name.touched">
             *Name is required</p>
           <ion-grid>
-            <button ion-button color="secondary" [disabled]="!(addCategoryForm.valid && allowAddingCategory)" (click)="addCategory();">Add
+            <button ion-button color="secondary" [disabled]="!(addCategoryForm.valid && allowAddingCategory && isUserAuthorized)" (click)="addCategory();">Add
               Category<ion-spinner name="dots" *ngIf="showLoader"></ion-spinner></button>
           </ion-grid>
         </form>

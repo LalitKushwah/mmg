@@ -97,6 +97,9 @@ import { SelectedCustomerOrderListPageModule } from '../pages/selected-customer-
 import { AssociatedCustomersListOrderPageModule } from '../pages/associated-customers-list-order/associated-customers-list-order.module';
 import { ViewCustomerDataPage } from '../pages/view-customer-data/view-customer-data';
 import { ViewCustomerDataPageModule } from '../pages/view-customer-data/view-customer-data.module';
+import { CommonPaymentHistoryPageModule } from '../pages/common-payment-history/common-payment-history.module';
+import { CommonPaymentHistoryPage } from '../pages/common-payment-history/common-payment-history';
+import { CommonService } from '../providers/common.service';
 
 @NgModule({
   declarations: [
@@ -146,6 +149,7 @@ import { ViewCustomerDataPageModule } from '../pages/view-customer-data/view-cus
     GiftCheckoutPageModule,
     AddSalesmanModalPageModule,
     UserPaymentHistoryPageModule,
+    CommonPaymentHistoryPageModule,
     UserProfilePageModule,
     SalesmanSelectCustomerPageModule,
     AdminListSalesmanPageModule,
@@ -196,7 +200,8 @@ import { ViewCustomerDataPageModule } from '../pages/view-customer-data/view-cus
     AdminDashboardPage,
     SelectedCustomerOrderListPage,
     AssociatedCustomersListOrderPage,
-    ViewCustomerDataPage
+    ViewCustomerDataPage,
+    CommonPaymentHistoryPage
   ],
   providers: [
     StatusBar,
@@ -214,7 +219,8 @@ import { ViewCustomerDataPageModule } from '../pages/view-customer-data/view-cus
     File,
     FileTransfer,
     FileTransferObject,
-    DatePipe
+    DatePipe,
+    CommonService
   ]
 })
 export class AppModule {}

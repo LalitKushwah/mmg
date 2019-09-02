@@ -33,6 +33,7 @@ export class CustomerListProductPage {
   searchQuery: string;
   limit: number = CONSTANTS.PAGINATION_LIMIT;
   allProducts = []
+  totalNetWeight: number = 0
 
   constructor (public navCtrl: NavController, public navParams: NavParams,
     private apiService: ApiServiceProvider, private widgetUtil: WidgetUtilService
@@ -163,13 +164,19 @@ export class CustomerListProductPage {
         this.cart = productsInCart
       }
       let sum = 0
+      let totalNetWeight = 0
       this.cart.map(item => {
           if (item.tkPoint) {
             sum = sum + (parseFloat(item.tkPoint) * parseInt(item.quantity))
-        }
+          }
+          if (item.netWeight) {
+            totalNetWeight = totalNetWeight + (parseFloat(item.netWeight) * parseInt(item.quantity))
+          }
       })
       this.tkPoint = sum
+      this.totalNetWeight = totalNetWeight/1000
       this.storageService.setToStorage('tkpoint', sum)
+      this.storageService.setToStorage('totalNetWeight', this.totalNetWeight.toFixed(4))
 
       this.cartDetail = await this.storageService.setToStorage('cart', this.cart)
       let updatedTotal = 0, updatedQuantity = 0;
@@ -185,7 +192,7 @@ export class CustomerListProductPage {
     }
   }
 
-  async removeFromCart (product) {
+/*   async removeFromCart (product) {
     this.widgetUtil.showToast(`${product.name} removed from cart`)
     if (this.cart.length > 0) {
       this.cart.map((value, index) => {
@@ -195,7 +202,7 @@ export class CustomerListProductPage {
       })
       this.getCartItems()
     }
-  }
+  } */
 
   decrementQty (qty) {
     if(parseInt(qty) > 1) {

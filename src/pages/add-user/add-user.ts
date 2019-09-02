@@ -4,6 +4,7 @@ import { Component, OnInit } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { CONSTANTS } from '../../utils/constants';
+import { CommonService } from '../../providers/common.service';
 
 @IonicPage({
   name: 'AddUserPage'
@@ -35,13 +36,17 @@ export class AddUserPage implements OnInit {
   selectedCountry : string = 'ZAMBIA'
   selectedProvince : string = 'BOTSWANA'
   showCustomerForm: string = 'CUSTOMER'
+  isUserAuthorized = false
 
-  constructor (public navCtrl: NavController, public navParams: NavParams
-  , private apiService: ApiServiceProvider, private widgetUtil: WidgetUtilService) {
+  constructor (public navCtrl: NavController, 
+               public navParams: NavParams, 
+               private apiService: ApiServiceProvider,
+               private widgetUtil: WidgetUtilService,
+               private commonService: CommonService) {
     this.showCustomerForm = this.selectedUserType
   }
 
-  ngOnInit (): void {
+  async ngOnInit () {
     this.createFormControls()
     this.createAdminForm()
     this.createAdminHOForm()
@@ -50,6 +55,18 @@ export class AddUserPage implements OnInit {
 
     //Salesmanager Form
     this.createSalesmanagerForm()
+
+    // enable, disable CRUD button
+    this.isUserAuthorized = await this.commonService.isAuthorized()
+    console.log('====== 61 ======', this.isUserAuthorized);
+    
+    // this.commonService.isAuthorized().then(res => {
+    //   this.isUserAuthorized = res
+    //   console.log('====== 62 =====', this.isUserAuthorized);
+    // }).catch(err => {
+    //   console.log('===== 65 =====', err);
+    // })
+
   }
 
   createFormControls () {
@@ -202,4 +219,5 @@ export class AddUserPage implements OnInit {
       }
     })
   }
+
 }

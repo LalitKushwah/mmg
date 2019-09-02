@@ -3,25 +3,7 @@ page-admin-list-user {
         width: 20px ;
         margin: 0 ;
     }
-    // ion-label > span {
-    //     text-transform: lowercase;
-    // }
-    // ion-label > span {
-    //     &:first-child {
-    //         height: 50px;
-    //         width: 50px;
-    //         background: color($colors, secondary);
-    //         color: #fff;
-    //         border-radius: 25px;
-    //         text-align: center;
-    //         padding-top: 15px;
-    //         margin-right: 10px;
-    //     }
-    //     &:last-child::first-letter {
-    //         font-size: 28px;
-    //         text-transform: uppercase;
-    //     }
-    // }
+
     ion-label.label {
         margin: 16px 8px 16px 0;
         img {
@@ -46,12 +28,14 @@ page-admin-list-user {
 
     .edit-user-btn{
         font-size: 10px;
+        width: 100%;
     }
 
 
     .rest-pass-btn{
         margin-top:8px;
         font-size: 10px;
+        width: 100%;
     }
 
     .user-card{

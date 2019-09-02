@@ -17,10 +17,6 @@ page-admin-list-salesman {
             padding-top: 15px;
             margin-right: 10px;
         }
-        // &:last-child::first-letter {
-        //     font-size: 28px;
-        //     text-transform: uppercase;
-        // }
         &:nth-child(2)::first-letter {
                 font-size: 28px;
                 text-transform: uppercase;
@@ -58,5 +54,76 @@ page-admin-list-salesman {
         h4{
             font-size: 2rem
         }
+    }
+    button img {
+        width: 20px ;
+        margin: 0 ;
+    }
+
+    ion-label.label {
+        margin: 16px 8px 16px 0;
+        img {
+            width: 40px;
+            margin-right: 20px;
+            overflow: visible ;
+        }
+    }
+    .noDataView{
+        border-bottom: none;
+        ion-card-header{
+            padding: 20px;
+            margin-top: 30%;
+            font-size: 60px;
+            color: #225f93;
+
+            h4{
+                font-size: 2rem
+            }
+        }
+    }
+
+    .edit-user-btn{
+        font-size: 10px;
+        width: 100%;
+    }
+
+    .rest-pass-btn {
+        margin-top: 8px;
+        font-size: 10px;
+        width: 100%;
+    }
+
+    .user-card{
+        margin: 0;
+        ion-card-content{
+            padding: 5px;
+        }
+    }
+    .user-name-col{
+        padding: 0;
+    }
+    .user-name {
+        font-size: 20px;
+        text-transform: capitalize;
+        word-break: break-word;
+        // display: block;
+    }
+
+    .user-id-col{
+        text-align: center;
+        margin-top: auto;
+        margin-bottom: auto;
+    }
+
+    .user-id{
+        display: block;
+        height: 90px;
+        width: 90px;
+        background: color($colors, secondary);
+        color: #fff;
+        border-radius: 50px;
+        text-align: center;
+        padding: 35px 10px;
+        
     }
 }

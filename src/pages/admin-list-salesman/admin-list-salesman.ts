@@ -1,5 +1,5 @@
 import { Component, ViewChild } from '@angular/core';
-import { IonicPage, NavController, NavParams, AlertController, Navbar } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, AlertController, Navbar, ModalController, Searchbar } from 'ionic-angular';
 import { CONSTANTS } from '../../utils/constants';
 import { StorageServiceProvider } from '../../providers/storage-service/storage-service';
 import { ApiServiceProvider } from '../../providers/api-service/api-service';
@@ -16,6 +16,9 @@ import { AdminDashboardPage } from '../admin-dashboard/admin-dashboard';
 })
 export class AdminListSalesmanPage {
   @ViewChild(Navbar) navBar: Navbar;
+  @ViewChild('searchbar') searchbar : Searchbar;
+  
+
   skipValue: number = 0
   limit: number = CONSTANTS.PAGINATION_LIMIT
   salesmanList: Array<any> = [];
@@ -23,14 +26,22 @@ export class AdminListSalesmanPage {
   salesmanListAvailable: Boolean = false
   searchQuery: string
   allSalesman = []
+  searchKeyword = ''
+
 
   constructor (public navCtrl: NavController, public navParams: NavParams,
               private apiService: ApiServiceProvider,
               private widgetUtil: WidgetUtilService,
               private alertCtrl: AlertController,
-              private storageService: StorageServiceProvider) {
+              private storageService: StorageServiceProvider,
+              private modal: ModalController) {
     this.skipValue = 0
     this.limit = CONSTANTS.PAGINATION_LIMIT
+    this.searchKeyword = navParams.get('searchedKeyword')
+    console.log('====== 41 =======', this.searchKeyword)
+    if (!this.searchKeyword) {
+      this.getUserList()
+    }
     this.getUserList()
   }
 
@@ -83,6 +94,13 @@ export class AdminListSalesmanPage {
   //   })
   // }
 
+  async editCustomer (user) {
+    console.log('====== 98', user);
+    
+    await this.storageService.setToStorage('editCustomerInfo', user)
+    this.navCtrl.push(EditUserPage, {searchedKeyword: this.searchbar.value})
+  }
+
   // doRefresh(refresher) : void {
   //   this.getUserList()
   //   setTimeout(() => {
@@ -90,43 +108,38 @@ export class AdminListSalesmanPage {
   //   }, 1000);
   // }
 
-  resetPasswordModel (user) {
-    /* const resetPasswordConfirm = this.modal.create('ResetPasswordModelPage', {message: 'Are you sure you want to reset password for ' +  customerName})
-    resetPasswordConfirm.present()
-    resetPasswordConfirm.onDidDismiss((result) => {
-      console.log('result', result)
-    }) */
-    let alert = this.alertCtrl.create();
-    alert.setTitle('Reset Password!')
-    alert.setMessage('Are you sure you want to reset password for ' +  user.name)
-    alert.addButton({
-      text: 'No',
-      role: 'cancel',
-      handler: () => {}
-    });
-    alert.addButton({
-      text: 'Yes',
-      cssClass: 'secondary',
-      handler: () => {
-        this.resetPassword(user)
-      }
-    })
-    alert.present(alert)
-  }
+  // resetPasswordModel (user) {
+  //   let alert = this.alertCtrl.create();
+  //   alert.setTitle('Reset Password!')
+  //   alert.setMessage('Are you sure you want to reset password for ' +  user.name)
+  //   alert.addButton({
+  //     text: 'No',
+  //     role: 'cancel',
+  //     handler: () => {}
+  //   });
+  //   alert.addButton({
+  //     text: 'Yes',
+  //     cssClass: 'secondary',
+  //     handler: () => {
+  //       this.resetPassword(user)
+  //     }
+  //   })
+  //   alert.present(alert)
+  // }
 
-  resetPassword (user) {
-    console.log(user)
-    this.apiService.resetUserPassowrd(user['_id']).subscribe((result) => {
-      console.log(result)
-      this.widgetUtil.showToast(`Password reset successfully. New password: ${CONSTANTS.DEFUALT_PASSWORD}`)
-    }, (error) => {
-      if (error.statusText === 'Unknown Error') {
-        this.widgetUtil.showToast(CONSTANTS.INTERNET_ISSUE)
-      } else {
-        this.widgetUtil.showToast(CONSTANTS.SERVER_ERROR)
-      }
-    })
-  }
+  // resetPassword (user) {
+  //   console.log(user)
+  //   this.apiService.resetUserPassowrd(user['_id']).subscribe((result) => {
+  //     console.log(result)
+  //     this.widgetUtil.showToast(`Password reset successfully. New password: ${CONSTANTS.DEFUALT_PASSWORD}`)
+  //   }, (error) => {
+  //     if (error.statusText === 'Unknown Error') {
+  //       this.widgetUtil.showToast(CONSTANTS.INTERNET_ISSUE)
+  //     } else {
+  //       this.widgetUtil.showToast(CONSTANTS.SERVER_ERROR)
+  //     }
+  //   })
+  // }
 
   searchSalesman (searchQuery) {
       this.filteredSalesmanList = this.allSalesman.filter(user =>
@@ -156,12 +169,30 @@ export class AdminListSalesmanPage {
   });
   confirm.present();  
 }
+
+async openCustomerDashboardModel (user) {
+  await this.storageService.setToStorage('editCustomerInfo', user)
+  const payModal = this.modal.create('ViewCustomerDataPage')
+  payModal.present();
+}
     // await this.storageService.setToStorage('editCustomerInfo', user)
     // this.navCtrl.push(EditUserPage)
 
   ionViewDidLoad () {
     this.navBar.backButtonClick = () => {
       this.navCtrl.setRoot(AdminDashboardPage);      
+    }
+    if (this.searchKeyword) {
+      this.searchbar.value = this.searchKeyword
+    }
+  }
+
+  ionViewDidEnter () {
+    this.navBar.backButtonClick = () => {
+      this.navCtrl.setRoot(AdminDashboardPage)
+    }
+    if (this.searchKeyword) {
+      this.searchbar.value = this.searchKeyword
     }
   }
 }

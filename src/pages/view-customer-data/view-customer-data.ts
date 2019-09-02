@@ -37,10 +37,13 @@ export class ViewCustomerDataPage {
               private storageService: StorageServiceProvider,
               private apiService: ApiServiceProvider,
               private loadingCtrl: LoadingController) {
+                console.log('============== 40 =============')
     
   }
 
   displayChart () {
+    console.log('===== 45 =====');
+    
     this.pieChart = new Chart(this.pieCanvas.nativeElement, {
       type: 'pie',
       data: {
@@ -84,12 +87,13 @@ export class ViewCustomerDataPage {
     this.loader.present()
     try {
       let profile = await this.storageService.getFromStorage('profile')
-      if ((profile['userType'] === 'ADMIN') || (profile['userType'] === 'ADMINHO')) {
+      const loggedInUser = profile['userType']
+      if (loggedInUser === 'ADMIN' || loggedInUser === 'ADMINHO' || loggedInUser === 'SALESMAN' || loggedInUser === 'SALESMANAGER') {
         let selectedCustomerprofile = await this.storageService.getFromStorage('editCustomerInfo')
         if(selectedCustomerprofile['userType']==='CUSTOMER'){
           this.customerDashboard = true
         }
-
+  
         this.partyName = selectedCustomerprofile['name']
         this.externalId = selectedCustomerprofile['externalId']
       }
@@ -129,14 +133,20 @@ prepareData (selectedValue) {
     this.data.creditLimit = 0
     this.data.currentOutStanding = 0
     this.data.thirtyDaysOutStanding = 0
-    this.data.availableCreditLimit = 0
 
     this.data.tkPoints = 0
     this.data.tkCurrency = 0
     //Preparing Data for Graph
     this.mtdAchieved = this.data.achievement
     //this.target = this.data.balanceToDo
-    this.target = 1
+    if(!(this.data.achievement && this.data.balanceToDo)){
+      this.target = 0.1
+      console.log(this.target)
+    }
+    else{
+      this.target = this.data.balanceToDo
+    }
+    // this.target = 1
     this.displayChart()
   }
 
@@ -158,7 +168,7 @@ prepareData (selectedValue) {
     
     this.data.currentOutStanding = "currentOutStanding" in this.dashboardData ? this.dashboardData.currentOutStanding : 0
 
-    this.data.thirtyDaysOutStanding = "thirtyDaysOutStanding" in this.dashboardData ? this.dashboardData.thirtyDaysOutStanding : 0
+    this.data.thirtyDaysOutStanding = this.dashboardData.thirtyDaysOutStanding ? this.dashboardData.thirtyDaysOutStanding : 0
 
     this.data.availableCreditLimit = (this.data.creditLimit !== 0 && this.data.creditLimit !== undefined) ? ((this.data.creditLimit - this.data.currentOutStanding).toFixed(2)) : 'NA'
     
@@ -167,7 +177,8 @@ prepareData (selectedValue) {
 
     //Preparing Data for Graph
     this.mtdAchieved = this.data.achievement
-    this.target = this.data.balanceToDo
+    // set target to 1 to show graph
+    this.target = this.data.balanceToDo ? this.data.balanceToDo : 1
     this.displayChart()
   }
 }

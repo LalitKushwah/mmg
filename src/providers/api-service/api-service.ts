@@ -74,6 +74,10 @@ export class ApiServiceProvider {
     return this.http.get(CONSTANTS.BASE_URL + 'api/user/payment/history/' + '?externalId='+externalId)
   }
 
+  getPaymentHistoryForSM (externalId) {
+    return this.http.get(CONSTANTS.BASE_URL + 'api/user/list/payments/SM/' + '?externalId='+externalId)
+  }
+
   addProduct (productDetails: Object): any {
     return this.http.post(CONSTANTS.BASE_URL + 'api/product/', productDetails)
   }

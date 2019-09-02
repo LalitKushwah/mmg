@@ -21,6 +21,7 @@ export class CustomerReviewSubmitOrderPage {
   cartItems: any = []
   orderTotal: any = 0
   totalTK = 0;
+  totalNetWeight: number = 0
   showLoader: boolean = false
   showClearCartLoader: boolean = false
   salesmanProfile: any
@@ -53,6 +54,9 @@ export class CustomerReviewSubmitOrderPage {
     this.calculateOrderTotal()
     this.storageService.getTkPointsFromStorage().then((res: any) => {
       this.totalTK = res
+    })
+    this.storageService.getFromStorage('totalNetWeight').then((res: any) => {
+      this.totalNetWeight = res
     })
   }
 
@@ -109,6 +113,7 @@ export class CustomerReviewSubmitOrderPage {
   async submitOrder () {
     let profile = await this.storageService.getFromStorage('profile')
     let totalTkPoints = await this.storageService.getTkPointsFromStorage()
+    let totalNetWeight = await this.storageService.getFromStorage('totalNetWeight')
     this.showLoader = true
 
     //Replacing the Profile with Selected Customer Profile if userType = SALESMAN
@@ -122,7 +127,8 @@ export class CustomerReviewSubmitOrderPage {
           productId: value['_id'],
           quantity: value['quantity'],
           price: parseFloat(value['price']),
-          tkPoint: parseFloat(value['tkPoint'])
+          tkPoint: parseFloat(value['tkPoint']),
+          netWeight: parseFloat(value['netWeight'])
         }
       }),
       userId: profile['_id'],
@@ -130,6 +136,7 @@ export class CustomerReviewSubmitOrderPage {
       salesmanCode: this.salesmanCode ? this.salesmanCode : undefined,
       orderId: 'ORD' + Math.floor(Math.random() * 90000) + Math.floor(Math.random() * 90000),
       orderTotal: parseFloat(this.orderTotal.toString()),
+      totalNetWeight: parseFloat(totalNetWeight.toString()),
       totalTkPoints: parseFloat(totalTkPoints.toString()),
       status: CONSTANTS.ORDER_STATUS_PROGRESS,
       province: profile['province'],
@@ -140,6 +147,7 @@ export class CustomerReviewSubmitOrderPage {
       this.showLoader = false
       this.storageService.setToStorage('cart', [])
       this.storageService.removeFromStorage('tkpoint')
+      this.storageService.setToStorage('totalNetWeight', 0);
       
       console.log(orderObj)
       //Removing the key-value after the order has been placed
@@ -165,6 +173,8 @@ export class CustomerReviewSubmitOrderPage {
     this.showClearCartLoader = true
     await this.storageService.setToStorage('cart', [])
     await this.storageService.removeFromStorage('tkpoint')
+    await this.storageService.setToStorage('totalNetWeight', 0)
+    this.totalNetWeight = 0;
     this.orderTotal = 0
     this.totalTK = 0
     this.getCartItems()
@@ -203,13 +213,19 @@ export class CustomerReviewSubmitOrderPage {
       }
     })
     let sum = 0
+    let totalNetWeight = 0
     this.cartItems.map(item => {
       if (item.tkPoint) {
         sum = sum + (parseFloat(item.tkPoint) * parseInt(item.quantity))
       }
+      if (item.netWeight) {
+        totalNetWeight = totalNetWeight + (parseFloat(item.netWeight) * parseInt(item.quantity))
+      }
     })
     this.totalTK = sum
+    this.totalNetWeight = totalNetWeight/1000
     this.storageService.setToStorage('tkpoint', sum)
+    this.storageService.setToStorage('totalNetWeight', this.totalNetWeight.toFixed(4))
     this.calculateOrderTotal()
     this.storageService.setToStorage('cart', this.cartItems)
     return (product.quantity)
@@ -225,13 +241,19 @@ export class CustomerReviewSubmitOrderPage {
       }
     })
     let sum = 0
+    let totalNetWeight = 0
     this.cartItems.map(item => {
       if (item.tkPoint) {
         sum = sum + (parseFloat(item.tkPoint) * parseInt(item.quantity))
       }
+      if (item.netWeight) {
+        totalNetWeight = totalNetWeight + (parseFloat(item.netWeight) * parseInt(item.quantity))
+      }
     })
     this.totalTK = sum
+    this.totalNetWeight = totalNetWeight/1000
     this.storageService.setToStorage('tkpoint', sum)
+    this.storageService.setToStorage('totalNetWeight', this.totalNetWeight.toFixed(4))
     this.calculateOrderTotal()
     this.storageService.setToStorage('cart', this.cartItems)
     return (product.quantity)
@@ -247,13 +269,19 @@ export class CustomerReviewSubmitOrderPage {
       }
     });
     let sum = 0;
+    let totalNetWeight = 0;
     this.cartItems.map(item => {
       if (item.tkPoint) {
         sum = sum + (parseFloat(item.tkPoint) * parseInt(item.quantity))
       }
+      if (item.netWeight) {
+        totalNetWeight = totalNetWeight + (parseFloat(item.netWeight) * parseInt(item.quantity))
+      }
     });
     this.totalTK = sum;
+    this.totalNetWeight = totalNetWeight/1000
     this.storageService.setToStorage('tkpoint', sum);
+    this.storageService.setToStorage('totalNetWeight', this.totalNetWeight.toFixed(4));
     this.calculateOrderTotal();
     this.storageService.setToStorage('cart', this.cartItems)
     return (product.quantity)

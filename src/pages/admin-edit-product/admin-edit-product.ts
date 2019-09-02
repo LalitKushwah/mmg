@@ -71,7 +71,7 @@ export class AdminEditProductPage {
     updateDetail['productCode'] = this.productCode.value.trim()
     updateDetail['productSysCode'] = this.productSysCode.value.trim()
     updateDetail['lastUpdatedAt'] = Date.now()
-    updateDetail['tkPoint'] = parseFloat(this.tkPoint.value.trim())
+    updateDetail['tkPoint'] = parseFloat(this.tkPoint.value)
     this.showLoader = true
     this.apiService.updateProduct(updateDetail).subscribe((result) => {
       this.widgetUtil.showToast(CONSTANTS.PRODUCT_UPDATED)

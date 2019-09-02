@@ -74,6 +74,11 @@
           </ion-col>
           <ion-col col-12>
             <strong>
+              <ion-icon name="cog"></ion-icon> Weight Total: {{ totalNetWeight }}
+            </strong>
+          </ion-col>
+          <ion-col col-12>
+            <strong>
               <ion-icon name="trophy"></ion-icon> Total TK Points: {{totalTK}}
             </strong>
           </ion-col>
@@ -167,6 +172,12 @@
             TK-Point: <span>{{product.tkPoint}}</span>
           </ion-col>
         </ion-row>
+        <ion-row>
+          <ion-col text-center *ngIf="product.netWeight">
+            <ion-icon name="cog" color="grey"></ion-icon>
+            Net Weight: <span>{{product.netWeight}}</span> tonnage
+          </ion-col>
+        </ion-row>        
         <ion-row>
           <ion-col col-12>
             <ion-row>

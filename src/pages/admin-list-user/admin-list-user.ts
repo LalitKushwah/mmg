@@ -6,6 +6,7 @@ import { CONSTANTS } from '../../utils/constants';
 import { EditUserPage } from '../edit-user/edit-user';
 import { StorageServiceProvider } from '../../providers/storage-service/storage-service';
 import { AdminDashboardPage } from '../admin-dashboard/admin-dashboard';
+import { SalesmanDashboardPage } from '../salesman-dashboard/salesman-dashboard';
 
 @IonicPage({
   name: 'AdminListUserPage'
@@ -42,7 +43,8 @@ export class AdminListUserPage {
   }
 
   ionViewWillEnter () {
-    this.apiService.getAllCustomers().subscribe((result) => {
+
+/*     this.apiService.getAllCustomers().subscribe((result) => {
       if (result.body && result.body.length > 0) {
         this.allCustomers = result.body
         if (this.searchKeyword) {
@@ -56,12 +58,14 @@ export class AdminListUserPage {
       } else {
         this.widgetUtil.showToast(CONSTANTS.SERVER_ERROR)
       }
-    })
+    }) */
   }
-  getUserList () {
-      this.apiService.getCustomerList(this.skipValue, this.limit).subscribe((result) => {
+  async getUserList () {
+    const res: any = await this.storageService.getFromStorage('profile')
+      this.apiService.getAssociatedCustomersListBySalesman(res.externalId).subscribe((result: any) => {
         this.userList = result.body
         this.filteredUserList = this.userList
+        this.allCustomers = this.userList
         this.userListAvailable = true
       }, (error) => {
         if (error.statusText === 'Unknown Error') {
@@ -101,39 +105,6 @@ export class AdminListUserPage {
     }, 1000);
   }
 
-  resetPasswordModel (user) {
-    let alert = this.alertCtrl.create();
-    alert.setTitle('Reset Password!')
-    alert.setMessage('Are you sure you want to reset password for ' +  user.name)
-    alert.addButton({
-      text: 'No',
-      role: 'cancel',
-      handler: () => {}
-    });
-    alert.addButton({
-      text: 'Yes',
-      cssClass: 'secondary',
-      handler: () => {
-        this.resetPassword(user)
-      }
-    })
-    alert.present(alert)
-  }
-
-  resetPassword (user) {
-    console.log(user)
-    this.apiService.resetUserPassowrd(user['_id']).subscribe((result) => {
-      console.log(result)
-      this.widgetUtil.showToast(`Password reset successfully. New password: ${CONSTANTS.DEFUALT_PASSWORD}`)
-    }, (error) => {
-      if (error.statusText === 'Unknown Error') {
-        this.widgetUtil.showToast(CONSTANTS.INTERNET_ISSUE)
-      } else {
-        this.widgetUtil.showToast(CONSTANTS.SERVER_ERROR)
-      }
-    })
-  }
-
   searchCustomers (searchQuery) {
       this.filteredUserList = this.allCustomers.filter(user =>
         user.name.toLowerCase().includes(searchQuery.toLowerCase())
@@ -143,27 +114,38 @@ export class AdminListUserPage {
   }
 
    async editCustomer (user) {
-      const res = await this.storageService.setToStorage('editCustomerInfo', user)
+      await this.storageService.setToStorage('editCustomerInfo', user)
       this.navCtrl.push(EditUserPage, {searchedKeyword: this.searchbar.value})
     }
 
     ionViewDidLoad () {
+      const res: any = this.storageService.getFromStorage('profile')
       this.navBar.backButtonClick = () => {
-        this.navCtrl.setRoot(AdminDashboardPage)
+        if (res.userType === 'SALESMAN' || res.userType === 'SALESMANAGER') {
+          this.navCtrl.setRoot(SalesmanDashboardPage)
+        } else {
+          this.navCtrl.setRoot(AdminDashboardPage)
+
+        }
       }
       if (this.searchKeyword) {
         this.searchbar.value = this.searchKeyword
       }
     }
 
-  ionViewDidEnter () {
-    this.navBar.backButtonClick = () => {
-      this.navCtrl.setRoot(AdminDashboardPage)
+    ionViewDidEnter () {
+      const res: any = this.storageService.getFromStorage('profile')
+      this.navBar.backButtonClick = () => {
+        if (res.userType === 'SALESMAN' || res.userType === 'SALESMANAGER') {
+          this.navCtrl.setRoot(SalesmanDashboardPage)
+        } else {
+          this.navCtrl.setRoot(AdminDashboardPage)          
+        }
+      }
+      if (this.searchKeyword) {
+        this.searchbar.value = this.searchKeyword
+      }
     }
-    if (this.searchKeyword) {
-      this.searchbar.value = this.searchKeyword
-    }
-  }
 
 async openCustomerDashboardModel (user) {
     const res = await this.storageService.setToStorage('editCustomerInfo', user)

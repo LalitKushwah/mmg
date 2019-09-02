@@ -1,14 +1,11 @@
 page-edit-user {
     ion-row{
-        // box-shadow: 0px 0px 20px rgba(0,0,0,0.1);
         margin-top: 15px;
     }
     .custom-title{
         font-size: 14px;
     }
     .pill-wrapper{
-        //background-color: #c9e1ff;
-        // border: 1px solid rgb(0, 68, 194);
         box-shadow: 0px 0px 5px rgba(0,0,0,0.2);
         border-radius: 30px;
         font-size: 16px;
@@ -46,5 +43,8 @@ page-edit-user {
                 margin-right: 0px;
             }
         }
+    }
+    .rest-pass-btn {
+        width: 100%;
     }
 }

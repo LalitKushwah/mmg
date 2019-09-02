@@ -90,7 +90,7 @@
           </p>
 
           <ion-grid>
-            <button ion-button color="secondary" [disabled]="!(addProductForm.valid)" (click)="addProduct();">Add
+            <button ion-button color="secondary" [disabled]="!(addProductForm.valid && isUserAuthorized)" (click)="addProduct();">Add
               Product<ion-spinner name="dots" *ngIf="showLoader"></ion-spinner></button>
           </ion-grid>
         </form>

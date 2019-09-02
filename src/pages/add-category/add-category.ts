@@ -4,6 +4,7 @@ import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { CONSTANTS } from '../../utils/constants';
 import { ApiServiceProvider } from '../../providers/api-service/api-service';
 import { WidgetUtilService } from '../../utils/widget-utils';
+import { CommonService } from '../../providers/common.service';
 
 @IonicPage({
   name: 'AddCategoryPage'
@@ -25,9 +26,13 @@ export class AddCategoryPage implements OnInit {
   selectedCategoryType: string = 'parent'
   showParentList = false
   allowAddingCategory = true
+  isUserAuthorized = false
 
-  constructor (public navCtrl: NavController, public navParams: NavParams
-  , private apiService: ApiServiceProvider, private widgetUtil: WidgetUtilService) {
+  constructor (public navCtrl: NavController,
+               public navParams: NavParams, 
+               private apiService: ApiServiceProvider, 
+               private widgetUtil: WidgetUtilService,
+               private commonService: CommonService) {
     this.showParentList = false
     this.categoryListAvailable = false
     this.getCategoryList()
@@ -49,9 +54,10 @@ export class AddCategoryPage implements OnInit {
     })
   }
 
-  ngOnInit (): void {
+  async ngOnInit () {
     this.createFormControls()
     this.createProductForm()
+    this.isUserAuthorized = await this.commonService.isAuthorized()
   }
 
   createFormControls () {

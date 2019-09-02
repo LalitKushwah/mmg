@@ -19,6 +19,7 @@ import { AdminListSalesmanPage } from '../pages/admin-list-salesman/admin-list-s
 import { UserPaymentHistoryPage } from '../pages/user-payment-history/user-payment-history';
 import { AdminDashboardPage } from '../pages/admin-dashboard/admin-dashboard'; 
 import { AdminHomePage } from '../pages/admin-home/admin-home';
+import { CommonPaymentHistoryPage } from '../pages/common-payment-history/common-payment-history';
 
 @Component({
   templateUrl: 'app.html'
@@ -67,7 +68,7 @@ export class MyApp {
               {title: 'Dashboard', component: SalesmanDashboardPage, icon: 'dashboard-new', class: 'default'},
               {title: 'Orders', component: AssociatedCustomersListOrderPage, icon: 'cart', class: 'default'},
               {title: 'Products', component: AdminListCategoryPage, icon: 'products', class: 'default'},
-              {title: 'Customers', component: AdminListUserPage, icon: 'shopping-bag-new', class: 'default'},
+              {title: 'Payments', component: CommonPaymentHistoryPage, icon: 'payment', class: 'default'},
               {title: '', component: ClubPremierPage, icon: 'club-premier', class: 'custom-side-icon'}
             ]
           }else{

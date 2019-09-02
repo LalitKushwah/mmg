@@ -27,9 +27,9 @@
     <ion-refresher (ionRefresh)="doRefresh($event)" spinner="crescent">
       <ion-refresher-content></ion-refresher-content>
     </ion-refresher>
-    <ion-list *ngIf="productListAvailable &&  (productList.length > 0)">
+    <ion-list *ngIf="productListAvailable &&  (productList.length > 0); else norecord">
       <ion-card *ngFor="let product of filteredProductList">
-        <ion-card-content>
+        <ion-card-content *ngIf="product.price > 1">
         <ion-row>
             <ion-col text-center>
               <ion-icon name="cube" color="grey"></ion-icon>
@@ -51,6 +51,14 @@
               TK-Point: <span>{{product.tkPoint}}</span>
             </ion-col>
           </ion-row>
+
+          <ion-row *ngIf="product.netWeight">
+            <ion-col text-center>
+              <ion-icon name="cog" color="grey"></ion-icon>
+              Net Weight: <span>{{product.netWeight.toFixed(2)}} tonnage</span>
+            </ion-col>
+          </ion-row>
+
           <ion-row>
             <ion-col col-12>
               <ion-row>
@@ -78,14 +86,23 @@
             </ion-col> -->
           </ion-row>
         </ion-card-content>
+        <ng-template #noproduct>
+          <!-- no record found -->
+            <ion-card-header text-center class="noDataView">
+                <ion-icon name="alert"></ion-icon>
+              <h4>No record found!</h4>
+            </ion-card-header>
+        </ng-template>
       </ion-card>
       <ion-infinite-scroll (ionInfinite)="doInfinite($event)">
         <ion-infinite-scroll-content></ion-infinite-scroll-content>
       </ion-infinite-scroll>
     </ion-list>
-    <ion-card *ngIf="productListAvailable && (productList.length < 1)">
-      <ion-card-header text-center>
-        <h4>No record found</h4>
-      </ion-card-header>
-    </ion-card>
+    <ng-template #norecord>
+      <ion-card>
+        <ion-card-header text-center>
+          <h4>No record found</h4>
+        </ion-card-header>
+      </ion-card>
+  </ng-template>
   </ion-content>

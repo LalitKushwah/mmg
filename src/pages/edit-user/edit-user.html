@@ -7,7 +7,7 @@
 
   <ion-grid>
     <ion-row>
-      <ion-col>
+      <ion-col col-12>
           <button ion-button class="rest-pass-btn" (click)="resetPasswordModel()">RESET PASSWORD</button>
       </ion-col>
     </ion-row>
@@ -59,11 +59,11 @@
               <button class="pill-remove" (click)="removeSalesman(salesman)"><ion-icon name="close-circle" class="pill-close-icon"></ion-icon></button>
             </div>
           <ion-grid>
-            <button *ngIf="userData.userType === 'CUSTOMER'" ion-button color="secondary"  (click)="updateUser()" class="update-btn">Update
+            <button [disabled]="!isAuthorized ? 'disabled' : null" *ngIf="userData.userType === 'CUSTOMER'" ion-button color="secondary"  (click)="updateUser()" class="update-btn">Update
               Customer<ion-spinner name="dots" *ngIf="showLoader"></ion-spinner></button>
-            <button *ngIf="userData.userType === 'SALESMAN'" ion-button color="secondary"  (click)="updateUser()" class="update-btn">Update
+            <button  *ngIf="userData.userType === 'SALESMAN'" ion-button color="secondary"  (click)="updateUser()" class="update-btn">Update
               SM<ion-spinner name="dots" *ngIf="showLoader"></ion-spinner></button>
-            <button *ngIf="userData.userType === 'SALESMANAGER'" ion-button color="secondary"  (click)="updateUser()" class="update-btn">Update
+            <button  *ngIf="userData.userType === 'SALESMANAGER'" ion-button color="secondary"  (click)="updateUser()" class="update-btn">Update
               SM<ion-spinner name="dots" *ngIf="showLoader"></ion-spinner></button>
           </ion-grid>
       </ion-col>

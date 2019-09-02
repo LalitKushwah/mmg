@@ -86,6 +86,12 @@
             <span class="order-list-label">Tk-Points:</span> <strong text-uppercase>{{order.totalTkPoints}}</strong>
           </ion-col>
         </ion-row>
+        <ion-row>
+          <ion-col *ngIf="order.totalNetWeight">
+            <ion-icon color="grey" name="cog"></ion-icon>
+            <span class="order-list-label">Total Net Weight:</span> <strong text-uppercase>{{order.totalNetWeight}}</strong>
+          </ion-col>
+        </ion-row>
         
       <!-- <ion-row>
         <ion-col>

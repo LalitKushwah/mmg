@@ -42,9 +42,15 @@
             TK-Point: <span>{{product.tkPoint}}</span>
           </ion-col>
         </ion-row>
+        <ion-row *ngIf="product.tkPoint">
+          <ion-col text-center>
+            <ion-icon name="cog" color="grey"></ion-icon>
+            Net Weight: <span>{{product.netWeight}}</span>
+          </ion-col>
+        </ion-row>
         <ion-row>
           <ion-col text-center>
-            <button color="secondary" ion-button outline (click)="editProduct(product)">
+            <button [disabled]="!isUserAuthorized ? 'disabled': null" color="secondary" ion-button outline (click)="editProduct(product)">
               <ion-icon name="create"></ion-icon>Edit
             </button>
           </ion-col>

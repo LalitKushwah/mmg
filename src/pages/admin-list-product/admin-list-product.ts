@@ -4,6 +4,7 @@ import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { CONSTANTS } from '../../utils/constants';
 import { ApiServiceProvider } from '../../providers/api-service/api-service';
 import { WidgetUtilService } from '../../utils/widget-utils';
+import { CommonService } from '../../providers/common.service';
 
 @IonicPage({
   name: 'AdminListProductPage'
@@ -23,9 +24,15 @@ export class AdminListProductPage {
   parentCategoryId: string = ''
   isSearch: Boolean = false
   filteredProductList: Array<any> = [];
+  isUserAuthorized = false;
 
 
-  constructor (public navCtrl: NavController, public navParams: NavParams, private apiService: ApiServiceProvider, private widgetUtil: WidgetUtilService) {
+  constructor (public navCtrl: NavController,
+               public navParams: NavParams, 
+               private apiService: 
+               ApiServiceProvider, 
+               private widgetUtil: WidgetUtilService,
+               private commonService: CommonService) {
     this.skipValue = 0
     this.limit = CONSTANTS.PAGINATION_LIMIT
     // this.categoryId = this.navParams.get("categoryId")
@@ -110,6 +117,10 @@ export class AdminListProductPage {
       'product': product
     }
     this.navCtrl.push(AdminEditProductPage, productInfo)
+  }
+
+  async ngOnInit () {
+    this.isUserAuthorized = await this.commonService.isAuthorized()
   }
 
 }

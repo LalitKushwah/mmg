@@ -77,7 +77,7 @@
             *Channel is required
           </p>
           <ion-grid>
-            <button ion-button color="secondary" [disabled]="!(addCustomerForm.valid)" (click)="createUser('customer');">Add
+            <button ion-button color="secondary" [disabled]="!(addCustomerForm.valid && isUserAuthorized)" (click)="createUser('customer');">Add
               Customer<ion-spinner name="dots" *ngIf="showLoader"></ion-spinner></button>
           </ion-grid>
         </form>
@@ -106,7 +106,7 @@
             *Password is required
           </p>
           <ion-grid>
-            <button ion-button color="secondary" [disabled]="!(addAdminForm.controls.name.valid && addAdminForm.controls.userLoginId.valid && addAdminForm.controls.password.valid)"
+            <button ion-button color="secondary" [disabled]="!(addAdminForm.controls.name.valid && addAdminForm.controls.userLoginId.valid && addAdminForm.controls.password.valid && isUserAuthorized)"
               (click)="createUser('admin');">Add Admin<ion-spinner name="dots" *ngIf="showLoader"></ion-spinner></button>
           </ion-grid>
         </form>
@@ -137,7 +137,7 @@
             *Password is required
           </p>
           <ion-grid>
-            <button ion-button color="secondary" [disabled]="!(addAdminHOForm.controls.name.valid && addAdminHOForm.controls.userLoginId.valid && addAdminHOForm.controls.password.valid)"
+            <button ion-button color="secondary" [disabled]="!(addAdminHOForm.controls.name.valid && addAdminHOForm.controls.userLoginId.valid && addAdminHOForm.controls.password.valid && isUserAuthorized)"
               (click)="createUser('ADMINHO');">Add Admin HO<ion-spinner name="dots" *ngIf="showLoader"></ion-spinner></button>
           </ion-grid>
         </form>
@@ -175,7 +175,7 @@
             *SM code is required
           </p>
           <ion-grid>
-            <button ion-button color="secondary" [disabled]="!(addSalesmanForm.controls.name.valid && addSalesmanForm.controls.userLoginId.valid && addSalesmanForm.controls.password.valid)"
+            <button ion-button color="secondary" [disabled]="!(addSalesmanForm.controls.name.valid && addSalesmanForm.controls.userLoginId.valid && addSalesmanForm.controls.password.valid && isUserAuthorized)"
               (click)="createUser('salesman');">Add SM<ion-spinner name="dots" *ngIf="showLoader"></ion-spinner></button>
           </ion-grid>
         </form>
@@ -213,7 +213,7 @@
             *SM code is required
           </p>
           <ion-grid>
-            <button ion-button color="secondary" [disabled]="!(addSalesmanForm.controls.name.valid && addSalesmanForm.controls.userLoginId.valid && addSalesmanForm.controls.password.valid)"
+            <button ion-button color="secondary" [disabled]="!(addSalesmanForm.controls.name.valid && addSalesmanForm.controls.userLoginId.valid && addSalesmanForm.controls.password.valid && isUserAuthorized)"
               (click)="createUser('salesman');">Add SM<ion-spinner name="dots" *ngIf="showLoader"></ion-spinner></button>
           </ion-grid>
         </form>

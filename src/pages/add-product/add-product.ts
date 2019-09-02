@@ -4,6 +4,7 @@ import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { WidgetUtilService } from '../../utils/widget-utils';
 import { ApiServiceProvider } from '../../providers/api-service/api-service';
 import { CONSTANTS } from '../../utils/constants';
+import { CommonService } from '../../providers/common.service';
 
 @IonicPage({
   name: 'AddProductPage'
@@ -30,9 +31,13 @@ export class AddProductPage {
   selectedCategory : any = {};
   priceTypeList: Array<any> =  [ 'Standard Price']
   selectedPriceType = 'Standard Price'
+  isUserAuthorized = false
 
-  constructor (public navCtrl: NavController, public navParams: NavParams
-  , private apiService: ApiServiceProvider, private widgetUtil: WidgetUtilService) {
+  constructor (public navCtrl: NavController,
+               public navParams: NavParams, 
+               private apiService: ApiServiceProvider,
+               private widgetUtil: WidgetUtilService,
+               private commonService: CommonService) {
     this.categoryListAvailable = false
     this.getCategoryList()
   }
@@ -53,9 +58,10 @@ export class AddProductPage {
     })
   }
 
-  ngOnInit (): void {
+  async ngOnInit () {
     this.createFormControls()
     this.createProductForm()
+    this.isUserAuthorized = await this.commonService.isAuthorized()
   }
 
   createFormControls () {

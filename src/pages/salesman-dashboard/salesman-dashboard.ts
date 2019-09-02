@@ -143,7 +143,7 @@ export class SalesmanDashboardPage {
       this.data.balanceToDo = (tempTodo > 0) ? (tempTodo.toFixed(2)) : 0
       
       this.data.currentOutStanding = "currentOutStanding" in this.dashboardData ? this.dashboardData.currentOutStanding : 0
-      this.data.thirtyDaysOutStanding = "thirtyDaysOutStanding" in this.dashboardData ? this.dashboardData.thirtyDaysOutStanding : 0
+      this.data.thirtyDaysOutStanding = this.dashboardData.thirtyDaysOutStanding ? this.dashboardData.thirtyDaysOutStanding : 0
       this.data.availableCreditLimit = this.data.creditLimit != 'NA' && this.data.currentOutStanding != 0 ? (this.data.creditLimit - this.data.currentOutStanding) : 'NA'
      
       //Preparing Data for Graph

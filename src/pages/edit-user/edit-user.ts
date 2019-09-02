@@ -7,6 +7,7 @@ import { AddSalesmanModalPage } from '../add-salesman-modal/add-salesman-modal';
 import { AdminListUserPage } from '../admin-list-user/admin-list-user';
 import { AdminListSalesmanPage } from '../admin-list-salesman/admin-list-salesman';
 import { CONSTANTS } from '../../utils/constants';
+import { CommonService } from '../../providers/common.service';
 
  /**
  * Generated class for the EditUserPage page.
@@ -40,6 +41,7 @@ export class EditUserPage {
   userData: any = {}
   userTypeLabel: string = 'CUSTOMER'
   searchedKeyword = ''
+  isAuthorized = false
 
   constructor (public navCtrl: NavController, 
               public navParams: NavParams, 
@@ -49,7 +51,8 @@ export class EditUserPage {
               private modalCtrl: ModalController,
               private alertCtrl: AlertController,
               private loadingCtrl: LoadingController,
-              private modal: ModalController) {
+              private modal: ModalController,
+              private commonService: CommonService) {
     this.showCustomerForm = this.selectedUserType
     const toBeAddSalesMan = this.navParams.get('data')
     this.searchedKeyword = this.navParams.get('searchedKeyword')
@@ -58,6 +61,8 @@ export class EditUserPage {
     if (toBeAddSalesMan) {
       this.addSalesman(toBeAddSalesMan)
     }
+    console.log('====== 64 ======', this.isAuthorized);
+    
   }
 
   async prepareEditCustomerData () {
@@ -162,7 +167,10 @@ export class EditUserPage {
 
   ionViewDidLoad () {
     this.navBar.backButtonClick = () => {
-      this.userData.userType === 'CUSTOMER' ? this.navCtrl.push(AdminListUserPage, {searchedKeyword: this.searchedKeyword}) : this.navCtrl.push(AdminListSalesmanPage)
+      this.userData.userType === 'CUSTOMER' || 
+      this.userData.userType === 'SALESMAN' || 
+      this.userData.userType === 'SALESMANAGER' ? this.navCtrl.push(AdminListUserPage, {searchedKeyword: this.searchedKeyword}) 
+      : this.navCtrl.push(AdminListSalesmanPage)
 	  }
   }
   
@@ -197,6 +205,10 @@ export class EditUserPage {
         this.widgetUtil.showToast(CONSTANTS.SERVER_ERROR)
       }
     })
+  }
+
+  async ngOnInit () {
+    this.isAuthorized = await this.commonService.isAuthorized()
   }
 
 }

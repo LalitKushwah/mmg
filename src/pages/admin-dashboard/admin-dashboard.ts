@@ -86,8 +86,9 @@ export class AdminDashboardPage {
       // this.partyName = profile['name']
       if ((profile['userType'] === 'SALESMAN') || (profile['userType'] === 'SALESMANAGER')) {
         let selectedCustomerprofile = await this.storageService.getFromStorage('selectedCustomer')
-        this.partyName = selectedCustomerprofile['name']
-        this.externalId = selectedCustomerprofile['externalId']
+        this.partyName = selectedCustomerprofile ? selectedCustomerprofile['name'] : profile['name']
+        this.externalId = selectedCustomerprofile ? selectedCustomerprofile['externalId']: profile['externalId']
+        this.userTypeCustomer = false;
       }
       else {
         this.partyName = profile['name']

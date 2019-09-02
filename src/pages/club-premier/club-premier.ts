@@ -38,8 +38,8 @@ export class ClubPremierPage {
     this.storageService.getFromStorage('profile').then((res: any) => {
       this.apiService.getDashboardData(res.externalId).subscribe((data:any) => {
           loader.dismiss()
-          this.tkPoints = data.body[0].tkPoints
-          this.tkCurrency = data.body[0].tkCurrency
+          this.tkPoints = data.body[0] && data.body[0].tkPoints ? data.body[0].tkPoints : 0
+          this.tkCurrency = data.body[0] && data.body[0].tkCurrency ? data.body[0].tkCurrency: 0
       })
     })
   }
