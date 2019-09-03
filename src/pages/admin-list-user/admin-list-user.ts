@@ -27,6 +27,7 @@ export class AdminListUserPage {
   searchQuery: string
   allCustomers = []
   searchKeyword = ''
+  profile = {}
 
   constructor (public navCtrl: NavController, public navParams: NavParams,
               private apiService: ApiServiceProvider,
@@ -42,60 +43,77 @@ export class AdminListUserPage {
     }
   }
 
-  ionViewWillEnter () {
+  async ngOnInit () {
+    this.profile = await this.storageService.getFromStorage('profile')
+  }
 
-/*     this.apiService.getAllCustomers().subscribe((result) => {
-      if (result.body && result.body.length > 0) {
-        this.allCustomers = result.body
-        if (this.searchKeyword) {
-          // this.userListAvailable = true
-          this.searchCustomers(this.searchKeyword)
-        }
-      }
-    }, (error) => {
-      if (error.statusText === 'Unknown Error') {
-        this.widgetUtil.showToast(CONSTANTS.INTERNET_ISSUE)
-      } else {
-        this.widgetUtil.showToast(CONSTANTS.SERVER_ERROR)
-      }
-    }) */
+  ionViewWillEnter () {
+    this.getUserList()
   }
   async getUserList () {
-    const res: any = await this.storageService.getFromStorage('profile')
-      this.apiService.getAssociatedCustomersListBySalesman(res.externalId).subscribe((result: any) => {
-        this.userList = result.body
-        this.filteredUserList = this.userList
-        this.allCustomers = this.userList
-        this.userListAvailable = true
+    if (this.profile['userType'] === 'ADMINHO') {
+      this.apiService.getCustomerList(this.skipValue, this.limit).subscribe((result) => {
+        if (result.body && result.body.length > 0) {
+          this.allCustomers = result.body
+          this.filteredUserList = this.allCustomers
+          this.userList = this.filteredUserList
+          this.userListAvailable = true
+          if (this.searchKeyword) {
+            this.userListAvailable = true
+            this.searchCustomers(this.searchKeyword)
+          }
+        }
       }, (error) => {
         if (error.statusText === 'Unknown Error') {
           this.widgetUtil.showToast(CONSTANTS.INTERNET_ISSUE)
         } else {
           this.widgetUtil.showToast(CONSTANTS.SERVER_ERROR)
         }
-        this.userListAvailable = true
       })
+    } else if (this.profile['userType'] === 'ADMIN') {
+      this.apiService.getCustomersByProvince(this.profile['province']).subscribe((result: any) => {
+        if (result.body && result.body.length > 0) {
+          this.allCustomers = result.body
+          this.filteredUserList = this.allCustomers
+          this.userList = this.filteredUserList
+          this.userListAvailable = true
+          if (this.searchKeyword) {
+            this.userListAvailable = true
+            this.searchCustomers(this.searchKeyword)
+          }
+        }
+      }, (error) => {
+        if (error.statusText === 'Unknown Error') {
+          this.widgetUtil.showToast(CONSTANTS.INTERNET_ISSUE)
+        } else {
+          this.widgetUtil.showToast(CONSTANTS.SERVER_ERROR)
+        }
+      })
+    }
   }
 
   doInfinite (infiniteScroll) {
     this.skipValue = this.skipValue + this.limit
-    this.apiService.getCustomerList(this.skipValue, this.limit).subscribe((result) => {
-      if(result.body.length > 0) {
-        result.body.map( (value) => {
-          this.userList.push(value)
-        })
-      } else {
-        this.skipValue = this.limit
-      }
-      infiniteScroll.complete();
-    }, (error) => {
-      infiniteScroll.complete();
-      if (error.statusText === 'Unknown Error') {
-        this.widgetUtil.showToast(CONSTANTS.INTERNET_ISSUE)
-      } else {
-        this.widgetUtil.showToast(CONSTANTS.SERVER_ERROR)
-      }
-    })
+    if (this.profile['userType'] === 'ADMINHO'){
+      this.apiService.getCustomerList(this.skipValue, this.limit).subscribe((result) => {
+        if(result.body.length > 0) {
+          result.body.map( (value) => {
+            this.userList.push(value)
+          })
+        } else {
+          this.skipValue = this.limit
+        }
+        infiniteScroll.complete();
+      }, (error) => {
+        infiniteScroll.complete();
+        if (error.statusText === 'Unknown Error') {
+          this.widgetUtil.showToast(CONSTANTS.INTERNET_ISSUE)
+        } else {
+          this.widgetUtil.showToast(CONSTANTS.SERVER_ERROR)
+        }
+      })
+    }
+
   }
 
   doRefresh (refresher) : void {
@@ -125,7 +143,7 @@ export class AdminListUserPage {
           this.navCtrl.setRoot(SalesmanDashboardPage)
         } else {
           this.navCtrl.setRoot(AdminDashboardPage)
-
+  
         }
       }
       if (this.searchKeyword) {

@@ -54,6 +54,12 @@
               </ion-col>
           </ion-row>
           <ion-row>
+            <ion-col>
+              <ion-icon color="grey" name="cog"></ion-icon>
+              <span class="order-list-label">Total Net Weight:</span> <strong text-uppercase>{{order.totalNetWeight}} tonnage</strong>
+            </ion-col>
+          </ion-row>
+          <ion-row>
             <ion-col col-12 text-center>
               <button ion-button outline color="secondary" item-end (click)="getOrderDetial(order)" class="order-list-btn">VIEW ORDER</button>
             </ion-col>

@@ -176,7 +176,7 @@ export class CustomerListProductPage {
       this.tkPoint = sum
       this.totalNetWeight = totalNetWeight/1000
       this.storageService.setToStorage('tkpoint', sum)
-      this.storageService.setToStorage('totalNetWeight', this.totalNetWeight.toFixed(4))
+      this.storageService.setToStorage('totalNetWeight', this.totalNetWeight.toFixed(3))
 
       this.cartDetail = await this.storageService.setToStorage('cart', this.cart)
       let updatedTotal = 0, updatedQuantity = 0;

@@ -225,7 +225,7 @@ export class CustomerReviewSubmitOrderPage {
     this.totalTK = sum
     this.totalNetWeight = totalNetWeight/1000
     this.storageService.setToStorage('tkpoint', sum)
-    this.storageService.setToStorage('totalNetWeight', this.totalNetWeight.toFixed(4))
+    this.storageService.setToStorage('totalNetWeight', this.totalNetWeight.toFixed(3))
     this.calculateOrderTotal()
     this.storageService.setToStorage('cart', this.cartItems)
     return (product.quantity)
@@ -253,7 +253,7 @@ export class CustomerReviewSubmitOrderPage {
     this.totalTK = sum
     this.totalNetWeight = totalNetWeight/1000
     this.storageService.setToStorage('tkpoint', sum)
-    this.storageService.setToStorage('totalNetWeight', this.totalNetWeight.toFixed(4))
+    this.storageService.setToStorage('totalNetWeight', this.totalNetWeight.toFixed(3))
     this.calculateOrderTotal()
     this.storageService.setToStorage('cart', this.cartItems)
     return (product.quantity)
@@ -281,7 +281,7 @@ export class CustomerReviewSubmitOrderPage {
     this.totalTK = sum;
     this.totalNetWeight = totalNetWeight/1000
     this.storageService.setToStorage('tkpoint', sum);
-    this.storageService.setToStorage('totalNetWeight', this.totalNetWeight.toFixed(4));
+    this.storageService.setToStorage('totalNetWeight', this.totalNetWeight.toFixed(3));
     this.calculateOrderTotal();
     this.storageService.setToStorage('cart', this.cartItems)
     return (product.quantity)
