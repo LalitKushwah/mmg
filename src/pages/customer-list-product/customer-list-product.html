@@ -16,8 +16,9 @@
         </button>
       </ion-buttons>
     </ion-navbar>
-    <ion-toolbar *ngIf="keyword && keyword !== ''">
-        <ion-label class="search-result">Matching Results For : <b>&nbsp;{{ keyword }}</b></ion-label>
+    <ion-toolbar>
+        <ion-searchbar *ngIf="keyword == undefind && keyword != ''" #q (ionChange)="searchProducts(q.value)" placeholder="Search any product in {{categoryObj.name}}"></ion-searchbar>
+        <ion-label *ngIf="keyword && keyword != ''" class="search-result">Matching Results For : <b>&nbsp;{{ keyword }}</b></ion-label>
     </ion-toolbar>
   </ion-header>
   <ion-content class="full-background">

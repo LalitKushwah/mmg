@@ -49,13 +49,24 @@ export class AdminListUserPage {
 
   ionViewWillEnter () {
     this.getUserList()
+    this.getAllCustomers()
   }
+
+  getAllCustomers () {
+    this.apiService.getAllCustomers().subscribe((res:any) => {
+      this.allCustomers = res.body
+    }, (err: any) => {
+      console.log(err);
+      
+    })
+  }
+
   async getUserList () {
     if (this.profile['userType'] === 'ADMINHO') {
       this.apiService.getCustomerList(this.skipValue, this.limit).subscribe((result) => {
         if (result.body && result.body.length > 0) {
-          this.allCustomers = result.body
-          this.filteredUserList = this.allCustomers
+          // this.allCustomers = result.body
+          this.filteredUserList = result.body
           this.userList = this.filteredUserList
           this.userListAvailable = true
           if (this.searchKeyword) {
@@ -73,8 +84,8 @@ export class AdminListUserPage {
     } else if (this.profile['userType'] === 'ADMIN') {
       this.apiService.getCustomersByProvince(this.profile['province']).subscribe((result: any) => {
         if (result.body && result.body.length > 0) {
-          this.allCustomers = result.body
-          this.filteredUserList = this.allCustomers
+          // this.allCustomers = result.body
+          this.filteredUserList = result.body
           this.userList = this.filteredUserList
           this.userListAvailable = true
           if (this.searchKeyword) {

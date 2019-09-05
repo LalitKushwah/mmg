@@ -45,6 +45,8 @@ export class CustomerListProductPage {
     this.categoryObj = this.navParams.get("category")
     this.isSearch = this.navParams.get("isSearch")
     this.keyword = this.navParams.get("keyword")
+    console.log('====== 48 ======', this.keyword);
+    
     this.productListAvailable = false
     this.productList = []
     this.getList()
