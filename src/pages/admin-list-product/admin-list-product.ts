@@ -25,6 +25,7 @@ export class AdminListProductPage {
   isSearch: Boolean = false
   filteredProductList: Array<any> = [];
   isUserAuthorized = false;
+  loggedInUserStore = {}
 
 
   constructor (public navCtrl: NavController,
@@ -121,6 +122,8 @@ export class AdminListProductPage {
 
   async ngOnInit () {
     this.isUserAuthorized = await this.commonService.isAuthorized()
+    const res: any = await this.commonService.getLoggedInUser()
+    this.loggedInUserStore = res.associatedStore
   }
 
 }

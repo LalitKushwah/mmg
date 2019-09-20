@@ -7,12 +7,15 @@ export class CommonService {
 
     async isAuthorized () {
         const loggedInUser: any = await this.strorageService.getFromStorage('profile')
-        console.log('====== 10 ======',loggedInUser);
-        
         if (loggedInUser.isAuthorized) {
           return true
         } else {
             return false
         }
+    }
+
+    async getLoggedInUser () {
+        const loggedInUser = await this.strorageService.getFromStorage('profile')
+        return loggedInUser
     }
 }

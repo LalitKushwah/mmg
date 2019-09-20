@@ -48,6 +48,18 @@
             Net Weight: <span>{{product.netWeight.toFixed(2)}} Kg</span>
           </ion-col>
         </ion-row>
+        <div *ngIf="!loggedInUserStore; else showSpecificStore">
+          <ion-row *ngFor="let store of product.inventoryDetails">
+            <ion-col col-8 class="store-name">{{store.storeName}}</ion-col>
+            <ion-col col-4>{{store.inventory}}</ion-col>
+          </ion-row>
+        </div>
+        <ng-template #showSpecificStore>
+          <ion-row *ngFor="let store of product.inventoryDetails">
+              <ion-col *ngIf="store.storeName === loggedInUserStore" col-8 class="store-name">{{store.storeName}}</ion-col>
+              <ion-col *ngIf="store.storeName === loggedInUserStore" col-4>{{store.inventory}}</ion-col>
+          </ion-row>
+        </ng-template>
         <ion-row>
           <ion-col text-center>
             <button [disabled]="!isUserAuthorized ? 'disabled': null" color="secondary" ion-button outline (click)="editProduct(product)">
