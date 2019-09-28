@@ -13,7 +13,7 @@
   </div>
 
     <ion-list>
-      <button color="primary" [disabled]="orderDetail.status === 'recieved'" ion-button full class="edit-btn" (click)="navigateToEditOrderPage()">EDIT ORDER</button>
+      <button color="primary" [disabled]="orderDetail.status !== 'in-progress'" ion-button full class="edit-btn" (click)="navigateToEditOrderPage()">EDIT ORDER</button>
       <ion-card>
         <ion-card-content>
           <ion-row>
