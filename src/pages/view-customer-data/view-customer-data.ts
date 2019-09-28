@@ -37,13 +37,10 @@ export class ViewCustomerDataPage {
               private storageService: StorageServiceProvider,
               private apiService: ApiServiceProvider,
               private loadingCtrl: LoadingController) {
-                console.log('============== 40 =============')
     
   }
 
   displayChart () {
-    console.log('===== 45 =====');
-    
     this.pieChart = new Chart(this.pieCanvas.nativeElement, {
       type: 'pie',
       data: {

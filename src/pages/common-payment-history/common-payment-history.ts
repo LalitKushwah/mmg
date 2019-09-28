@@ -52,7 +52,6 @@ export class CommonPaymentHistoryPage {
     });
     loader.present()
     let profile = await this.storageService.getFromStorage('profile')
-    console.log('========== 55 ========', profile)
     this.apiService.getPaymentHistoryForSM(profile['externalId']).subscribe((res: any) => {
         if (res && res.body) {
           this.data = res.body

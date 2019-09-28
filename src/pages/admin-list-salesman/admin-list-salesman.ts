@@ -38,7 +38,6 @@ export class AdminListSalesmanPage {
     this.skipValue = 0
     this.limit = CONSTANTS.PAGINATION_LIMIT
     this.searchKeyword = navParams.get('searchedKeyword')
-    console.log('====== 41 =======', this.searchKeyword)
     if (!this.searchKeyword) {
       this.getUserList()
     }
@@ -95,7 +94,6 @@ export class AdminListSalesmanPage {
   // }
 
   async editCustomer (user) {
-    console.log('====== 98', user);
     
     await this.storageService.setToStorage('editCustomerInfo', user)
     this.navCtrl.push(EditUserPage, {searchedKeyword: this.searchbar.value})

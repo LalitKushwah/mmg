@@ -7,6 +7,7 @@ import { CONSTANTS } from '../../utils/constants';
 import { CustomerCategoryListPage } from '../customer-category-list/customer-category-list';
 import { StorageServiceProvider } from '../../providers/storage-service/storage-service';
 import { CustomerReviewSubmitOrderPage } from '../customer-review-submit-order/customer-review-submit-order';
+import { SmEditOrderPage } from '../sm-edit-order/sm-edit-order';
 
 
 @IonicPage({
@@ -24,6 +25,7 @@ export class CustomerHomePage {
   limit: number = CONSTANTS.PAGINATION_LIMIT
   cart: any = []
   tkPoint: any = 0
+  isEditFlow = false
 
 
   constructor (public navCtrl: NavController,
@@ -37,6 +39,7 @@ export class CustomerHomePage {
     this.parentCategoryList = []
     this.skipValue = 0
     this.limit = CONSTANTS.PAGINATION_LIMIT
+    this.isEditFlow = this.navParams.get('isEdit')
     this.getList()
     this.getVersion()
   }
@@ -46,21 +49,33 @@ export class CustomerHomePage {
   }
 
   async getCardItems () {
-    this.cart = await this.storageService.getCartFromStorage()
-    this.storageService.getTkPointsFromStorage().then(res => {
-      this.tkPoint = res
-    })
-  }
+    const storedEditedOrder: any = await this.storageService.getFromStorage('order')
+    // update cart count badge when edit order flow is in active state
+    if (this.isEditFlow && storedEditedOrder) {
+      this.cart = storedEditedOrder.productList ? storedEditedOrder.productList : []
+      this.tkPoint = storedEditedOrder.totalTkPoints ? storedEditedOrder.totalTkPoints : 0
+    } else {
+      this.cart = await this.storageService.getCartFromStorage()
+      this.storageService.getTkPointsFromStorage().then(res => {
+        this.tkPoint = res
+      })
+    }
+   }
 
   async reviewAndSubmitOrder () {
+   if (!this.isEditFlow) {
     if (this.cart.length <= 0) {
       this.widgetUtil.showToast(CONSTANTS.CART_EMPTY)
-    }else {
+    } else {
       let orderTotal = await this.storageService.getFromStorage('orderTotal')
       this.navCtrl.push(CustomerReviewSubmitOrderPage, {
         'orderTotal' : orderTotal
       })
     }
+   } else {
+     console.log('=============== 73 ==================');
+      this.navCtrl.setRoot(SmEditOrderPage)
+   }
   }
 
   getList () {
@@ -80,7 +95,8 @@ export class CustomerHomePage {
   getChildCategory (category) {
     const categoryObj = {
       'parentCategoryId' : category['_id'],
-      'category' : category
+      'category' : category,
+      'isEdit': this.isEditFlow
     }
     this.navCtrl.push(CustomerCategoryListPage, categoryObj)
   }

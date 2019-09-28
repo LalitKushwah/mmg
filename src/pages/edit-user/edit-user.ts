@@ -61,7 +61,6 @@ export class EditUserPage {
     if (toBeAddSalesMan) {
       this.addSalesman(toBeAddSalesMan)
     }
-    console.log('====== 64 ======', this.isAuthorized);
     
   }
 

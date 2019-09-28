@@ -100,7 +100,7 @@ export class AdminListSubCategoryPage {
         'category': this.categoryObj
       };
       this.searchQuery  = ''
-        this.navCtrl.push(AdminListProductPage, data)
+      this.navCtrl.push(AdminListProductPage, data)
     }
   }
 }

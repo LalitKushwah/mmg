@@ -65,7 +65,6 @@ export class AddSalesmanModalPage {
         {
           text: 'Disagree',
           handler: () => {
-            console.log('Disagree clicked');
           }
         },
         {

@@ -9,7 +9,6 @@ export class StorageServiceProvider {
 
   async getEditCustomerData () {
     const response = await this.getFromStorage('salesmanList')
-    console.log('============ 12 ============', response)
     if (response) {
       this.editCustomer.salesmanList = response
     } else {

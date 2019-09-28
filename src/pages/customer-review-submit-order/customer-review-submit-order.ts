@@ -121,6 +121,7 @@ export class CustomerReviewSubmitOrderPage {
       profile = await this.storageService.getFromStorage('selectedCustomer')
     }
 
+
     let orderObj = {
       productList: this.cartItems.map((value) => {
         return {
@@ -128,7 +129,9 @@ export class CustomerReviewSubmitOrderPage {
           quantity: value['quantity'],
           price: parseFloat(value['price']),
           tkPoint: parseFloat(value['tkPoint']),
-          netWeight: parseFloat(value['netWeight'])
+          netWeight: parseFloat(value['netWeight']),
+          parentCategoryId: value['parentCategoryId'],
+          productSysCode: value['productSysCode']
         }
       }),
       userId: profile['_id'],
@@ -149,7 +152,6 @@ export class CustomerReviewSubmitOrderPage {
       this.storageService.removeFromStorage('tkpoint')
       this.storageService.setToStorage('totalNetWeight', 0);
       
-      console.log(orderObj)
       //Removing the key-value after the order has been placed
       this.storageService.removeFromStorage('selectedCustomer')
       

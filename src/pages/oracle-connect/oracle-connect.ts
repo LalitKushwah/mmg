@@ -59,7 +59,6 @@ export class OracleConnectPage {
     });
     loader.present();
     this.apiService.updateCustomerInMongo().subscribe(res => {
-      console.log('===== 62 =====', res)
       loader.dismiss()
       this.widgetUtil.showToast('Schedular completed successfully...')
     }, error => {

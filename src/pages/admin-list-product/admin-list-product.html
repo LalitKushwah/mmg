@@ -2,6 +2,10 @@
   <ion-navbar>
     <ion-title>{{categoryObj.name}}</ion-title>
   </ion-navbar>
+  <ion-toolbar>
+      <ion-searchbar *ngIf="keyword == undefind && keyword != ''" #q (ionChange)="searchProducts(q.value)" placeholder="Search any product in {{categoryObj.name}}"></ion-searchbar>
+      <ion-label *ngIf="keyword && keyword != ''" class="search-result">Matching Results For : <b>&nbsp;{{ keyword }}</b></ion-label>
+  </ion-toolbar>
 </ion-header>
 <ion-content class="full-background">
   <div class="search-spinner">
@@ -48,18 +52,14 @@
             Net Weight: <span>{{product.netWeight.toFixed(2)}} Kg</span>
           </ion-col>
         </ion-row>
-        <div *ngIf="!loggedInUserStore; else showSpecificStore">
-          <ion-row *ngFor="let store of product.inventoryDetails">
-            <ion-col col-8 class="store-name">{{store.storeName}}</ion-col>
-            <ion-col col-4>{{store.inventory}}</ion-col>
+        <div *ngIf="loggedInUserStore.length">
+          <ion-row *ngFor="let assocStores of loggedInUserStore">
+            <div *ngFor="let store of product.inventoryDetails">
+              <ion-col col-8 *ngIf="assocStores === store.storeName" class="store-name">{{assocStores}}</ion-col>
+              <ion-col col-4 *ngIf="assocStores === store.storeName">{{store.inventory}}</ion-col>
+            </div>
           </ion-row>
         </div>
-        <ng-template #showSpecificStore>
-          <ion-row *ngFor="let store of product.inventoryDetails">
-              <ion-col *ngIf="store.storeName === loggedInUserStore" col-8 class="store-name">{{store.storeName}}</ion-col>
-              <ion-col *ngIf="store.storeName === loggedInUserStore" col-4>{{store.inventory}}</ion-col>
-          </ion-row>
-        </ng-template>
         <ion-row>
           <ion-col text-center>
             <button [disabled]="!isUserAuthorized ? 'disabled': null" color="secondary" ion-button outline (click)="editProduct(product)">

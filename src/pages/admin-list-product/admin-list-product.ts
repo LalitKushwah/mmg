@@ -25,7 +25,9 @@ export class AdminListProductPage {
   isSearch: Boolean = false
   filteredProductList: Array<any> = [];
   isUserAuthorized = false;
-  loggedInUserStore = {}
+  loggedInUserStore = []
+  allProducts = []
+  storeList = []
 
 
   constructor (public navCtrl: NavController,
@@ -43,6 +45,24 @@ export class AdminListProductPage {
     this.isSearch = this.navParams.get("isSearch")
     this.keyword = this.navParams.get("keyword")
     this.getProductList()
+  }
+
+  ionViewWillEnter () {
+    // INFO: get All products corresponding to category
+    this.apiService.getAllProductsByCategory(this.categoryId).subscribe((result) => {
+      if (result.body && result.body.length) {
+        this.allProducts = result.body
+        this.allProducts.map((product: any) => {
+          product['quantity'] = 1
+        })
+      }
+    }, error => {
+          if (error.statusText === 'Unknown Error') {
+            this.widgetUtil.showToast(CONSTANTS.INTERNET_ISSUE)
+          } else {
+            this.widgetUtil.showToast(CONSTANTS.SERVER_ERROR)
+          }
+    })
   }
 
   getProductList () {
@@ -123,7 +143,13 @@ export class AdminListProductPage {
   async ngOnInit () {
     this.isUserAuthorized = await this.commonService.isAuthorized()
     const res: any = await this.commonService.getLoggedInUser()
-    this.loggedInUserStore = res.associatedStore
+    if (res.associatedStore && res.associatedStore.length) {
+      this.loggedInUserStore = res.associatedStore
+    }
   }
 
+  searchProducts (searchQuery) {
+    this.filteredProductList = this.allProducts.filter(product =>
+      product.name.toLowerCase().includes(searchQuery.toLowerCase())
+  )}
 }

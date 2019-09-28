@@ -100,6 +100,8 @@ import { ViewCustomerDataPageModule } from '../pages/view-customer-data/view-cus
 import { CommonPaymentHistoryPageModule } from '../pages/common-payment-history/common-payment-history.module';
 import { CommonPaymentHistoryPage } from '../pages/common-payment-history/common-payment-history';
 import { CommonService } from '../providers/common.service';
+import { SmEditOrderPage } from '../pages/sm-edit-order/sm-edit-order';
+import { SmEditOrderPageModule } from '../pages/sm-edit-order/sm-edit-order.module';
 
 @NgModule({
   declarations: [
@@ -157,7 +159,8 @@ import { CommonService } from '../providers/common.service';
     AdminDashboardPageModule,
     SelectedCustomerOrderListPageModule,
     AssociatedCustomersListOrderPageModule,
-    ViewCustomerDataPageModule
+    ViewCustomerDataPageModule,
+    SmEditOrderPageModule
   ],
   bootstrap: [IonicApp],
   entryComponents: [
@@ -201,7 +204,8 @@ import { CommonService } from '../providers/common.service';
     SelectedCustomerOrderListPage,
     AssociatedCustomersListOrderPage,
     ViewCustomerDataPage,
-    CommonPaymentHistoryPage
+    CommonPaymentHistoryPage,
+    SmEditOrderPage
   ],
   providers: [
     StatusBar,

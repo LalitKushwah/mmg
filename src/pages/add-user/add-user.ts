@@ -58,13 +58,10 @@ export class AddUserPage implements OnInit {
 
     // enable, disable CRUD button
     this.isUserAuthorized = await this.commonService.isAuthorized()
-    console.log('====== 61 ======', this.isUserAuthorized);
     
     // this.commonService.isAuthorized().then(res => {
     //   this.isUserAuthorized = res
-    //   console.log('====== 62 =====', this.isUserAuthorized);
     // }).catch(err => {
-    //   console.log('===== 65 =====', err);
     // })
 
   }
@@ -186,14 +183,10 @@ export class AddUserPage implements OnInit {
       
       if(userType === 'salesmanager'){
       message = CONSTANTS.SALESMANAGER_CREATED
-      // console.log('salesmanager created!')
-      // console.log(userType)
       }
 
       else{
         message = CONSTANTS.SALESMAN_CREATED
-        // console.log('salesman created!')
-        // console.log(userType)
       }
       userDetails['name'] = this.name.value.trim()
       userDetails['userLoginId'] = this.userLoginId.value.trim()

@@ -6,6 +6,7 @@ import { WidgetUtilService } from '../../utils/widget-utils';
 import { ApiServiceProvider } from '../../providers/api-service/api-service';
 import { CONSTANTS } from '../../utils/constants';
 import { PopoverHomePage } from '../popover-home/popover-home';
+import { SmEditOrderPage } from '../sm-edit-order/sm-edit-order';
 
 @IonicPage({
   name: 'CustomerListProductPage'
@@ -34,6 +35,7 @@ export class CustomerListProductPage {
   limit: number = CONSTANTS.PAGINATION_LIMIT;
   allProducts = []
   totalNetWeight: number = 0
+  isEditOrderFlow = false
 
   constructor (public navCtrl: NavController, public navParams: NavParams,
     private apiService: ApiServiceProvider, private widgetUtil: WidgetUtilService
@@ -45,7 +47,7 @@ export class CustomerListProductPage {
     this.categoryObj = this.navParams.get("category")
     this.isSearch = this.navParams.get("isSearch")
     this.keyword = this.navParams.get("keyword")
-    console.log('====== 48 ======', this.keyword);
+    this.isEditOrderFlow = this.navParams.get("isEdit")
     
     this.productListAvailable = false
     this.productList = []
@@ -72,9 +74,9 @@ export class CustomerListProductPage {
 
   ionViewDidEnter (){
     this.getCartItems()
-    this.storageService.getTkPointsFromStorage().then(res => {
-      this.tkPoint = res
-    })
+    // this.storageService.getTkPointsFromStorage().then(res => {
+    //   this.tkPoint = res
+    // })
   }
 
   getList () {
@@ -117,7 +119,13 @@ export class CustomerListProductPage {
 
   async getCartItems () {
     this.cart = await this.storageService.getCartFromStorage()
-    this.tkPoint = await this.storageService.getTkPointsFromStorage()
+    if (this.isEditOrderFlow) {
+        const storedEditedOrder: any = await this.storageService.getFromStorage('order')
+        // update cart count badge when edit order flow is in active state
+        this.tkPoint = storedEditedOrder.totalTkPoints ? storedEditedOrder.totalTkPoints : 0
+    } else {
+        this.tkPoint = await this.storageService.getTkPointsFromStorage()
+    }
     if(this.cart.length > 0) {
       let updatedTotal = 0, updatedQuantity = 0;
       this.cart.map((value) => {
@@ -144,14 +152,28 @@ export class CustomerListProductPage {
   }
 
   async addToCart (product, qty) {
+   if (this.isEditOrderFlow) {
     if(parseInt(qty) > 0) {
-      this.widgetUtil.showToast(`${product.name} added to cart!`)
-      delete product['categoryId']
-      delete product['productCode']
-      /* product['quantity'] = parseInt(qty) */
+      let prepareProduct = {
+        productId: product._id,
+        netWeight: product.netWeight,
+        price: product.price,
+        productDetail: {
+          _id: product._id,
+          name: product.name,
+          price: product.price,
+          productCode: product.productCode
+        },
+        quantity: product.quantity,
+        tkPoint: product.tkPoint,
+        parentCategoryId: product.parentCategoryId,
+        productSysCode: product.productSysCode
+      }
+      let order: any = await this.storageService.getFromStorage('order')
+
       let presentInCart = false;
-      const productsInCart = this.cart.map((value)=> {
-        if (value['_id'] === product['_id']) {
+      const productsInCart = order.productList.map((value)=> {
+        if (value['productSysCode'] === product['productSysCode']) {
           presentInCart = true
           value.quantity = value.quantity + parseInt(product.quantity)
         }
@@ -159,38 +181,85 @@ export class CustomerListProductPage {
       })
       if(!presentInCart) {
         let obj ={}
-        Object.assign(obj, product)
+        Object.assign(obj, prepareProduct)
         obj['quantity'] = parseInt(qty)
-        this.cart.push(obj)
+        order.productList.push(obj)
       } else {
-        this.cart = productsInCart
+        order.productList = productsInCart
       }
+
       let sum = 0
       let totalNetWeight = 0
-      this.cart.map(item => {
+      let orderTotal = 0
+      order.productList.map(item => {
           if (item.tkPoint) {
             sum = sum + (parseFloat(item.tkPoint) * parseInt(item.quantity))
           }
           if (item.netWeight) {
             totalNetWeight = totalNetWeight + (parseFloat(item.netWeight) * parseInt(item.quantity))
           }
+          orderTotal = orderTotal + (parseFloat(item.price) * parseInt(item.quantity))
       })
+      order.totalTkPoints = sum
       this.tkPoint = sum
-      this.totalNetWeight = totalNetWeight/1000
-      this.storageService.setToStorage('tkpoint', sum)
-      this.storageService.setToStorage('totalNetWeight', this.totalNetWeight.toFixed(3))
+      order.totalNetWeight = (totalNetWeight/1000).toFixed(3)
+      
+      order.orderTotal = orderTotal
 
-      this.cartDetail = await this.storageService.setToStorage('cart', this.cart)
-      let updatedTotal = 0, updatedQuantity = 0;
-      this.cartDetail.map((value) => {
-        updatedTotal = updatedTotal + (parseFloat(value.price) * parseInt(value.quantity))
-        updatedQuantity = updatedQuantity + parseInt(value.quantity)
-      })
-      this.orderTotal = updatedTotal
-      this.cartQuantity = updatedQuantity
-      this.storageService.setToStorage('cart', this.cart)
-    } else {
-      this.widgetUtil.showToast(`Atleast 1 quantity is required!`)
+      await this.storageService.setToStorage('order', order)
+      this.widgetUtil.showToast(`${product.name} added to cart!`)
+    }
+   } else {
+      if(parseInt(qty) > 0) {
+        this.widgetUtil.showToast(`${product.name} added to cart!`)
+        delete product['categoryId']
+        delete product['productCode']
+        /* product['quantity'] = parseInt(qty) */
+        let presentInCart = false;
+        const productsInCart = this.cart.map((value)=> {
+          if (value['_id'] === product['_id']) {
+            presentInCart = true
+            value.quantity = value.quantity + parseInt(product.quantity)
+          }
+          return value
+        })
+        if(!presentInCart) {
+          let obj ={}
+          Object.assign(obj, product)
+          obj['quantity'] = parseInt(qty)
+          this.cart.push(obj)
+        } else {
+          this.cart = productsInCart
+        }
+        let sum = 0
+        let totalNetWeight = 0
+        this.cart.map(item => {
+            if (item.tkPoint) {
+              sum = sum + (parseFloat(item.tkPoint) * parseInt(item.quantity))
+            }
+            if (item.netWeight) {
+              totalNetWeight = totalNetWeight + (parseFloat(item.netWeight) * parseInt(item.quantity))
+            }
+        })
+        this.tkPoint = sum
+        this.totalNetWeight = totalNetWeight/1000
+        this.storageService.setToStorage('tkpoint', sum)
+        this.storageService.setToStorage('totalNetWeight', this.totalNetWeight.toFixed(3))
+  
+        this.cartDetail = await this.storageService.setToStorage('cart', this.cart)
+        let updatedTotal = 0, updatedQuantity = 0;
+        this.cartDetail.map((value) => {
+          updatedTotal = updatedTotal + (parseFloat(value.price) * parseInt(value.quantity))
+          updatedQuantity = updatedQuantity + parseInt(value.quantity)
+        })
+        this.orderTotal = updatedTotal
+        this.cartQuantity = updatedQuantity
+        console.log('============= 259 ===========', this.cart);
+        
+        this.storageService.setToStorage('cart', this.cart)
+      } else {
+        this.widgetUtil.showToast(`Atleast 1 quantity is required!`)
+      }
     }
   }
 
@@ -276,9 +345,13 @@ export class CustomerListProductPage {
   searchProducts (searchQuery) {
     this.filteredProductList = this.allProducts.filter(product =>
       product.name.toLowerCase().includes(searchQuery.toLowerCase())
-    )}
+  )}
 
   showTkToast () {
     this.widgetUtil.showToast('TK points will convert into TK currency post target achievement of QTR')
+  }
+
+  moveToEditOrderPage () {
+    this.navCtrl.push(SmEditOrderPage)
   }
 }

@@ -6,7 +6,7 @@
 <ion-content class="full-background">
   <div class="search-spinner">
       <ion-spinner name="crescent" *ngIf="!orderListAvailable"></ion-spinner>
-    </div>
+  </div>
     <ion-refresher (ionRefresh)="doRefresh($event)" spinner="crescent">
       <ion-refresher-content></ion-refresher-content>
     </ion-refresher>
@@ -19,7 +19,7 @@
                   <span class="order-list-label">Date:</span> {{order.lastUpdatedAt}}
               </ion-col>
               <ion-col class="{{order.status}} order-status">
-                <ion-icon color="grey" name="radio-button-on"></ion-icon><span class="order-list-label">Status:</span> <strong text-uppercase>{{order.status}}</strong>
+                <ion-icon color="grey" name="radio-button-on"></ion-icon><span class="order-list-label"></span> <strong text-uppercase>{{order.status}}</strong>
               </ion-col>
           </ion-row>
           <ion-row>

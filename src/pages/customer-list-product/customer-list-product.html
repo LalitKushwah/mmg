@@ -3,10 +3,14 @@
       <ion-title *ngIf="!isSearch">{{categoryObj.name}}</ion-title>
       <ion-title *ngIf="isSearch">Search Result</ion-title>
       <ion-buttons end>
-        <button class="cart-btn" ion-button icon-only (click)="reviewAndSubmitOrder()">
+        <button *ngIf="!isEditOrderFlow" class="cart-btn" ion-button icon-only (click)="reviewAndSubmitOrder()">
           <ion-icon name="cart"></ion-icon>
           <ion-badge class="cart-badge">{{cart.length}}</ion-badge>
         </button>
+        <button *ngIf="isEditOrderFlow" class="cart-btn" ion-button icon-only (click)="moveToEditOrderPage()">
+            <ion-icon name="create"></ion-icon>
+            <!-- <ion-badge class="cart-badge">{{cart.length}}</ion-badge> -->
+          </button>
         <button class="cart-btn" ion-button icon-only (click)="showTkToast()">
           <ion-icon name="trophy"></ion-icon>
           <ion-badge class="cart-badge">{{tkPoint}}</ion-badge>

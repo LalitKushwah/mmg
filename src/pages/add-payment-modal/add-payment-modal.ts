@@ -36,13 +36,11 @@ export class AddPaymentModalPage {
   }
 
   ionViewDidLoad () {
-    console.log('ionViewDidLoad AddPaymentModalPage');
     this.getData()
   }
   async getData () {
     try{
       let profile = await this.storageService.getFromStorage('profile')
-      console.log(profile['name'])
       if ((profile['userType'] === 'SALESMAN') || (profile['userType'] === 'SALESMANAGER')) {
         this.salesmanName = profile['name']
         this.salesmanCode = profile['externalId']

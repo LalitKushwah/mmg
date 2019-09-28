@@ -61,7 +61,6 @@ export class GiftRewardsPage {
       loader.present();
     this.apiService.getGiftProducts().subscribe(res => {
       this.giftProducts = res.body
-      console.log('===== 57 =====', this.giftProducts)
       loader.dismiss()
       // schema of the received gift products
       // {_id: "5ca8ad0a45d7402c15f989c1", name: "32 Inch LED", brand: "Hisense", tkCurrencyValue: "2000"}

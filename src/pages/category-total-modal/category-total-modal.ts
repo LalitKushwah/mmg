@@ -23,14 +23,21 @@ export class CategoryTotalModalPage {
     private apiService: ApiServiceProvider, private widgetUtil: WidgetUtilService) {
       this.categoryListAvailable = false
     this.cartItems = this.navParams.get('cartItems')
+    if (this.navParams.data && this.navParams.data.cartItems) {
+      this.cartItems = this.navParams.data.cartItems
+    }
     this.getParenCategoryList()
   }
 
   getParenCategoryList () {
     this.apiService.getParentCategoryList(this.skipValue, this.limit).subscribe((result) => {
       this.parentCategoryList = result.body
+      console.log('=========== 37 =========', this.parentCategoryList);
       this.cartItems.map(cartItem => {
         this.parentCategoryList.map(parentCategoryObj => {
+          console.log('=========== parentCategoryObj ========',parentCategoryObj['_id']);
+          console.log('=========== cartItem ========',cartItem['parentCategoryId']);
+          
           if(cartItem['parentCategoryId'] === parentCategoryObj['_id']) {
             if((parentCategoryObj.subTotal) && (parseFloat(parentCategoryObj.subTotal) > 0)) {
               parentCategoryObj.subTotal = (parseFloat(parentCategoryObj.subTotal)) + (parseFloat(cartItem.subTotal))

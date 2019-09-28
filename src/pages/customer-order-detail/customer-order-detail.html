@@ -11,45 +11,9 @@
   <div class="search-spinner">
     <ion-spinner name="crescent" *ngIf="!orderItemsAvailable"></ion-spinner>
   </div>
-  <!-- <ion-card style="overflow-x:auto;" *ngIf="orderItemsAvailable">
-      <table>
-        <thead>
-          <tr>
-            <th>S.No</th>
-            <th>Name</th>
-            <th>Quantity</th>
-            <th>Price (ZMW)</th>
-            <th>Sub Total (ZMW)</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr *ngFor="let item of orderItems; let i = index">
-            <td>{{(i+1)}}</td>
-            <td>{{item.productDetail.name}} [{{item.productDetail.productCode}}]</td>
-            <td>{{item.quantity}}</td>
-            <td>{{item.price}}</td>
-            <td>{{(item.subTotal)}}</td>
-          </tr>
-        </tbody>
-      </table>
-      <ion-row>
-        <ion-col text-center>
-          <button ion-button outline color="grey"><ion-icon name="cash"></ion-icon> Order Total (ZMW): {{orderDetail.orderTotal}}</button>
-          <strong><ion-icon name="cash"></ion-icon> Order Total: {{orderDetail.orderTotal}} ZMW</strong>
-        </ion-col>
-      </ion-row>
-      <ion-row *ngIf="showImportOrder">
-        <ion-col text-center>
-          <button ion-button primary color="secondary" (click)="importOrder()"><ion-icon name="arrow-dropdown-circle"></ion-icon> Import Order<ion-spinner name="dots" *ngIf="showLoader"></ion-spinner></button>
-        </ion-col>
-      </ion-row>
-      <ion-row *ngIf="showCsvButton">
-        <ion-col text-center>
-          <button ion-button primary color="secondary" (click)="exportToCsv()"><ion-icon name="arrow-dropdown-circle"></ion-icon> Export to csv<ion-spinner name="dots" *ngIf="showLoader"></ion-spinner></button>
-        </ion-col>
-        </ion-row>
-    </ion-card> -->
+
     <ion-list>
+      <button color="primary" [disabled]="orderDetail.status === 'recieved'" ion-button full class="edit-btn" (click)="navigateToEditOrderPage()">EDIT ORDER</button>
       <ion-card>
         <ion-card-content>
           <ion-row>

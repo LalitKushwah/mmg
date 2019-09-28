@@ -42,6 +42,10 @@ export class ApiServiceProvider {
     }])
   }
 
+  createEditedOrderToErp (order) {
+    return this.http.post(CONSTANTS.BASE_URL + 'api/erp/createEditedOrderToERP', order)
+  }
+
   getData (obj) {
     return this.http.post(CONSTANTS.BASE_URL + 'api/user/products', obj)
   }

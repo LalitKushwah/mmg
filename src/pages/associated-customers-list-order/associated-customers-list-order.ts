@@ -5,6 +5,7 @@ import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { StorageServiceProvider } from '../../providers/storage-service/storage-service';
 import { WidgetUtilService } from '../../utils/widget-utils';
 import { ApiServiceProvider } from '../../providers/api-service/api-service';
+import { SmEditOrderPage } from '../sm-edit-order/sm-edit-order';
 
 @IonicPage({
   name: 'AssociatedCustomersListOrderPage'
@@ -38,6 +39,7 @@ export class AssociatedCustomersListOrderPage {
     this.apiService.getOrdersForSalesmanByAssociatedCustomers(this.userId, this.skipValue, this.limit).subscribe((result) => {
       this.orderList = result.body
 
+
       //Sorting Order List - Desc
         this.orderList.sort((a, b) => {
           return <any>new Date(b.lastUpdatedAt) - <any>new Date(a.lastUpdatedAt);
@@ -64,29 +66,6 @@ export class AssociatedCustomersListOrderPage {
     }
     this.navCtrl.push(CustomerOrderDetailPage, orderObj)
   }
-
-  // async doInfinite (infiniteScroll) {
-  //   this.skipValue = this.skipValue + this.limit
-  //   const profile = await this.storageService.getFromStorage('profile')
-  //   const isSalesman = ((profile['userType'] === 'SALESMAN') || (profile['userType'] === 'SALESMANAGER')) ? true : false
-  //   this.apiService.getOrdersForSalesmanByAssociatedCustomers(this.userId, this.skipValue, this.limit).subscribe((result) => {
-  //     if(result.body.length > 0) {
-  //       result.body.map( (value) => {
-  //         this.orderList.push(value)
-  //       })
-  //     } else {
-  //       this.skipValue = this.limit
-  //     }
-  //     infiniteScroll.complete();
-  //   }, (error) => {
-  //     infiniteScroll.complete();
-  //     if (error.statusText === 'Unknown Error') {
-  //       this.widgetUtil.showToast(CONSTANTS.INTERNET_ISSUE)
-  //     } else {
-  //       this.widgetUtil.showToast(CONSTANTS.SERVER_ERROR)
-  //     }
-  //   })
-  // }
 
   //Client Side Pagination
   async doInfinite (infiniteScroll) {
@@ -135,6 +114,8 @@ export class AssociatedCustomersListOrderPage {
     if (day.length < 2) day = '0' + day
     return [year, month, day].join('-')
   }
+
+
 
 
 }

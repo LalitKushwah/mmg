@@ -8,6 +8,7 @@ import { PopoverHomePage } from '../popover-home/popover-home';
 import { CONSTANTS } from '../../utils/constants';
 import { CustomerListProductPage } from '../customer-list-product/customer-list-product';
 import { CustomerReviewSubmitOrderPage } from '../customer-review-submit-order/customer-review-submit-order';
+import { SmEditOrderPage } from '../sm-edit-order/sm-edit-order';
 
 @IonicPage({
   name: 'CustomerCategoryListPage'
@@ -27,12 +28,14 @@ export class CustomerCategoryListPage {
   limit: number = CONSTANTS.PAGINATION_LIMIT
   cart: any = []
   tkPoint: any = 0
-  searchQuery: string = ''  
+  searchQuery: string = '' 
+  isEditFlow = false 
 
   constructor (public navCtrl: NavController, public navParams: NavParams, private apiService: ApiServiceProvider, private widgetUtil: WidgetUtilService
   , private storageService: StorageServiceProvider) {
     this.parentCategoryId = this.navParams.get("parentCategoryId")
     this.categoryObj = this.navParams.get("category")
+    this.isEditFlow = this.navParams.get("isEdit")
     this.categoryListAvailable = false
     this.childCategoryList = []
     this.skipValue = 0
@@ -58,7 +61,8 @@ export class CustomerCategoryListPage {
     const categoryObj = {
       'categoryId' : category['_id'],
       'category': category,
-      'isSearch': false
+      'isSearch': false,
+      'isEdit': this.isEditFlow
     }
     let profile = await this.storageService.getFromStorage('profile')
     if(profile['type'] === 'admin') {
@@ -73,18 +77,31 @@ export class CustomerCategoryListPage {
   }
 
   async getCardItems () {
-    this.cart = await this.storageService.getCartFromStorage()
-    this.tkPoint = await this.storageService.getTkPointsFromStorage()
+    const storedEditedOrder: any = await this.storageService.getFromStorage('order')
+    // update cart count badge when edit order flow is in active state
+    if (this.isEditFlow && storedEditedOrder) {
+      this.cart = storedEditedOrder.productList ? storedEditedOrder.productList : []
+      this.tkPoint = storedEditedOrder.totalTkPoints ? storedEditedOrder.totalTkPoints : 0
+    } else {
+      this.cart = await this.storageService.getCartFromStorage()
+      this.storageService.getTkPointsFromStorage().then(res => {
+        this.tkPoint = res
+      })
+    }
   }
 
   async reviewAndSubmitOrder () {
-    if (this.cart.length <= 0) {
-      this.widgetUtil.showToast(CONSTANTS.CART_EMPTY)
-    }else {
-      let orderTotal = await this.storageService.getFromStorage('orderTotal')
-      this.navCtrl.push(CustomerReviewSubmitOrderPage, {
-        'orderTotal' : orderTotal
-      })
+    if (!this.isEditFlow) {
+      if (this.cart.length <= 0) {
+        this.widgetUtil.showToast(CONSTANTS.CART_EMPTY)
+      }else {
+        let orderTotal = await this.storageService.getFromStorage('orderTotal')
+        this.navCtrl.push(CustomerReviewSubmitOrderPage, {
+          'orderTotal' : orderTotal
+        })
+      }
+    } else {
+      this.navCtrl.setRoot(SmEditOrderPage)  
     }
   }
 

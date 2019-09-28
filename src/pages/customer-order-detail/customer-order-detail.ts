@@ -5,6 +5,7 @@ import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { WidgetUtilService } from '../../utils/widget-utils';
 import { FileTransfer, FileTransferObject } from '@ionic-native/file-transfer';
+import { SmEditOrderPage } from '../sm-edit-order/sm-edit-order';
 
 @IonicPage({
   name: 'CustomerOrderDetailPage'
@@ -35,7 +36,8 @@ export class CustomerOrderDetailPage {
               private transfer: FileTransfer) {
 
     this.orderDetail = this.navParams.get('order')
-    console.log('======= 38 =======', this.orderDetail)
+    // store order to localstorage it will be used when SM needs to perform edit operation
+    this.storageService.setToStorage('order', this.orderDetail)
     this.orderItems = this.orderDetail.productList
     this.orderItems.map((value) => {
       value['subTotal'] = (parseFloat((Math.round((value.quantity * parseFloat(value.price.toString())) * 100) / 100).toString()).toFixed(2))
@@ -97,7 +99,6 @@ export class CustomerOrderDetailPage {
   getOrderDetail () {
     this.apiService.getOrderDetail(this.orderDetail['_id']).subscribe((result) => {
       this.orderDetail = result.body[0]
-      console.log('=== 100 ====', this.orderDetail)
       this.checkData()
       this.showLoader = false
     }, (error) => {
@@ -121,6 +122,10 @@ export class CustomerOrderDetailPage {
     setTimeout(() => {
       infiniteScroll.complete();
     }, 500);
+  }
+
+  navigateToEditOrderPage () {
+    this.navCtrl.push(SmEditOrderPage)
   }
 
 }
