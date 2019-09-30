@@ -64,6 +64,15 @@
             </ion-col>
           </ion-row>
 
+          <div *ngIf="loggedInUserStore.length">
+              <ion-row *ngFor="let assocStores of loggedInUserStore">
+                <div *ngFor="let store of product.inventoryDetails">
+                  <ion-col col-8 *ngIf="assocStores === store.storeName" class="store-name">{{assocStores}}</ion-col>
+                  <ion-col col-4 *ngIf="assocStores === store.storeName">{{store.inventory}}</ion-col>
+                </div>
+              </ion-row>
+            </div>
+
           <ion-row>
             <ion-col col-12>
               <ion-row>
@@ -90,6 +99,7 @@
               </button>
             </ion-col> -->
           </ion-row>
+          <hr>
         </ion-card-content>
         <ng-template #noproduct>
           <!-- no record found -->

@@ -7,6 +7,7 @@ import { ApiServiceProvider } from '../../providers/api-service/api-service';
 import { CONSTANTS } from '../../utils/constants';
 import { PopoverHomePage } from '../popover-home/popover-home';
 import { SmEditOrderPage } from '../sm-edit-order/sm-edit-order';
+import { CommonService } from '../../providers/common.service';
 
 @IonicPage({
   name: 'CustomerListProductPage'
@@ -36,10 +37,15 @@ export class CustomerListProductPage {
   allProducts = []
   totalNetWeight: number = 0
   isEditOrderFlow = false
+  loggedInUserStore = []
 
-  constructor (public navCtrl: NavController, public navParams: NavParams,
-    private apiService: ApiServiceProvider, private widgetUtil: WidgetUtilService
-  , private storageService: StorageServiceProvider) {
+  constructor (public navCtrl: NavController,
+               public navParams: NavParams,
+               private apiService: ApiServiceProvider,
+               private widgetUtil: WidgetUtilService, 
+               private storageService: StorageServiceProvider,
+               private commonService: CommonService) {
+
     this.skipValue = 0
     this.limit = CONSTANTS.PAGINATION_LIMIT
     this.categoryId = this.navParams.get("categoryId")
@@ -72,11 +78,13 @@ export class CustomerListProductPage {
     })
   }
 
-  ionViewDidEnter (){
+  async ionViewDidEnter (){
     this.getCartItems()
-    // this.storageService.getTkPointsFromStorage().then(res => {
-    //   this.tkPoint = res
-    // })
+    const res: any = await this.commonService.getLoggedInUser()
+    if (res.associatedStore && res.associatedStore.length) {
+      console.log('============ 85 ==========', res.associatedStore)
+      this.loggedInUserStore = res.associatedStore
+    }
   }
 
   getList () {
