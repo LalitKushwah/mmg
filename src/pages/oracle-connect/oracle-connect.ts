@@ -165,4 +165,32 @@ export class OracleConnectPage {
       loader.dismiss()
     })    
   }
+
+  storeInProgressOrderInErp () {
+    const loader = this.loadingCtrl.create({
+      content: "Schedular is Running...",
+    });
+    loader.present();
+    this.apiService.storeInProgressOrderInErp().subscribe(res => {
+      loader.dismiss()
+      this.widgetUtil.showToast('Schedular completed successfully...')
+    }, error => {
+      this.widgetUtil.showToast(`Error while running schedular:  ${error}`)
+      loader.dismiss()
+    })
+  }
+
+  updateOrderStatusToBilled () {
+    const loader = this.loadingCtrl.create({
+      content: "Schedular is Running...",
+    });
+    loader.present();
+    this.apiService.updateOrderStatusToBilled().subscribe(res => {
+      loader.dismiss()
+      this.widgetUtil.showToast('Schedular completed successfully...')
+    }, error => {
+      this.widgetUtil.showToast(`Error while running schedular:  ${error}`)
+      loader.dismiss()
+    })
+  }
 }

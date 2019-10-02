@@ -205,6 +205,14 @@ export class ApiServiceProvider {
     return this.http.get(CONSTANTS.BASE_URL + 'api/erp/update/associated/sm/mongo', {})
   }
 
+  storeInProgressOrderInErp () {
+    return this.http.get(CONSTANTS.BASE_URL + 'api/erp/store/inprogress/order/to/erp', {})
+  }
+
+  updateOrderStatusToBilled () {
+    return this.http.get(CONSTANTS.BASE_URL + 'api/erp/update/order/status/billed/mongo', {})
+  }
+
   getVersion (): any {
     return this.http.get(CONSTANTS.BASE_URL + 'api/user/version')
   }
