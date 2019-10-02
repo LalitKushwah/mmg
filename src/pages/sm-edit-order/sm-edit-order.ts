@@ -80,6 +80,7 @@ export class SmEditOrderPage {
 
   async submitOrder () {
     this.showLoader = true
+    this.orderDetail.lastUpdatedAt = Date.now()
     this.apiService.createEditedOrderToErp(this.orderDetail).subscribe(async (result) => {
       this.showLoader = false
       await this.storageService.removeFromStorage('order')

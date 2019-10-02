@@ -37,6 +37,7 @@ export class CustomerOrderDetailPage {
 
     this.orderDetail = this.navParams.get('order')
     // store order to localstorage it will be used when SM needs to perform edit operation
+    
     this.storageService.setToStorage('order', this.orderDetail)
     this.orderItems = this.orderDetail.productList
     this.orderItems.map((value) => {

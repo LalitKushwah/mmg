@@ -44,7 +44,7 @@ export class AdminHomePage {
         this.orderList.map((value) => {
           value.lastUpdatedAt = this.formatDate(value.lastUpdatedAt)
           value.orderTotal = parseFloat((Math.round(value.orderTotal * 100) / 100).toString()).toFixed(2)
-          if((value.status != CONSTANTS.ORDER_STATUS_RECEIVED) && (value.status != CONSTANTS.ORDER_STATUS_CANCEL)) {
+          if((value.status === CONSTANTS.ORDER_STATUS_PROGRESS)) {
             value.showImport = true
           } else {
             value.showImport = false
@@ -66,7 +66,7 @@ export class AdminHomePage {
         this.orderList.map((value) => {
           value.lastUpdatedAt = this.formatDate(value.lastUpdatedAt)
           value.orderTotal = parseFloat((Math.round(value.orderTotal * 100) / 100).toString()).toFixed(2)
-          if((value.status != CONSTANTS.ORDER_STATUS_RECEIVED) && (value.status != CONSTANTS.ORDER_STATUS_CANCEL)) {
+          if((value.status === CONSTANTS.ORDER_STATUS_PROGRESS)) {
             value.showImport = true
           } else {
             value.showImport = false
@@ -105,7 +105,7 @@ export class AdminHomePage {
             this.orderList.map((value) => {
               value.lastUpdatedAt = this.formatDate(value.lastUpdatedAt)
               value.orderTotal = parseFloat((Math.round(value.orderTotal * 100) / 100).toString()).toFixed(2)
-              if((value.status != CONSTANTS.ORDER_STATUS_RECEIVED) && (value.status != CONSTANTS.ORDER_STATUS_CANCEL)) {
+              if((value.status === CONSTANTS.ORDER_STATUS_PROGRESS)) {
                 value.showImport = true
               } else {
                 value.showImport = false
@@ -134,7 +134,7 @@ export class AdminHomePage {
           this.orderList.map((value) => {
             value.lastUpdatedAt = this.formatDate(value.lastUpdatedAt)
             value.orderTotal = parseFloat((Math.round(value.orderTotal * 100) / 100).toString()).toFixed(2)
-            if((value.status != CONSTANTS.ORDER_STATUS_RECEIVED) && (value.status != CONSTANTS.ORDER_STATUS_CANCEL)) {
+            if((value.status === CONSTANTS.ORDER_STATUS_PROGRESS)) {
               value.showImport = true
             } else {
               value.showImport = false

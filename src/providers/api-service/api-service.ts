@@ -37,9 +37,9 @@ export class ApiServiceProvider {
   }
 
   createOrderToErp (orderId) {
-    return this.http.post(CONSTANTS.BASE_URL + 'api/erp/createOrderToERP', [ {
+    return this.http.post(CONSTANTS.BASE_URL + 'api/erp/createOrderToERP', {
       '_id': orderId
-    }])
+    })
   }
 
   createEditedOrderToErp (order) {
