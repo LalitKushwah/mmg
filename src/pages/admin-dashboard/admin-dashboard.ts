@@ -135,10 +135,10 @@ export class AdminDashboardPage {
       this.data.availableCreditLimit = 0
       this.data.tkPoints = 0
       this.data.tkCurrency = 0
-      this.data.lmtdAchieve = 0,
-      this.data.lymtdAchieve = 0,
-      this.data.lmtdGrowthPercentage = 0,
-      this.data.lymtdGrowthPercentage = 0,
+      this.data.lmtdAchieve = 0
+      this.data.lymtdAchieve = 0
+      this.data.lmtdGrowthPercentage = 0
+      this.data.lymtdGrowthPercentage = 0
       //Preparing Data for Graph
       this.mtdAchieved = this.data.achievement
       //this.target = this.data.balanceToDo
