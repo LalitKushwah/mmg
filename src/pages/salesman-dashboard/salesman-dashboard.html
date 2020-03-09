@@ -77,6 +77,42 @@
                 </p>
             </ion-col>
           </ion-row>
+          <ion-row>
+            <ion-col class="tabs">
+                <p class="tab-label-sm">
+                  LMTD Achieved
+                </p>
+                <p class="tab-label-lg">
+                  {{data.lmtdAchieve}}
+                </p>
+            </ion-col>
+            <ion-col class="tabs">
+                <p class="tab-label-sm">
+                    % Growth over LMTD
+                  </p>
+                  <p class="tab-label-lg">
+                    {{data.lmtdAchieve | number: '.2'}}%
+                </p>
+            </ion-col>
+          </ion-row>
+          <ion-row>
+            <ion-col class="tabs">
+                <p class="tab-label-sm">
+                  LYMTD Achieved
+                </p>
+                <p class="tab-label-lg">
+                  {{data.lymtdAchieve}}%
+                </p>
+            </ion-col>
+            <ion-col class="tabs">
+                <p class="tab-label-sm">
+                    % Growth over LYMTD
+                  </p>
+                  <p class="tab-label-lg">
+                    {{data.lmtdAchieve | number: '.2'}}%
+                </p>
+            </ion-col>
+          </ion-row>
 
           <div>
               <ion-row>

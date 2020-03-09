@@ -35,8 +35,10 @@ export class SalesmanDashboardPage {
     currentOutStanding:0,
     thirtyDaysOutStanding:0,
     availableCreditLimit:0,
-    // tkPoints:0,
-    // tkCurrency:0,
+    lmtdAchieve:0,
+    lymtdAchieve:0,
+    lmtdGrowthPercentage: 0,
+    lymtdGrowthPercentage: 0,
     mtdAchieved:0,
     }
   loader: any
@@ -130,11 +132,22 @@ export class SalesmanDashboardPage {
       if (selectedValue !== 'Total') {
         this.data.target = (this.dashboardData['target' + selectedValue.name.charAt(0)]).toFixed(2)
         this.data.achievement = (this.dashboardData['achive' + selectedValue.name.charAt(0)]).toFixed(2)
-
+        this.data.lmtdAchieve = (this.dashboardData['lmtdAchive' + selectedValue.name.charAt(0)]).toFixed(2)
+        this.data.lymtdAchieve = (this.dashboardData['lymtdAchive' + selectedValue.name.charAt(0)]).toFixed(2)
       } else {
         this.data.target = (this.dashboardData['targetC']  + this.dashboardData['targetP'] + this.dashboardData['targetH'] + this.dashboardData['targetL']).toFixed(2)
         this.data.achievement = (this.dashboardData['achiveC']  + this.dashboardData['achiveP'] + this.dashboardData['achiveH'] + this.dashboardData['achiveL']).toFixed(2)
+        this.data.lmtdAchieve = (this.dashboardData['lmtdAchiveC']  + this.dashboardData['lmtdAchiveP'] + this.dashboardData['lmtdAchiveH'] + this.dashboardData['lmtdAchiveL']).toFixed(2)
+        this.data.lymtdAchieve = (this.dashboardData['lymtdAchiveC']  + this.dashboardData['lymtdAchiveP'] + this.dashboardData['lymtdAchiveH'] + this.dashboardData['lymtdAchiveL']).toFixed(2)
       }
+  
+      if (this.data.achievement) {
+        const temp1 = this.data.lmtdAchieve ? ((this.data.achievement/this.data.lmtdAchieve)-1)*100 : 0;
+        this.data.lmtdGrowthPercentage = temp1 ? temp1.toFixed(2): 0;
+        const temp2 = this.data.lymtdAchieve ? ((this.data.achievement/this.data.lymtdAchieve)-1)*100 : 0;
+        this.data.lymtdGrowthPercentage = temp2 ? temp2.toFixed(2) : 0;
+      }
+
       this.data.creditLimit = this.dashboardData.creditLimit ? this.dashboardData.creditLimit : 'NA'
       let temp: any = (this.data.achievement>0 && this.data.target>0) ? (this.data.achievement/this.data.target): 0;
       this.data.achievedPercentage = (temp * 100).toFixed(2);
@@ -145,7 +158,7 @@ export class SalesmanDashboardPage {
       this.data.currentOutStanding = "currentOutStanding" in this.dashboardData ? this.dashboardData.currentOutStanding : 0
       this.data.thirtyDaysOutStanding = this.dashboardData.thirtyDaysOutStanding ? this.dashboardData.thirtyDaysOutStanding : 0
       this.data.availableCreditLimit = this.data.creditLimit != 'NA' && this.data.currentOutStanding != 0 ? (this.data.creditLimit - this.data.currentOutStanding) : 'NA'
-     
+
       //Preparing Data for Graph
       if(!(this.data.achievement && this.data.balanceToDo)){
         this.target = 0.1
