@@ -135,7 +135,10 @@ export class AdminDashboardPage {
       this.data.availableCreditLimit = 0
       this.data.tkPoints = 0
       this.data.tkCurrency = 0
-
+      this.data.lmtdAchieve = 0,
+      this.data.lymtdAchieve = 0,
+      this.data.lmtdGrowthPercentage = 0,
+      this.data.lymtdGrowthPercentage = 0,
       //Preparing Data for Graph
       this.mtdAchieved = this.data.achievement
       //this.target = this.data.balanceToDo
@@ -147,11 +150,22 @@ export class AdminDashboardPage {
       if (selectedValue !== 'Total') {
         this.data.target = (this.dashboardData['target' + selectedValue.name.charAt(0)]).toFixed(2)
         this.data.achievement = (this.dashboardData['achive' + selectedValue.name.charAt(0)]).toFixed(2)
-
+        this.data.lmtdAchieve = (this.dashboardData['lmtdAchive' + selectedValue.name.charAt(0)]).toFixed(2)
+        this.data.lymtdAchieve = (this.dashboardData['lymtdAchive' + selectedValue.name.charAt(0)]).toFixed(2)
       } else {
         this.data.target = (this.dashboardData['targetC']  + this.dashboardData['targetP'] + this.dashboardData['targetH'] + this.dashboardData['targetL']).toFixed(2)
         this.data.achievement = (this.dashboardData['achiveC']  + this.dashboardData['achiveP'] + this.dashboardData['achiveH'] + this.dashboardData['achiveL']).toFixed(2)
+        this.data.lmtdAchieve = (this.dashboardData['lmtdAchiveC']  + this.dashboardData['lmtdAchiveP'] + this.dashboardData['lmtdAchiveH'] + this.dashboardData['lmtdAchiveL']).toFixed(2)
+        this.data.lymtdAchieve = (this.dashboardData['lymtdAchiveC']  + this.dashboardData['lymtdAchiveP'] + this.dashboardData['lymtdAchiveH'] + this.dashboardData['lymtdAchiveL']).toFixed(2)
       }
+  
+      if (this.data.achievement) {
+        const temp1 = this.data.lmtdAchieve ? ((this.data.achievement/this.data.lmtdAchieve)-1)*100 : 0;
+        this.data.lmtdGrowthPercentage = temp1 ? temp1.toFixed(2): 0;
+        const temp2 = this.data.lymtdAchieve ? ((this.data.achievement/this.data.lymtdAchieve)-1)*100 : 0;
+        this.data.lymtdGrowthPercentage = temp2 ? temp2.toFixed(2) : 0;
+      }
+
       let temp: any = (this.data.achievement>0 && this.data.target>0) ? (this.data.achievement/this.data.target): 0;
       this.data.achievedPercentage = (temp * 100).toFixed(2);
       //this.data.achievedPercentage = (this.data.achievement/this.data.target) * 100
