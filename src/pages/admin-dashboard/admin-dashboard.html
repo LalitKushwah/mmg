@@ -38,29 +38,30 @@
             </ion-col>
             <ion-col class="tabs">
                 <p class="tab-label-sm">
-                    MTD Achieved
+                    Balance To Do
                   </p>
                   <p class="tab-label-lg">
-                    {{data.achievement | number: '.2'}}
+                    {{data.balanceToDo | number: '.2'}}
                 </p>
             </ion-col>
+
           </ion-row>
   
           <ion-row>
+              <ion-col class="tabs">
+                  <p class="tab-label-sm">
+                      MTD Achieved
+                    </p>
+                    <p class="tab-label-lg">
+                      {{data.achievement | number: '.2'}}
+                  </p>
+              </ion-col>
               <ion-col class="tabs">
                   <p class="tab-label-sm">
                     % Achieved
                   </p>
                   <p class="tab-label-lg">
                     {{data.achievedPercentage}}%
-                  </p>
-              </ion-col>
-              <ion-col class="tabs">
-                  <p class="tab-label-sm">
-                      Balance To Do
-                    </p>
-                    <p class="tab-label-lg">
-                      {{data.balanceToDo | number: '.2'}}
                   </p>
               </ion-col>
             </ion-row>
@@ -88,7 +89,7 @@
                     LYMTD Achieved
                   </p>
                   <p class="tab-label-lg">
-                    {{data.lymtdAchieve}}%
+                    {{data.lymtdAchieve}}
                   </p>
               </ion-col>
               <ion-col class="tabs">
