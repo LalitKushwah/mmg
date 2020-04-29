@@ -8,6 +8,7 @@ import { CustomerHomePage } from '../customer-home/customer-home';
 import { Chart } from 'chart.js';
 import { ApiServiceProvider } from '../../providers/api-service/api-service';
 import { UserPaymentHistoryPage } from '../user-payment-history/user-payment-history';
+import { UserStatementsPage } from '../user-statements/user-statements';
 
 @IonicPage({
   name: 'UserProfilePage'
@@ -187,6 +188,10 @@ prepareData (selectedValue) {
 
 ionViewWillUnload () {
   this.loader.dismiss()
+}
+
+moveToStatements () {
+  this.navCtrl.push(UserStatementsPage)
 }
 
 }

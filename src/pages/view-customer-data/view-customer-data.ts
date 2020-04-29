@@ -37,6 +37,7 @@ export class ViewCustomerDataPage {
               private storageService: StorageServiceProvider,
               private apiService: ApiServiceProvider,
               private loadingCtrl: LoadingController) {
+                console.log('==========40 ========');
     
   }
 
