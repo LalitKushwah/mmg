@@ -20,9 +20,25 @@ export class UserStatementsPage {
       transDate: 1588171263223,
       desc: 'Sales Invoice',
       ref: 'SI0001',
-      debit: '100',
+      debit: '100.00',
       credit: '',
-      balance: '1000'
+      balance: '1000.00'
+    },
+    {
+      transDate: 1588171263223,
+      desc: 'Sales Invoice',
+      ref: 'SI0001',
+      debit: '',
+      credit: '200.00',
+      balance: '1200.00'
+    },
+    {
+      transDate: 1588171263223,
+      desc: 'Long Description of Sales Invoice',
+      ref: 'SI0001',
+      debit: '99100.00',
+      credit: '',
+      balance: '98900.00'
     },
     {
       transDate: 1588171263223,
@@ -36,9 +52,9 @@ export class UserStatementsPage {
       transDate: 1588171263223,
       desc: 'Sales Invoice',
       ref: 'SI0001',
-      debit: '100',
+      debit: '10000',
       credit: '',
-      balance: '1000'
+      balance: '1000000'
     },
     {
       transDate: 1588171263223,

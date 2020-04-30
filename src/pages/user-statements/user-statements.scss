@@ -1,3 +1,42 @@
 page-user-statements {
-
+    .transDesc{
+        font-size: 1.1em;
+        font-weight: 500;
+        // color: #225f93;
+    }
+    .transDate{
+        color: #9BA3C0;
+        font-size: 0.8em;
+        // font-weight: 300;
+    }
+    .transRef{
+        font-size: 0.9em;
+        font-weight: 400;
+        // color: #141414;
+    }
+    .transAmt{
+        text-align: right;
+        .credit, .debit{
+            font-size: 1.2em !important;
+            font-weight: 500 !important;
+        }
+        .credit{
+            color: #00c93cd3;
+        }
+        .debit{
+            color: #f53d3d;
+        }
+        .balance{
+            font-size: 0.9em;
+            font-weight: 400;
+            color: #9BA3C0;
+        }
+    }
+    ion-footer{
+        box-shadow: 0 0 10px rgba(34, 95, 147, 0.5);
+        background: #225f93;
+        button{
+            margin: 0 !important;
+        }
+    }
 }
