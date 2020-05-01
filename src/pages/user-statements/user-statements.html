@@ -13,15 +13,15 @@
               <ion-icon name="arrow-down" color="danger" *ngIf="item.debit !== ''"></ion-icon>
                 <ion-icon name="arrow-up" color="success" *ngIf="item.credit !== ''"></ion-icon>
             </ion-col> -->
-            <ion-col col-8 text-wrap>
+            <ion-col col-6 text-wrap>
               <p class="transDesc">{{item.desc}}</p>
               <p class="transRef">#{{item.ref}}</p>
-              <p class="transDate">{{item.transDate}}</p>
+              <p class="transDate">{{item.date | date: 'd/mm/yy, h:mm a'}}</p>
             </ion-col>
-            <ion-col col-4 class="transAmt">
-              <p color="success" class="credit" *ngIf="item.credit !== ''">+ {{item.credit}}</p>
-              <p color="danger" class="debit" *ngIf="item.debit !== ''">- {{item.debit}}</p>
-              <p class="balance">{{item.balance}}</p>
+            <ion-col col-6 class="transAmt">
+              <p color="success" class="credit" *ngIf="item.credit">+ {{item.credit | number: '.2'}}</p>
+              <p color="danger" class="debit" *ngIf="item.debit">- {{item.debit | number: '.2'}}</p>
+              <p class="balance">{{item.balance | number: '.2'}}</p>
             </ion-col>
           </ion-row>
         </ion-grid>
@@ -30,7 +30,7 @@
 </ion-content>
 
 <ion-footer>
-  <button ion-button full padding class="downloadBtn"><ion-icon name="document"></ion-icon>
+  <button ion-button full padding class="downloadBtn" (click)="downloadPdf()"><ion-icon name="document"></ion-icon>
       DOWNLOAD PDF
   </button>
 </ion-footer>
