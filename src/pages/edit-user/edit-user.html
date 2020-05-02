@@ -35,14 +35,14 @@
             <ion-label floating *ngIf="userData.userType === 'SALESMANAGER'">SM Code</ion-label>
             <ion-input disabled="true" type="text" [(ngModel)]="custCode"></ion-input>
           </ion-item>
-          <ion-item *ngIf="userData.userType === 'CUSTOMER' ">
+          <!-- <ion-item *ngIf="userData.userType === 'CUSTOMER' ">
               <ion-label floating>TK Point</ion-label>
               <ion-input type="text" [(ngModel)]="tkPoint"></ion-input>
-          </ion-item>
-          <ion-item *ngIf="userData.userType === 'CUSTOMER' ">
+          </ion-item> -->
+          <!-- <ion-item *ngIf="userData.userType === 'CUSTOMER' ">
               <ion-label floating>TK Currency</ion-label>
               <ion-input type="text" [(ngModel)]="tkCurrency"></ion-input>
-          </ion-item>
+          </ion-item> -->
           <ion-grid>
             <ion-row class='associated-salesman' *ngIf="userData.userType === 'CUSTOMER' ">
                 <ion-col col-8>

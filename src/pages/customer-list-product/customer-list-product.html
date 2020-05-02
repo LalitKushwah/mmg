@@ -11,10 +11,10 @@
             <ion-icon name="create"></ion-icon>
             <!-- <ion-badge class="cart-badge">{{cart.length}}</ion-badge> -->
           </button>
-        <button class="cart-btn" ion-button icon-only (click)="showTkToast()">
+        <!-- <button class="cart-btn" ion-button icon-only (click)="showTkToast()">
           <ion-icon name="trophy"></ion-icon>
           <ion-badge class="cart-badge">{{tkPoint}}</ion-badge>
-        </button>
+        </button> -->
         <button ion-button icon-only (click)="presentPopover($event)">
           <ion-icon name="more"></ion-icon>
         </button>
@@ -50,12 +50,12 @@
               CaseSize: <span>{{product.currentCaseSize}}</span>
             </ion-col>
           </ion-row>
-          <ion-row *ngIf="product.tkPoint">
+          <!-- <ion-row *ngIf="product.tkPoint">
             <ion-col text-center>
               <ion-icon name="trophy" color="grey"></ion-icon>
               TK-Point: <span>{{product.tkPoint}}</span>
             </ion-col>
-          </ion-row>
+          </ion-row> -->
 
           <ion-row *ngIf="product.netWeight">
             <ion-col text-center>
