@@ -193,4 +193,19 @@ export class OracleConnectPage {
       loader.dismiss()
     })
   }
+
+  createCustomerStatements () {
+    const loader = this.loadingCtrl.create({
+      content: "Schedular is Running...",
+    });
+    loader.present();
+    this.apiService.createCustomerStatements().subscribe(res => {
+      loader.dismiss()
+      this.widgetUtil.showToast('Schedular completed successfully...')
+    }, error => {
+      this.widgetUtil.showToast(`Error while running schedular:  ${error}`)
+      loader.dismiss()
+    })
+  }
+
 }

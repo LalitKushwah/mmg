@@ -217,6 +217,10 @@ export class ApiServiceProvider {
     return this.http.get(CONSTANTS.BASE_URL + 'api/erp/update/order/status/billed/mongo', {})
   }
 
+  createCustomerStatements () {
+    return this.http.get(CONSTANTS.BASE_URL + 'api/erp/create/customer/statements')
+  }
+
   getVersion (): any {
     return this.http.get(CONSTANTS.BASE_URL + 'api/user/version')
   }
