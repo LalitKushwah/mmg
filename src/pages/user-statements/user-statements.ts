@@ -1,8 +1,11 @@
 import { Component } from '@angular/core';
 import { DatePipe } from '@angular/common';
-import { IonicPage, NavController, NavParams, LoadingController } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, LoadingController, Platform, AlertController } from 'ionic-angular';
 import { ApiServiceProvider } from '../../providers/api-service/api-service';
 import { CommonService } from '../../providers/common.service';
+import {  File } from '@ionic-native/file';
+import {  FileOpener } from '@ionic-native/file-opener';
+
 import pdfMake from 'pdfmake/build/pdfmake';
 import pdfFonts from 'pdfmake/build/vfs_fonts';
 import { StorageServiceProvider } from '../../providers/storage-service/storage-service';
@@ -32,6 +35,8 @@ export class UserStatementsPage {
   totalCredAmount = 0;
   userName = '';
   months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+  pdfObj;
+  documentDefinition;
 
   constructor (
     public navCtrl: NavController, 
@@ -39,7 +44,10 @@ export class UserStatementsPage {
     public apiService: ApiServiceProvider,
     public commonService: CommonService,
     private loadingCtrl: LoadingController,
-    private storageService: StorageServiceProvider) {
+    private storageService: StorageServiceProvider,
+    private file: File, private fileOpener: FileOpener,
+    private plt: Platform,
+    private alertCtrl: AlertController) {
   }
 
   async ionViewWillEnter () {
@@ -67,17 +75,18 @@ export class UserStatementsPage {
       this.loader.dismiss();
       this.calculateTotalCredAmount();
       this.calculateTotalDebAmount();
-      console.log('===== 60 =====', this.totalDebAmount);
+      this.createPdf()
     }, err => {
       console.error(err);
       this.loader.dismiss();
     });
   }
 
-  downloadPdf () {
+  createPdf () {
     let textColorPrimary = '#000000';
-    let documentDefinition = {
+    this.documentDefinition = {
       header: function (currentPage, pageCount, pageSize){},
+      pageSize: 'A4',
       content: [
         { text: 'STATEMENT', fontSize: 18, bold: true, alignment: 'center', color: 'blue', decoration: 'underline' },
         { text: 'CUSTOMER\'S NAME & ADDRESS', bold: true, color: textColorPrimary },
@@ -246,7 +255,7 @@ export class UserStatementsPage {
           alignment: 'right'
         },
         {
-          text: `${this.statements[this.statements.length -1].balance} DR`,
+          text: `${Number(this.statements[this.statements.length -1].balance).toFixed(2)} DR`,
           absolutePosition: { x: 0, y: this.height + 50},
           fontSize: 10,
           color: 'blue',
@@ -271,8 +280,62 @@ export class UserStatementsPage {
         return currentNode.headlineLevel === 1 && followingNodesOnPage.length === 0;
       }
     };
-    pdfMake.createPdf(documentDefinition).download(`${this.userInfo.customerName}-${this.months[new Date().getMonth()]}`);
+    // const doc =pdfMake.createPdf(documentDefinition)
+    // doc.getBase64((data) => { window.location.href = 'data:application/pdf;base64,' + data; });
+
+    this.pdfObj = pdfMake.createPdf(this.documentDefinition);
   }
+
+  downloadPdf () {
+    pdfMake.createPdf(this.documentDefinition).getBuffer(buffer => {
+      var utf8 = new Uint8Array(buffer); // Convert to UTF-8...
+      let binaryArray = utf8.buffer; //
+      this.file.resolveDirectoryUrl(this.file.externalRootDirectory)
+        .then(dirEntry => {
+      this.file.getFile(dirEntry, `${this.userInfo.customerName}-${this.months[new Date().getMonth()]}.pdf`, { create: true })
+            .then(fileEntry => {
+              fileEntry.createWriter(writer => {
+                writer.onwrite = () => {
+                  this.fileOpener.open(fileEntry.toURL(), 'application/pdf')
+                    .then(res => { })
+                    .catch(err => {
+                      const alert = this.alertCtrl.create({ message: err.message, buttons: ['Ok'] });
+                      alert.present();
+                    });
+                }
+                writer.write(binaryArray);
+              })
+            })
+            .catch(err => {
+              const alert = this.alertCtrl.create({ message: err, buttons: ['Ok'] });
+              alert.present();
+            });
+        })
+        .catch(err => {
+          const alert = this.alertCtrl.create({ message: err, buttons: ['Ok'] });
+          alert.present();
+        });
+
+    });
+  }
+
+  saveToDevice (data:any,savefile:any) {
+    console.log('======== Save To Device Called =========');
+    let self = this;
+    self.file.writeFile(self.file.externalDataDirectory, savefile, data, {replace:false})
+        .then(() => {
+          console.log('====== file written successfull =====');
+        }).catch(ex => {
+          console.log('========= Error while writing file ==========', ex);
+        });
+    // const toast = self.toastCtrl.create({
+    // message: 'File saved to your device',
+    // duration: 3000,
+    // position: 'top'
+    // });
+    //toast.present();
+    console.log('file saved')
+    }
 
   prepareRowData () {
     let headingColor = '#8f1515';
