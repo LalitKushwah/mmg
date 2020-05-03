@@ -5,7 +5,7 @@
 </ion-header>
 
 <ion-content no-padding>
-  <ion-list>
+  <ion-list *ngIf="statements && statements.length; else nocontent">
     <ion-item *ngFor="let item of statements">
         <ion-grid>
           <ion-row>
@@ -16,12 +16,12 @@
             <ion-col col-6 text-wrap>
               <p class="transDesc">{{item.desc}}</p>
               <p class="transRef">#{{item.ref}}</p>
-              <p class="transDate">{{item.date | date: 'd/mm/yy, h:mm a'}}</p>
+              <p class="transDate">{{item.date | date: 'dd/M/yy, h:mm a'}}</p>
             </ion-col>
             <ion-col col-6 class="transAmt">
-              <p color="success" class="credit" *ngIf="item.credit">+ {{item.credit | number: '.2'}}</p>
-              <p color="danger" class="debit" *ngIf="item.debit">- {{item.debit | number: '.2'}}</p>
-              <p class="balance">{{item.balance | number: '.2'}}</p>
+              <p color="success" class="credit" *ngIf="item.credit">+ {{item.credit | number: '.3'}}</p>
+              <p color="danger" class="debit" *ngIf="item.debit">- {{item.debit | number: '.3'}}</p>
+              <p class="balance">{{item.balance | number: '.3'}}</p>
             </ion-col>
           </ion-row>
         </ion-grid>
@@ -29,7 +29,11 @@
   </ion-list>
 </ion-content>
 
-<ion-footer>
+<ng-template *nocontent>
+  No Content To Show
+</ng-template>
+
+<ion-footer *ngIf="statements && statements.length">
   <button ion-button full padding class="downloadBtn" (click)="downloadPdf()"><ion-icon name="document"></ion-icon>
       DOWNLOAD PDF
   </button>

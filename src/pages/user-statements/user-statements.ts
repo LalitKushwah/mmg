@@ -5,6 +5,7 @@ import { ApiServiceProvider } from '../../providers/api-service/api-service';
 import { CommonService } from '../../providers/common.service';
 import pdfMake from 'pdfmake/build/pdfmake';
 import pdfFonts from 'pdfmake/build/vfs_fonts';
+import { StorageServiceProvider } from '../../providers/storage-service/storage-service';
 pdfMake.vfs = pdfFonts.pdfMake.vfs;
 /**
  * Generated class for the UserStatementsPage page.
@@ -27,22 +28,33 @@ export class UserStatementsPage {
   width = 0;
   height = 0; /* h */
   // tempIterate = ['1','1','1','1'];
+  totalDebAmount = 0;
+  totalCredAmount = 0;
+  userName = '';
+  months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
 
   constructor (
     public navCtrl: NavController, 
     public navParams: NavParams,
     public apiService: ApiServiceProvider,
     public commonService: CommonService,
-    private loadingCtrl: LoadingController) {
+    private loadingCtrl: LoadingController,
+    private storageService: StorageServiceProvider) {
   }
 
   async ionViewWillEnter () {
-    const loggedInUser: any = await this.commonService.getLoggedInUser();
+    this.userInfo = await this.commonService.getLoggedInUser();
+    if (this.userInfo['userType'] === 'ADMIN' || this.userInfo['userType'] === 'ADMINHO' || this.userInfo['userType'] === 'SALESMAN' || this.userInfo['userType'] === 'SALESMANAGER') {
+      let selectedCustomerprofile = await this.storageService.getFromStorage('editCustomerInfo')
+      if(selectedCustomerprofile['userType']==='CUSTOMER'){
+        this.userInfo = selectedCustomerprofile
+      }
+    }
     this.loader = this.loadingCtrl.create({
       content: "Fetching Records...",
     });
     this.loader.present()
-    this.apiService.getUserTransactions(loggedInUser.externalId).subscribe(res => {
+    this.apiService.getUserTransactions(this.userInfo.externalId).subscribe(res => {
       this.statements = res.body[0].statements;
       this.userInfo = res.body[0];
       if (this.statements && this.statements.length) {
@@ -50,9 +62,12 @@ export class UserStatementsPage {
           var c: any = new Date(a.date);
           var d: any = new Date(b.date);
           return (c - d);
-        }).reverse();
+        });
       }
       this.loader.dismiss();
+      this.calculateTotalCredAmount();
+      this.calculateTotalDebAmount();
+      console.log('===== 60 =====', this.totalDebAmount);
     }, err => {
       console.error(err);
       this.loader.dismiss();
@@ -188,12 +203,13 @@ export class UserStatementsPage {
         }, /* h205 */
         {
           absolutePosition: { x: 50, y: this.height += 25 },
-          layout: 'lightHorizontalLines', // optional
+          // layout: 'lightHorizontalLines', // optional
           table: {
             headerRows: 1,
             widths: [ '*', '*', 100, 50, 50, 100 ],
             body: this.prepareRowData()
-          }
+          },
+          layout: {hLineColor: 'black', vLineColor: 'black'}
         },
         // View For Total Amount Due Begin
         {
@@ -230,7 +246,7 @@ export class UserStatementsPage {
           alignment: 'right'
         },
         {
-          text: '12345.67   DR',
+          text: `${this.statements[this.statements.length -1].balance} DR`,
           absolutePosition: { x: 0, y: this.height + 50},
           fontSize: 10,
           color: 'blue',
@@ -255,7 +271,7 @@ export class UserStatementsPage {
         return currentNode.headlineLevel === 1 && followingNodesOnPage.length === 0;
       }
     };
-    pdfMake.createPdf(documentDefinition).open();
+    pdfMake.createPdf(documentDefinition).download(`${this.userInfo.customerName}-${this.months[new Date().getMonth()]}`);
   }
 
   prepareRowData () {
@@ -273,23 +289,23 @@ export class UserStatementsPage {
       ]
     );
     // tslint:disable-next-line: max-line-length
-    body.push([ '', '', 
-      { 
-        text: 'Brought Forward', 
-        color: 'blue', 
-        bold: true, 
-        fontSize: 9,
-        margin: [0, 6, 0, 6] 
-      }, '', '', 
-      { 
-        text: '24,023.75 DR', 
-        color: 'blue', 
-        bold: true, 
-        fontSize: 8,
-        margin: [0, 6, 0, 6], 
-        alignment: 'right' 
-      }
-    ]);
+    // body.push([ '', '', 
+    //   { 
+    //     text: 'Brought Forward', 
+    //     color: 'blue', 
+    //     bold: true, 
+    //     fontSize: 9,
+    //     margin: [0, 6, 0, 6] 
+    //   }, '', '', 
+    //   { 
+    //     text: '24,023.75 DR', 
+    //     color: 'blue', 
+    //     bold: true, 
+    //     fontSize: 8,
+    //     margin: [0, 6, 0, 6], 
+    //     alignment: 'right' 
+    //   }
+    // ]);
 
     this.height += 50;
 
@@ -360,7 +376,7 @@ export class UserStatementsPage {
           this.height += 26;
           const row = [
             {
-            text: new DatePipe('en_ZM').transform(statement.date, 'dd/mm/yy'),
+            text: new DatePipe('en_ZM').transform(statement.date, 'dd/M/yy'),
             color: textColorSecondary,
             fontSize: 8,
             margin: [0, 6, 0, 6],
@@ -418,13 +434,29 @@ export class UserStatementsPage {
       { text: ''},
       { text: ''},
       { text: ''},
-      { text: '12345.67', color: 'black', fontSize: 11, margin: [0, 6, 0, 6], alignment: 'right' },
-      { text: '56789.00', color: 'black', fontSize: 11, margin: [0, 6, 0, 6], alignment: 'right' },
+      { text: Number(this.totalDebAmount).toFixed(2), color: 'black', fontSize: 11, margin: [0, 6, 0, 6], alignment: 'right' },
+      { text: Number(this.totalCredAmount).toFixed(2), color: 'black', fontSize: 11, margin: [0, 6, 0, 6], alignment: 'right' },
       { text: ''}
     ]
   );
 
     return body;
+  }
+
+  calculateTotalDebAmount () {
+    this.statements.forEach(trans => {
+      if (trans.debit && trans.debit !== '' && trans.debit !== ' ') {
+        this.totalDebAmount = this.totalDebAmount + trans.debit;
+      }
+    })
+  }
+
+  calculateTotalCredAmount () {
+    this.statements.forEach(trans => {
+      if (trans.credit && trans.credit !== '' && trans.credit !== ' ') {
+        this.totalCredAmount = this.totalCredAmount + trans.credit;
+      }
+    })
   }
 
 

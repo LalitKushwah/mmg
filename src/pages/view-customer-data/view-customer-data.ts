@@ -6,6 +6,7 @@ import { StorageServiceProvider } from '../../providers/storage-service/storage-
 
 import { Chart } from 'chart.js';
 import { ApiServiceProvider } from '../../providers/api-service/api-service';
+import { UserStatementsPage } from '../user-statements/user-statements';
 
 @IonicPage({
   name: 'ViewCustomerDataPage'
@@ -199,6 +200,11 @@ prepareData (selectedValue) {
 closePayModal () {
   this.view.dismiss();
 }
+
+moveToStatements () {
+  this.navCtrl.push(UserStatementsPage)
+}
+
 ionViewWillUnload () {
   this.loader.dismiss()
 }

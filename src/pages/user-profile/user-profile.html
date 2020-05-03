@@ -29,7 +29,6 @@
       <ion-card-header class="card-title">
         <!-- TARGET vs ACHIEVEMENT -->
         <!-- <ion-icon></ion-icon> -->
-        <button ion-button (click)="moveToStatements()">View Statements</button>
         <ion-item class="switchCategory">
           <ion-label>TARGET vs ACHIEVEMENT</ion-label>
             <ion-select placeholder="Total"  interface="popover">
@@ -137,6 +136,8 @@
               </ion-col>
             </ion-row>
   </ion-card>
+
+  <button ion-button full (click)="moveToStatements()">View Statements</button>
 
   <!-- <ion-card class="tabs-wrapper" *ngIf="data.tkPoints !== undefined">
       <ion-card-header class="card-title">
