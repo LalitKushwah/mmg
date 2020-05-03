@@ -246,7 +246,7 @@ export class UserStatementsPage {
           alignment: 'right'
         },
         {
-          text: `${this.statements[this.statements.length -1].balance} DR`,
+          text: `${this.statements[this.statements.length -1].balance.toFixed(2)} DR`,
           absolutePosition: { x: 0, y: this.height + 50},
           fontSize: 10,
           color: 'blue',
