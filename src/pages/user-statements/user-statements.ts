@@ -52,11 +52,16 @@ export class UserStatementsPage {
 
   async ionViewWillEnter () {
     this.userInfo = await this.commonService.getLoggedInUser();
-    if (this.userInfo['userType'] === 'ADMIN' || this.userInfo['userType'] === 'ADMINHO' || this.userInfo['userType'] === 'SALESMAN' || this.userInfo['userType'] === 'SALESMANAGER') {
+    if (this.userInfo['userType'] === 'ADMIN' || this.userInfo['userType'] === 'ADMINHO') {
       let selectedCustomerprofile = await this.storageService.getFromStorage('editCustomerInfo')
       if(selectedCustomerprofile['userType']==='CUSTOMER'){
         this.userInfo = selectedCustomerprofile
       }
+    } else if (this.userInfo['userType'] === 'SALESMAN' || this.userInfo['userType'] === 'SALESMANAGER') {
+      let selectedCustomerprofile = await this.storageService.getFromStorage('selectedCustomer')
+      this.userInfo.customerName = selectedCustomerprofile['name'];
+      this.userInfo.customerAddress = selectedCustomerprofile['province'];
+      this.userInfo.externalId = selectedCustomerprofile['externalId'];
     }
     this.loader = this.loadingCtrl.create({
       content: "Fetching Records...",
