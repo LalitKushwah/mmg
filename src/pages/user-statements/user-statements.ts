@@ -3,8 +3,8 @@ import { DatePipe } from '@angular/common';
 import { IonicPage, NavController, NavParams, LoadingController, Platform, AlertController } from 'ionic-angular';
 import { ApiServiceProvider } from '../../providers/api-service/api-service';
 import { CommonService } from '../../providers/common.service';
-import {  File } from '@ionic-native/file';
-import {  FileOpener } from '@ionic-native/file-opener';
+import { File } from '@ionic-native/file';
+import { FileOpener } from '@ionic-native/file-opener';
 
 import pdfMake from 'pdfmake/build/pdfmake';
 import pdfFonts from 'pdfmake/build/vfs_fonts';
@@ -37,9 +37,10 @@ export class UserStatementsPage {
   months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
   pdfObj;
   documentDefinition;
+  loaderDownloading: any;
 
-  constructor (
-    public navCtrl: NavController, 
+  constructor(
+    public navCtrl: NavController,
     public navParams: NavParams,
     public apiService: ApiServiceProvider,
     public commonService: CommonService,
@@ -50,11 +51,11 @@ export class UserStatementsPage {
     private alertCtrl: AlertController) {
   }
 
-  async ionViewWillEnter () {
+  async ionViewWillEnter() {
     this.userInfo = await this.commonService.getLoggedInUser();
     if (this.userInfo['userType'] === 'ADMIN' || this.userInfo['userType'] === 'ADMINHO') {
       let selectedCustomerprofile = await this.storageService.getFromStorage('editCustomerInfo')
-      if(selectedCustomerprofile['userType']==='CUSTOMER'){
+      if (selectedCustomerprofile['userType'] === 'CUSTOMER') {
         this.userInfo = selectedCustomerprofile
       }
     } else if (this.userInfo['userType'] === 'SALESMAN' || this.userInfo['userType'] === 'SALESMANAGER') {
@@ -80,17 +81,22 @@ export class UserStatementsPage {
       this.loader.dismiss();
       this.calculateTotalCredAmount();
       this.calculateTotalDebAmount();
-      this.createPdf()
     }, err => {
       console.error(err);
       this.loader.dismiss();
     });
   }
 
-  createPdf () {
+  createPdf() {
+    this.loaderDownloading = this.loadingCtrl.create({
+      content: "Please wait while downloading...",
+    });
+    this.loaderDownloading.present()
+    this.height = 0;
+    this.width = 0;
     let textColorPrimary = '#000000';
     this.documentDefinition = {
-      header: function (currentPage, pageCount, pageSize){},
+      header: function (currentPage, pageCount, pageSize) { },
       pageSize: 'A4',
       content: [
         { text: 'STATEMENT', fontSize: 18, bold: true, alignment: 'center', color: 'blue', decoration: 'underline' },
@@ -197,7 +203,7 @@ export class UserStatementsPage {
           text: 'TIN No. 1001736629',
           absolutePosition: { x: 0, y: this.height += 25 },
           fontSize: 8,
-          bold: true, 
+          bold: true,
           color: textColorPrimary,
           alignment: 'right'
         }, /* h190 */
@@ -205,14 +211,14 @@ export class UserStatementsPage {
           text: 'Period 01-01-2020 to 07-04-2020',
           absolutePosition: { x: 50, y: this.height += 15 },
           fontSize: 9,
-          bold: true, 
+          bold: true,
           color: textColorPrimary
         }, /* h205 */
         {
           text: 'PAGE No.         1 of 1',
           absolutePosition: { x: 470, y: this.height },
           fontSize: 9,
-          bold: true, 
+          bold: true,
           color: textColorPrimary
         }, /* h205 */
         {
@@ -220,52 +226,52 @@ export class UserStatementsPage {
           // layout: 'lightHorizontalLines', // optional
           table: {
             headerRows: 1,
-            widths: [ '*', '*', 100, 50, 50, 100 ],
+            widths: ['*', '*', 100, 50, 50, 100],
             body: this.prepareRowData()
           },
-          layout: {hLineColor: 'black', vLineColor: 'black'}
+          layout: { hLineColor: 'black', vLineColor: 'black' }
         },
         // View For Total Amount Due Begin
-        {
-          // absolutePosition: { x: 0, y: this.height },
-          canvas: [
-            {
-              type: 'rect',
-              x: 350,
-              y: this.height - 165,
-              w: 180,
-              h: 65,
-              r: 4,
-              lineColor: '#D3D3D3',
-              color: '#D3D3D3'
-            },
-            {
-              type: 'rect',
-              x: 350,
-              y: this.height - 165,
-              w: 177,
-              h: 62,
-              r: 4,
-              lineColor: '#D3D3D3',
-              color: 'white'
-            },
-          ]
-        },
-        {
-          text: 'TOTAL AMOUNT DUE',
-          absolutePosition: { x: 0, y: this.height + 30},
-          fontSize: 11,
-          bold: true,
-          color: textColorPrimary,
-          alignment: 'right'
-        },
-        {
-          text: `${Number(this.statements[this.statements.length -1].balance).toFixed(2)} DR`,
-          absolutePosition: { x: 0, y: this.height + 50},
-          fontSize: 10,
-          color: 'blue',
-          alignment: 'right'
-        },
+        // {
+        // absolutePosition: { x: 0, y: this.height },
+        //   canvas: [
+        //     {
+        //       type: 'rect',
+        //       x: 350,
+        //       y: this.height - 165,
+        //       w: 180,
+        //       h: 65,
+        //       r: 4,
+        //       lineColor: '#D3D3D3',
+        //       color: '#D3D3D3'
+        //     },
+        //     {
+        //       type: 'rect',
+        //       x: 350,
+        //       y: this.height - 165,
+        //       w: 177,
+        //       h: 62,
+        //       r: 4,
+        //       lineColor: '#D3D3D3',
+        //       color: 'white'
+        //     },
+        //   ]
+        // },
+        // {
+        //   text: 'TOTAL AMOUNT DUE',
+        //   absolutePosition: { x: 0, y: this.height + 30 },
+        //   fontSize: 11,
+        //   bold: true,
+        //   color: textColorPrimary,
+        //   alignment: 'right'
+        // },
+        // {
+        //   text: `${Number(this.statements[this.statements.length - 1].balance).toFixed(2)} DR`,
+        //   absolutePosition: { x: 0, y: this.height + 50 },
+        //   fontSize: 10,
+        //   color: 'blue',
+        //   alignment: 'right'
+        // },
         // View For Total Amount Due End
         // {
         //   canvas: [
@@ -279,44 +285,84 @@ export class UserStatementsPage {
         //       }
         //   ]
         // }
-        
       ],
       pageBreakBefore: function (currentNode, followingNodesOnPage, nodesOnNextPage, previousNodesOnPage) {
-        return currentNode.headlineLevel === 1 && followingNodesOnPage.length === 0;
+        let flag = false;
+        if (currentNode.headlineLevel === 1 && followingNodesOnPage.length === 0) {
+          flag = true;
+        }
+
+        if (currentNode.startPosition.top > 750) {
+          flag = true;
+        }
+
+        if (currentNode.hasOwnProperty('id')) {
+          // totalCard = currentNode.startPosition.top;
+          // console.log('total', totalCard);
+        }
+        return flag;
       }
     };
     // const doc =pdfMake.createPdf(documentDefinition)
     // doc.getBase64((data) => { window.location.href = 'data:application/pdf;base64,' + data; });
 
     this.pdfObj = pdfMake.createPdf(this.documentDefinition);
+    this.downloadPdf();
   }
 
-  downloadPdf () {
-    pdfMake.createPdf(this.documentDefinition).getBuffer(buffer => {
+  downloadPdf() {
+    this.pdfObj.getBuffer(buffer => {
       var utf8 = new Uint8Array(buffer); // Convert to UTF-8...
       let binaryArray = utf8.buffer; //
       this.file.resolveDirectoryUrl(this.file.externalRootDirectory)
         .then(dirEntry => {
-      this.file.getFile(dirEntry, `${this.userInfo.customerName}-${this.months[new Date().getMonth()]}.pdf`, { create: true })
+          this.file.getFile(dirEntry, `${this.userInfo.customerName}-${this.months[new Date().getMonth()]}.pdf`, { create: true })
             .then(fileEntry => {
               fileEntry.createWriter(writer => {
                 writer.onwrite = () => {
-                  this.fileOpener.open(fileEntry.toURL(), 'application/pdf')
-                    .then(res => { })
-                    .catch(err => {
-                      const alert = this.alertCtrl.create({ message: err.message, buttons: ['Ok'] });
-                      alert.present();
-                    });
+                  this.loaderDownloading.dismiss();
+                  const confirm = this.alertCtrl.create({
+                    title: 'PDF Downloaded!',
+                    message: 'Your Pdf is downloaded in your storage, Do you want to open now!',
+                    buttons: [
+                      {
+                        text: 'Cancel',
+                        handler: () => {
+                          console.log('Confirmed Cancel');
+                        }
+                      },
+                      {
+                        text: 'Okay',
+                        handler: () => {
+                          this.fileOpener.open(`file:///storage/emulated/0/${this.userInfo.customerName}-${this.months[new Date().getMonth()]}.pdf`, 'application/pdf')
+                            .then(res => { })
+                            .catch(err => {
+                              const alert = this.alertCtrl.create({ message: err.message, buttons: ['Ok'] });
+                              alert.present();
+                            });
+                        }
+                      }
+                    ]
+                  });
+                  confirm.present();
+                  // this.fileOpener.open(fileEntry.toURL(), 'application/pdf')
+                  //   .then(res => { })
+                  //   .catch(err => {
+                  //     const alert = this.alertCtrl.create({ message: err.message, buttons: ['Ok'] });
+                  //     alert.present();
+                  //   });
                 }
                 writer.write(binaryArray);
               })
             })
             .catch(err => {
+              this.loaderDownloading.dismiss();
               const alert = this.alertCtrl.create({ message: err, buttons: ['Ok'] });
               alert.present();
             });
         })
         .catch(err => {
+          this.loaderDownloading.dismiss();
           const alert = this.alertCtrl.create({ message: err, buttons: ['Ok'] });
           alert.present();
         });
@@ -324,15 +370,15 @@ export class UserStatementsPage {
     });
   }
 
-  saveToDevice (data:any,savefile:any) {
+  saveToDevice(data: any, savefile: any) {
     console.log('======== Save To Device Called =========');
     let self = this;
-    self.file.writeFile(self.file.externalDataDirectory, savefile, data, {replace:false})
-        .then(() => {
-          console.log('====== file written successfull =====');
-        }).catch(ex => {
-          console.log('========= Error while writing file ==========', ex);
-        });
+    self.file.writeFile(self.file.externalDataDirectory, savefile, data, { replace: false })
+      .then(() => {
+        console.log('====== file written successfull =====');
+      }).catch(ex => {
+        console.log('========= Error while writing file ==========', ex);
+      });
     // const toast = self.toastCtrl.create({
     // message: 'File saved to your device',
     // duration: 3000,
@@ -340,18 +386,18 @@ export class UserStatementsPage {
     // });
     //toast.present();
     console.log('file saved')
-    }
+  }
 
-  prepareRowData () {
+  prepareRowData() {
     let headingColor = '#8f1515';
     let textColorSecondary = '#202020';
     const body = []
     body.push(
       [
-        { text: 'DATE', color: headingColor, fontSize: 10},
+        { text: 'DATE', color: headingColor, fontSize: 10 },
         { text: 'REFERENCE', color: headingColor, fontSize: 10 },
-        { text: 'DESCRIPTION', color: headingColor, fontSize: 10},
-        { text: 'DEBIT', color: headingColor, fontSize: 10,  alignment: 'right' },
+        { text: 'DESCRIPTION', color: headingColor, fontSize: 10 },
+        { text: 'DEBIT', color: headingColor, fontSize: 10, alignment: 'right' },
         { text: 'CREDIT', color: headingColor, fontSize: 10, alignment: 'right' },
         { text: 'BALANCE', color: headingColor, fontSize: 10, alignment: 'right' }
       ]
@@ -432,86 +478,105 @@ export class UserStatementsPage {
     //       }
     //     ]
     //     body.push(row);
-        
+
     //   }
-      
+
     //   )
     //   //Main code End
 
     // });
-    
+
     this.statements.forEach(statement => {
-          this.height += 26;
-          const row = [
-            {
-            text: new DatePipe('en_ZM').transform(statement.date, 'dd/M/yy'),
-            color: textColorSecondary,
-            fontSize: 8,
-            margin: [0, 6, 0, 6],
-            lineHeight: 1
-          },
-          {
-            text: statement.ref,
-            color: textColorSecondary,
-            fontSize: 8,
-            margin: [0, 6, 0, 6],
-            lineHeight: 1
-          },
-          {
-            text: statement.desc,
-            color: textColorSecondary,
-            fontSize: 8,
-            margin: [0, 6, 0, 6],
-            lineHeight: 1
-          },
-          {
-            text: statement.debit ? Number(statement.debit).toFixed(2): '',
-            color: textColorSecondary,
-            fontSize: 8,
-            margin: [0, 6, 0, 6],
-            lineHeight: 1,
-            alignment: 'right'
-          },
-          {
-            text: statement.credit ? Number(statement.credit).toFixed(2): '',
-            color: textColorSecondary,
-            fontSize: 8,
-            margin: [0, 6, 0, 6],
-            lineHeight: 1,
-            alignment: 'right'
-          },
-          {
-            text: Number(statement.balance).toFixed(2) + '  DR',
-            color: textColorSecondary,
-            fontSize: 8,
-            margin: [0, 6, 0, 6],
-            lineHeight: 1,
-            alignment: 'right'
-          }
-        ]
-        body.push(row);
-        
-      }
-      
+      this.height += 26;
+      const row = [
+        {
+          text: new DatePipe('en_ZM').transform(statement.date, 'dd/M/yy'),
+          color: textColorSecondary,
+          fontSize: 8,
+          margin: [0, 6, 0, 6],
+          lineHeight: 1
+        },
+        {
+          text: statement.ref,
+          color: textColorSecondary,
+          fontSize: 8,
+          margin: [0, 6, 0, 6],
+          lineHeight: 1
+        },
+        {
+          text: statement.desc,
+          color: textColorSecondary,
+          fontSize: 8,
+          margin: [0, 6, 0, 6],
+          lineHeight: 1
+        },
+        {
+          text: statement.debit ? Number(statement.debit).toFixed(2) : '',
+          color: textColorSecondary,
+          fontSize: 8,
+          margin: [0, 6, 0, 6],
+          lineHeight: 1,
+          alignment: 'right'
+        },
+        {
+          text: statement.credit ? Number(statement.credit).toFixed(2) : '',
+          color: textColorSecondary,
+          fontSize: 8,
+          margin: [0, 6, 0, 6],
+          lineHeight: 1,
+          alignment: 'right'
+        },
+        {
+          text: Number(statement.balance).toFixed(2) + '  DR',
+          color: textColorSecondary,
+          fontSize: 8,
+          margin: [0, 6, 0, 6],
+          lineHeight: 1,
+          alignment: 'right'
+        }
+      ]
+      body.push(row);
+
+    }
+
     )
 
-  // Total Credit Debit Row
-  this.height += 20;
-  body.push(
-    [
-      { text: ''},
-      { text: ''},
-      { text: ''},
-      { text: Number(this.totalDebAmount).toFixed(2), color: 'black', fontSize: 11, margin: [0, 6, 0, 6], alignment: 'right' },
-      { text: Number(this.totalCredAmount).toFixed(2), color: 'black', fontSize: 11, margin: [0, 6, 0, 6], alignment: 'right' },
-      { text: ''}
-    ]
-  );
+    // Total Credit Debit Row
+    this.height += 20;
+    body.push(
+      [
+        { text: '' },
+        { text: '' },
+        { text: '' },
+        { text: Number(this.totalDebAmount).toFixed(2), color: 'black', fontSize: 11, margin: [0, 6, 0, 6], alignment: 'right' },
+        { text: Number(this.totalCredAmount).toFixed(2), color: 'black', fontSize: 11, margin: [0, 6, 0, 6], alignment: 'right' },
+        { text: '' }
+      ]
+    );
+
+    body.push(
+      [
+        { border: [false, false, false, false], text: '' },
+        { border: [false, false, false, false], text: '' },
+        { border: [false, false, false, false], text: '' },
+        { border: [false, false, false, false], text: '' },
+        { border: [true, false, false, true], text: 'TOTAL AMOUNT DUE', fontSize: 11, bold: true, alignment: 'center', color: '#000000'},
+        {
+          text: `${Number(this.statements[this.statements.length - 1].balance).toFixed(2)} DR`,
+          border: [false, true, true, true],
+          fontSize: 10,
+          bold: true,
+          color: 'blue',
+          alignment: 'center',
+          margin: [0, 6, 0, 6]
+        }
+      ]
+    );
 
     return body;
   }
 
-  calculateTotalDebAmount () {
+  calculateTotalDebAmount() {
     this.statements.forEach(trans => {
       if (trans.debit && trans.debit !== '' && trans.debit !== ' ') {
         this.totalDebAmount = this.totalDebAmount + trans.debit;
@@ -519,7 +584,7 @@ export class UserStatementsPage {
     })
   }
 
-  calculateTotalCredAmount () {
+  calculateTotalCredAmount() {
     this.statements.forEach(trans => {
       if (trans.credit && trans.credit !== '' && trans.credit !== ' ') {
         this.totalCredAmount = this.totalCredAmount + trans.credit;
@@ -528,7 +593,7 @@ export class UserStatementsPage {
   }
 
 
-  ionViewDidLoad () {
+  ionViewDidLoad() {
     console.log('ionViewDidLoad UserStatementsPage');
   }
 
