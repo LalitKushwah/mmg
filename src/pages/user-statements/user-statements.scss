@@ -21,7 +21,7 @@ page-user-statements {
             font-weight: 500 !important;
         }
         .credit{
-            color: #00c93cd3;
+            color: green;
         }
         .debit{
             color: #f53d3d;
@@ -39,4 +39,8 @@ page-user-statements {
             margin: 0 !important;
         }
     }
+}
+.no-content {
+    margin-top:70%;
+    text-align: center;
 }

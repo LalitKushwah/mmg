@@ -104,6 +104,7 @@ import { SmEditOrderPage } from '../pages/sm-edit-order/sm-edit-order';
 import { SmEditOrderPageModule } from '../pages/sm-edit-order/sm-edit-order.module';
 import { UserStatementsPage } from '../pages/user-statements/user-statements';
 import { UserStatementsPageModule } from '../pages/user-statements/user-statements.module';
+import { FileOpener } from '@ionic-native/file-opener';
 
 @NgModule({
   declarations: [
@@ -227,6 +228,7 @@ import { UserStatementsPageModule } from '../pages/user-statements/user-statemen
     File,
     FileTransfer,
     FileTransferObject,
+    FileOpener,
     DatePipe,
     CommonService
   ]
