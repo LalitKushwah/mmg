@@ -39,7 +39,7 @@ export class UserStatementsPage {
   documentDefinition;
   loaderDownloading: any;
 
-  constructor(
+  constructor (
     public navCtrl: NavController,
     public navParams: NavParams,
     public apiService: ApiServiceProvider,
@@ -51,7 +51,7 @@ export class UserStatementsPage {
     private alertCtrl: AlertController) {
   }
 
-  async ionViewWillEnter() {
+  async ionViewWillEnter () {
     this.userInfo = await this.commonService.getLoggedInUser();
     if (this.userInfo['userType'] === 'ADMIN' || this.userInfo['userType'] === 'ADMINHO') {
       let selectedCustomerprofile = await this.storageService.getFromStorage('editCustomerInfo')
@@ -68,26 +68,30 @@ export class UserStatementsPage {
       content: "Fetching Records...",
     });
     this.loader.present()
-    this.apiService.getUserTransactions(this.userInfo.externalId).subscribe(res => {
-      this.statements = res.body[0].statements;
-      this.userInfo = res.body[0];
-      if (this.statements && this.statements.length) {
-        this.statements.sort(function (a, b) {
-          var c: any = new Date(a.date);
-          var d: any = new Date(b.date);
-          return (c - d);
-        });
+    this.apiService.getUserTransactions(this.userInfo.externalId).subscribe((res: any) => {
+      if (res && res.body && res.body.length) {
+          this.statements = res.body[0].statements;
+          this.userInfo = res.body[0];
+          if (this.statements && this.statements.length) {
+            this.statements.sort(function (a, b) {
+              var c: any = new Date(a.date);
+              var d: any = new Date(b.date);
+              return (c - d);
+            });
+          }
+          this.loader.dismiss();
+          this.calculateTotalCredAmount();
+          this.calculateTotalDebAmount();
+      } else {
+        this.loader.dismiss();
       }
-      this.loader.dismiss();
-      this.calculateTotalCredAmount();
-      this.calculateTotalDebAmount();
     }, err => {
       console.error(err);
       this.loader.dismiss();
     });
   }
 
-  createPdf() {
+  createPdf () {
     this.loaderDownloading = this.loadingCtrl.create({
       content: "Please wait while downloading...",
     });
@@ -96,7 +100,17 @@ export class UserStatementsPage {
     this.width = 0;
     let textColorPrimary = '#000000';
     this.documentDefinition = {
-      header: function (currentPage, pageCount, pageSize) { },
+      header: function (currentPage, pageCount, pageSize) { 
+        return [
+          { 
+            text: `Page ${currentPage} of ${pageCount}`, 
+            fontSize: 12, 
+            color: 'grey',
+            margin: 20,
+            alignment: 'right'
+          }
+        ]
+      },
       pageSize: 'A4',
       content: [
         { text: 'STATEMENT', fontSize: 18, bold: true, alignment: 'center', color: 'blue', decoration: 'underline' },
@@ -122,27 +136,7 @@ export class UserStatementsPage {
               r: 4,
               lineColor: '#D3D3D3',
               color: 'white'
-            },
-            {
-              type: 'rect',
-              x: 315,
-              y: this.height,
-              w: 213,
-              h: 105,
-              r: 4,
-              lineColor: '#D3D3D3',
-              color: '#D3D3D3'
-            },
-            {
-              type: 'rect',
-              x: 315,
-              y: this.height,
-              w: 210,
-              h: 102,
-              r: 4,
-              lineColor: '#D3D3D3',
-              color: 'white'
-            },
+            }
           ]
         },
         {
@@ -158,71 +152,15 @@ export class UserStatementsPage {
           color: textColorPrimary
         }, /* h130 */
         {
-          text: 'TRADE KINGS LIMITED ZAMBIA',
-          absolutePosition: { x: 0, y: this.height - 40 },
-          fontSize: 8,
-          color: textColorPrimary,
-          alignment: 'right'
-        }, /* 90 */
-        {
-          text: 'PLOT NO 29381, NAMPUNDWE RD..LUSKA, ZAMBIA',
-          absolutePosition: { x: 0, y: this.height - 25 },
-          fontSize: 8,
-          color: textColorPrimary,
-          alignment: 'right'
-        }, /* 105 */
-        {
-          text: 'L GHT INDUSTRIAL AREA',
-          absolutePosition: { x: 0, y: this.height - 10 },
-          fontSize: 8,
-          color: textColorPrimary,
-          alignment: 'right'
-        }, /* 120 */
-        {
-          text: 'TEL: - ',
-          absolutePosition: { x: 0, y: this.height += 5 },
-          fontSize: 8,
-          color: textColorPrimary,
-          alignment: 'right'
-        }, /* h135 */
-        {
-          text: 'FAX: +264 211-286127',
-          absolutePosition: { x: 0, y: this.height += 15 },
-          fontSize: 8,
-          color: textColorPrimary,
-          alignment: 'right'
-        }, /* h150 */
-        {
-          text: 'E-MAIL: info.tradekings.co.zm',
-          absolutePosition: { x: 0, y: this.height += 15 },
-          fontSize: 8,
-          color: textColorPrimary,
-          alignment: 'right'
-        }, /* h165 */
-        {
-          text: 'TIN No. 1001736629',
-          absolutePosition: { x: 0, y: this.height += 25 },
-          fontSize: 8,
-          bold: true,
-          color: textColorPrimary,
-          alignment: 'right'
-        }, /* h190 */
-        {
-          text: 'Period 01-01-2020 to 07-04-2020',
-          absolutePosition: { x: 50, y: this.height += 15 },
+          text: `Period ${new DatePipe('en_ZM').transform(this.statements[0].date, 'dd/M/yy')} to ${new DatePipe('en_ZM').transform(this.statements[this.statements.length-1].date, 'dd/M/yy')}`,
+          absolutePosition: { x: 50, y: this.height += 60 },
           fontSize: 9,
+          alignment: 'right',
           bold: true,
           color: textColorPrimary
         }, /* h205 */
         {
-          text: 'PAGE No.         1 of 1',
-          absolutePosition: { x: 470, y: this.height },
-          fontSize: 9,
-          bold: true,
-          color: textColorPrimary
-        }, /* h205 */
-        {
-          absolutePosition: { x: 50, y: this.height += 25 },
+          absolutePosition: { x: 50, y: this.height += 60 },
           // layout: 'lightHorizontalLines', // optional
           table: {
             headerRows: 1,
@@ -230,61 +168,7 @@ export class UserStatementsPage {
             body: this.prepareRowData()
           },
           layout: { hLineColor: 'black', vLineColor: 'black' }
-        },
-        // View For Total Amount Due Begin
-        // {
-        // absolutePosition: { x: 0, y: this.height },
-        //   canvas: [
-        //     {
-        //       type: 'rect',
-        //       x: 350,
-        //       y: this.height - 165,
-        //       w: 180,
-        //       h: 65,
-        //       r: 4,
-        //       lineColor: '#D3D3D3',
-        //       color: '#D3D3D3'
-        //     },
-        //     {
-        //       type: 'rect',
-        //       x: 350,
-        //       y: this.height - 165,
-        //       w: 177,
-        //       h: 62,
-        //       r: 4,
-        //       lineColor: '#D3D3D3',
-        //       color: 'white'
-        //     },
-        //   ]
-        // },
-        // {
-        //   text: 'TOTAL AMOUNT DUE',
-        //   absolutePosition: { x: 0, y: this.height + 30 },
-        //   fontSize: 11,
-        //   bold: true,
-        //   color: textColorPrimary,
-        //   alignment: 'right'
-        // },
-        // {
-        //   text: `${Number(this.statements[this.statements.length - 1].balance).toFixed(2)} DR`,
-        //   absolutePosition: { x: 0, y: this.height + 50 },
-        //   fontSize: 10,
-        //   color: 'blue',
-        //   alignment: 'right'
-        // },
-        // View For Total Amount Due End
-        // {
-        //   canvas: [
-        //       {
-        //           type: 'line',
-        //           x1: 10,
-        //           y1: this.height - 360,
-        //           x2: 515,
-        //           y2: this.height - 360,
-        //           lineWidth: 2
-        //       }
-        //   ]
-        // }
+        }
       ],
       pageBreakBefore: function (currentNode, followingNodesOnPage, nodesOnNextPage, previousNodesOnPage) {
         let flag = false;
@@ -303,92 +187,76 @@ export class UserStatementsPage {
         return flag;
       }
     };
-    // const doc =pdfMake.createPdf(documentDefinition)
-    // doc.getBase64((data) => { window.location.href = 'data:application/pdf;base64,' + data; });
 
     this.pdfObj = pdfMake.createPdf(this.documentDefinition);
     this.downloadPdf();
   }
 
-  downloadPdf() {
-    this.pdfObj.getBuffer(buffer => {
-      var utf8 = new Uint8Array(buffer); // Convert to UTF-8...
-      let binaryArray = utf8.buffer; //
-      this.file.resolveDirectoryUrl(this.file.externalRootDirectory)
-        .then(dirEntry => {
-          this.file.getFile(dirEntry, `${this.userInfo.customerName}-${this.months[new Date().getMonth()]}.pdf`, { create: true })
-            .then(fileEntry => {
-              fileEntry.createWriter(writer => {
-                writer.onwrite = () => {
-                  this.loaderDownloading.dismiss();
-                  const confirm = this.alertCtrl.create({
-                    title: 'PDF Downloaded!',
-                    message: 'Your Pdf is downloaded in your storage, Do you want to open now!',
-                    buttons: [
-                      {
-                        text: 'Cancel',
-                        handler: () => {
-                          console.log('Confirmed Cancel');
+  downloadPdf () {
+    if (window['cordova']) {
+      this.pdfObj.getBuffer(buffer => {
+        var utf8 = new Uint8Array(buffer); // Convert to UTF-8...
+        let binaryArray = utf8.buffer; //
+        this.file.resolveDirectoryUrl(this.file.externalRootDirectory)
+          .then(dirEntry => {
+            this.file.getFile(dirEntry, `${this.userInfo.customerName}-${this.months[new Date().getMonth()]}.pdf`, { create: true })
+              .then(fileEntry => {
+                fileEntry.createWriter(writer => {
+                  writer.onwrite = () => {
+                    this.loaderDownloading.dismiss();
+                    const confirm = this.alertCtrl.create({
+                      title: 'PDF Downloaded!',
+                      message: 'Your Pdf is downloaded in your storage, Do you want to open now!',
+                      buttons: [
+                        {
+                          text: 'Cancel',
+                          handler: () => {
+                            console.log('Confirmed Cancel');
+                          }
+                        },
+                        {
+                          text: 'Okay',
+                          handler: () => {
+                            this.fileOpener.open(`file:///storage/emulated/0/${this.userInfo.customerName}-${this.months[new Date().getMonth()]}.pdf`, 'application/pdf')
+                              .then(res => { })
+                              .catch(err => {
+                                const alert = this.alertCtrl.create({ message: err.message, buttons: ['Ok'] });
+                                alert.present();
+                              });
+                          }
                         }
-                      },
-                      {
-                        text: 'Okay',
-                        handler: () => {
-                          this.fileOpener.open(`file:///storage/emulated/0/${this.userInfo.customerName}-${this.months[new Date().getMonth()]}.pdf`, 'application/pdf')
-                            .then(res => { })
-                            .catch(err => {
-                              const alert = this.alertCtrl.create({ message: err.message, buttons: ['Ok'] });
-                              alert.present();
-                            });
-                        }
-                      }
-                    ]
-                  });
-                  confirm.present();
-                  // this.fileOpener.open(fileEntry.toURL(), 'application/pdf')
-                  //   .then(res => { })
-                  //   .catch(err => {
-                  //     const alert = this.alertCtrl.create({ message: err.message, buttons: ['Ok'] });
-                  //     alert.present();
-                  //   });
-                }
-                writer.write(binaryArray);
+                      ]
+                    });
+                    confirm.present();
+                    // this.fileOpener.open(fileEntry.toURL(), 'application/pdf')
+                    //   .then(res => { })
+                    //   .catch(err => {
+                    //     const alert = this.alertCtrl.create({ message: err.message, buttons: ['Ok'] });
+                    //     alert.present();
+                    //   });
+                  }
+                  writer.write(binaryArray);
+                })
               })
-            })
-            .catch(err => {
-              this.loaderDownloading.dismiss();
-              const alert = this.alertCtrl.create({ message: err, buttons: ['Ok'] });
-              alert.present();
-            });
-        })
-        .catch(err => {
-          this.loaderDownloading.dismiss();
-          const alert = this.alertCtrl.create({ message: err, buttons: ['Ok'] });
-          alert.present();
-        });
-
-    });
-  }
-
-  saveToDevice(data: any, savefile: any) {
-    console.log('======== Save To Device Called =========');
-    let self = this;
-    self.file.writeFile(self.file.externalDataDirectory, savefile, data, { replace: false })
-      .then(() => {
-        console.log('====== file written successfull =====');
-      }).catch(ex => {
-        console.log('========= Error while writing file ==========', ex);
+              .catch(err => {
+                this.loaderDownloading.dismiss();
+                const alert = this.alertCtrl.create({ message: err, buttons: ['Ok'] });
+                alert.present();
+              });
+          })
+          .catch(err => {
+            this.loaderDownloading.dismiss();
+            const alert = this.alertCtrl.create({ message: err, buttons: ['Ok'] });
+            alert.present();
+          });
+  
       });
-    // const toast = self.toastCtrl.create({
-    // message: 'File saved to your device',
-    // duration: 3000,
-    // position: 'top'
-    // });
-    //toast.present();
-    console.log('file saved')
+    } else {
+      this.pdfObj.open();
+    }
   }
 
-  prepareRowData() {
+  prepareRowData () {
     let headingColor = '#8f1515';
     let textColorSecondary = '#202020';
     const body = []
@@ -576,7 +444,7 @@ export class UserStatementsPage {
     return body;
   }
 
-  calculateTotalDebAmount() {
+  calculateTotalDebAmount () {
     this.statements.forEach(trans => {
       if (trans.debit && trans.debit !== '' && trans.debit !== ' ') {
         this.totalDebAmount = this.totalDebAmount + trans.debit;
@@ -584,7 +452,7 @@ export class UserStatementsPage {
     })
   }
 
-  calculateTotalCredAmount() {
+  calculateTotalCredAmount () {
     this.statements.forEach(trans => {
       if (trans.credit && trans.credit !== '' && trans.credit !== ' ') {
         this.totalCredAmount = this.totalCredAmount + trans.credit;
@@ -593,7 +461,7 @@ export class UserStatementsPage {
   }
 
 
-  ionViewDidLoad() {
+  ionViewDidLoad () {
     console.log('ionViewDidLoad UserStatementsPage');
   }
 

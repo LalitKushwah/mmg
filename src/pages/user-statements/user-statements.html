@@ -29,12 +29,14 @@
   </ion-list>
 </ion-content>
 
-<ng-template *nocontent>
-  No Content To Show
+<ng-template #nocontent>
+  <div class="no-content">
+    No Transactions to show
+  </div>
 </ng-template>
 
 <ion-footer *ngIf="statements && statements.length">
-  <button ion-button full padding class="downloadBtn" (click)="createPdf()"><ion-icon name="document"></ion-icon>
+  <button ion-button full padding class="downloadBtn" (tap)="createPdf()"><ion-icon name="document"></ion-icon>
       DOWNLOAD PDF
   </button>
 </ion-footer>
