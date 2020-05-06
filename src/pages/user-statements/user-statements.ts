@@ -160,11 +160,13 @@ export class UserStatementsPage {
           color: textColorPrimary
         }, /* h205 */
         {
-          absolutePosition: { x: 50, y: this.height += 60 },
+          absolutePosition: { x: 50, y: this.height += 30 },
+          // absolutePosition: { x: 50, y: this.height += 60 },
           // layout: 'lightHorizontalLines', // optional
           table: {
             headerRows: 1,
-            widths: ['*', '*', 100, 50, 50, 100],
+            // widths: ['auto','auto','auto','auto','auto','auto'],
+            widths: ['*', '*', 100, 70, 70, 80],
             body: this.prepareRowData()
           },
           layout: { hLineColor: 'black', vLineColor: 'black' }
@@ -262,12 +264,12 @@ export class UserStatementsPage {
     const body = []
     body.push(
       [
-        { text: 'DATE', color: headingColor, fontSize: 10 },
-        { text: 'REFERENCE', color: headingColor, fontSize: 10 },
-        { text: 'DESCRIPTION', color: headingColor, fontSize: 10 },
-        { text: 'DEBIT', color: headingColor, fontSize: 10, alignment: 'right' },
-        { text: 'CREDIT', color: headingColor, fontSize: 10, alignment: 'right' },
-        { text: 'BALANCE', color: headingColor, fontSize: 10, alignment: 'right' }
+        { text: 'DATE', color: headingColor, fontSize: 10, margin: [0, 6, 0, 6] },
+        { text: 'REFERENCE', color: headingColor, fontSize: 10, margin: [0, 6, 0, 6] },
+        { text: 'DESCRIPTION', color: headingColor, fontSize: 10, margin: [0, 6, 0, 6] },
+        { text: 'DEBIT', color: headingColor, fontSize: 10, margin: [0, 6, 0, 6], alignment: 'right' },
+        { text: 'CREDIT', color: headingColor, fontSize: 10, margin: [0, 6, 0, 6], alignment: 'right' },
+        { text: 'BALANCE', color: headingColor, fontSize: 10, margin: [0, 6, 0, 6], alignment: 'right' }
       ]
     );
     // tslint:disable-next-line: max-line-length
@@ -297,59 +299,59 @@ export class UserStatementsPage {
 
     //     //Main code Begin
     //     this.statements.forEach(statement => {
-    //       this.height += 26;
-    //       const row = [
-    //         {
-    //         text: new DatePipe('en_ZM').transform(statement.date, 'dd/mm/yy'),
-    //         color: textColorSecondary,
-    //         fontSize: 8,
-    //         margin: [0, 6, 0, 6],
-    //         lineHeight: 1
-    //       },
-    //       {
-    //         text: statement.ref,
-    //         color: textColorSecondary,
-    //         fontSize: 8,
-    //         margin: [0, 6, 0, 6],
-    //         lineHeight: 1
-    //       },
-    //       {
-    //         text: statement.desc,
-    //         color: textColorSecondary,
-    //         fontSize: 8,
-    //         margin: [0, 6, 0, 6],
-    //         lineHeight: 1
-    //       },
-    //       {
-    //         text: statement.debit ? Number(statement.debit).toFixed(2): '',
-    //         color: textColorSecondary,
-    //         fontSize: 8,
-    //         margin: [0, 6, 0, 6],
-    //         lineHeight: 1,
-    //         alignment: 'right'
-    //       },
-    //       {
-    //         text: statement.credit ? Number(statement.credit).toFixed(2): '',
-    //         color: textColorSecondary,
-    //         fontSize: 8,
-    //         margin: [0, 6, 0, 6],
-    //         lineHeight: 1,
-    //         alignment: 'right'
-    //       },
-    //       {
-    //         text: Number(statement.balance).toFixed(2) + '  DR',
-    //         color: textColorSecondary,
-    //         fontSize: 8,
-    //         margin: [0, 6, 0, 6],
-    //         lineHeight: 1,
-    //         alignment: 'right'
-    //       }
-    //     ]
-    //     body.push(row);
+    //   this.height += 26;
+    //   const row = [
+    //     {
+    //       text: new DatePipe('en_ZM').transform(statement.date, 'dd/M/yy'),
+    //       color: textColorSecondary,
+    //       fontSize: 8,
+    //       margin: [0, 6, 0, 6],
+    //       lineHeight: 1
+    //     },
+    //     {
+    //       text: statement.ref,
+    //       color: textColorSecondary,
+    //       fontSize: 8,
+    //       margin: [0, 6, 0, 6],
+    //       lineHeight: 1
+    //     },
+    //     {
+    //       text: statement.desc,
+    //       color: textColorSecondary,
+    //       fontSize: 8,
+    //       margin: [0, 6, 0, 6],
+    //       lineHeight: 1
+    //     },
+    //     {
+    //       text: statement.debit ? Number(statement.debit).toFixed(2) : '',
+    //       color: textColorSecondary,
+    //       fontSize: 8,
+    //       margin: [0, 6, 0, 6],
+    //       lineHeight: 1,
+    //       alignment: 'right'
+    //     },
+    //     {
+    //       text: statement.credit ? Number(statement.credit).toFixed(2) : '',
+    //       color: textColorSecondary,
+    //       fontSize: 8,
+    //       margin: [0, 6, 0, 6],
+    //       lineHeight: 1,
+    //       alignment: 'right'
+    //     },
+    //     {
+    //       text: Number(statement.balance).toFixed(2) + '  DR',
+    //       color: textColorSecondary,
+    //       fontSize: 8,
+    //       margin: [0, 6, 0, 6],
+    //       lineHeight: 1,
+    //       alignment: 'right'
+    //     }
+    //   ]
+    //   body.push(row);
 
-    //   }
+    // }
 
-    //   )
+    // )
     //   //Main code End
 
     // });
@@ -424,22 +426,51 @@ export class UserStatementsPage {
 
     body.push(
       [
+        { border: [true, false, true, false], text: 'TOTAL AMOUNT DUE', colSpan: 6, margin: [0, 6, 0, 0], fontSize: 11, bold: true, alignment: 'right', color: '#000000'},
         { border: [false, false, false, false], text: '' },
         { border: [false, false, false, false], text: '' },
         { border: [false, false, false, false], text: '' },
         { border: [false, false, false, false], text: '' },
-        { border: [true, false, false, true], text: 'TOTAL AMOUNT DUE', fontSize: 11, bold: true, alignment: 'center', color: '#000000'},
+        { border: [false, false, false, false], text: '' }
+      ]
+    );
+    body.push(
+      [
         {
           text: `${Number(this.statements[this.statements.length - 1].balance).toFixed(2)} DR`,
-          border: [false, true, true, true],
+          border: [true, false, true, true],
+          colSpan: 6,
           fontSize: 10,
           bold: true,
           color: 'blue',
-          alignment: 'center',
+          alignment: 'right',
           margin: [0, 6, 0, 6]
-        }
+        },
+        { border: [false, false, false, false], text: '' },
+        { border: [false, false, false, false], text: '' },
+        { border: [false, false, false, false], text: '' },
+        { border: [false, false, false, false], text: '' },
+        { border: [false, false, false, false], text: '' },
       ]
     );
+    // body.push(
+    //   [
+    //     { border: [false, false, false, false], text: '' },
+    //     { border: [false, false, false, false], text: '' },
+    //     { border: [false, false, false, false], text: '' },
+    //     { border: [false, false, false, false], text: '' },
+    //     { border: [true, false, false, true], text: 'TOTAL AMOUNT DUE', fontSize: 11, bold: true, alignment: 'center', color: '#000000'},
+    //     {
+    //       text: `${Number(this.statements[this.statements.length - 1].balance).toFixed(2)} DR`,
+    //       border: [false, true, true, true],
+    //       fontSize: 10,
+    //       bold: true,
+    //       color: 'blue',
+    //       alignment: 'center',
+    //       margin: [0, 6, 0, 6]
+    //     }
+    //   ]
+    // );
 
     return body;
   }
