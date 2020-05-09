@@ -137,11 +137,13 @@
             </ion-row>
   </ion-card>
 
-  <button ion-button full (click)="moveToStatements()">View Statements</button>
+  <ng-container *ngIf="loggedInUser && loggedInUser['userType'] !== 'CUSTOMER'">
+    <button ion-button full (click)="moveToStatements()">View Statements</button>
+  </ng-container>
 
   <!-- <ion-card class="tabs-wrapper" *ngIf="data.tkPoints !== undefined">
       <ion-card-header class="card-title">
-        TK CURRENCY
+        TK CURRENCYs
       </ion-card-header>
       
           <ion-row>

@@ -46,6 +46,7 @@ export class UserProfilePage {
   externalId: string = ''
   customerDashboard: boolean = true
   colorType: any
+  loggedInUser;
 
   constructor (public navCtrl: NavController, 
               public navParams: NavParams,
@@ -100,6 +101,8 @@ export class UserProfilePage {
     this.loader.present()
     try {
       let profile = await this.storageService.getFromStorage('profile')
+      this.loggedInUser = profile;
+      console.log(this.loggedInUser);
       if ((profile['userType'] === 'SALESMAN') || (profile['userType'] === 'SALESMANAGER')) {
         let selectedCustomerprofile = await this.storageService.getFromStorage('selectedCustomer')
         this.partyName = selectedCustomerprofile['name']
