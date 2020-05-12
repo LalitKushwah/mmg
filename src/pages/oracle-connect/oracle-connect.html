@@ -15,7 +15,13 @@
 
 <ion-content padding>
   <ion-item>
+    <button full large text-wrap ion-button (click)="createNewProductInMongo()">Create Product in App</button>
+  </ion-item>
+  <ion-item>
     <button full large text-wrap ion-button (click)="updateProductInMongo()">Update Proudct</button>
+  </ion-item>
+  <ion-item>
+    <button full large text-wrap ion-button (click)="createNewCustomerInMongo()">Create Customer in App</button>
   </ion-item>
   <!-- <ion-item>
     <button full large text-wrap ion-button (click)="updateProductStatInERP()">Update Product Stat in ERP</button>
@@ -27,30 +33,24 @@
     <button full large text-wrap ion-button (click)="updateCustomerStatInERP()">Update Customer Stat in ERP</button>
   </ion-item> -->
   <ion-item>
-    <button full large text-wrap ion-button (click)="createNewCustomerInMongo()">Create New Customer in Mongo</button>
+    <button full large text-wrap ion-button (click)="updateParentIdInUserDoc()">Update User Parent Id in App</button>
   </ion-item>
   <ion-item>
-    <button full large text-wrap ion-button (click)="createNewProductInMongo()">Create New Product in Mongo</button>
+    <button full large text-wrap ion-button (click)="updateUserDashboardData()">Update Customer Dashboard</button>
   </ion-item>
   <ion-item>
-    <button full large text-wrap ion-button (click)="updateParentIdInUserDoc()">Update Parent Id in User Doc Mongo</button>
-  </ion-item>
-  <ion-item>
-    <button full large text-wrap ion-button (click)="updateUserDashboardData()">Update Customer Dashboard Data in Mongo</button>
-  </ion-item>
-  <ion-item>
-    <button full large text-wrap ion-button (click)="updateNonUserDashboardData()">Update Executive Dashboard Data in Mongo</button>
+    <button full large text-wrap ion-button (click)="updateNonUserDashboardData()">Update Executive Dashboard</button>
   </ion-item>
   <ion-item>
     <button full large text-wrap ion-button (click)="updateAssociatedSMListToMongo()">Update Sales Tree</button>
   </ion-item>
   <ion-item>
-      <button full large text-wrap ion-button (click)="storeInProgressOrderInErp()">Store In-Progress Order</button>
-    </ion-item>
-  <ion-item>
-    <button full large text-wrap ion-button (click)="updateOrderStatusToBilled()">Update Status To Billed</button>
+    <button full large text-wrap ion-button (click)="createCustomerStatements()">Create Customer Statements</button>
   </ion-item>
   <ion-item>
-    <button full large text-wrap ion-button (click)="createCustomerStatements()">Create Customer Statements</button>
+      <button class="erp-action-btn" full large text-wrap ion-button (click)="storeInProgressOrderInErp()">Store In-Progress Order</button>
+    </ion-item>
+  <ion-item>
+    <button class="erp-action-btn" full large text-wrap ion-button (click)="updateOrderStatusToBilled()">Update Status To Billed</button>
   </ion-item>
 </ion-content>

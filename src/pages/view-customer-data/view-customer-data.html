@@ -152,7 +152,9 @@
               </ion-col>
             </ion-row>
   </ion-card>
-  <button ion-button full (click)="moveToStatements()">View Statements</button>
+  <ng-container *ngIf="customerDashboard">
+    <button ion-button full (click)="moveToStatements()">View Statements</button>
+  </ng-container>
 
 
   <!-- <ion-card class="tabs-wrapper" *ngIf="customerDashboard==true">

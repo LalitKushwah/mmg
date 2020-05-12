@@ -70,18 +70,18 @@ export class UserStatementsPage {
     this.loader.present()
     this.apiService.getUserTransactions(this.userInfo.externalId).subscribe((res: any) => {
       if (res && res.body && res.body.length) {
-          this.statements = res.body[0].statements;
-          this.userInfo = res.body[0];
-          if (this.statements && this.statements.length) {
-            this.statements.sort(function (a, b) {
-              var c: any = new Date(a.date);
-              var d: any = new Date(b.date);
-              return (c - d);
-            });
-          }
-          this.loader.dismiss();
-          this.calculateTotalCredAmount();
-          this.calculateTotalDebAmount();
+        this.statements = res.body[0].statements;
+        this.userInfo = res.body[0];
+        if (this.statements && this.statements.length) {
+          this.statements.sort(function (a, b) {
+            var c: any = new Date(a.date);
+            var d: any = new Date(b.date);
+            return (c - d);
+          });
+        }
+        this.loader.dismiss();
+        this.calculateTotalCredAmount();
+        this.calculateTotalDebAmount();
       } else {
         this.loader.dismiss();
       }
@@ -100,11 +100,11 @@ export class UserStatementsPage {
     this.width = 0;
     let textColorPrimary = '#000000';
     this.documentDefinition = {
-      header: function (currentPage, pageCount, pageSize) { 
+      header: function (currentPage, pageCount, pageSize) {
         return [
-          { 
-            text: `Page ${currentPage} of ${pageCount}`, 
-            fontSize: 12, 
+          {
+            text: `Page ${currentPage} of ${pageCount}`,
+            fontSize: 12,
             color: 'grey',
             margin: 20,
             alignment: 'right'
@@ -152,7 +152,7 @@ export class UserStatementsPage {
           color: textColorPrimary
         }, /* h130 */
         {
-          text: `Period ${new DatePipe('en_ZM').transform(this.statements[0].date, 'dd/M/yy')} to ${new DatePipe('en_ZM').transform(this.statements[this.statements.length-1].date, 'dd/M/yy')}`,
+          text: `Period ${new DatePipe('en_ZM').transform(this.statements[0].date, 'dd/M/yy')} to ${new DatePipe('en_ZM').transform(this.statements[this.statements.length - 1].date, 'dd/M/yy')}`,
           absolutePosition: { x: 50, y: this.height += 60 },
           fontSize: 9,
           alignment: 'right',
@@ -201,7 +201,7 @@ export class UserStatementsPage {
         let binaryArray = utf8.buffer; //
         this.file.resolveDirectoryUrl(this.file.externalRootDirectory)
           .then(dirEntry => {
-            this.file.getFile(dirEntry, `${this.userInfo.customerName}-${this.months[new Date().getMonth()]}.pdf`, { create: true })
+            this.file.getFile(dirEntry, `${this.userInfo.customerName.replace(/[^a-zA-Z ]/g, "")}-${this.months[new Date().getMonth()]}.pdf`, { create: true })
               .then(fileEntry => {
                 fileEntry.createWriter(writer => {
                   writer.onwrite = () => {
@@ -219,10 +219,10 @@ export class UserStatementsPage {
                         {
                           text: 'Okay',
                           handler: () => {
-                            this.fileOpener.open(`file:///storage/emulated/0/${this.userInfo.customerName}-${this.months[new Date().getMonth()]}.pdf`, 'application/pdf')
+                            this.fileOpener.open(`${this.file.externalRootDirectory}${this.userInfo.customerName.replace(/[^a-zA-Z ]/g, "")}-${this.months[new Date().getMonth()]}.pdf`, 'application/pdf')
                               .then(res => { })
                               .catch(err => {
-                                const alert = this.alertCtrl.create({ message: err.message, buttons: ['Ok'] });
+                                const alert = this.alertCtrl.create({ message: "225"+ JSON.stringify(err.message), buttons: ['Ok'] });
                                 alert.present();
                               });
                           }
@@ -242,16 +242,16 @@ export class UserStatementsPage {
               })
               .catch(err => {
                 this.loaderDownloading.dismiss();
-                const alert = this.alertCtrl.create({ message: err, buttons: ['Ok'] });
+                const alert = this.alertCtrl.create({ message: "245"+ JSON.stringify(err), buttons: ['Ok'] });
                 alert.present();
               });
           })
           .catch(err => {
             this.loaderDownloading.dismiss();
-            const alert = this.alertCtrl.create({ message: err, buttons: ['Ok'] });
+            const alert = this.alertCtrl.create({ message: "251"+JSON.stringify(err), buttons: ['Ok'] });
             alert.present();
           });
-  
+
       });
     } else {
       this.pdfObj.open();
@@ -426,7 +426,7 @@ export class UserStatementsPage {
 
     body.push(
       [
-        { border: [true, false, true, false], text: 'TOTAL AMOUNT DUE', colSpan: 6, margin: [0, 6, 0, 0], fontSize: 11, bold: true, alignment: 'right', color: '#000000'},
+        { border: [true, false, true, false], text: 'TOTAL AMOUNT DUE', colSpan: 6, margin: [0, 6, 0, 0], fontSize: 11, bold: true, alignment: 'right', color: '#000000' },
         { border: [false, false, false, false], text: '' },
         { border: [false, false, false, false], text: '' },
         { border: [false, false, false, false], text: '' },

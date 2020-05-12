@@ -72,6 +72,7 @@ export class AdminListProductPage {
         this.productList.map(value => {
           value.quantity = 1
           value.price = (parseFloat((Math.round(value.price * 100) / 100).toString()).toFixed(2))
+          value.currentCaseSize=Number(value.currentCaseSize).toFixed(2);
         })
         this.filteredProductList = this.productList
         this.productListAvailable = true

@@ -33,7 +33,7 @@
       <ion-refresher-content></ion-refresher-content>
     </ion-refresher>
     <ion-list *ngIf="productListAvailable &&  (productList.length > 0); else norecord">
-      <ion-card *ngFor="let product of filteredProductList">
+      <ion-card *ngFor="let product of filteredProductList" [ngStyle]="product.price <= 1 && { 'display': 'none' }">
         <ion-card-content *ngIf="product.price > 1">
         <ion-row>
             <ion-col text-center>
