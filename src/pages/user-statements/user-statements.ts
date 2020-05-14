@@ -39,7 +39,7 @@ export class UserStatementsPage {
   documentDefinition;
   loaderDownloading: any;
 
-  constructor (
+  constructor(
     public navCtrl: NavController,
     public navParams: NavParams,
     public apiService: ApiServiceProvider,
@@ -51,7 +51,7 @@ export class UserStatementsPage {
     private alertCtrl: AlertController) {
   }
 
-  async ionViewWillEnter () {
+  async ionViewWillEnter() {
     this.userInfo = await this.commonService.getLoggedInUser();
     if (this.userInfo['userType'] === 'ADMIN' || this.userInfo['userType'] === 'ADMINHO') {
       let selectedCustomerprofile = await this.storageService.getFromStorage('editCustomerInfo')
@@ -91,7 +91,7 @@ export class UserStatementsPage {
     });
   }
 
-  createPdf () {
+  createPdf() {
     this.loaderDownloading = this.loadingCtrl.create({
       content: "Please wait while downloading...",
     });
@@ -194,12 +194,18 @@ export class UserStatementsPage {
     this.downloadPdf();
   }
 
-  downloadPdf () {
+  downloadPdf() {
     if (window['cordova']) {
       this.pdfObj.getBuffer(buffer => {
         var utf8 = new Uint8Array(buffer); // Convert to UTF-8...
         let binaryArray = utf8.buffer; //
-        this.file.resolveDirectoryUrl(this.file.externalRootDirectory)
+        let storageLocation: any;
+        if (this.plt.is('ios')) {
+          storageLocation = this.file.documentsDirectory;
+        } else {
+          storageLocation = this.file.externalRootDirectory;
+        }
+        this.file.resolveDirectoryUrl(storageLocation)
           .then(dirEntry => {
             this.file.getFile(dirEntry, `${this.userInfo.customerName.replace(/[^a-zA-Z ]/g, "")}-${this.months[new Date().getMonth()]}.pdf`, { create: true })
               .then(fileEntry => {
@@ -219,10 +225,10 @@ export class UserStatementsPage {
                         {
                           text: 'Okay',
                           handler: () => {
-                            this.fileOpener.open(`${this.file.externalRootDirectory}${this.userInfo.customerName.replace(/[^a-zA-Z ]/g, "")}-${this.months[new Date().getMonth()]}.pdf`, 'application/pdf')
+                            this.fileOpener.open(`${storageLocation}${this.userInfo.customerName.replace(/[^a-zA-Z ]/g, "")}-${this.months[new Date().getMonth()]}.pdf`, 'application/pdf')
                               .then(res => { })
                               .catch(err => {
-                                const alert = this.alertCtrl.create({ message: "225"+ JSON.stringify(err.message), buttons: ['Ok'] });
+                                const alert = this.alertCtrl.create({ message: "225" + JSON.stringify(err.message), buttons: ['Ok'] });
                                 alert.present();
                               });
                           }
@@ -242,13 +248,13 @@ export class UserStatementsPage {
               })
               .catch(err => {
                 this.loaderDownloading.dismiss();
-                const alert = this.alertCtrl.create({ message: "245"+ JSON.stringify(err), buttons: ['Ok'] });
+                const alert = this.alertCtrl.create({ message: "245" + JSON.stringify(err), buttons: ['Ok'] });
                 alert.present();
               });
           })
           .catch(err => {
             this.loaderDownloading.dismiss();
-            const alert = this.alertCtrl.create({ message: "251"+JSON.stringify(err), buttons: ['Ok'] });
+            const alert = this.alertCtrl.create({ message: "251" + JSON.stringify(err), buttons: ['Ok'] });
             alert.present();
           });
 
@@ -258,7 +264,7 @@ export class UserStatementsPage {
     }
   }
 
-  prepareRowData () {
+  prepareRowData() {
     let headingColor = '#8f1515';
     let textColorSecondary = '#202020';
     const body = []
@@ -381,7 +387,7 @@ export class UserStatementsPage {
           lineHeight: 1
         },
         {
-          text: statement.debit ? Number(statement.debit).toFixed(2) : '',
+          text: statement.debit ? Number((statement.debit).toFixed(2)).toLocaleString('en-US') : '',
           color: textColorSecondary,
           fontSize: 8,
           margin: [0, 6, 0, 6],
@@ -389,7 +395,7 @@ export class UserStatementsPage {
           alignment: 'right'
         },
         {
-          text: statement.credit ? Number(statement.credit).toFixed(2) : '',
+          text: statement.credit ? Number((statement.credit).toFixed(2)).toLocaleString('en-US') : '',
           color: textColorSecondary,
           fontSize: 8,
           margin: [0, 6, 0, 6],
@@ -397,7 +403,7 @@ export class UserStatementsPage {
           alignment: 'right'
         },
         {
-          text: Number(statement.balance).toFixed(2) + '  DR',
+          text: Number((statement.balance).toFixed(2)).toLocaleString('en-US') + '  DR',
           color: textColorSecondary,
           fontSize: 8,
           margin: [0, 6, 0, 6],
@@ -418,8 +424,8 @@ export class UserStatementsPage {
         { text: '' },
         { text: '' },
         { text: '' },
-        { text: Number(this.totalDebAmount).toFixed(2), color: 'black', fontSize: 11, margin: [0, 6, 0, 6], alignment: 'right' },
-        { text: Number(this.totalCredAmount).toFixed(2), color: 'black', fontSize: 11, margin: [0, 6, 0, 6], alignment: 'right' },
+        { text: Number(this.totalDebAmount.toFixed(2)).toLocaleString('en-US'), color: 'black', fontSize: 11, margin: [0, 6, 0, 6], alignment: 'right' },
+        { text: Number(this.totalCredAmount.toFixed(2)).toLocaleString('en-US'), color: 'black', fontSize: 11, margin: [0, 6, 0, 6], alignment: 'right' },
         { text: '' }
       ]
     );
@@ -437,7 +443,7 @@ export class UserStatementsPage {
     body.push(
       [
         {
-          text: `${Number(this.statements[this.statements.length - 1].balance).toFixed(2)} DR`,
+          text: `${Number((this.statements[this.statements.length - 1].balance).toFixed(2)).toLocaleString('en-US')} DR`,
           border: [true, false, true, true],
           colSpan: 6,
           fontSize: 10,
@@ -475,7 +481,7 @@ export class UserStatementsPage {
     return body;
   }
 
-  calculateTotalDebAmount () {
+  calculateTotalDebAmount() {
     this.statements.forEach(trans => {
       if (trans.debit && trans.debit !== '' && trans.debit !== ' ') {
         this.totalDebAmount = this.totalDebAmount + trans.debit;
@@ -483,7 +489,7 @@ export class UserStatementsPage {
     })
   }
 
-  calculateTotalCredAmount () {
+  calculateTotalCredAmount() {
     this.statements.forEach(trans => {
       if (trans.credit && trans.credit !== '' && trans.credit !== ' ') {
         this.totalCredAmount = this.totalCredAmount + trans.credit;
@@ -492,7 +498,7 @@ export class UserStatementsPage {
   }
 
 
-  ionViewDidLoad () {
+  ionViewDidLoad() {
     console.log('ionViewDidLoad UserStatementsPage');
   }
 
