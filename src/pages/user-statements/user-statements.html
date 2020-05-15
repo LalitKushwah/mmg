@@ -19,9 +19,9 @@
               <p class="transDate">{{item.date | date: 'dd/M/yy, h:mm a'}}</p>
             </ion-col>
             <ion-col col-6 class="transAmt">
-              <p color="success" class="credit" *ngIf="item.credit">+ {{item.credit | number: '.3'}}</p>
-              <p color="danger" class="debit" *ngIf="item.debit">- {{item.debit | number: '.3'}}</p>
-              <p class="balance">{{item.balance | number: '.3'}}</p>
+              <p color="success" class="credit" *ngIf="item.credit">+ {{item.credit | number: '.2'}}</p>
+              <p color="danger" class="debit" *ngIf="item.debit">- {{item.debit | number: '.2'}}</p>
+              <p class="balance">{{item.balance | number: '.2'}}</p>
             </ion-col>
           </ion-row>
         </ion-grid>

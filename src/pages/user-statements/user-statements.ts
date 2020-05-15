@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { DatePipe } from '@angular/common';
+import { DatePipe, DecimalPipe } from '@angular/common';
 import { IonicPage, NavController, NavParams, LoadingController, Platform, AlertController } from 'ionic-angular';
 import { ApiServiceProvider } from '../../providers/api-service/api-service';
 import { CommonService } from '../../providers/common.service';
@@ -39,7 +39,7 @@ export class UserStatementsPage {
   documentDefinition;
   loaderDownloading: any;
 
-  constructor(
+  constructor (
     public navCtrl: NavController,
     public navParams: NavParams,
     public apiService: ApiServiceProvider,
@@ -48,10 +48,11 @@ export class UserStatementsPage {
     private storageService: StorageServiceProvider,
     private file: File, private fileOpener: FileOpener,
     private plt: Platform,
-    private alertCtrl: AlertController) {
+    private alertCtrl: AlertController,
+    private decimalPipe: DecimalPipe) {
   }
 
-  async ionViewWillEnter() {
+  async ionViewWillEnter () {
     this.userInfo = await this.commonService.getLoggedInUser();
     if (this.userInfo['userType'] === 'ADMIN' || this.userInfo['userType'] === 'ADMINHO') {
       let selectedCustomerprofile = await this.storageService.getFromStorage('editCustomerInfo')
@@ -73,6 +74,11 @@ export class UserStatementsPage {
         this.statements = res.body[0].statements;
         this.userInfo = res.body[0];
         if (this.statements && this.statements.length) {
+          this.statements.map(item => {
+            if (item.credit) item.credit = Number(item.credit).toFixed(2)
+            if (item.debit) item.debit = Number(item.debit).toFixed(2)
+            if (item.balance) item.balance = Number(item.balance).toFixed(2)
+          })
           this.statements.sort(function (a, b) {
             var c: any = new Date(a.date);
             var d: any = new Date(b.date);
@@ -91,7 +97,7 @@ export class UserStatementsPage {
     });
   }
 
-  createPdf() {
+  createPdf () {
     this.loaderDownloading = this.loadingCtrl.create({
       content: "Please wait while downloading...",
     });
@@ -194,7 +200,7 @@ export class UserStatementsPage {
     this.downloadPdf();
   }
 
-  downloadPdf() {
+  downloadPdf () {
     if (window['cordova']) {
       this.pdfObj.getBuffer(buffer => {
         var utf8 = new Uint8Array(buffer); // Convert to UTF-8...
@@ -264,7 +270,7 @@ export class UserStatementsPage {
     }
   }
 
-  prepareRowData() {
+  prepareRowData () {
     let headingColor = '#8f1515';
     let textColorSecondary = '#202020';
     const body = []
@@ -278,89 +284,6 @@ export class UserStatementsPage {
         { text: 'BALANCE', color: headingColor, fontSize: 10, margin: [0, 6, 0, 6], alignment: 'right' }
       ]
     );
-    // tslint:disable-next-line: max-line-length
-    // body.push([ '', '', 
-    //   { 
-    //     text: 'Brought Forward', 
-    //     color: 'blue', 
-    //     bold: true, 
-    //     fontSize: 9,
-    //     margin: [0, 6, 0, 6] 
-    //   }, '', '', 
-    //   { 
-    //     text: '24,023.75 DR', 
-    //     color: 'blue', 
-    //     bold: true, 
-    //     fontSize: 8,
-    //     margin: [0, 6, 0, 6], 
-    //     alignment: 'right' 
-    //   }
-    // ]);
-
-    this.height += 50;
-
-    // Remove the temp iterate forEachloop after testing after testing
-    // this.tempIterate.forEach(element => {
-    //   console.log('+-+-+-+');
-
-    //     //Main code Begin
-    //     this.statements.forEach(statement => {
-    //   this.height += 26;
-    //   const row = [
-    //     {
-    //       text: new DatePipe('en_ZM').transform(statement.date, 'dd/M/yy'),
-    //       color: textColorSecondary,
-    //       fontSize: 8,
-    //       margin: [0, 6, 0, 6],
-    //       lineHeight: 1
-    //     },
-    //     {
-    //       text: statement.ref,
-    //       color: textColorSecondary,
-    //       fontSize: 8,
-    //       margin: [0, 6, 0, 6],
-    //       lineHeight: 1
-    //     },
-    //     {
-    //       text: statement.desc,
-    //       color: textColorSecondary,
-    //       fontSize: 8,
-    //       margin: [0, 6, 0, 6],
-    //       lineHeight: 1
-    //     },
-    //     {
-    //       text: statement.debit ? Number(statement.debit).toFixed(2) : '',
-    //       color: textColorSecondary,
-    //       fontSize: 8,
-    //       margin: [0, 6, 0, 6],
-    //       lineHeight: 1,
-    //       alignment: 'right'
-    //     },
-    //     {
-    //       text: statement.credit ? Number(statement.credit).toFixed(2) : '',
-    //       color: textColorSecondary,
-    //       fontSize: 8,
-    //       margin: [0, 6, 0, 6],
-    //       lineHeight: 1,
-    //       alignment: 'right'
-    //     },
-    //     {
-    //       text: Number(statement.balance).toFixed(2) + '  DR',
-    //       color: textColorSecondary,
-    //       fontSize: 8,
-    //       margin: [0, 6, 0, 6],
-    //       lineHeight: 1,
-    //       alignment: 'right'
-    //     }
-    //   ]
-    //   body.push(row);
-
-    // }
-
-    // )
-    //   //Main code End
-
-    // });
 
     this.statements.forEach(statement => {
       this.height += 26;
@@ -387,7 +310,7 @@ export class UserStatementsPage {
           lineHeight: 1
         },
         {
-          text: statement.debit ? Number((statement.debit).toFixed(2)).toLocaleString('en-US') : '',
+          text: statement.debit ? this.decimalPipe.transform(statement.debit, '.2') : '',
           color: textColorSecondary,
           fontSize: 8,
           margin: [0, 6, 0, 6],
@@ -395,7 +318,7 @@ export class UserStatementsPage {
           alignment: 'right'
         },
         {
-          text: statement.credit ? Number((statement.credit).toFixed(2)).toLocaleString('en-US') : '',
+          text: statement.credit ? this.decimalPipe.transform(statement.credit, '.2') : '',
           color: textColorSecondary,
           fontSize: 8,
           margin: [0, 6, 0, 6],
@@ -403,7 +326,7 @@ export class UserStatementsPage {
           alignment: 'right'
         },
         {
-          text: Number((statement.balance).toFixed(2)).toLocaleString('en-US') + '  DR',
+          text: statement.balance ? this.decimalPipe.transform(statement.balance, '.2') + '  DR': '',
           color: textColorSecondary,
           fontSize: 8,
           margin: [0, 6, 0, 6],
@@ -424,8 +347,8 @@ export class UserStatementsPage {
         { text: '' },
         { text: '' },
         { text: '' },
-        { text: Number(this.totalDebAmount.toFixed(2)).toLocaleString('en-US'), color: 'black', fontSize: 11, margin: [0, 6, 0, 6], alignment: 'right' },
-        { text: Number(this.totalCredAmount.toFixed(2)).toLocaleString('en-US'), color: 'black', fontSize: 11, margin: [0, 6, 0, 6], alignment: 'right' },
+        { text: this.decimalPipe.transform(Number(this.totalDebAmount), '.2'), color: 'black', fontSize: 11, margin: [0, 6, 0, 6], alignment: 'right' },
+        { text: this.decimalPipe.transform(Number(this.totalCredAmount), '.2'), color: 'black', fontSize: 11, margin: [0, 6, 0, 6], alignment: 'right' },
         { text: '' }
       ]
     );
@@ -443,7 +366,7 @@ export class UserStatementsPage {
     body.push(
       [
         {
-          text: `${Number((this.statements[this.statements.length - 1].balance).toFixed(2)).toLocaleString('en-US')} DR`,
+          text: `${this.decimalPipe.transform(Number(this.statements[this.statements.length - 1].balance), '.2')} DR`,
           border: [true, false, true, true],
           colSpan: 6,
           fontSize: 10,
@@ -459,29 +382,10 @@ export class UserStatementsPage {
         { border: [false, false, false, false], text: '' },
       ]
     );
-    // body.push(
-    //   [
-    //     { border: [false, false, false, false], text: '' },
-    //     { border: [false, false, false, false], text: '' },
-    //     { border: [false, false, false, false], text: '' },
-    //     { border: [false, false, false, false], text: '' },
-    //     { border: [true, false, false, true], text: 'TOTAL AMOUNT DUE', fontSize: 11, bold: true, alignment: 'center', color: '#000000'},
-    //     {
-    //       text: `${Number(this.statements[this.statements.length - 1].balance).toFixed(2)} DR`,
-    //       border: [false, true, true, true],
-    //       fontSize: 10,
-    //       bold: true,
-    //       color: 'blue',
-    //       alignment: 'center',
-    //       margin: [0, 6, 0, 6]
-    //     }
-    //   ]
-    // );
-
     return body;
   }
 
-  calculateTotalDebAmount() {
+  calculateTotalDebAmount () {
     this.statements.forEach(trans => {
       if (trans.debit && trans.debit !== '' && trans.debit !== ' ') {
         this.totalDebAmount = this.totalDebAmount + trans.debit;
@@ -489,7 +393,7 @@ export class UserStatementsPage {
     })
   }
 
-  calculateTotalCredAmount() {
+  calculateTotalCredAmount () {
     this.statements.forEach(trans => {
       if (trans.credit && trans.credit !== '' && trans.credit !== ' ') {
         this.totalCredAmount = this.totalCredAmount + trans.credit;
@@ -498,7 +402,7 @@ export class UserStatementsPage {
   }
 
 
-  ionViewDidLoad() {
+  ionViewDidLoad () {
     console.log('ionViewDidLoad UserStatementsPage');
   }
 
