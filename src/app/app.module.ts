@@ -80,7 +80,7 @@ import { ClubClassificationPage } from '../pages/club-classification/club-classi
 import { ClubClassificationPageModule } from '../pages/club-classification/club-classification.module';
 import { GiftCheckoutPage } from "../pages/gift-checkout/gift-checkout";
 import { GiftCheckoutPageModule } from "../pages/gift-checkout/gift-checkout.module";
-import { DatePipe } from "@angular/common";
+import { DatePipe, DecimalPipe } from "@angular/common";
 import { EditUserPageModule } from '../pages/edit-user/edit-user.module';
 import { EditUserPage } from '../pages/edit-user/edit-user';
 import { AddSalesmanModalPageModule } from '../pages/add-salesman-modal/add-salesman-modal.module';
@@ -230,6 +230,7 @@ import { FileOpener } from '@ionic-native/file-opener';
     FileTransferObject,
     FileOpener,
     DatePipe,
+    DecimalPipe,
     CommonService
   ]
 })
