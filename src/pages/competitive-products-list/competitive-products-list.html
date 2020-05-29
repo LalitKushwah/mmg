@@ -1,0 +1,56 @@
+<ion-header>
+
+  <ion-navbar>
+    <ion-title>Competitive Product</ion-title>
+    <ion-buttons end>
+      <button ion-button icon-only (click)="onSaveCompProducts()">
+        <ion-icon name="done-all"></ion-icon>
+      </button>
+    </ion-buttons>
+  </ion-navbar>
+
+</ion-header>
+
+
+<ion-content>
+  <ion-grid>
+    <form [formGroup]="inputForm">
+      <ion-row formGroupName="tkProduct">
+        <ion-col size="1">
+          {{ tkProduct['Product Name'] }}
+        </ion-col>
+        <ion-col size="5">
+          <ion-item>
+            <ion-input type="text" placeholder="PRICE" formControlName="inputA"></ion-input>
+          </ion-item>
+        </ion-col>
+        <ion-col size="6">
+          <ion-item>
+            <ion-input type="number" placeholder="RRP" formControlName="inputB"></ion-input>
+          </ion-item>
+        </ion-col>
+      </ion-row>
+      <ion-row *ngFor="let item of tkProduct['Competitive Product']; let i = index;" formGroupName="compProduct">
+        <ion-col size="1">
+          {{ item['Product Name'] }}
+        </ion-col>
+        <ion-col size="5">
+          <ion-item>
+            <ion-input type="text" placeholder="PRICE" [formControlName]="i+'A'"></ion-input>
+          </ion-item>
+        </ion-col>
+        <ion-col size="6">
+          <ion-item>
+            <ion-input type="number" placeholder="RRP" [formControlName]="i+'B'"></ion-input>
+          </ion-item>
+        </ion-col>
+      </ion-row>
+    </form>
+  </ion-grid>
+
+  <ion-fab right bottom>
+    <button ion-fab (click)="onOpenModal()">
+      <ion-icon name="add"></ion-icon>
+    </button>
+  </ion-fab>
+</ion-content>

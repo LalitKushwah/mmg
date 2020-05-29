@@ -5,7 +5,6 @@ import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { StorageServiceProvider } from '../../providers/storage-service/storage-service';
 import { WidgetUtilService } from '../../utils/widget-utils';
 import { ApiServiceProvider } from '../../providers/api-service/api-service';
-import { SmEditOrderPage } from '../sm-edit-order/sm-edit-order';
 
 @IonicPage({
   name: 'AssociatedCustomersListOrderPage'

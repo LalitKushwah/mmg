@@ -105,6 +105,12 @@ import { SmEditOrderPageModule } from '../pages/sm-edit-order/sm-edit-order.modu
 import { UserStatementsPage } from '../pages/user-statements/user-statements';
 import { UserStatementsPageModule } from '../pages/user-statements/user-statements.module';
 import { FileOpener } from '@ionic-native/file-opener';
+import { AddCustomerInfoPageModule } from '../pages/add-customer-info/add-customer-info.module';
+import { AddCustomerInfoPage } from '../pages/add-customer-info/add-customer-info';
+import { TkProductsListPageModule } from '../pages/tk-products-list/tk-products-list.module';
+import { TkProductsListPage } from '../pages/tk-products-list/tk-products-list';
+import { CompetitiveProductsListPageModule } from '../pages/competitive-products-list/competitive-products-list.module';
+import { CompetitiveProductsListPage } from '../pages/competitive-products-list/competitive-products-list';
 
 @NgModule({
   declarations: [
@@ -164,7 +170,10 @@ import { FileOpener } from '@ionic-native/file-opener';
     AssociatedCustomersListOrderPageModule,
     ViewCustomerDataPageModule,
     SmEditOrderPageModule,
-    UserStatementsPageModule
+    UserStatementsPageModule,
+    AddCustomerInfoPageModule,
+    TkProductsListPageModule,
+    CompetitiveProductsListPageModule
   ],
   bootstrap: [IonicApp],
   entryComponents: [
@@ -210,7 +219,10 @@ import { FileOpener } from '@ionic-native/file-opener';
     ViewCustomerDataPage,
     CommonPaymentHistoryPage,
     SmEditOrderPage,
-    UserStatementsPage
+    UserStatementsPage,
+    AddCustomerInfoPage,
+    TkProductsListPage,
+    CompetitiveProductsListPage
   ],
   providers: [
     StatusBar,
