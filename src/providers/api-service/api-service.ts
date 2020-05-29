@@ -161,6 +161,10 @@ export class ApiServiceProvider {
     return this.http.get(CONSTANTS.BASE_URL + 'api/product/list/gift/products',{})
   }
 
+  getCompProducts (): any {
+    return this.http.get(CONSTANTS.BASE_URL + 'api/product/list/comp/products',{})
+  }
+
   submitGiftOrder (orderDetails: Object): any {
     return this.http.post(CONSTANTS.BASE_URL + 'api/order/create/gift/order', orderDetails)
   }

@@ -4,6 +4,7 @@ import { IonicPage, NavController, NavParams, AlertController } from 'ionic-angu
 import { CompetitiveProductsListPage } from '../competitive-products-list/competitive-products-list';
 import { data } from '../../utils/data';
 import { WidgetUtilService } from '../../utils/widget-utils';
+import { ApiServiceProvider } from '../../providers/api-service/api-service';
 
 @IonicPage()
 @Component({
@@ -18,6 +19,7 @@ export class TkProductsListPage {
   constructor (public navCtrl: NavController,
     public navParams: NavParams,
     private alertCtrl: AlertController,
+    private apiService: ApiServiceProvider,
     private widgetService: WidgetUtilService) {
   }
 
@@ -27,12 +29,20 @@ export class TkProductsListPage {
 
   setItemsToTkProductArray () {
     this.allProducts = [];
-    for (const key in data) {
-      data[key].forEach(element => {
-        this.allProducts.push(element);
-      });
-    }
-    this.initializeItems();
+    this.apiService.getCompProducts().subscribe((res: any) => {  
+      console.log(res);
+      const productsData = res.body[0];
+      for (const key in productsData) {
+        if (key !== '_id') {
+          productsData[key].forEach(element => {
+            this.allProducts.push(element);
+          });
+        }
+        this.initializeItems();
+        }
+    }, err => {
+      console.log('Error while fetching comp products', err)
+    });
   }
 
   initializeItems () {
