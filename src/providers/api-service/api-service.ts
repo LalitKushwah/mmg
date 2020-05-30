@@ -169,6 +169,10 @@ export class ApiServiceProvider {
     return this.http.post(CONSTANTS.BASE_URL + 'api/product/add/tk/product', product)
   }
 
+  addCompProduct (product) : any {
+    return this.http.post(CONSTANTS.BASE_URL + 'api/product/add/comp/product', product)
+  }
+
   submitGiftOrder (orderDetails: Object): any {
     return this.http.post(CONSTANTS.BASE_URL + 'api/order/create/gift/order', orderDetails)
   }

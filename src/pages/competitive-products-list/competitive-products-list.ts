@@ -3,6 +3,7 @@ import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 
 import { WidgetUtilService } from '../../utils/widget-utils';
+import { ApiServiceProvider } from '../../providers/api-service/api-service';
 
 /**
  * Generated class for the CompetitiveProductsListPage page.
@@ -23,7 +24,8 @@ export class CompetitiveProductsListPage implements OnInit {
 
   constructor (public navCtrl: NavController,
     public navParams: NavParams,
-    private widgetService: WidgetUtilService) {
+    private widgetService: WidgetUtilService,
+    private apiService: ApiServiceProvider) {
   }
 
   ngOnInit (): void {
@@ -57,10 +59,21 @@ export class CompetitiveProductsListPage implements OnInit {
 
   async onOpenModal () {
     const compProdData = await this.widgetService.showPrompt('Add Competitive Product');
-    this.tkProduct['Competitive Product'].push(compProdData)
-    const newForm = this.inputForm.get('compProduct') as FormGroup;
-    newForm.addControl(`${this.tkProduct['Competitive Product'].length - 1}A`, new FormControl(null, [Validators.required]));
-    newForm.addControl(`${this.tkProduct['Competitive Product'].length - 1}B`, new FormControl(null, [Validators.required]));
+    this.apiService
+    .addCompProduct(
+      {
+        product: compProdData, 
+        categoryName: this.tkProduct['Product Catagory'], 
+        masterCode: this.tkProduct['Master Code']
+      }).subscribe(res => {
+        console.log(res)
+        this.tkProduct['Competitive Product'].push(compProdData)
+        const newForm = this.inputForm.get('compProduct') as FormGroup;
+        newForm.addControl(`${this.tkProduct['Competitive Product'].length - 1}A`, new FormControl(null, [Validators.required]));
+        newForm.addControl(`${this.tkProduct['Competitive Product'].length - 1}B`, new FormControl(null, [Validators.required]));
+      }, err => {
+        console.log(err)
+      })
   }
 
 }
