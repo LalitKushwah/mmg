@@ -53,10 +53,11 @@ export class TkProductsListPage {
 
   searchItems (event: any) {
     const val = event.target.value;
-
     if (val && val.trim() != '') {
       this.tkProductArray = this.allProducts.filter((item) => {
-        return (item['Product Name'].toLowerCase().indexOf(val.toLowerCase()) > -1);
+        return (
+            item['Product Name'] && item['Product Name'].toLowerCase().indexOf(val.toLowerCase()) > -1
+          );
       });
     } else {
       this.initializeItems();
@@ -126,8 +127,14 @@ export class TkProductsListPage {
 
   async onOpenModal () {
     const prodData = await this.widgetService.showPrompt('Add TK Product', 'tk');
-    data[prodData['Product Catagory']].unshift(prodData);
-    this.allProducts.unshift(prodData);
-    this.initializeItems();
+    const obj = { categoryName: prodData['Product Catagory'], product: prodData};
+    this.apiService.addCompTkProduct(obj).subscribe(res => {
+      data[prodData['Product Catagory']].unshift(prodData);
+      this.allProducts.unshift(prodData);
+      this.initializeItems();
+    }, err => {
+      console.log(err);
+    })
+
   }
 }
