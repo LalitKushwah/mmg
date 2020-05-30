@@ -1,10 +1,11 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams, AlertController } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, AlertController, LoadingController } from 'ionic-angular';
 
 import { CompetitiveProductsListPage } from '../competitive-products-list/competitive-products-list';
 import { data } from '../../utils/data';
 import { WidgetUtilService } from '../../utils/widget-utils';
 import { ApiServiceProvider } from '../../providers/api-service/api-service';
+import { StorageServiceProvider } from '../../providers/storage-service/storage-service';
 
 @IonicPage()
 @Component({
@@ -15,12 +16,15 @@ export class TkProductsListPage {
   radioResult: any;
   tkProductArray = [];
   allProducts = [];
+  fetchedCompProducts;
 
   constructor (public navCtrl: NavController,
     public navParams: NavParams,
     private alertCtrl: AlertController,
     private apiService: ApiServiceProvider,
-    private widgetService: WidgetUtilService) {
+    private widgetService: WidgetUtilService,
+    private loadingController: LoadingController,
+    private storageService: StorageServiceProvider) {
   }
 
   ionViewDidEnter () {
@@ -29,18 +33,24 @@ export class TkProductsListPage {
 
   setItemsToTkProductArray () {
     this.allProducts = [];
+    const loader = this.loadingController.create({
+      content: "Fetching Data...",
+    });
+    loader.present();
     this.apiService.getCompProducts().subscribe((res: any) => {  
       console.log(res);
-      const productsData = res.body[0];
-      for (const key in productsData) {
+      this.fetchedCompProducts = res.body[0];
+      for (const key in this.fetchedCompProducts) {
         if (key !== '_id') {
-          productsData[key].forEach(element => {
+          this.fetchedCompProducts[key].forEach(element => {
             this.allProducts.push(element);
           });
         }
-        this.initializeItems();
-        }
+      }
+      loader.dismiss();
+      this.initializeItems();
     }, err => {
+      loader.dismiss();
       console.log('Error while fetching comp products', err)
     });
   }
@@ -48,7 +58,6 @@ export class TkProductsListPage {
   initializeItems () {
     this.tkProductArray = [];
     this.tkProductArray = this.allProducts;
-    console.log(this.tkProductArray[0]);
   }
 
   searchItems (event: any) {
@@ -122,14 +131,31 @@ export class TkProductsListPage {
 
   setFilteredItemsToTkProductArray () {
     this.tkProductArray = [];
-    this.tkProductArray = data[this.radioResult];
+    this.tkProductArray = this.fetchedCompProducts[this.radioResult];
+  }
+
+  async saveToServer () {
+    // get the captured data from storage using key 'capturedCompProducts'
+    // get the customerInfo from storage using key 'customerInfo'
+    // manipulate data according to need and then upload to server
+    // then clear the storage
+    const capturedData: any = await this.storageService.getFromStorage('capturedCompProducts');
+    if (!capturedData) {
+      this.widgetService.showAlert('Alert', 'You did not captured any product, kindly capture data for some products first!');
+      return;
+    }
+    console.log('Captured Product', JSON.parse(capturedData));
+    const agree =  await this.widgetService.showConfirm('Uploading To Server', 'Would you like to continue with the same as this can not be undone?')
+    if (agree === 'No') { return; }
+    await this.storageService.removeFromStorage('customerInfo');
+    await this.storageService.removeFromStorage('capturedCompProducts');
   }
 
   async onOpenModal () {
     const prodData = await this.widgetService.showPrompt('Add TK Product', 'tk');
     const obj = { categoryName: prodData['Product Catagory'], product: prodData};
     this.apiService.addCompTkProduct(obj).subscribe(res => {
-      data[prodData['Product Catagory']].unshift(prodData);
+      this.fetchedCompProducts[prodData['Product Catagory']].unshift(prodData);
       this.allProducts.unshift(prodData);
       this.initializeItems();
     }, err => {

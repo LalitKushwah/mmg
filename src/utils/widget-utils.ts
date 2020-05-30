@@ -4,7 +4,7 @@ import { AlertController, ToastController, PopoverController } from 'ionic-angul
 @Injectable()
 export class WidgetUtilService {
 
-  popoverInstance : any = {}
+  popoverInstance: any = {}
 
   constructor (public alertController: AlertController, public toastController: ToastController
     , private popoverController: PopoverController) {
@@ -12,10 +12,10 @@ export class WidgetUtilService {
 
   showAlert (title, subTitle) {
     this.alertController.create({
-        title: title,
-        subTitle: subTitle,
-        buttons: ['OK']
-      }).present();
+      title: title,
+      subTitle: subTitle,
+      buttons: ['OK']
+    }).present();
   }
 
   showToast (message) {
@@ -38,7 +38,35 @@ export class WidgetUtilService {
     });
   }
 
-  async showPrompt (title: string, prodType?: string) {
+  showConfirm (title: string, message: string) {
+    return new Promise(async (resolve, reject) => {
+      const confirm = this.alertController.create({
+        title,
+        message,
+        buttons: [
+          {
+            text: 'No',
+            handler: () => {
+              resolve('No')
+            }
+          },
+          {
+            text: 'Yes',
+            handler: () => {
+              resolve('Yes')
+            }
+          }
+        ]
+      });
+      try {
+        await confirm.present();
+      } catch (error) {
+        reject(error);
+      }
+    });
+  }
+
+  showPrompt (title: string, prodType?: string) {
     return new Promise(async (resolve, reject) => {
       const prompt = this.alertController.create({
         title,
