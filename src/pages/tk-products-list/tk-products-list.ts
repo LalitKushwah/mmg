@@ -44,6 +44,7 @@ export class TkProductsListPage {
       this.fetchedCompProducts = res.body[0];
       for (const key in this.fetchedCompProducts) {
         if (key !== '_id') {
+          console.log('======== 47 =====', key);
           this.fetchedCompProducts[key].forEach(element => {
             this.allProducts.push(element);
           });
@@ -167,7 +168,7 @@ export class TkProductsListPage {
   }
 
   openAddTkProductModal () {
-    const addTkProductModal = this.modalCtrl.create(AddTkProductModalPage, { title: 'Add TK Product' });
+    const addTkProductModal = this.modalCtrl.create(AddTkProductModalPage, { title: 'Add TK Product', context: 'tk'});
     addTkProductModal.present();
   }
 

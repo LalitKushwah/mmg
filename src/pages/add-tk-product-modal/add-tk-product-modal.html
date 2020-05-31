@@ -10,61 +10,53 @@
 </ion-header>
 
 <ion-content padding>
-
-  <ion-grid>
-    <ion-row>
+  <ion-list>
+    <form [formGroup]="productForm">
       <ion-item>
         <ion-label floating>Brand</ion-label>
-        <ion-input type="text"></ion-input>
+        <ion-input formControlName="brand" type="text" #brand></ion-input>
       </ion-item>
-    </ion-row>
-    <ion-row>
+
+      <ion-item>
+        <ion-label floating>Master Name</ion-label>
+        <ion-input formControlName="masterName" type="text" #masterName></ion-input>
+      </ion-item>
+
       <ion-item>
         <ion-label floating>Case Size</ion-label>
-        <ion-input type="number"></ion-input>
+        <ion-input formControlName="caseSize" type="number" #caseSize></ion-input>
       </ion-item>
-    </ion-row>
-    <ion-row>
+
       <ion-item>
         <ion-label floating>Master Code</ion-label>
-        <ion-input type="text"></ion-input>
+        <ion-input formControlName="masterCode" type="text" #masterCode></ion-input>
       </ion-item>
-    </ion-row>
-    <ion-row>
       <ion-item>
         <ion-label floating>Product Catagory</ion-label>
-        <ion-input type="text"></ion-input>
+        <ion-input formControlName="prodCat" type="text" #prodCat></ion-input>
       </ion-item>
-    </ion-row>
-    <ion-row>
       <ion-item>
         <ion-label floating>Product Code</ion-label>
-        <ion-input type="text"></ion-input>
+        <ion-input formControlName="prodCode" type="text" #prodCode></ion-input>
       </ion-item>
-    </ion-row>
-    <ion-row>
       <ion-item>
         <ion-label floating>Product Name</ion-label>
-        <ion-input type="text"></ion-input>
+        <ion-input formControlName="prodName" type="text" #prodName></ion-input>
       </ion-item>
-    </ion-row>
-    <ion-row>
       <ion-item>
         <ion-label floating>Sub Catagory</ion-label>
-        <ion-input type="text"></ion-input>
+        <ion-input formControlName="subCat" type="text" #subCat></ion-input>
       </ion-item>
-    </ion-row>
-    <ion-row>
       <ion-item>
         <ion-label floating>Unit Size</ion-label>
-        <ion-input type="text"></ion-input>
+        <ion-input formControlName="unitSize" type="number" #unitSize></ion-input>
       </ion-item>
-    </ion-row>
-  </ion-grid>
-  <ion-grid>
-    <button ion-button color="secondary" class="mt-20">
-      SAVE<ion-spinner name="dots" *ngIf="showLoader"></ion-spinner>
-    </button>
-  </ion-grid>
+      <button ion-button color="secondary" class="add-cust-btn" full [disabled]="productForm.invalid" class="mt-20" (click)="submit()">
+        SAVE
+      </button>
+      <!-- <button ion-button color="secondary" round full (click)="onAddCustomerInfo()">Add Customer</button> -->
+    </form>
+
+  </ion-list>
 
 </ion-content>

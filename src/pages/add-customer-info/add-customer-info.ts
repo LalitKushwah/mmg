@@ -48,9 +48,10 @@ export class AddCustomerInfoPage implements OnInit {
 
   createForm () {
     this.customerForm = new FormGroup({
+      province: new FormControl('', [ Validators.required ]),
+      city: new FormControl('', [ Validators.required ]),
+      area: new FormControl('', [ Validators.required ]),
       shopName: new FormControl('', [ Validators.required ]),
-      customerName: new FormControl('', [ Validators.required ]),
-      shopAddress: new FormControl('', [ Validators.required ])
     });
   }
 

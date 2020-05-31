@@ -6,6 +6,7 @@ import { WidgetUtilService } from '../../utils/widget-utils';
 import { ApiServiceProvider } from '../../providers/api-service/api-service';
 import { StorageServiceProvider } from '../../providers/storage-service/storage-service';
 import { AddTkProductModalPage } from '../add-tk-product-modal/add-tk-product-modal';
+import { CommonService } from '../../providers/common.service';
 
 /**
  * Generated class for the CompetitiveProductsListPage page.
@@ -114,7 +115,7 @@ export class CompetitiveProductsListPage implements OnInit {
   }
 
   openAddTkProductModal () {
-    const addTkProductModal = this.modalCtrl.create(AddTkProductModalPage, { title: 'Add Competitive Product' });
+    const addTkProductModal = this.modalCtrl.create(AddTkProductModalPage, { title: 'Add Competitive Product', context: 'comp', masterCode: this.tkProduct['Master Code'] });
     addTkProductModal.present();
   }
 
