@@ -1,9 +1,10 @@
 import { Component, OnInit } from '@angular/core';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, ModalController } from 'ionic-angular';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 
 import { WidgetUtilService } from '../../utils/widget-utils';
 import { StorageServiceProvider } from '../../providers/storage-service/storage-service';
+import { AddTkProductModalPage } from '../add-tk-product-modal/add-tk-product-modal';
 
 /**
  * Generated class for the CompetitiveProductsListPage page.
@@ -25,7 +26,8 @@ export class CompetitiveProductsListPage implements OnInit {
   constructor (public navCtrl: NavController,
     public navParams: NavParams,
     private widgetService: WidgetUtilService,
-    private storageService: StorageServiceProvider) {
+    private storageService: StorageServiceProvider,
+    public modalCtrl: ModalController) {
   }
 
   ngOnInit (): void {
@@ -96,6 +98,11 @@ export class CompetitiveProductsListPage implements OnInit {
     const newForm = this.inputForm.get('compProduct') as FormGroup;
     newForm.addControl(`${this.tkProduct['Competitive Product'].length - 1}A`, new FormControl(null, [Validators.required]));
     newForm.addControl(`${this.tkProduct['Competitive Product'].length - 1}B`, new FormControl(null, [Validators.required]));
+  }
+
+  openAddTkProductModal () {
+    const addTkProductModal = this.modalCtrl.create(AddTkProductModalPage, { title: 'Add Competitive Product' });
+    addTkProductModal.present();
   }
 
 }

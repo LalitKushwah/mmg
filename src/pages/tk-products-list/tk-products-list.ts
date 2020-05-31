@@ -1,11 +1,12 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams, AlertController, LoadingController } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, AlertController, LoadingController, ModalController } from 'ionic-angular';
 
 import { CompetitiveProductsListPage } from '../competitive-products-list/competitive-products-list';
 import { data } from '../../utils/data';
 import { WidgetUtilService } from '../../utils/widget-utils';
 import { ApiServiceProvider } from '../../providers/api-service/api-service';
 import { StorageServiceProvider } from '../../providers/storage-service/storage-service';
+import { AddTkProductModalPage } from '../add-tk-product-modal/add-tk-product-modal';
 
 @IonicPage()
 @Component({
@@ -24,7 +25,8 @@ export class TkProductsListPage {
     private apiService: ApiServiceProvider,
     private widgetService: WidgetUtilService,
     private loadingController: LoadingController,
-    private storageService: StorageServiceProvider) {
+    private storageService: StorageServiceProvider,
+    public modalCtrl: ModalController) {
   }
 
   ionViewDidEnter () {
@@ -163,4 +165,10 @@ export class TkProductsListPage {
     })
 
   }
+
+  openAddTkProductModal () {
+    const addTkProductModal = this.modalCtrl.create(AddTkProductModalPage, { title: 'Add TK Product' });
+    addTkProductModal.present();
+  }
+
 }
