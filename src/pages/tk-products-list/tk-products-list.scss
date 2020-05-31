@@ -1,5 +1,35 @@
-.alert-wrapper {
-    width: 330px !important;
-    max-width: 400px !important;
-    margin-top: 40px;
+page-tk-products-list {
+
+    .tk-product-container{
+     ion-searchbar{
+         margin-top: 20px;
+     }
+     ion-list{
+         ion-grid{
+             ion-row{
+                 .product-name{
+                    color: #000000;
+                 }
+                 ion-col{
+                    //  font-size: 0.9em;
+                     color: grey;
+                     span{
+                        color: #000000;
+                     }
+                 }
+             }
+         }
+     }
+    }
+    .alert-wrapper {
+        width: 330px !important;
+        max-width: 400px !important;
+        margin-top: 40px;
+    }
+
+    .custom-fab {
+        font-size: 2em !important;
+        margin-left: 4px !important;
+    }
 }
+

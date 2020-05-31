@@ -1,9 +1,11 @@
 import { Component, OnInit } from '@angular/core';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, ModalController } from 'ionic-angular';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 
 import { WidgetUtilService } from '../../utils/widget-utils';
 import { ApiServiceProvider } from '../../providers/api-service/api-service';
+import { StorageServiceProvider } from '../../providers/storage-service/storage-service';
+import { AddTkProductModalPage } from '../add-tk-product-modal/add-tk-product-modal';
 
 /**
  * Generated class for the CompetitiveProductsListPage page.
@@ -25,7 +27,9 @@ export class CompetitiveProductsListPage implements OnInit {
   constructor (public navCtrl: NavController,
     public navParams: NavParams,
     private widgetService: WidgetUtilService,
-    private apiService: ApiServiceProvider) {
+    private storageService: StorageServiceProvider,
+    public modalCtrl: ModalController,
+    public apiService: ApiServiceProvider) {
   }
 
   ngOnInit (): void {
@@ -48,12 +52,45 @@ export class CompetitiveProductsListPage implements OnInit {
     });
   }
 
-  onSaveCompProducts () {
+  async onSaveCompProducts () {
     if (this.inputForm.invalid) {
       this.widgetService.showAlert('Validation Failed', 'Kindly enter all valid values in below fields');
       return;
     }
-    console.log(this.inputForm.value);
+
+    const isAgree = await this.widgetService.showConfirm('Alert', 'Would you like to continue as this can not be altered in future?');
+    if (isAgree === 'No') {
+      return;
+    }
+    this.saveCapturedDataToStorage();
+  }
+
+  async saveCapturedDataToStorage () {
+    this.tkProduct['Brand Type'] = 'TK';
+    this.tkProduct['Price Capturing Date'] = new Date().toLocaleString().split(',')[0];
+    this.tkProduct['inputA'] = this.inputForm.value.tkProduct.inputA // change inputA key of this.tkProduct as required in excel sheet
+    this.tkProduct['RRP'] = this.inputForm.value.tkProduct.inputB
+    for (let index = 0; index < this.tkProduct['Competitive Product'].length; index++) {
+      this.tkProduct['Competitive Product'][index]['Brand Type'] = 'Comp';
+      this.tkProduct['Competitive Product'][index]['Price Capturing Date'] = new Date().toLocaleString().split(',')[0];
+      this.tkProduct['Competitive Product'][index]['inputA'] = this.inputForm.value.compProduct[`${index}A`];
+      this.tkProduct['Competitive Product'][index]['RRP'] = this.inputForm.value.compProduct[`${index}B`];
+    }
+    let savedCapturedProducts: any =  await this.storageService.getFromStorage('capturedCompProducts');
+    if (savedCapturedProducts) {
+      savedCapturedProducts = JSON.parse(savedCapturedProducts);
+      if (savedCapturedProducts.hasOwnProperty(this.tkProduct['Product Catagory'])) {
+        savedCapturedProducts[this.tkProduct['Product Catagory']].push(this.tkProduct);
+      } else {
+        savedCapturedProducts[this.tkProduct['Product Catagory']] = [];
+        savedCapturedProducts[this.tkProduct['Product Catagory']].push(this.tkProduct);
+      }
+    } else {
+      savedCapturedProducts = {};
+      savedCapturedProducts[this.tkProduct['Product Catagory']] = [];
+      savedCapturedProducts[this.tkProduct['Product Catagory']].push(this.tkProduct);
+    }
+    await this.storageService.setToStorage('capturedCompProducts', JSON.stringify(savedCapturedProducts));
     this.navCtrl.pop();
   }
 
@@ -74,6 +111,11 @@ export class CompetitiveProductsListPage implements OnInit {
       }, err => {
         console.log(err)
       })
+  }
+
+  openAddTkProductModal () {
+    const addTkProductModal = this.modalCtrl.create(AddTkProductModalPage, { title: 'Add Competitive Product' });
+    addTkProductModal.present();
   }
 
 }

@@ -4,6 +4,7 @@ import { FormGroup, FormControl, Validators } from '@angular/forms';
 
 import { StorageServiceProvider } from '../../providers/storage-service/storage-service';
 import { TkProductsListPage } from '../tk-products-list/tk-products-list';
+import { WidgetUtilService } from '../../utils/widget-utils';
 
 /**
  * Generated class for the PagesAddCustomerInfoPage page.
@@ -21,12 +22,28 @@ export class AddCustomerInfoPage implements OnInit {
 
   customerForm: FormGroup;
 
-  constructor (public navCtrl: NavController, public navParams: NavParams, private storageService: StorageServiceProvider) {
+  constructor (public navCtrl: NavController,
+    public navParams: NavParams,
+    private storageService: StorageServiceProvider,
+    private widgetService: WidgetUtilService) {
     this.createForm();
   }
 
   ngOnInit (): void {
 
+  }
+
+  async ionViewWillEnter () {
+    const customerInfo = await this.storageService.getFromStorage('customerInfo');
+    if (!!customerInfo) {
+      const agree = await this.widgetService.showConfirm('Previous Capturing Exists!', 'Would you like to continue with the previous capturing?');
+      if (agree === 'Yes') {
+        this.navCtrl.push(TkProductsListPage);
+      } else {
+        await this.storageService.removeFromStorage('capturedCompProducts');
+        await this.storageService.removeFromStorage('customerInfo');
+      }
+    }
   }
 
   createForm () {

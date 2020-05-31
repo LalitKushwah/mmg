@@ -111,6 +111,8 @@ import { TkProductsListPageModule } from '../pages/tk-products-list/tk-products-
 import { TkProductsListPage } from '../pages/tk-products-list/tk-products-list';
 import { CompetitiveProductsListPageModule } from '../pages/competitive-products-list/competitive-products-list.module';
 import { CompetitiveProductsListPage } from '../pages/competitive-products-list/competitive-products-list';
+import { AddTkProductModalPage } from '../pages/add-tk-product-modal/add-tk-product-modal';
+import { AddTkProductModalPageModule } from '../pages/add-tk-product-modal/add-tk-product-modal.module';
 
 @NgModule({
   declarations: [
@@ -173,7 +175,8 @@ import { CompetitiveProductsListPage } from '../pages/competitive-products-list/
     UserStatementsPageModule,
     AddCustomerInfoPageModule,
     TkProductsListPageModule,
-    CompetitiveProductsListPageModule
+    CompetitiveProductsListPageModule,
+    AddTkProductModalPageModule
   ],
   bootstrap: [IonicApp],
   entryComponents: [
@@ -222,7 +225,8 @@ import { CompetitiveProductsListPage } from '../pages/competitive-products-list/
     UserStatementsPage,
     AddCustomerInfoPage,
     TkProductsListPage,
-    CompetitiveProductsListPage
+    CompetitiveProductsListPage,
+    AddTkProductModalPage
   ],
   providers: [
     StatusBar,
