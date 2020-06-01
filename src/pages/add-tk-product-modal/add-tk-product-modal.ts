@@ -48,11 +48,18 @@ export class AddTkProductModalPage {
   ionViewDidLoad () {
     console.log('ionViewDidLoad AddTkProductModalPage');
   }
+
   dismissModal (){
     this.viewCtrl.dismiss();
   }
 
   submit () {
+
+    if (this.productForm.invalid) {
+      this.widgetCtrl.showAlert('Invalid Inputs', 'Kindly enter all fields with valid data');
+      return;
+    }
+
     const loader = this.loadCtrl.create({
       content: "Please Wait...",
     });
@@ -66,41 +73,38 @@ export class AddTkProductModalPage {
       "BRAND": this.productForm.value.brand,
       "Product Code": this.productForm.value.prodCode,
       "Product Name": this.productForm.value.prodName
-  }
-  console.log(newProd);
-  loader.present();
-  // add competitive prod
-  if (this.context === 'comp') {
-    newProd['Is TKProduct'] = "N";
-    this.apiService
-    .addCompProduct({categoryName: newProd['Product Catagory'], masterCode: this.masterCode, product: newProd})
-    .subscribe(res => {
-      // add prod to list
-      this.navCtrl.pop();
-      loader.dismiss();
-      this.widgetCtrl.showToast('Product Added Successfully...')
-    }, err => {
-        console.log(err);
+    }
+    loader.present();
+    // add competitive prod
+    if (this.context === 'comp') {
+      newProd['Is TKProduct'] = "N";
+      this.apiService
+      .addCompProduct({categoryName: newProd['Product Catagory'], masterCode: this.masterCode, product: newProd})
+      .subscribe(res => {
+        // add prod to list
+        this.navCtrl.pop();
         loader.dismiss();
-    })
-  } else {
-    // add tk product
-    newProd['Is TKProduct'] = "Y";
-    newProd['Competitive Product'] = [];
+        this.widgetCtrl.showToast('Product Added Successfully...')
+      }, err => {
+          console.log(err);
+          loader.dismiss();
+      })
+    } else {
+      // add tk product
+      newProd['Is TKProduct'] = "Y";
+      newProd['Competitive Product'] = [];
 
-    this.apiService
-    .addCompTkProduct({categoryName: newProd['Product Catagory'], product: newProd})
-    .subscribe(res => {
-      // add prod to list
-      loader.dismiss();
-      this.navCtrl.pop();
-      this.widgetCtrl.showToast('Competitive Prodct Added...')
-    }, err => {
-        console.log(err);        
+      this.apiService
+      .addCompTkProduct({categoryName: newProd['Product Catagory'], product: newProd})
+      .subscribe(res => {
+        // add prod to list
         loader.dismiss();
-    })
+        this.navCtrl.pop();
+        this.widgetCtrl.showToast('Competitive Prodct Added...')
+      }, err => {
+          console.log(err);        
+          loader.dismiss();
+      })
+    }
   }
-  
-  }
-
 }

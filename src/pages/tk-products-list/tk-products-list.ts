@@ -14,7 +14,7 @@ import { AddTkProductModalPage } from '../add-tk-product-modal/add-tk-product-mo
   templateUrl: 'tk-products-list.html',
 })
 export class TkProductsListPage {
-  radioResult: any;
+  radioResult = 'reset';
   tkProductArray = [];
   allProducts = [];
   fetchedCompProducts;
@@ -86,33 +86,37 @@ export class TkProductsListPage {
 
     alert.addInput({
       type: 'radio',
+      label: 'All',
+      value: 'reset',
+      checked: this.radioResult === 'reset' ? true : false
+    });
+
+    alert.addInput({
+      type: 'radio',
       label: 'Laundry',
       value: 'Laundry',
-      checked: true
+      checked: this.radioResult === 'Laundry' ? true : false
     });
 
     alert.addInput({
       type: 'radio',
       label: 'Confectionery',
-      value: 'Confectionery'
+      value: 'Confectionery',
+      checked: this.radioResult === 'Confectionery' ? true : false
     });
 
     alert.addInput({
       type: 'radio',
       label: 'Household',
-      value: 'Household'
+      value: 'Household',
+      checked: this.radioResult === 'Household' ? true : false
     });
 
     alert.addInput({
       type: 'radio',
       label: 'Personal Care',
-      value: 'Personal Care'
-    });
-
-    alert.addInput({
-      type: 'radio',
-      label: 'Reset',
-      value: 'reset'
+      value: 'Personal Care',
+      checked: this.radioResult === 'Personal Care' ? true : false
     });
 
     alert.addButton('Cancel');
