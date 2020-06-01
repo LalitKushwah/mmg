@@ -69,7 +69,7 @@ export class MyApp {
               {title: 'Orders', component: AssociatedCustomersListOrderPage, icon: 'cart', class: 'default'},
               {title: 'Products', component: AdminListCategoryPage, icon: 'products', class: 'default'},
               {title: 'Payments', component: CommonPaymentHistoryPage, icon: 'payment', class: 'default'},
-              {title: 'Capture Product', component: AddCustomerInfoPage, icon: 'products', class: 'default'},
+              {title: 'Capture Product', component: AddCustomerInfoPage, icon: 'information', class: 'default'},
               // {title: '', component: ClubPremierPage, icon: 'club-premier', class: 'custom-side-icon'}
             ]
           }else{
