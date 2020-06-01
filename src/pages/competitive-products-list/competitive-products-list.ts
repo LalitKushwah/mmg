@@ -35,6 +35,7 @@ export class CompetitiveProductsListPage implements OnInit {
 
   ngOnInit (): void {
     this.tkProduct = this.navParams.data.product;
+    console.log(this.tkProduct);
     this.createForm();
   }
 

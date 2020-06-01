@@ -33,7 +33,13 @@
       </ion-item>
       <ion-item>
         <ion-label floating>Product Catagory</ion-label>
-        <ion-input formControlName="prodCat" type="text" #prodCat></ion-input>
+        <ion-select [(ngModel)]="prodCat" formControlName="prodCat">
+          <ion-option value="Laundry">Laundry</ion-option>
+          <ion-option value="Confectionery">Confectionery</ion-option>
+          <ion-option value="Household">Household</ion-option>
+          <ion-option value="Personal Care">Personal Care</ion-option>
+        </ion-select>
+        <!-- <ion-input formControlName="prodCat" type="text" #prodCat></ion-input> -->
       </ion-item>
       <ion-item>
         <ion-label floating>Product Code</ion-label>

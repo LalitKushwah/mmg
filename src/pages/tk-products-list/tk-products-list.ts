@@ -7,6 +7,7 @@ import { WidgetUtilService } from '../../utils/widget-utils';
 import { ApiServiceProvider } from '../../providers/api-service/api-service';
 import { StorageServiceProvider } from '../../providers/storage-service/storage-service';
 import { AddTkProductModalPage } from '../add-tk-product-modal/add-tk-product-modal';
+import { FormGroup, FormControl, Validators } from '@angular/forms';
 
 @IonicPage()
 @Component({
@@ -18,6 +19,13 @@ export class TkProductsListPage {
   tkProductArray = [];
   allProducts = [];
   fetchedCompProducts;
+  itemIsHighlighted = false;
+  itemIsExpanded = false;
+
+  // added from competitive-products-list.ts
+  compTkProduct: any;
+  inputForm: FormGroup;
+  compSurvey = {};
 
   constructor (public navCtrl: NavController,
     public navParams: NavParams,
@@ -29,8 +37,75 @@ export class TkProductsListPage {
     public modalCtrl: ModalController) {
   }
 
+  // Added from competitive-products-list.ts Begins
+  ngOnInit (): void {
+    // this.tkProduct = this.navParams.data.product;
+    // this.createForm();
+  }
+
+  // createForm () {
+  //   this.compSurvey = {};
+  //   for (let index = 0; index < this.tkProduct['Competitive Product'].length; index++) {
+  //     this.compSurvey[`${index}A`] = new FormControl(null, [Validators.required]);
+  //     this.compSurvey[`${index}B`] = new FormControl(null, [Validators.required]);
+  //   }
+  //   this.inputForm = new FormGroup({
+  //     tkProduct: new FormGroup({
+  //       inputA: new FormControl(null, [Validators.required]),
+  //       inputB: new FormControl(null, [Validators.required])
+  //     }),
+  //     compProduct: new FormGroup(this.compSurvey)
+  //   });
+  // }
+
+  // async onSaveCompProducts () {
+  //   if (this.inputForm.invalid) {
+  //     this.widgetService.showAlert('Validation Failed', 'Kindly enter all valid values in below fields');
+  //     return;
+  //   }
+
+  //   const isAgree = await this.widgetService.showConfirm('Alert', 'Would you like to continue as this can not be altered in future?');
+  //   if (isAgree === 'No') {
+  //     return;
+  //   }
+  //   this.saveCapturedDataToStorage();
+  // }
+
+  // async saveCapturedDataToStorage () {
+  //   this.tkProduct['Brand Type'] = 'TK';
+  //   this.tkProduct['Price Capturing Date'] = new Date().toLocaleString().split(',')[0];
+  //   this.tkProduct['inputA'] = this.inputForm.value.tkProduct.inputA // change inputA key of this.tkProduct as required in excel sheet
+  //   this.tkProduct['RRP'] = this.inputForm.value.tkProduct.inputB
+  //   for (let index = 0; index < this.tkProduct['Competitive Product'].length; index++) {
+  //     this.tkProduct['Competitive Product'][index]['Brand Type'] = 'Comp';
+  //     this.tkProduct['Competitive Product'][index]['Price Capturing Date'] = new Date().toLocaleString().split(',')[0];
+  //     this.tkProduct['Competitive Product'][index]['inputA'] = this.inputForm.value.compProduct[`${index}A`];
+  //     this.tkProduct['Competitive Product'][index]['RRP'] = this.inputForm.value.compProduct[`${index}B`];
+  //   }
+  //   let savedCapturedProducts: any =  await this.storageService.getFromStorage('capturedCompProducts');
+  //   if (savedCapturedProducts) {
+  //     savedCapturedProducts = JSON.parse(savedCapturedProducts);
+  //     if (savedCapturedProducts.hasOwnProperty(this.tkProduct['Product Catagory'])) {
+  //       savedCapturedProducts[this.tkProduct['Product Catagory']].push(this.tkProduct);
+  //     } else {
+  //       savedCapturedProducts[this.tkProduct['Product Catagory']] = [];
+  //       savedCapturedProducts[this.tkProduct['Product Catagory']].push(this.tkProduct);
+  //     }
+  //   } else {
+  //     savedCapturedProducts = {};
+  //     savedCapturedProducts[this.tkProduct['Product Catagory']] = [];
+  //     savedCapturedProducts[this.tkProduct['Product Catagory']].push(this.tkProduct);
+  //   }
+  //   await this.storageService.setToStorage('capturedCompProducts', JSON.stringify(savedCapturedProducts));
+  //   this.navCtrl.pop();
+  // }
+
+  // Added from Competitive-products-list.ts Ends
+
+
   ionViewDidEnter () {
     this.setItemsToTkProductArray();
+    console.log(this.itemIsExpanded);
   }
 
   setItemsToTkProductArray () {
@@ -39,7 +114,7 @@ export class TkProductsListPage {
       content: "Fetching Data...",
     });
     loader.present();
-    this.apiService.getCompProducts().subscribe((res: any) => {  
+    this.apiService.getCompProducts().subscribe((res: any) => {
       console.log(res);
       this.fetchedCompProducts = res.body[0];
       for (const key in this.fetchedCompProducts) {
@@ -61,6 +136,12 @@ export class TkProductsListPage {
   initializeItems () {
     this.tkProductArray = [];
     this.tkProductArray = this.allProducts;
+    console.log("=====//");
+    console.log(this.tkProductArray);
+    // this.compTkProduct = this.allProducts['Competitive Product'];
+    // console.log("=====//");
+    // console.log(this.compTkProduct);
+    // console.log("=====//");
   }
 
   searchItems (event: any) {
@@ -174,6 +255,18 @@ export class TkProductsListPage {
   openAddTkProductModal () {
     const addTkProductModal = this.modalCtrl.create(AddTkProductModalPage, { title: 'Add TK Product', context: 'tk'});
     addTkProductModal.present();
+  }
+
+  openAddCompetitiveProductModal (masterCode) {
+    // const addCompetitiveProductModal = this.modalCtrl.create(AddTkProductModalPage, { title: 'Add Competitive Product', context: 'comp', masterCode: this.tkProduct['Master Code'] });
+    const addCompetitiveProductModal = this.modalCtrl.create(AddTkProductModalPage, { title: 'Add Competitive Product', context: 'comp', masterCode: masterCode });
+    console.log("---master code of selected item --", masterCode);
+    addCompetitiveProductModal.present();
+  }
+
+  onItemToggle () {
+    this.itemIsExpanded = !this.itemIsExpanded;
+    console.log(this.itemIsExpanded);
   }
 
 }

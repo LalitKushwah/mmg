@@ -1,25 +1,66 @@
 page-tk-products-list {
-
+    ion-content{
+        background: aliceblue !important;
+        padding: 0 10px !important;
+    }
     .tk-product-container{
      ion-searchbar{
          margin-top: 20px;
-     }
-     ion-list{
-         ion-grid{
-             ion-row{
-                 .product-name{
-                    color: #000000;
-                 }
-                 ion-col{
-                    //  font-size: 0.9em;
-                     color: grey;
-                     span{
-                        color: #000000;
-                     }
-                 }
-             }
+         .searchbar-input{
+             box-shadow: 0 0 10px rgba(0,0,0,0.1) !important;
          }
      }
+     ion-list{
+            .tk-item-wrapper{
+                padding: 10px;
+                width: 100%;
+            }
+            .main-grid{
+                height: fit-content;
+                background: #ffffff;
+                border-radius: 4px;
+                box-shadow: 0 0 10px rgba(0,0,0,0.1);
+                 ion-row{
+                     .product-name{
+                        color: #000000;
+                     }
+                     ion-col{
+                        //  font-size: 0.9em;
+                         color: grey;
+                         span{
+                            color: #000000;
+                        }
+                    }
+                }
+            }
+            .main-grid.highlight{
+                border: 1px solid rgba(0, 211, 81, 0.75);
+            }
+            .competitive-section{
+                border-top: 1px solid rgba(0,0,0,0.1);
+                margin-top: 10px !important;
+                font-size: 0.9em !important;
+                padding: 0 5px;
+                .title{
+                    color: #000000;
+                    font-weight: 500;
+                    font-size: 1.1em;
+                    margin-bottom: 2px;
+                }
+                ion-row{
+                    // border-bottom: 1px solid rgba(0,0,0,0.1);
+                    padding: 0px;
+                    ion-col{
+                        padding-bottom: 0;
+                        padding-top: 0;
+                    }
+                }
+            }
+            .item-action-wrapper{
+                text-align: center;
+                margin-top: 10px;
+            }
+        }
     }
     .alert-wrapper {
         width: 330px !important;
@@ -33,3 +74,12 @@ page-tk-products-list {
     }
 }
 
+.expandable-content{
+    //some style here
+}
+.expandable-content.expanded{
+    max-height: 500px !important;
+}
+.expandable-content.collapsed{
+    height: 0 !important;
+}
