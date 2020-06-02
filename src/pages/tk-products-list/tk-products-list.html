@@ -11,9 +11,6 @@
       <button ion-button icon-only (click)="openAddTkProductModal()">
         <ion-icon name="add"></ion-icon>
       </button>
-      <!-- <button ion-button icon-only (click)="saveToServer()">
-        <ion-icon name="cloud-upload"></ion-icon>
-      </button> -->
       <button ion-button icon-only (click)="showRadioAlert()">
         <ion-icon name="funnel"></ion-icon>
       </button>
@@ -25,24 +22,21 @@
 
 <ion-content class="tk-product-container">
   <ion-searchbar (ionInput)="searchItems($event)"></ion-searchbar>
-  <ion-list [virtualScroll]="tkProductArray" [approxItemHeight]="'250px'" no-lines>
-    <!-- <button ion-item (click)="onItemSelected(product)" *virtualItem="let product;" text-wrap class="tk-item-main"> -->
-      <!-- <ion-item (click)="onItemSelected(product)" *virtualItem="let product;" text-wrap> -->
-
-        <div class="tk-item-wrapper" *virtualItem="let product;" text-wrap>
-        <!-- <div class="tk-item-wrapper" (click)="onItemToggle()" *virtualItem="let product;" text-wrap> -->
-        <!-- <div class="tk-item-wrapper" (click)="onItemSelected(product)" *virtualItem="let product;" text-wrap> -->
-
-          <ion-grid [ngClass]="[itemIsHighlighted ? 'main-grid highlight' : 'main-grid']">
-            <ion-row>
-              <ion-col col-12>
-                <ion-icon name="cube" color="grey"></ion-icon>
-                <span class="product-name">
-                  {{ product['Product Name'] }}
-                </span>
-              </ion-col>
-            </ion-row>
-            <!-- <ion-row>
+  <!-- <ion-list [virtualScroll]="tkProductArray" [approxItemHeight]="'250px'" no-lines #row> -->
+    <ion-list *ngFor="let product of tkProductArray; let j = index;" no-lines>
+      <!-- <div class="tk-item-wrapper" *virtualItem="let product;let j = index" text-wrap> -->
+      <div class="tk-item-wrapper" text-wrap>
+        <ion-grid
+          [ngClass]="markRowAsCaptured(product['Product Catagory'], product['Master Code'], product['Product Code']) ? 'main-grid highlight' : 'main-grid'">
+          <ion-row>
+            <ion-col col-12>
+              <ion-icon name="cube" color="grey"></ion-icon>
+              <span class="product-name">
+                {{ product['Product Name'] }}
+              </span>
+            </ion-col>
+          </ion-row>
+          <!-- <ion-row>
               <ion-col col-12>Product Code: 
                 <span>
                   {{ product['Product Code'] }}
@@ -97,10 +91,11 @@
               </ion-col>
             </ion-row> -->
 
-            <!-- Competitive Section Begins -->
-            <div class="competitive-section">
-              <p class="title">Competitive Products</p>
-              <!-- <form [formGroup]="inputForm"> -->
+          <!-- Competitive Section Begins -->
+          <form [formGroup]="inputForm">
+            <div [formGroupName]="j">
+              <div class="competitive-section">
+                <p class="title">Competitive Products</p>
                 <!-- <ion-row formGroupName="tkProduct"> -->
                 <ion-row>
                   <ion-col col-6>
@@ -110,19 +105,16 @@
                   </ion-col>
                   <ion-col col-3>
                     <ion-item>
-                      <ion-input type="text" placeholder="PRICE"></ion-input>
-                      <!-- <ion-input type="text" placeholder="PRICE" formControlName="inputA"></ion-input> -->
+                      <ion-input type="text" placeholder="MSQ" formControlName="inputA"></ion-input>
                     </ion-item>
                   </ion-col>
                   <ion-col col-3>
                     <ion-item>
-                      <ion-input type="number" placeholder="RRP"></ion-input>
-                      <!-- <ion-input type="number" placeholder="RRP" formControlName="inputB"></ion-input> -->
+                      <ion-input type="number" placeholder="RRP" formControlName="inputB"></ion-input>
                     </ion-item>
                   </ion-col>
                 </ion-row>
-                <ion-row *ngFor="let item of product['Competitive Product']; let i = index;">
-                <!-- <ion-row *ngFor="let item of product['Competitive Product']; let i = index;" formGroupName="compProduct"> -->
+                <ion-row *ngFor="let item of product['Competitive Product']; let i = index;" formGroupName="compInputs">
                   <ion-col col-6>
                     <ion-label>
                       {{ item['Product Name'] }}
@@ -130,40 +122,27 @@
                   </ion-col>
                   <ion-col col-3>
                     <ion-item>
-                      <ion-input type="text" placeholder="PRICE"></ion-input>
-                      <!-- <ion-input type="text" placeholder="PRICE" [formControlName]="i+'A'"></ion-input> -->
+                      <ion-input type="text" placeholder="MSQ" [formControlName]="i+'A'"></ion-input>
                     </ion-item>
                   </ion-col>
                   <ion-col col-3>
                     <ion-item>
-                      <ion-input type="number" placeholder="RRP"></ion-input>
-                      <!-- <ion-input type="number" placeholder="RRP" [formControlName]="i+'B'"></ion-input> -->
+                      <ion-input type="number" placeholder="RRP" [formControlName]="i+'B'"></ion-input>
                     </ion-item>
                   </ion-col>
                 </ion-row>
-              <!-- </form> -->
+              </div>
+              <!-- Competitive Section Ends -->
+
+              <div class="item-action-wrapper">
+                <button ion-button small color="secondary" class="cust-btn" [disabled]="tkProductArray.length > 0 ? inputForm.controls[j].invalid : true" (click)="saveToServer(j)">Upload</button>
+                <button ion-button small color="secondary" class="cust-btn"
+                  (click)="openAddCompetitiveProductModal(product['Master Code'])">Add New</button>
+              </div>
             </div>
-            <!-- Competitive Section Ends -->
+          </form>
 
-            <div class="item-action-wrapper">
-              <button ion-button small color="secondary" class="cust-btn" (click)="saveToServer()">Upload</button>
-              <button ion-button small color="secondary" class="cust-btn" (click)="openAddCompetitiveProductModal(product['Master Code'])">Add New</button>
-            </div>
-
-            <!-- <div [ngClass]="[itemIsExpanded ? 'expandable-content expanded' : 'expandable-content collapsed']">
-              <p>Test Accordion Content</p>
-            </div> -->
-
-          </ion-grid>
-
-        </div>
-      <!-- </ion-item> -->
-    <!-- </button> -->
-  </ion-list>
-
-  <!-- <ion-fab right bottom>
-    <button ion-fab (click)="openAddTkProductModal()">
-      <ion-icon name="add" class="custom-fab"></ion-icon>
-    </button>
-  </ion-fab> -->
+        </ion-grid>
+      </div>
+    </ion-list>
 </ion-content>

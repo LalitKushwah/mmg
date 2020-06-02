@@ -40,7 +40,6 @@ export class AddCustomerInfoPage implements OnInit {
       if (agree === 'Yes') {
         this.navCtrl.push(TkProductsListPage);
       } else {
-        await this.storageService.removeFromStorage('capturedCompProducts');
         await this.storageService.removeFromStorage('customerInfo');
       }
     }

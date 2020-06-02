@@ -1,31 +1,25 @@
-import { Component } from '@angular/core';
+import { Component, Renderer2, ViewChild, ElementRef, OnDestroy } from '@angular/core';
 import { IonicPage, NavController, NavParams, AlertController, LoadingController, ModalController } from 'ionic-angular';
+import { FormGroup, FormControl, Validators } from '@angular/forms';
 
-import { CompetitiveProductsListPage } from '../competitive-products-list/competitive-products-list';
-import { data } from '../../utils/data';
 import { WidgetUtilService } from '../../utils/widget-utils';
 import { ApiServiceProvider } from '../../providers/api-service/api-service';
 import { StorageServiceProvider } from '../../providers/storage-service/storage-service';
 import { AddTkProductModalPage } from '../add-tk-product-modal/add-tk-product-modal';
-import { FormGroup, FormControl, Validators } from '@angular/forms';
 
 @IonicPage()
 @Component({
   selector: 'page-tk-products-list',
   templateUrl: 'tk-products-list.html',
 })
-export class TkProductsListPage {
+export class TkProductsListPage implements OnDestroy {
   radioResult = 'reset';
   tkProductArray = [];
   allProducts = [];
-  fetchedCompProducts;
+  fetchedCompProducts: any;
   itemIsHighlighted = false;
-  itemIsExpanded = false;
-
-  // added from competitive-products-list.ts
-  compTkProduct: any;
   inputForm: FormGroup;
-  compSurvey = {};
+  productCapturedIdentity = [];
 
   constructor (public navCtrl: NavController,
     public navParams: NavParams,
@@ -37,75 +31,70 @@ export class TkProductsListPage {
     public modalCtrl: ModalController) {
   }
 
-  // Added from competitive-products-list.ts Begins
-  ngOnInit (): void {
-    // this.tkProduct = this.navParams.data.product;
-    // this.createForm();
+  createForm () {
+    this.inputForm = new FormGroup({});
+    let compSurvey;
+    for (let index = 0; index < this.tkProductArray.length; index++) {
+      compSurvey = {};
+      for (let j = 0; j < this.tkProductArray[index]['Competitive Product'].length; j++) {
+        compSurvey[`${j}A`] = new FormControl(null, [Validators.required]);
+        compSurvey[`${j}B`] = new FormControl(null, [Validators.required]);
+      }
+      this.inputForm.registerControl(`${index}`, new FormGroup({
+        inputA: new FormControl(null, [Validators.required]),
+        inputB: new FormControl(null, [Validators.required]),
+        compInputs: new FormGroup(compSurvey)
+      }));
+    }
   }
 
-  // createForm () {
-  //   this.compSurvey = {};
-  //   for (let index = 0; index < this.tkProduct['Competitive Product'].length; index++) {
-  //     this.compSurvey[`${index}A`] = new FormControl(null, [Validators.required]);
-  //     this.compSurvey[`${index}B`] = new FormControl(null, [Validators.required]);
-  //   }
-  //   this.inputForm = new FormGroup({
-  //     tkProduct: new FormGroup({
-  //       inputA: new FormControl(null, [Validators.required]),
-  //       inputB: new FormControl(null, [Validators.required])
-  //     }),
-  //     compProduct: new FormGroup(this.compSurvey)
-  //   });
-  // }
+  async prepareCapturedProduct (index: number) {
+    const prepareData = { customerInfo: '', product: '' };
+    const product = this.tkProductArray[index];
+    prepareData.customerInfo = JSON.parse(<string>await this.storageService.getFromStorage('customerInfo'));
+    product['Brand Type'] = 'TK';
+    product['Price Capturing Date'] = new Date().toLocaleString().split(',')[0];
+    product['MSQ'] = this.inputForm.value[index].inputA;
+    product['RRP'] = this.inputForm.value[index].inputB;
+    for (let i = 0; i < product['Competitive Product'].length; i++) {
+      product['Competitive Product'][i]['Brand Type'] = 'Comp';
+      product['Competitive Product'][i]['Price Capturing Date'] = new Date().toLocaleString().split(',')[0];
+      product['Competitive Product'][i]['MSQ'] = this.inputForm.value[index].compInputs[`${i}A`];
+      product['Competitive Product'][i]['RRP'] = this.inputForm.value[index].compInputs[`${i}B`];
+    }
+    prepareData.product = product;
+    this.inputForm.get(`${index}`).reset();
+    const productIdentity = [product['Product Catagory'], product['Master Code'], product['Product Code']];
+    let storedCapturedIdentities: any = await this.storageService.getFromStorage('capturedIdentities');
+    if (storedCapturedIdentities) {
+      storedCapturedIdentities = JSON.parse(storedCapturedIdentities);
+      storedCapturedIdentities.push(productIdentity);
+      await this.storageService.setToStorage('capturedIdentities', JSON.stringify(storedCapturedIdentities));
+    } else {
+      await this.storageService.setToStorage('capturedIdentities', JSON.stringify([productIdentity]));
+    }
+    this.productCapturedIdentity.push(productIdentity);
+    console.log(prepareData);
+  }
 
-  // async onSaveCompProducts () {
-  //   if (this.inputForm.invalid) {
-  //     this.widgetService.showAlert('Validation Failed', 'Kindly enter all valid values in below fields');
-  //     return;
-  //   }
+  markRowAsCaptured (prodCat: string, masterCode: string, prodCode: string): boolean {
+    let temp = false;
+    this.productCapturedIdentity.forEach((identity: any) => {
+      if (identity[0] === prodCat && identity[1] === masterCode && identity[2] === prodCode) {
+        temp = true;
+      }
+    });
+    return temp
+  }
 
-  //   const isAgree = await this.widgetService.showConfirm('Alert', 'Would you like to continue as this can not be altered in future?');
-  //   if (isAgree === 'No') {
-  //     return;
-  //   }
-  //   this.saveCapturedDataToStorage();
-  // }
-
-  // async saveCapturedDataToStorage () {
-  //   this.tkProduct['Brand Type'] = 'TK';
-  //   this.tkProduct['Price Capturing Date'] = new Date().toLocaleString().split(',')[0];
-  //   this.tkProduct['inputA'] = this.inputForm.value.tkProduct.inputA // change inputA key of this.tkProduct as required in excel sheet
-  //   this.tkProduct['RRP'] = this.inputForm.value.tkProduct.inputB
-  //   for (let index = 0; index < this.tkProduct['Competitive Product'].length; index++) {
-  //     this.tkProduct['Competitive Product'][index]['Brand Type'] = 'Comp';
-  //     this.tkProduct['Competitive Product'][index]['Price Capturing Date'] = new Date().toLocaleString().split(',')[0];
-  //     this.tkProduct['Competitive Product'][index]['inputA'] = this.inputForm.value.compProduct[`${index}A`];
-  //     this.tkProduct['Competitive Product'][index]['RRP'] = this.inputForm.value.compProduct[`${index}B`];
-  //   }
-  //   let savedCapturedProducts: any =  await this.storageService.getFromStorage('capturedCompProducts');
-  //   if (savedCapturedProducts) {
-  //     savedCapturedProducts = JSON.parse(savedCapturedProducts);
-  //     if (savedCapturedProducts.hasOwnProperty(this.tkProduct['Product Catagory'])) {
-  //       savedCapturedProducts[this.tkProduct['Product Catagory']].push(this.tkProduct);
-  //     } else {
-  //       savedCapturedProducts[this.tkProduct['Product Catagory']] = [];
-  //       savedCapturedProducts[this.tkProduct['Product Catagory']].push(this.tkProduct);
-  //     }
-  //   } else {
-  //     savedCapturedProducts = {};
-  //     savedCapturedProducts[this.tkProduct['Product Catagory']] = [];
-  //     savedCapturedProducts[this.tkProduct['Product Catagory']].push(this.tkProduct);
-  //   }
-  //   await this.storageService.setToStorage('capturedCompProducts', JSON.stringify(savedCapturedProducts));
-  //   this.navCtrl.pop();
-  // }
-
-  // Added from Competitive-products-list.ts Ends
-
-
-  ionViewDidEnter () {
+  async ionViewDidEnter () {
+    let storedCapturedIdentities: any = await this.storageService.getFromStorage('capturedIdentities');
+    if (storedCapturedIdentities) {
+      storedCapturedIdentities = JSON.parse(storedCapturedIdentities);
+      this.productCapturedIdentity = [];
+      this.productCapturedIdentity = storedCapturedIdentities;
+    }
     this.setItemsToTkProductArray();
-    console.log(this.itemIsExpanded);
   }
 
   setItemsToTkProductArray () {
@@ -119,7 +108,6 @@ export class TkProductsListPage {
       this.fetchedCompProducts = res.body[0];
       for (const key in this.fetchedCompProducts) {
         if (key !== '_id') {
-          console.log('======== 47 =====', key);
           this.fetchedCompProducts[key].forEach(element => {
             this.allProducts.push(element);
           });
@@ -136,15 +124,14 @@ export class TkProductsListPage {
   initializeItems () {
     this.tkProductArray = [];
     this.tkProductArray = this.allProducts;
-    console.log("=====//");
-    console.log(this.tkProductArray);
-    // this.compTkProduct = this.allProducts['Competitive Product'];
-    // console.log("=====//");
-    // console.log(this.compTkProduct);
-    // console.log("=====//");
+    this.createForm();
   }
 
   searchItems (event: any) {
+    const loader = this.loadingController.create({
+      content: "Searching...",
+    });
+    loader.present();
     const val = event.target.value;
     if (val && val.trim() != '') {
       this.tkProductArray = this.allProducts.filter((item) => {
@@ -152,13 +139,11 @@ export class TkProductsListPage {
             item['Product Name'] && item['Product Name'].toLowerCase().indexOf(val.toLowerCase()) > -1
           );
       });
+      this.createForm();
     } else {
       this.initializeItems();
     }
-  }
-
-  onItemSelected (product: any) {
-    this.navCtrl.push(CompetitiveProductsListPage, { product });
+    loader.dismiss();
   }
 
   showRadioAlert () {
@@ -220,23 +205,17 @@ export class TkProductsListPage {
   setFilteredItemsToTkProductArray () {
     this.tkProductArray = [];
     this.tkProductArray = this.fetchedCompProducts[this.radioResult];
+    this.createForm();
   }
 
-  async saveToServer () {
-    // get the captured data from storage using key 'capturedCompProducts'
-    // get the customerInfo from storage using key 'customerInfo'
-    // manipulate data according to need and then upload to server
-    // then clear the storage
-    const capturedData: any = await this.storageService.getFromStorage('capturedCompProducts');
-    if (!capturedData) {
-      this.widgetService.showAlert('Alert', 'You did not captured any product, kindly capture data for some products first!');
-      return;
-    }
-    console.log('Captured Product', JSON.parse(capturedData));
+  async saveToServer (index: number) {
+    // if (this.inputForm.get(`${index}`).invalid) {
+    //   this.widgetService.showToast('Kindly enter all valid inputs!');
+    //   return;
+    // }
     const agree =  await this.widgetService.showConfirm('Uploading To Server', 'Would you like to continue with the same as this can not be undone?')
     if (agree === 'No') { return; }
-    await this.storageService.removeFromStorage('customerInfo');
-    await this.storageService.removeFromStorage('capturedCompProducts');
+    this.prepareCapturedProduct(index);
   }
 
   async onOpenModal () {
@@ -255,18 +234,20 @@ export class TkProductsListPage {
   openAddTkProductModal () {
     const addTkProductModal = this.modalCtrl.create(AddTkProductModalPage, { title: 'Add TK Product', context: 'tk'});
     addTkProductModal.present();
+    addTkProductModal.onDidDismiss((data, role) => {
+      this.setItemsToTkProductArray();
+    });
   }
 
-  openAddCompetitiveProductModal (masterCode) {
-    // const addCompetitiveProductModal = this.modalCtrl.create(AddTkProductModalPage, { title: 'Add Competitive Product', context: 'comp', masterCode: this.tkProduct['Master Code'] });
+  openAddCompetitiveProductModal (masterCode: any) {
     const addCompetitiveProductModal = this.modalCtrl.create(AddTkProductModalPage, { title: 'Add Competitive Product', context: 'comp', masterCode: masterCode });
-    console.log("---master code of selected item --", masterCode);
     addCompetitiveProductModal.present();
+    addCompetitiveProductModal.onDidDismiss((data, role) => {
+      this.setItemsToTkProductArray();
+    });
   }
 
-  onItemToggle () {
-    this.itemIsExpanded = !this.itemIsExpanded;
-    console.log(this.itemIsExpanded);
+  async ngOnDestroy () {
+    await this.storageService.removeFromStorage('capturedIdentities');
   }
-
 }

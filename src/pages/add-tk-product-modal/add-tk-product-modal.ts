@@ -3,7 +3,6 @@ import { IonicPage, NavController, NavParams, ViewController, LoadingController,
 import { ApiServiceProvider } from '../../providers/api-service/api-service';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { WidgetUtilService } from '../../utils/widget-utils';
-import { CommonService } from '../../providers/common.service';
 
 @IonicPage()
 @Component({

@@ -109,8 +109,6 @@ import { AddCustomerInfoPageModule } from '../pages/add-customer-info/add-custom
 import { AddCustomerInfoPage } from '../pages/add-customer-info/add-customer-info';
 import { TkProductsListPageModule } from '../pages/tk-products-list/tk-products-list.module';
 import { TkProductsListPage } from '../pages/tk-products-list/tk-products-list';
-import { CompetitiveProductsListPageModule } from '../pages/competitive-products-list/competitive-products-list.module';
-import { CompetitiveProductsListPage } from '../pages/competitive-products-list/competitive-products-list';
 import { AddTkProductModalPage } from '../pages/add-tk-product-modal/add-tk-product-modal';
 import { AddTkProductModalPageModule } from '../pages/add-tk-product-modal/add-tk-product-modal.module';
 
@@ -175,7 +173,6 @@ import { AddTkProductModalPageModule } from '../pages/add-tk-product-modal/add-t
     UserStatementsPageModule,
     AddCustomerInfoPageModule,
     TkProductsListPageModule,
-    CompetitiveProductsListPageModule,
     AddTkProductModalPageModule
   ],
   bootstrap: [IonicApp],
@@ -225,7 +222,6 @@ import { AddTkProductModalPageModule } from '../pages/add-tk-product-modal/add-t
     UserStatementsPage,
     AddCustomerInfoPage,
     TkProductsListPage,
-    CompetitiveProductsListPage,
     AddTkProductModalPage
   ],
   providers: [
