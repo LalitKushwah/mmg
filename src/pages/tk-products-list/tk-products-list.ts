@@ -5,6 +5,8 @@ import { NgForm } from '@angular/forms';
 import { ApiServiceProvider } from '../../providers/api-service/api-service';
 import { StorageServiceProvider } from '../../providers/storage-service/storage-service';
 import { AddTkProductModalPage } from '../add-tk-product-modal/add-tk-product-modal';
+import { DatePipe } from '@angular/common';
+import { WidgetUtilService } from '../../utils/widget-utils';
 
 @IonicPage()
 @Component({
@@ -25,7 +27,9 @@ export class TkProductsListPage implements OnDestroy {
     private apiService: ApiServiceProvider,
     private loadingController: LoadingController,
     private storageService: StorageServiceProvider,
-    public modalCtrl: ModalController) {
+    public modalCtrl: ModalController,
+    private widgetService: WidgetUtilService,
+    public datePipe: DatePipe) {
     
   }
 
@@ -60,7 +64,7 @@ export class TkProductsListPage implements OnDestroy {
       await this.storageService.setToStorage('capturedIdentities', JSON.stringify([productIdentity]));
     }
     this.productCapturedIdentity.push(productIdentity);
-    console.log(prepareData);
+    return prepareData;
   }
 
   markRowAsCaptured (prodCat: string, masterCode: string, prodCode: string): boolean {
@@ -186,8 +190,14 @@ export class TkProductsListPage implements OnDestroy {
     this.tkProductArray = this.fetchedCompProducts[this.radioResult];
   }
 
-  saveToServer (masterCode: string, productCode: string, prodCategory: string, form: NgForm) {
-    this.prepareCapturedProduct(masterCode, productCode, prodCategory, form.value);
+  async saveToServer (masterCode: string, productCode: string, prodCategory: string, form: NgForm) {
+    const data = await this.prepareCapturedProduct(masterCode, productCode, prodCategory, form.value);
+    data['date'] = this.datePipe.transform(Date.now(), 'dd/MM/yyyy')
+    this.apiService.captureProduct(data).subscribe(res => {
+      this.widgetService.showToast('Uploaded Successfully...')
+    }, err => {
+      this.widgetService.showToast('Error While Uploading...' + err);
+    });
   }
 
   openAddTkProductModal () {

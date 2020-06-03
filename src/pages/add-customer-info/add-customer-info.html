@@ -10,6 +10,11 @@
 
     <form [formGroup]="customerForm">
       <ion-item>
+        <ion-label floating>Shop Name</ion-label>
+        <ion-input formControlName="shopName" type="text"></ion-input>
+      </ion-item>
+      
+      <ion-item>
         <ion-label floating>Province</ion-label>
         <ion-input formControlName="province" type="text"></ion-input>
       </ion-item>
@@ -22,11 +27,6 @@
       <ion-item>
         <ion-label floating>Compound/Area</ion-label>
         <ion-input formControlName="area" type="text"></ion-input>
-      </ion-item>
-
-      <ion-item>
-        <ion-label floating>Shop Name</ion-label>
-        <ion-input formControlName="shopName" type="text"></ion-input>
       </ion-item>
 
       <button ion-button color="secondary" full [disabled]="customerForm.invalid" (click)="onAddCustomerInfo()" class="add-cust-btn">Add Customer</button>
