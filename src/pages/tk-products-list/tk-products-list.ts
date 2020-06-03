@@ -54,16 +54,6 @@ export class TkProductsListPage implements OnDestroy {
       product['Competitive Product'][i]['RRP'] = form[`${i}B`];
     }
     prepareData.product = product;
-    const productIdentity = [product['Product Catagory'], product['Master Code'], product['Product Code']];
-    let storedCapturedIdentities: any = await this.storageService.getFromStorage('capturedIdentities');
-    if (storedCapturedIdentities) {
-      storedCapturedIdentities = JSON.parse(storedCapturedIdentities);
-      storedCapturedIdentities.push(productIdentity);
-      await this.storageService.setToStorage('capturedIdentities', JSON.stringify(storedCapturedIdentities));
-    } else {
-      await this.storageService.setToStorage('capturedIdentities', JSON.stringify([productIdentity]));
-    }
-    this.productCapturedIdentity.push(productIdentity);
     return prepareData;
   }
 
@@ -191,11 +181,29 @@ export class TkProductsListPage implements OnDestroy {
   }
 
   async saveToServer (masterCode: string, productCode: string, prodCategory: string, form: NgForm) {
+    const loader = this.loadingController.create({
+      content: "Uploading Data...",
+    });
+    loader.present();
     const data = await this.prepareCapturedProduct(masterCode, productCode, prodCategory, form.value);
     data['date'] = this.datePipe.transform(Date.now(), 'dd/MM/yyyy')
-    this.apiService.captureProduct(data).subscribe(res => {
+    this.apiService.captureProduct(data).subscribe(async res => {
       this.widgetService.showToast('Uploaded Successfully...')
+      /* Marking for captured product */
+      const productIdentity = [data.product['Product Catagory'], data.product['Master Code'], data.product['Product Code']];
+      let storedCapturedIdentities: any = await this.storageService.getFromStorage('capturedIdentities');
+      if (storedCapturedIdentities) {
+        storedCapturedIdentities = JSON.parse(storedCapturedIdentities);
+        storedCapturedIdentities.push(productIdentity);
+        await this.storageService.setToStorage('capturedIdentities', JSON.stringify(storedCapturedIdentities));
+      } else {
+        await this.storageService.setToStorage('capturedIdentities', JSON.stringify([productIdentity]));
+      }
+      this.productCapturedIdentity.push(productIdentity);
+      loader.dismiss();
+      /* Marking end */
     }, err => {
+      loader.dismiss();
       this.widgetService.showToast('Error While Uploading...' + err);
     });
   }
