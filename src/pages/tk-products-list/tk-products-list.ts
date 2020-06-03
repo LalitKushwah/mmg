@@ -6,6 +6,7 @@ import { WidgetUtilService } from '../../utils/widget-utils';
 import { ApiServiceProvider } from '../../providers/api-service/api-service';
 import { StorageServiceProvider } from '../../providers/storage-service/storage-service';
 import { AddTkProductModalPage } from '../add-tk-product-modal/add-tk-product-modal';
+import { DatePipe } from '@angular/common';
 
 @IonicPage()
 @Component({
@@ -28,7 +29,8 @@ export class TkProductsListPage implements OnDestroy {
     private widgetService: WidgetUtilService,
     private loadingController: LoadingController,
     private storageService: StorageServiceProvider,
-    public modalCtrl: ModalController) {
+    public modalCtrl: ModalController,
+    public datePipe: DatePipe) {
   }
 
   createForm () {
@@ -49,9 +51,9 @@ export class TkProductsListPage implements OnDestroy {
   }
 
   async prepareCapturedProduct (index: number) {
-    const prepareData = { customerInfo: '', product: '' };
+    const prepareData = { customerDetail: '', product: '' };
     const product = this.tkProductArray[index];
-    prepareData.customerInfo = JSON.parse(<string>await this.storageService.getFromStorage('customerInfo'));
+    prepareData.customerDetail = JSON.parse(<string>await this.storageService.getFromStorage('customerInfo'));
     product['Brand Type'] = 'TK';
     product['Price Capturing Date'] = new Date().toLocaleString().split(',')[0];
     product['MSQ'] = this.inputForm.value[index].inputA;
@@ -74,7 +76,7 @@ export class TkProductsListPage implements OnDestroy {
       await this.storageService.setToStorage('capturedIdentities', JSON.stringify([productIdentity]));
     }
     this.productCapturedIdentity.push(productIdentity);
-    console.log(prepareData);
+    return prepareData;
   }
 
   markRowAsCaptured (prodCat: string, masterCode: string, prodCode: string): boolean {
@@ -209,13 +211,21 @@ export class TkProductsListPage implements OnDestroy {
   }
 
   async saveToServer (index: number) {
+    const data = await this.prepareCapturedProduct(index);
+    data['date'] = this.datePipe.transform(Date.now(), 'dd/MM/yyyy')
+    console.log('===== 216 ===', data);
+    
+    this.apiService.captureProduct(data).subscribe(res => {
+      this.widgetService.showToast('Uploaded Successfully...')
+    }, err => {
+      this.widgetService.showToast('Error While Uploading...' + err);
+    });
     // if (this.inputForm.get(`${index}`).invalid) {
     //   this.widgetService.showToast('Kindly enter all valid inputs!');
     //   return;
     // }
-    const agree =  await this.widgetService.showConfirm('Uploading To Server', 'Would you like to continue with the same as this can not be undone?')
-    if (agree === 'No') { return; }
-    this.prepareCapturedProduct(index);
+    // const agree =  await this.widgetService.showConfirm('Uploading To Server', 'Would you like to continue with the same as this can not be undone?')
+    // if (agree === 'No') { return; }
   }
 
   async onOpenModal () {
