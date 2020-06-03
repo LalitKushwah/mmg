@@ -1,8 +1,7 @@
-import { Component, Renderer2, ViewChild, ElementRef, OnDestroy } from '@angular/core';
+import { Component, OnDestroy } from '@angular/core';
 import { IonicPage, NavController, NavParams, AlertController, LoadingController, ModalController } from 'ionic-angular';
-import { FormGroup, FormControl, Validators } from '@angular/forms';
+import { NgForm } from '@angular/forms';
 
-import { WidgetUtilService } from '../../utils/widget-utils';
 import { ApiServiceProvider } from '../../providers/api-service/api-service';
 import { StorageServiceProvider } from '../../providers/storage-service/storage-service';
 import { AddTkProductModalPage } from '../add-tk-product-modal/add-tk-product-modal';
@@ -18,52 +17,39 @@ export class TkProductsListPage implements OnDestroy {
   allProducts = [];
   fetchedCompProducts: any;
   itemIsHighlighted = false;
-  inputForm: FormGroup;
   productCapturedIdentity = [];
 
   constructor (public navCtrl: NavController,
     public navParams: NavParams,
     private alertCtrl: AlertController,
     private apiService: ApiServiceProvider,
-    private widgetService: WidgetUtilService,
     private loadingController: LoadingController,
     private storageService: StorageServiceProvider,
     public modalCtrl: ModalController) {
+    
   }
 
-  createForm () {
-    this.inputForm = new FormGroup({});
-    let compSurvey;
-    for (let index = 0; index < this.tkProductArray.length; index++) {
-      compSurvey = {};
-      for (let j = 0; j < this.tkProductArray[index]['Competitive Product'].length; j++) {
-        compSurvey[`${j}A`] = new FormControl(null, [Validators.required]);
-        compSurvey[`${j}B`] = new FormControl(null, [Validators.required]);
-      }
-      this.inputForm.registerControl(`${index}`, new FormGroup({
-        inputA: new FormControl(null, [Validators.required]),
-        inputB: new FormControl(null, [Validators.required]),
-        compInputs: new FormGroup(compSurvey)
-      }));
-    }
-  }
-
-  async prepareCapturedProduct (index: number) {
+  async prepareCapturedProduct (masterCode: string, productCode: string, prodCategory: string, form: any) {
     const prepareData = { customerInfo: '', product: '' };
+    const index = this.tkProductArray.findIndex(prod => {
+      return prod['Product Catagory'] === prodCategory && prod['Master Code'] === masterCode && prod['Product Code'] === productCode;
+    });
+    if (index === -1) {
+      return;
+    }
     const product = this.tkProductArray[index];
     prepareData.customerInfo = JSON.parse(<string>await this.storageService.getFromStorage('customerInfo'));
     product['Brand Type'] = 'TK';
     product['Price Capturing Date'] = new Date().toLocaleString().split(',')[0];
-    product['MSQ'] = this.inputForm.value[index].inputA;
-    product['RRP'] = this.inputForm.value[index].inputB;
+    product['MSQ'] = form.A;
+    product['RRP'] = form.B;
     for (let i = 0; i < product['Competitive Product'].length; i++) {
       product['Competitive Product'][i]['Brand Type'] = 'Comp';
       product['Competitive Product'][i]['Price Capturing Date'] = new Date().toLocaleString().split(',')[0];
-      product['Competitive Product'][i]['MSQ'] = this.inputForm.value[index].compInputs[`${i}A`];
-      product['Competitive Product'][i]['RRP'] = this.inputForm.value[index].compInputs[`${i}B`];
+      product['Competitive Product'][i]['MSQ'] = form[`${i}A`];
+      product['Competitive Product'][i]['RRP'] = form[`${i}B`];
     }
     prepareData.product = product;
-    this.inputForm.get(`${index}`).reset();
     const productIdentity = [product['Product Catagory'], product['Master Code'], product['Product Code']];
     let storedCapturedIdentities: any = await this.storageService.getFromStorage('capturedIdentities');
     if (storedCapturedIdentities) {
@@ -124,14 +110,9 @@ export class TkProductsListPage implements OnDestroy {
   initializeItems () {
     this.tkProductArray = [];
     this.tkProductArray = this.allProducts;
-    this.createForm();
   }
 
   searchItems (event: any) {
-    const loader = this.loadingController.create({
-      content: "Searching...",
-    });
-    loader.present();
     const val = event.target.value;
     if (val && val.trim() != '') {
       this.tkProductArray = this.allProducts.filter((item) => {
@@ -139,11 +120,9 @@ export class TkProductsListPage implements OnDestroy {
             item['Product Name'] && item['Product Name'].toLowerCase().indexOf(val.toLowerCase()) > -1
           );
       });
-      this.createForm();
     } else {
       this.initializeItems();
     }
-    loader.dismiss();
   }
 
   showRadioAlert () {
@@ -205,30 +184,10 @@ export class TkProductsListPage implements OnDestroy {
   setFilteredItemsToTkProductArray () {
     this.tkProductArray = [];
     this.tkProductArray = this.fetchedCompProducts[this.radioResult];
-    this.createForm();
   }
 
-  async saveToServer (index: number) {
-    // if (this.inputForm.get(`${index}`).invalid) {
-    //   this.widgetService.showToast('Kindly enter all valid inputs!');
-    //   return;
-    // }
-    const agree =  await this.widgetService.showConfirm('Uploading To Server', 'Would you like to continue with the same as this can not be undone?')
-    if (agree === 'No') { return; }
-    this.prepareCapturedProduct(index);
-  }
-
-  async onOpenModal () {
-    const prodData = await this.widgetService.showPrompt('Add TK Product', 'tk');
-    const obj = { categoryName: prodData['Product Catagory'], product: prodData};
-    this.apiService.addCompTkProduct(obj).subscribe(res => {
-      this.fetchedCompProducts[prodData['Product Catagory']].unshift(prodData);
-      this.allProducts.unshift(prodData);
-      this.initializeItems();
-    }, err => {
-      console.log(err);
-    })
-
+  saveToServer (masterCode: string, productCode: string, prodCategory: string, form: NgForm) {
+    this.prepareCapturedProduct(masterCode, productCode, prodCategory, form.value);
   }
 
   openAddTkProductModal () {
