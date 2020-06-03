@@ -41,6 +41,7 @@ export class AddCustomerInfoPage implements OnInit {
         this.navCtrl.push(TkProductsListPage);
       } else {
         await this.storageService.removeFromStorage('customerInfo');
+        this.resetForm(this.customerForm);
       }
     }
   }
@@ -52,6 +53,11 @@ export class AddCustomerInfoPage implements OnInit {
       area: new FormControl('', [ Validators.required ]),
       shopName: new FormControl('', [ Validators.required ]),
     });
+  }
+
+  resetForm (form: FormGroup) {
+    form.reset();
+    console.log('---form reset successfully--');
   }
 
   async onAddCustomerInfo () {

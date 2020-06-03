@@ -16,12 +16,13 @@
       </button>
     </ion-buttons>
   </ion-navbar>
+  <ion-searchbar (ionInput)="searchItems($event)"></ion-searchbar>
 
 </ion-header>
 
 
-<ion-content class="tk-product-container">
-  <ion-searchbar (ionInput)="searchItems($event)"></ion-searchbar>
+<ion-content class="tk-product-container" no-padding>
+  <!-- <ion-searchbar (ionInput)="searchItems($event)"></ion-searchbar> -->
   <!-- <ion-list [virtualScroll]="tkProductArray" [approxItemHeight]="'250px'" no-lines #row> -->
   <!-- <form [formGroup]="inputForm"> -->
   <virtual-scroller #scroll [items]="tkProductArray">
