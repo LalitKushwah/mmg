@@ -25,12 +25,24 @@
   <!-- <ion-searchbar (ionInput)="searchItems($event)"></ion-searchbar> -->
   <!-- <ion-list [virtualScroll]="tkProductArray" [approxItemHeight]="'250px'" no-lines #row> -->
   <!-- <form [formGroup]="inputForm"> -->
-  <virtual-scroller #scroll [items]="tkProductArray">
+
+<!-- <button class="accordion" (click)="toggleAcoordion(1)">Section 1</button>
+<div class="panel" [ngClass]="isExpanded ? 'expanded' : 'collapsed'" id="1">
+  <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
+</div>
+
+<button class="accordion" (click)="toggleAcoordion(2)">Section 2</button>
+<div class="panel" [ngClass]="isExpanded ? 'expanded' : 'collapsed'" id="2">
+  <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
+</div> -->
+
+  <virtual-scroller #scroll [items]="tkProductArray" [enableUnequalChildrenSizes]="true" [bufferAmount]=10>
     <ion-list *ngFor="let product of scroll.viewPortItems; let j = index;" no-lines>
       <!-- <div class="tk-item-wrapper" *virtualItem="let product;let j = index" text-wrap> -->
       <div class="tk-item-wrapper" text-wrap>
         <ion-grid
-          [ngClass]="markRowAsCaptured(product['Product Catagory'], product['Master Code'], product['Product Code']) ? 'main-grid highlight' : 'main-grid'">
+          [ngClass]="markRowAsCaptured(product['Product Catagory'], product['Master Code'], product['Product Code']) ? 'main-grid highlight' : 'main-grid'"
+          (click)="toggleAcoordion(product['uniqueId'])">
           <ion-row>
             <ion-col col-12>
               <ion-icon name="cube" color="grey"></ion-icon>
@@ -142,8 +154,10 @@
                   (click)="openAddCompetitiveProductModal(product['Master Code'])">Add New</button>
               </div>
             </div> -->
+          <div #accordionDiv class="panel" [ngClass]="toggledElementId===product['uniqueId'] && isExpanded ? 'expanded' : 'collapsed'" 
+              id="{{product['uniqueId']}}">
+          <!-- <div #accordionDiv class="panel" [ngClass]="toggledElementId===j && isExpanded ? 'expanded' : 'collapsed'" id={{j}}> -->
           <form #form="ngForm">
-            <div>
               <div class="competitive-section">
                 <p class="title">Competitive Products</p>
                 <ion-row>
@@ -187,8 +201,9 @@
                 <button ion-button small color="secondary" class="cust-btn"
                   (click)="openAddCompetitiveProductModal(product['Master Code'])">Add New</button>
               </div>
-            </div>
-          </form>
+            </form>
+          </div>
+
         </ion-grid>
       </div>
     </ion-list>

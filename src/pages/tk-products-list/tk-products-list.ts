@@ -8,6 +8,8 @@ import { AddTkProductModalPage } from '../add-tk-product-modal/add-tk-product-mo
 import { DatePipe } from '@angular/common';
 import { WidgetUtilService } from '../../utils/widget-utils';
 
+import * as uuid from 'uuid';
+
 @IonicPage()
 @Component({
   selector: 'page-tk-products-list',
@@ -20,6 +22,10 @@ export class TkProductsListPage implements OnDestroy {
   fetchedCompProducts: any;
   itemIsHighlighted = false;
   productCapturedIdentity = [];
+
+  isExpanded = false;
+  toggledElementId: any;
+  randomId: any;
 
   constructor (public navCtrl: NavController,
     public navParams: NavParams,
@@ -89,6 +95,7 @@ export class TkProductsListPage implements OnDestroy {
       for (const key in this.fetchedCompProducts) {
         if (key !== '_id') {
           this.fetchedCompProducts[key].forEach(element => {
+            element.uniqueId = uuid.v4();
             this.allProducts.push(element);
           });
         }
@@ -226,5 +233,11 @@ export class TkProductsListPage implements OnDestroy {
 
   async ngOnDestroy () {
     await this.storageService.removeFromStorage('capturedIdentities');
+  }
+
+  toggleAcoordion (a) {
+    this.isExpanded = !this.isExpanded;
+    this.toggledElementId = a;
+    console.log(this.toggledElementId)
   }
 }
