@@ -44,11 +44,15 @@
           [ngClass]="markRowAsCaptured(product['Product Catagory'], product['Master Code'], product['Product Code']) ? 'main-grid highlight' : 'main-grid'"
           (click)="toggleAcoordion(product['uniqueId'])">
           <ion-row>
-            <ion-col col-12>
+            <ion-col col-11>
               <ion-icon name="cube" color="grey"></ion-icon>
               <span class="product-name">
                 {{ product['Product Name'] }}
               </span>
+            </ion-col>
+            <ion-col col-1>
+              <!-- <ion-icon name="add" color="grey"></ion-icon> -->
+              <ion-icon name="ios-arrow-down" color="grey"></ion-icon>
             </ion-col>
           </ion-row>
           <!-- <ion-row>
