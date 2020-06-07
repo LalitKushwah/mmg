@@ -99,7 +99,7 @@ export class AddTkProductModalPage {
         // add prod to list
         loader.dismiss();
         this.navCtrl.pop();
-        this.widgetCtrl.showToast('Competitive Prodct Added...')
+        this.widgetCtrl.showToast('TK Product Added Successfully...')
       }, err => {
           console.log(err);        
           loader.dismiss();
