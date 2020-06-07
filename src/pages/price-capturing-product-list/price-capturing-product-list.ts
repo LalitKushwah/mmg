@@ -1,6 +1,7 @@
-import { Component } from '@angular/core';
+import { Component, ViewChild } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { ApiServiceProvider } from '../../providers/api-service/api-service';
+import { NgForm } from '@angular/forms';
 
 /**
  * Generated class for the PriceCapturingProductListPage page.
@@ -15,6 +16,7 @@ import { ApiServiceProvider } from '../../providers/api-service/api-service';
   templateUrl: 'price-capturing-product-list.html',
 })
 export class PriceCapturingProductListPage {
+  @ViewChild('form') formData: NgForm;
   parentCategoryName = '';
   unitSize = '';
   productListAvailable = false;
@@ -39,7 +41,11 @@ export class PriceCapturingProductListPage {
   }
 
   upload () {
-    
+    for (let i = 0; i < this.productList.length; i++) {
+      this.productList[i].MSQ = this.formData.value[`${i}A`] === `` ? 0 : this.formData.value[`${i}A`];
+      this.productList[i].RRP = this.formData.value[`${i}B`] === `` ? 0 : this.formData.value[`${i}B`];
+    }
+    console.log(this.productList);
   }
 
   ionViewDidLoad () {

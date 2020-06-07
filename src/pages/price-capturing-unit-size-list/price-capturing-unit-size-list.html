@@ -12,9 +12,9 @@
   <div class="search-spinner">
     <ion-spinner name="crescent" *ngIf="!unitSizeListAvailable"></ion-spinner>
   </div>
-  <ion-refresher (ionRefresh)="doRefresh($event)" spinner="crescent">
+  <!-- <ion-refresher (ionRefresh)="doRefresh($event)" spinner="crescent">
     <ion-refresher-content></ion-refresher-content>
-  </ion-refresher>
+  </ion-refresher> -->
   <ion-list *ngIf="unitSizeListAvailable && (unitSizeList.length > 0)">
     <ion-item *ngFor="let unitSize of unitSizeList" (click)="getProducts(unitSize)">
       <img src="assets/imgs/productcategory.svg"> {{unitSize}}
@@ -26,7 +26,7 @@
       <h4>No record found</h4>
     </ion-card-header>
   </ion-card>
-  <ion-infinite-scroll (ionInfinite)="doInfinite($event)">
+  <!-- <ion-infinite-scroll (ionInfinite)="doInfinite($event)">
     <ion-infinite-scroll-content></ion-infinite-scroll-content>
-  </ion-infinite-scroll>
+  </ion-infinite-scroll> -->
 </ion-content>
