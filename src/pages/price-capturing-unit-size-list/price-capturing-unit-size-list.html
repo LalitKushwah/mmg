@@ -17,8 +17,10 @@
   </ion-refresher>
   <ion-list *ngIf="unitSizeListAvailable && (unitSizeList.length > 0)">
     <ion-item *ngFor="let unitSize of unitSizeList" (click)="getProducts(unitSize)">
-      <img src="assets/imgs/productcategory.svg"> {{unitSize}}
-      <button ion-button clear color="secondary" item-end><ion-icon name="arrow-forward"></ion-icon></button>
+      <ng-container *ngIf="unitSize !== '-'">
+        <img src="assets/imgs/productcategory.svg"> {{unitSize}}
+        <button ion-button clear color="secondary" item-end><ion-icon name="arrow-forward"></ion-icon></button>
+      </ng-container>
     </ion-item>
   </ion-list>
   <ion-card *ngIf="unitSizeListAvailable && (unitSizeList.length < 1)">
