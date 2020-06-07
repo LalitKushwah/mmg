@@ -115,6 +115,10 @@ import { PriceCapturingCategoryListPage } from '../pages/price-capturing-categor
 import { PriceCapturingSubCategoryListPage } from '../pages/price-capturing-sub-category-list/price-capturing-sub-category-list';
 import { PriceCapturingCategoryListPageModule } from '../pages/price-capturing-category-list/price-capturing-category-list.module';
 import { PriceCapturingSubCategoryListPageModule } from '../pages/price-capturing-sub-category-list/price-capturing-sub-category-list.module';
+import { PriceCapturingUnitSizeListPageModule } from '../pages/price-capturing-unit-size-list/price-capturing-unit-size-list.module';
+import { PriceCapturingUnitSizeListPage } from '../pages/price-capturing-unit-size-list/price-capturing-unit-size-list';
+import { PriceCapturingProductListPageModule } from '../pages/price-capturing-product-list/price-capturing-product-list.module';
+import { PriceCapturingProductListPage } from '../pages/price-capturing-product-list/price-capturing-product-list';
 
 
 @NgModule({
@@ -180,7 +184,9 @@ import { PriceCapturingSubCategoryListPageModule } from '../pages/price-capturin
     TkProductsListPageModule,
     AddTkProductModalPageModule,
     PriceCapturingCategoryListPageModule,
-    PriceCapturingSubCategoryListPageModule
+    PriceCapturingSubCategoryListPageModule,
+    PriceCapturingUnitSizeListPageModule,
+    PriceCapturingProductListPageModule
   ],
   bootstrap: [IonicApp],
   entryComponents: [
@@ -231,7 +237,9 @@ import { PriceCapturingSubCategoryListPageModule } from '../pages/price-capturin
     TkProductsListPage,
     AddTkProductModalPage,
     PriceCapturingCategoryListPage,
-    PriceCapturingSubCategoryListPage
+    PriceCapturingSubCategoryListPage,
+    PriceCapturingUnitSizeListPage,
+    PriceCapturingProductListPage
   ],
   providers: [
     StatusBar,

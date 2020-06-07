@@ -237,6 +237,14 @@ export class ApiServiceProvider {
     return this.http.get(CONSTANTS.BASE_URL + 'api/erp/create/customer/statements')
   }
 
+  getCaturingUnitSizeList (parentCatName, childCatName) {
+    return this.http.get(CONSTANTS.BASE_URL + `api/product/list/unitsize?parent=${parentCatName}&child=${childCatName}`);
+  }
+
+  getToBeCaptureProductList (unitSize) {
+    return this.http.get(CONSTANTS.BASE_URL + `api/product/list/unitsize/products?unitSize=${unitSize}`);
+  }
+
   getVersion (): any {
     return this.http.get(CONSTANTS.BASE_URL + 'api/user/version')
   }

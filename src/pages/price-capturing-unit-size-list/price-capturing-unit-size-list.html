@@ -1,6 +1,6 @@
 <ion-header>
   <ion-navbar>
-    <ion-title>{{categoryObj.name}}</ion-title>
+    <ion-title>{{childCategoryName}}</ion-title>
   </ion-navbar>
   <!-- <ion-toolbar>
     <form (ngSubmit)="submitSearch($event)">
@@ -10,23 +10,23 @@
 </ion-header>
 <ion-content class="full-background">
   <div class="search-spinner">
-    <ion-spinner name="crescent" *ngIf="!categoryListAvailable"></ion-spinner>
+    <ion-spinner name="crescent" *ngIf="!unitSizeListAvailable"></ion-spinner>
   </div>
-  <!-- <ion-refresher (ionRefresh)="doRefresh($event)" spinner="crescent">
+  <ion-refresher (ionRefresh)="doRefresh($event)" spinner="crescent">
     <ion-refresher-content></ion-refresher-content>
-  </ion-refresher> -->
-  <ion-list *ngIf="categoryListAvailable && (childCategoryList.length > 0)">
-    <ion-item *ngFor="let category of childCategoryList" (click)="getProducts(category)">
-      <img src="assets/imgs/productcategory.svg"> {{category.name}}
+  </ion-refresher>
+  <ion-list *ngIf="unitSizeListAvailable && (unitSizeList.length > 0)">
+    <ion-item *ngFor="let unitSize of unitSizeList" (click)="getProducts(unitSize)">
+      <img src="assets/imgs/productcategory.svg"> {{unitSize}}
       <button ion-button clear color="secondary" item-end><ion-icon name="arrow-forward"></ion-icon></button>
     </ion-item>
   </ion-list>
-  <ion-card *ngIf="categoryListAvailable && (childCategoryList.length < 1)">
+  <ion-card *ngIf="unitSizeListAvailable && (unitSizeList.length < 1)">
     <ion-card-header text-center>
       <h4>No record found</h4>
     </ion-card-header>
   </ion-card>
-  <!-- <ion-infinite-scroll (ionInfinite)="doInfinite($event)">
+  <ion-infinite-scroll (ionInfinite)="doInfinite($event)">
     <ion-infinite-scroll-content></ion-infinite-scroll-content>
-  </ion-infinite-scroll> -->
+  </ion-infinite-scroll>
 </ion-content>

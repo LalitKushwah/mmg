@@ -4,6 +4,7 @@ import { CONSTANTS } from '../../utils/constants';
 import { StorageServiceProvider } from '../../providers/storage-service/storage-service';
 import { ApiServiceProvider } from '../../providers/api-service/api-service';
 import { WidgetUtilService } from '../../utils/widget-utils';
+import { PriceCapturingUnitSizeListPage } from '../price-capturing-unit-size-list/price-capturing-unit-size-list';
 
 /**
  * Generated class for the PriceCapturingSubCategoryListPage page.
@@ -58,6 +59,15 @@ export class PriceCapturingSubCategoryListPage {
         }
         this.categoryListAvailable = true
       })
+    }
+
+    async getProducts (category) {
+      const categoryObj = {
+        categoryId : category['_id'],
+        childCategoryName: category.name,
+        parentCategoryName: this.categoryObj.name
+      }
+      this.navCtrl.push(PriceCapturingUnitSizeListPage, categoryObj)
     }
   
     ionViewDidLoad () {
