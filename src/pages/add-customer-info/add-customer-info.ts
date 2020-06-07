@@ -5,6 +5,7 @@ import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { StorageServiceProvider } from '../../providers/storage-service/storage-service';
 import { TkProductsListPage } from '../tk-products-list/tk-products-list';
 import { WidgetUtilService } from '../../utils/widget-utils';
+import { PriceCapturingCategoryListPage } from '../price-capturing-category-list/price-capturing-category-list';
 
 /**
  * Generated class for the PagesAddCustomerInfoPage page.
@@ -38,7 +39,7 @@ export class AddCustomerInfoPage implements OnInit {
     if (!!customerInfo) {
       const agree = await this.widgetService.showConfirm('Previous Capturing Exists!', 'Would you like to continue with the previous capturing?');
       if (agree === 'Yes') {
-        this.navCtrl.push(TkProductsListPage);
+        this.navCtrl.push(PriceCapturingCategoryListPage);
       } else {
         await this.storageService.removeFromStorage('customerInfo');
         this.resetForm(this.customerForm);
@@ -61,7 +62,8 @@ export class AddCustomerInfoPage implements OnInit {
   }
 
   async onAddCustomerInfo () {
+    console.log('=================');
     await this.storageService.setToStorage('customerInfo', JSON.stringify(this.customerForm.value));
-    this.navCtrl.push(TkProductsListPage);
+    this.navCtrl.push(PriceCapturingCategoryListPage);
   }
 }

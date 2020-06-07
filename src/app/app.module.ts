@@ -111,6 +111,11 @@ import { TkProductsListPageModule } from '../pages/tk-products-list/tk-products-
 import { TkProductsListPage } from '../pages/tk-products-list/tk-products-list';
 import { AddTkProductModalPage } from '../pages/add-tk-product-modal/add-tk-product-modal';
 import { AddTkProductModalPageModule } from '../pages/add-tk-product-modal/add-tk-product-modal.module';
+import { PriceCapturingCategoryListPage } from '../pages/price-capturing-category-list/price-capturing-category-list';
+import { PriceCapturingSubCategoryListPage } from '../pages/price-capturing-sub-category-list/price-capturing-sub-category-list';
+import { PriceCapturingCategoryListPageModule } from '../pages/price-capturing-category-list/price-capturing-category-list.module';
+import { PriceCapturingSubCategoryListPageModule } from '../pages/price-capturing-sub-category-list/price-capturing-sub-category-list.module';
+
 
 @NgModule({
   declarations: [
@@ -173,7 +178,9 @@ import { AddTkProductModalPageModule } from '../pages/add-tk-product-modal/add-t
     UserStatementsPageModule,
     AddCustomerInfoPageModule,
     TkProductsListPageModule,
-    AddTkProductModalPageModule
+    AddTkProductModalPageModule,
+    PriceCapturingCategoryListPageModule,
+    PriceCapturingSubCategoryListPageModule
   ],
   bootstrap: [IonicApp],
   entryComponents: [
@@ -222,7 +229,9 @@ import { AddTkProductModalPageModule } from '../pages/add-tk-product-modal/add-t
     UserStatementsPage,
     AddCustomerInfoPage,
     TkProductsListPage,
-    AddTkProductModalPage
+    AddTkProductModalPage,
+    PriceCapturingCategoryListPage,
+    PriceCapturingSubCategoryListPage
   ],
   providers: [
     StatusBar,
