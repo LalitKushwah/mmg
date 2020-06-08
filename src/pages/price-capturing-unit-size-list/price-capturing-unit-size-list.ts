@@ -41,7 +41,12 @@ export class PriceCapturingUnitSizeListPage {
   }
 
   getProducts (unitSize) {
-    this.navCtrl.push(PriceCapturingProductListPage, {unitSize: unitSize})        
+    this.navCtrl.push(PriceCapturingProductListPage, 
+      {
+        unitSize: unitSize, 
+        parentCategoryName: this.parentCategoryName, 
+        childCategoryName: this.childCategoryName
+      })        
   }
 
   ionViewDidLoad () {
