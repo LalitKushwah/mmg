@@ -18,8 +18,19 @@
   <ion-list *ngIf="unitSizeListAvailable && (unitSizeList.length > 0)">
     <ion-item *ngFor="let unitSize of unitSizeList" (click)="getProducts(unitSize)">
       <ng-container *ngIf="unitSize !== '-'">
-        <img src="assets/imgs/productcategory.svg"> {{unitSize}}
-        <button ion-button clear color="secondary" item-end><ion-icon name="arrow-forward"></ion-icon></button>
+        <ion-grid>
+          <ion-row align-items-center>
+            <ion-col col-2>
+              <img src="assets/icon/box.svg">
+            </ion-col>
+            <ion-col col-9>
+              {{unitSize}}
+            </ion-col>
+            <ion-col col-1>
+              <button ion-button clear color="secondary" item-end><ion-icon name="arrow-forward"></ion-icon></button>
+            </ion-col>
+          </ion-row>
+        </ion-grid>
       </ng-container>
     </ion-item>
   </ion-list>

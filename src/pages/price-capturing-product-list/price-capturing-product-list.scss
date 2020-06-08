@@ -1,3 +1,15 @@
 page-price-capturing-product-list {
-
+    ion-searchbar{
+        .searchbar-input{
+            box-shadow: none !important;
+        }
+    }
+    ion-grid{
+        padding: 0 !important;
+    }
+    ion-footer{
+        button{
+            margin: 0 !important;
+        }
+    }
 }
