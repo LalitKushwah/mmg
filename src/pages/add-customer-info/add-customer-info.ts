@@ -3,7 +3,6 @@ import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 
 import { StorageServiceProvider } from '../../providers/storage-service/storage-service';
-import { TkProductsListPage } from '../tk-products-list/tk-products-list';
 import { WidgetUtilService } from '../../utils/widget-utils';
 import { PriceCapturingCategoryListPage } from '../price-capturing-category-list/price-capturing-category-list';
 
@@ -35,9 +34,10 @@ export class AddCustomerInfoPage implements OnInit {
   }
 
   async ionViewWillEnter () {
-    const customerInfo = await this.storageService.getFromStorage('customerInfo');
+    let customerInfo: any = await this.storageService.getFromStorage('customerInfo');
     if (!!customerInfo) {
-      const agree = await this.widgetService.showConfirm('Previous Capturing Exists!', 'Would you like to continue with the previous capturing?');
+      customerInfo = JSON.parse(customerInfo);
+      const agree = await this.widgetService.showConfirm('Capturing Exists!', `Continue with the last captured shop name : ${customerInfo.shopName}`);
       if (agree === 'Yes') {
         this.navCtrl.push(PriceCapturingCategoryListPage);
       } else {
@@ -53,6 +53,7 @@ export class AddCustomerInfoPage implements OnInit {
       city: new FormControl('', [ Validators.required ]),
       area: new FormControl('', [ Validators.required ]),
       shopName: new FormControl('', [ Validators.required ]),
+      mobile: new FormControl('', [ Validators.required ])
     });
   }
 

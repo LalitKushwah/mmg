@@ -1,9 +1,11 @@
 import { Component, ViewChild } from '@angular/core';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, LoadingController } from 'ionic-angular';
 import { ApiServiceProvider } from '../../providers/api-service/api-service';
 import { NgForm } from '@angular/forms';
 import { StorageServiceProvider } from '../../providers/storage-service/storage-service';
 import { DatePipe } from '@angular/common';
+import { WidgetUtilService } from '../../utils/widget-utils';
+import { PriceCapturingCategoryListPage } from '../price-capturing-category-list/price-capturing-category-list';
 
 /**
  * Generated class for the PriceCapturingProductListPage page.
@@ -23,6 +25,7 @@ export class PriceCapturingProductListPage {
   unitSize = '';
   productListAvailable = false;
   productList = [];
+  // allProductList = [];
   parentCatName = '';
   childCatName = '';
   constructor (
@@ -30,7 +33,9 @@ export class PriceCapturingProductListPage {
     public navParams: NavParams,
     public apiService: ApiServiceProvider,
     private storageService: StorageServiceProvider,
-    private datePipe: DatePipe) {
+    private datePipe: DatePipe,
+    private loadingController: LoadingController,
+    private widgetService: WidgetUtilService) {
     this.unitSize = this.navParams.get('unitSize');
     this.parentCatName = this.navParams.get('parentCategoryName');
     this.childCatName = this.navParams.get('childCategoryName');
@@ -42,6 +47,7 @@ export class PriceCapturingProductListPage {
     this.apiService.getToBeCaptureProductList(this.unitSize)
       .subscribe((res: any) => {
         this.productList = res.body;
+        // this.allProductList = res.body;
         this.productListAvailable = true;
         console.log(res);        
       }, err => {
@@ -50,9 +56,20 @@ export class PriceCapturingProductListPage {
   }
 
   async upload () {
+    const loader = this.loadingController.create({
+      content: "Uploading Data...",
+    });
+    loader.present();
+    let valA: any;
+    let valB: any;
     for (let i = 0; i < this.productList.length; i++) {
-      this.productList[i].MSQ = this.formData.value[`${i}A`] === `` ? 0 : this.formData.value[`${i}A`];
-      this.productList[i].RRP = this.formData.value[`${i}B`] === `` ? 0 : this.formData.value[`${i}B`];
+      valA = this.formData.value[`${i}A`];
+      valB = this.formData.value[`${i}B`];
+      // valB = this.formData.value[`${this.allProductList[i]['Master Code']}-${this.allProductList[i]['Product Code']}-${this.allProductList[i]['Product Catagory']}-B`];
+      // console.log(valA, `${this.allProductList[i]['Master Code']}-${this.allProductList[i]['Product Code']}-${this.allProductList[i]['Product Category']}-A`);
+      // console.log(valB, `${this.allProductList[i]['Master Code']}-${this.allProductList[i]['Product Code']}-${this.allProductList[i]['Product Category']}-B`);
+      this.productList[i].MSQ = valA === `` || typeof valA === 'undefined' ? 0 : valA;
+      this.productList[i].RRP = valB === `` || typeof valB === 'undefined' ? 0 : valB;
     }
     const obj = {
       date: this.datePipe.transform(Date.now(), 'dd/MM/yyyy'),
@@ -62,16 +79,35 @@ export class PriceCapturingProductListPage {
       childCategoryName: this.childCatName,
       unitSize: this.unitSize
     }
-    this.apiService.captureProduct(obj).subscribe(res => {
-      console.log(res);      
+    this.apiService.captureProduct(obj).subscribe(async res => {
+      loader.dismiss();
+      const agree = await this.widgetService.showConfirm('Uploaded Successfully!', `Continue with the same customer?`);
+      if (agree === 'Yes') {
+        this.navCtrl.remove(this.navCtrl.length() - 3, 3);
+      } else {
+        await this.storageService.removeFromStorage('customerInfo');
+        this.navCtrl.popToRoot();
+      }      
     }, err => {
+      loader.dismiss();
       console.log(err);
-      
-    })
+    });
   }
+
+  // searchItems (event: any) {
+  //   const val = event.target.value;
+  //   if (val && val.trim() != '') {
+  //     this.productList = this.allProductList.filter((item) => {
+  //       return (
+  //           item['Product Name'] && item['Product Name'].toLowerCase().indexOf(val.toLowerCase()) > -1
+  //       );
+  //     });
+  //   } else {
+  //     this.productList = [...this.allProductList];
+  //   }
+  // }
 
   ionViewDidLoad () {
     console.log('ionViewDidLoad PriceCapturingProductListPage');
   }
-
 }
