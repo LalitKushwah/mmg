@@ -241,8 +241,8 @@ export class ApiServiceProvider {
     return this.http.get(CONSTANTS.BASE_URL + `api/product/list/unitsize?parent=${parentCatName}&child=${childCatName}`);
   }
 
-  getToBeCaptureProductList (unitSize) {
-    return this.http.get(CONSTANTS.BASE_URL + `api/product/list/unitsize/products?unitSize=${unitSize}`);
+  getToBeCaptureProductList (unitSize, parentCategory, subCategory) {
+    return this.http.get(CONSTANTS.BASE_URL + `api/product/list/unitsize/products?unitSize=${unitSize}&parent=${parentCategory}&child=${subCategory}`);
   }
 
   getVersion (): any {

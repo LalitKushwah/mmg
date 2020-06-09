@@ -43,8 +43,7 @@ export class PriceCapturingProductListPage {
   }
 
   getProducts () {
-    console.log('================= 41 =================');    
-    this.apiService.getToBeCaptureProductList(this.unitSize)
+    this.apiService.getToBeCaptureProductList(this.unitSize, this.parentCatName, this.childCatName)
       .subscribe((res: any) => {
         this.productList = res.body;
         // this.allProductList = res.body;

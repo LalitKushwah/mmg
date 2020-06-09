@@ -73,7 +73,6 @@ export class CustomerHomePage {
       })
     }
    } else {
-     console.log('=============== 73 ==================');
       this.navCtrl.setRoot(SmEditOrderPage)
    }
   }

@@ -16,8 +16,8 @@
     <ion-refresher-content></ion-refresher-content>
   </ion-refresher> -->
   <ion-list *ngIf="unitSizeListAvailable && (unitSizeList.length > 0)">
-    <ion-item *ngFor="let unitSize of unitSizeList" (click)="getProducts(unitSize)">
-      <ng-container *ngIf="unitSize !== '-'">
+    <ng-container *ngFor="let unitSize of unitSizeList">
+      <ion-item *ngIf="unitSize !== '-'" (click)="getProducts(unitSize)">
         <ion-grid>
           <ion-row align-items-center>
             <ion-col col-2>
@@ -31,8 +31,8 @@
             </ion-col>
           </ion-row>
         </ion-grid>
+      </ion-item>
       </ng-container>
-    </ion-item>
   </ion-list>
   <ion-card *ngIf="unitSizeListAvailable && (unitSizeList.length < 1)">
     <ion-card-header text-center>
