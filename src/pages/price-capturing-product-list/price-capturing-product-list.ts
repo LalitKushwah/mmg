@@ -64,9 +64,6 @@ export class PriceCapturingProductListPage {
     for (let i = 0; i < this.productList.length; i++) {
       valA = this.formData.value[`${i}A`];
       valB = this.formData.value[`${i}B`];
-      // valB = this.formData.value[`${this.allProductList[i]['Master Code']}-${this.allProductList[i]['Product Code']}-${this.allProductList[i]['Product Catagory']}-B`];
-      // console.log(valA, `${this.allProductList[i]['Master Code']}-${this.allProductList[i]['Product Code']}-${this.allProductList[i]['Product Category']}-A`);
-      // console.log(valB, `${this.allProductList[i]['Master Code']}-${this.allProductList[i]['Product Code']}-${this.allProductList[i]['Product Category']}-B`);
       this.productList[i].MSQ = valA === `` || typeof valA === 'undefined' ? 0 : valA;
       this.productList[i].RRP = valB === `` || typeof valB === 'undefined' ? 0 : valB;
     }
