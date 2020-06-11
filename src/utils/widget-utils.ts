@@ -43,6 +43,7 @@ export class WidgetUtilService {
       const confirm = this.alertController.create({
         title,
         message,
+        enableBackdropDismiss: false,
         buttons: [
           {
             text: 'No',
