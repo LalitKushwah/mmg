@@ -34,6 +34,7 @@ export class PriceCapturingProductListPage {
     public apiService: ApiServiceProvider,
     private storageService: StorageServiceProvider,
     private datePipe: DatePipe,
+    private strorageService: StorageServiceProvider,
     private loadingController: LoadingController,
     private widgetService: WidgetUtilService) {
     this.unitSize = this.navParams.get('unitSize');
@@ -70,6 +71,7 @@ export class PriceCapturingProductListPage {
     const obj = {
       date: this.datePipe.transform(Date.now(), 'dd/MM/yyyy'),
       customerInfo: JSON.parse(<string> await this.storageService.getFromStorage('customerInfo')),
+      capturedBy: await this.strorageService.getFromStorage('profile'),
       capturedProducts: this.productList,
       parentCategoryName: this.parentCatName,
       childCategoryName: this.childCatName,
