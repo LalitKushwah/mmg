@@ -29,11 +29,7 @@ export class AddCustomerInfoPage implements OnInit {
     this.createForm();
   }
 
-  ngOnInit (): void {
-
-  }
-
-  async ionViewWillEnter () {
+  async ngOnInit () {
     let customerInfo: any = await this.storageService.getFromStorage('customerInfo');
     if (!!customerInfo) {
       customerInfo = JSON.parse(customerInfo);
@@ -46,6 +42,8 @@ export class AddCustomerInfoPage implements OnInit {
       }
     }
   }
+
+  ionViewWillEnter () {}
 
   createForm () {
     this.customerForm = new FormGroup({
