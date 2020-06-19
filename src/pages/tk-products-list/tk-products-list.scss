@@ -81,23 +81,12 @@ page-tk-products-list {
     }
 }
 
-.expandable-content{
-    //some style here
-}
+
 .expandable-content.expanded{
     max-height: 500px !important;
 }
 .expandable-content.collapsed{
     height: 0 !important;
-}
-
-virtual-scroller {
-    width: 100%;
-    height: 2000px;
-    // height: 100vh;
-    ion-list{
-        // height: 200px;
-    }
 }
   
 

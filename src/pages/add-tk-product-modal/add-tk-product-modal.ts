@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams, ViewController, LoadingController, ModalController } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, ViewController, LoadingController } from 'ionic-angular';
 import { ApiServiceProvider } from '../../providers/api-service/api-service';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { WidgetUtilService } from '../../utils/widget-utils';
@@ -15,6 +15,14 @@ export class AddTkProductModalPage {
   context;
   masterCode;
   productForm: FormGroup;
+  childCategoryList = [];
+  product;
+  categoryIdMappingwithName = {
+    'Confectionery':'5c169aa7f39393278ddce40b',
+    'Laundry':'5c169a9df39393278ddce40a',
+    'Household':'5c169a8ef39393278ddce409',
+    'Personal Care':'5c169a7ef39393278ddce408'
+  }
 
   constructor (
     public navCtrl: NavController, 
@@ -27,21 +35,43 @@ export class AddTkProductModalPage {
     this.title = navParams.get('title');
     this.context = navParams.get('context');
     this.masterCode = navParams.get('masterCode');
+    this.product = navParams.get('product');
     this.createForm();
   }
 
   createForm () {
+    const masterCodeDefault = this.context === 'comp' ? this.masterCode : '';
+    let defaultProductCategory,defaultMastername, defaultPorductSubCat = '';
+
     this.productForm = new FormGroup({
       brand: new FormControl('', [ Validators.required ]),
-      masterName: new FormControl('', [ Validators.required ]),
+      masterName: new FormControl(defaultMastername, [ Validators.required ]),
       caseSize: new FormControl('', [ Validators.required ]),
-      masterCode: new FormControl('', [ Validators.required ]),
-      prodCat: new FormControl('', [ Validators.required ]),
+      masterCode: new FormControl(masterCodeDefault, [ Validators.required ]),
+      prodCat: new FormControl(defaultProductCategory, [ Validators.required ]),
       prodCode: new FormControl('', [ Validators.required ]),
       prodName: new FormControl('', [ Validators.required ]),
-      subCat: new FormControl('', [ Validators.required ]),
+      subCat: new FormControl(defaultPorductSubCat, [ Validators.required ]),
       unitSize: new FormControl('', [ Validators.required ]),
     });
+  }
+
+  fetchChildCat (catName) {
+    console.log("Called");
+    
+    const categoryId = this.categoryIdMappingwithName[catName];
+    if (categoryId) {
+      const loader = this.loadCtrl.create({content: 'Fetching child category...'})
+      loader.present();
+      this.apiService.getChildCategoryList(categoryId,0,20).subscribe((res) => {
+        this.childCategoryList = res.body;
+        console.log(this.childCategoryList);        
+        loader.dismiss();
+      }, err => {
+        console.error(err);
+        loader.dismiss();
+      });
+    }
   }
 
   ionViewDidLoad () {
@@ -63,45 +93,43 @@ export class AddTkProductModalPage {
       content: "Please Wait...",
     });
     const newProd = {
-      "Master Code": this.productForm.value.masterCode,
-      "Master Name": this.productForm.value.masterName,
-      "Product Catagory": this.productForm.value.prodCat,
-      "Sub Catagory": this.productForm.value.subCat,
-      "Unit Size": this.productForm.value.unitSize,
-      "Case Size": this.productForm.value.caseSize,
-      "BRAND": this.productForm.value.brand,
-      "Product Code": this.productForm.value.prodCode,
-      "Product Name": this.productForm.value.prodName
+      "masterCode": this.productForm.value.masterCode,
+      "masterName": this.productForm.value.masterName,
+      "productCategory": this.productForm.value.prodCat,
+      "subCategory": this.productForm.value.subCat,
+      "unitSize": this.productForm.value.unitSize,
+      "caseSize": this.productForm.value.caseSize,
+      "brand": this.productForm.value.brand,
+      "productCode": this.productForm.value.prodCode,
+      "productName": this.productForm.value.prodName
     }
     loader.present();
     // add competitive prod
     if (this.context === 'comp') {
-      newProd['Is TKProduct'] = "N";
+      newProd['isTkProduct'] = "N";
       this.apiService
-      .addCompProduct({categoryName: newProd['Product Catagory'], masterCode: this.masterCode, product: newProd})
+      .addCompProduct({categoryName: newProd['productCatagory'], masterCode: this.masterCode, product: newProd})
       .subscribe(res => {
-        // add prod to list
-        this.navCtrl.pop();
         loader.dismiss();
         this.widgetCtrl.showToast('Product Added Successfully...')
+        this.productForm.reset();
       }, err => {
           console.log(err);
           loader.dismiss();
+          this.widgetCtrl.showToast('Product already exists...') 
       })
     } else {
-      // add tk product
-      newProd['Is TKProduct'] = "Y";
-      newProd['Competitive Product'] = [];
+      newProd['isTkProduct'] = "Y";
+      newProd['competitiveProduct'] = [];
 
       this.apiService
-      .addCompTkProduct({categoryName: newProd['Product Catagory'], product: newProd})
+      .addCompTkProduct({categoryName: newProd['productCatagory'], product: newProd})
       .subscribe(res => {
-        // add prod to list
         loader.dismiss();
-        this.navCtrl.pop();
         this.widgetCtrl.showToast('TK Product Added Successfully...')
+        this.productForm.reset();
       }, err => {
-          console.log(err);        
+          this.widgetCtrl.showToast('Product already exists...')       
           loader.dismiss();
       })
     }

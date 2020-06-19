@@ -14,7 +14,7 @@
     <form [formGroup]="productForm">
       <ion-item>
         <ion-label floating>Brand</ion-label>
-        <ion-input formControlName="brand" type="text" #brand></ion-input>
+        <ion-input formControlName="brand" type="text" #brand autofocus="true"></ion-input>
       </ion-item>
 
       <ion-item>
@@ -33,7 +33,7 @@
       </ion-item>
       <ion-item>
         <ion-label floating>Product Catagory</ion-label>
-        <ion-select [(ngModel)]="prodCat" formControlName="prodCat">
+        <ion-select [(ngModel)]="prodCat" formControlName="prodCat" (ionChange)="fetchChildCat($event)">
           <ion-option value="Laundry">Laundry</ion-option>
           <ion-option value="Confectionery">Confectionery</ion-option>
           <ion-option value="Household">Household</ion-option>
@@ -51,7 +51,9 @@
       </ion-item>
       <ion-item>
         <ion-label floating>Sub Catagory</ion-label>
-        <ion-input formControlName="subCat" type="text" #subCat></ion-input>
+        <ion-select [(ngModel)]="subCat" formControlName="subCat" type="text">
+          <ion-option *ngFor="let subCat of childCategoryList">{{subCat.name}}</ion-option>
+        </ion-select>
       </ion-item>
       <ion-item>
         <ion-label floating>Unit Size</ion-label>

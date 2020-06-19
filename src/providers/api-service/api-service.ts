@@ -28,6 +28,10 @@ export class ApiServiceProvider {
     return this.http.get(CONSTANTS.BASE_URL + 'api/product/list/category/' + categoryId + '?skip='+skip.toString() + "&limit="+ limit.toString())
   }
 
+  getTKProducts () {
+    return this.http.get(CONSTANTS.BASE_URL + 'api/product/list/tk/products')
+  }
+
   getAllProductsByCategory (categoryId: string): any {
     return this.http.get(CONSTANTS.BASE_URL + 'api/product/list/category/all/' + categoryId)
   }
