@@ -74,7 +74,7 @@
           </ion-col>
           <ion-col col-12>
             <strong>
-              <ion-icon name="cog"></ion-icon> Weight Total: {{ totalNetWeight }} tonnage
+              <ion-icon name="cog"></ion-icon> Weight Total: {{ totalNetWeight | number: '.2-2' }} tonnage
             </strong>
           </ion-col>
           <!-- <ion-col col-12>
@@ -175,7 +175,7 @@
         <ion-row>
           <ion-col text-center *ngIf="product.netWeight">
             <ion-icon name="cog" color="grey"></ion-icon>
-            Net Weight: <span>{{product.netWeight.toFixed(2)}}</span> Kg
+            Net Weight: <span>{{product.netWeight | number: '.2-2'}}</span> Kg
           </ion-col>
         </ion-row>        
         <ion-row>

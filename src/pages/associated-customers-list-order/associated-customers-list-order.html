@@ -56,7 +56,7 @@
           <ion-row>
             <ion-col>
               <ion-icon color="grey" name="cog"></ion-icon>
-              <span class="order-list-label">Total Net Weight:</span> <strong text-uppercase>{{order.totalNetWeight}} tonnage</strong>
+              <span class="order-list-label">Total Net Weight:</span> <strong text-uppercase>{{order.totalNetWeight | number: '.2-2'}} tonnage</strong>
             </ion-col>
           </ion-row>
           <ion-row>
