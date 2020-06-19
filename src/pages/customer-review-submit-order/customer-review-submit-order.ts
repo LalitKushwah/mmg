@@ -172,10 +172,8 @@ export class CustomerReviewSubmitOrderPage {
   }
 
   async clearCart () {
+    await this.storageService.clearCart();
     this.showClearCartLoader = true
-    await this.storageService.setToStorage('cart', [])
-    await this.storageService.removeFromStorage('tkpoint')
-    await this.storageService.setToStorage('totalNetWeight', 0)
     this.totalNetWeight = 0;
     this.orderTotal = 0
     this.totalTK = 0

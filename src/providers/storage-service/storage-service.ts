@@ -96,4 +96,10 @@ export class StorageServiceProvider {
   clearStorage () {
     this.storage.clear()
   }
+
+  async clearCart () {
+    await this.setToStorage('cart', [])
+    await this.removeFromStorage('tkpoint')
+    await this.setToStorage('totalNetWeight', 0)
+  }
 }

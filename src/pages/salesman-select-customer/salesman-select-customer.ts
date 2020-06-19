@@ -29,6 +29,13 @@ export class SalesmanSelectCustomerPage {
                 private storageService: StorageServiceProvider) {
     this.skipValue = 0
     this.limit = CONSTANTS.PAGINATION_LIMIT
+
+    // fix asked in release-1.5
+    this.storageService.clearCart().then(() => {
+      this.widgetUtil.showToast('Previous cart has been cleared successfully...');
+    }).catch(err => {
+        this.widgetUtil.showToast(`Error whlile clearing previous cart ${err}`);
+    })
     this.getUserList()
   }
 

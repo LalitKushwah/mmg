@@ -82,7 +82,6 @@ export class CustomerListProductPage {
     this.getCartItems()
     const res: any = await this.commonService.getLoggedInUser()
     if (res.associatedStore && res.associatedStore.length) {
-      console.log('============ 85 ==========', res.associatedStore)
       this.loggedInUserStore = res.associatedStore
     }
   }
@@ -271,6 +270,11 @@ export class CustomerListProductPage {
       }
     }
   }
+
+  resetQty (product) {
+    product.quantity = 0;
+  }
+
 
 /*   async removeFromCart (product) {
     this.widgetUtil.showToast(`${product.name} removed from cart`)
