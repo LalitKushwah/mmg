@@ -119,6 +119,7 @@ import { PriceCapturingUnitSizeListPageModule } from '../pages/price-capturing-u
 import { PriceCapturingUnitSizeListPage } from '../pages/price-capturing-unit-size-list/price-capturing-unit-size-list';
 import { PriceCapturingProductListPageModule } from '../pages/price-capturing-product-list/price-capturing-product-list.module';
 import { PriceCapturingProductListPage } from '../pages/price-capturing-product-list/price-capturing-product-list';
+import { GenericService } from '../providers/generic-service/generic-service';
 
 
 @NgModule({
@@ -260,7 +261,8 @@ import { PriceCapturingProductListPage } from '../pages/price-capturing-product-
     FileOpener,
     DatePipe,
     DecimalPipe,
-    CommonService
+    CommonService,
+    GenericService
   ]
 })
 export class AppModule {}

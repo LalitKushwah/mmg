@@ -6,6 +6,7 @@ import { StorageServiceProvider } from '../../providers/storage-service/storage-
 import { SalesmanSelectCustomerPage } from '../salesman-select-customer/salesman-select-customer';
 import { Chart } from 'chart.js';
 import { ApiServiceProvider } from '../../providers/api-service/api-service';
+import { GenericService } from '../../providers/generic-service/generic-service';
 
 @IonicPage({
   name: 'SalesmanDashboardPage'
@@ -49,7 +50,8 @@ export class SalesmanDashboardPage {
                private widgetUtil: WidgetUtilService, 
                private storageService: StorageServiceProvider,
                private apiService: ApiServiceProvider,
-               private loadingCtrl: LoadingController) {
+               private loadingCtrl: LoadingController,
+               private genericService: GenericService) {
   }
 
   displayChart () {
@@ -102,11 +104,19 @@ export class SalesmanDashboardPage {
       // TODO update in argument
       this.apiService.getDashboardData(profile['externalId']).subscribe((res: any) => {
         this.dashboardData = res.body[0]
-        this.apiService.getParentCategoryList(0,20).subscribe((res:any) => {
-          this.categoryList = res.body
+        /** REFACTORED PART */
+        const parentCategoryList = this.genericService.parentCategories;
+        if (parentCategoryList.length) {    
+          this.categoryList = parentCategoryList
           this.prepareData('Total')
-          this.loader.dismiss()
-        })
+          this.loader.dismiss()              
+        } else {
+          this.apiService.getParentCategoryList(0,20).subscribe((res:any) => {
+            this.categoryList = res.body
+            this.prepareData('Total')
+            this.loader.dismiss()
+          })
+        }
       })
     }
     catch (err) {

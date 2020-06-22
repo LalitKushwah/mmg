@@ -7,6 +7,7 @@ import { StorageServiceProvider } from '../../providers/storage-service/storage-
 import { Chart } from 'chart.js';
 import { ApiServiceProvider } from '../../providers/api-service/api-service';
 import { UserStatementsPage } from '../user-statements/user-statements';
+import { GenericService } from '../../providers/generic-service/generic-service';
 
 @IonicPage({
   name: 'ViewCustomerDataPage'
@@ -37,7 +38,8 @@ export class ViewCustomerDataPage {
               private widgetUtil: WidgetUtilService, 
               private storageService: StorageServiceProvider,
               private apiService: ApiServiceProvider,
-              private loadingCtrl: LoadingController) {
+              private loadingCtrl: LoadingController,
+              private genericService: GenericService) {
                 console.log('==========40 ========');
     
   }
@@ -98,11 +100,18 @@ export class ViewCustomerDataPage {
       }
       this.apiService.getDashboardData(this.externalId).subscribe((res: any) => {
         this.dashboardData = res.body[0]
-        this.apiService.getParentCategoryList(0,20).subscribe((res:any) => {
-          this.categoryList = res.body
+        /** REFACTORED PART */
+        if (this.genericService.parentCategories.length) {
+          this.categoryList = this.genericService.parentCategories;
           this.prepareData('Total')
           this.loader.dismiss()
-        })
+        } else {
+          this.apiService.getParentCategoryList(0,20).subscribe((res:any) => {
+            this.categoryList = res.body
+            this.prepareData('Total');
+            this.loader.dismiss();
+          })
+        }
       })
     }
     catch (err) {

@@ -5,6 +5,7 @@ import { PopoverHomePage } from '../popover-home/popover-home';
 import { StorageServiceProvider } from '../../providers/storage-service/storage-service';
 import { Chart } from 'chart.js';
 import { ApiServiceProvider } from '../../providers/api-service/api-service';
+import { GenericService } from '../../providers/generic-service/generic-service';
 
 @IonicPage({
   name: 'AdminDashboardPage'
@@ -34,7 +35,8 @@ export class AdminDashboardPage {
                private widgetUtil: WidgetUtilService, 
                private storageService: StorageServiceProvider,
                private apiService: ApiServiceProvider,
-               private loadingCtrl: LoadingController) {
+               private loadingCtrl: LoadingController,
+               private genericService: GenericService) {
     
   }
 
@@ -97,11 +99,19 @@ export class AdminDashboardPage {
       }
       this.apiService.getDashboardData(this.externalId).subscribe((res: any) => {
         this.dashboardData = res.body[0]
-        this.apiService.getParentCategoryList(0,20).subscribe((res:any) => {
-          this.categoryList = res.body
+        /** REFACTORED PART */
+        const parentCategoryList = this.genericService.parentCategories;
+        if (parentCategoryList.length) {
+          this.categoryList = parentCategoryList
           this.prepareData('Total')
           this.loader.dismiss()
-        })
+        } else {
+          this.apiService.getParentCategoryList(0,20).subscribe((res:any) => {
+            this.categoryList = res.body
+            this.prepareData('Total')
+            this.loader.dismiss()
+          })
+        }
       })
     }
     catch (err) {
