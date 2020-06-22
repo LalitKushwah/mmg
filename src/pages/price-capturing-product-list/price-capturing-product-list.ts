@@ -79,13 +79,13 @@ export class PriceCapturingProductListPage {
     }
     this.apiService.captureProduct(obj).subscribe(async res => {
       loader.dismiss();
-      const agree = await this.widgetService.showConfirm('Uploaded Successfully!', `Continue with the same customer?`);
-      if (agree === 'Yes') {
+      // const agree = await this.widgetService.showConfirm('Uploaded Successfully!', `Continue with the same customer?`);
+      // if (agree === 'Yes') {
         this.navCtrl.remove(this.navCtrl.length() - 3, 3);
-      } else {
-        await this.storageService.removeFromStorage('customerInfo');
-        this.navCtrl.popToRoot();
-      }      
+      // } else {
+        // await this.storageService.removeFromStorage('customerInfo');
+        // this.navCtrl.popToRoot();
+      // }      
     }, err => {
       loader.dismiss();
       console.log(err);

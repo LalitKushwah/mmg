@@ -272,7 +272,11 @@ export class CustomerListProductPage {
   }
 
   resetQty (product) {
-    product.quantity = 0;
+    product.quantity = '';
+  }
+
+  setQty (product) {
+    product.quantity = product.quantity && product.quantity !== '' ? product.quantity : 1;
   }
 
 
