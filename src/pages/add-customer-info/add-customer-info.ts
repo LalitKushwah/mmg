@@ -51,13 +51,14 @@ export class AddCustomerInfoPage implements OnInit {
       city: new FormControl('', [ Validators.required ]),
       area: new FormControl('', [ Validators.required ]),
       shopName: new FormControl('', [ Validators.required ]),
-      mobile: new FormControl('', [ Validators.required ])
+      mobile: new FormControl('', [ Validators.required ]),
+      reportType: new FormControl('price_capturing', [ Validators.required ]),
+      channel: new FormControl('formal_trade', [ Validators.required ])
     });
   }
 
   resetForm (form: FormGroup) {
     form.reset();
-    console.log('---form reset successfully--');
   }
 
   async onAddCustomerInfo () {
