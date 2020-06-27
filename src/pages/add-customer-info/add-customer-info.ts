@@ -51,7 +51,9 @@ export class AddCustomerInfoPage implements OnInit {
       city: new FormControl('', [ Validators.required ]),
       area: new FormControl('', [ Validators.required ]),
       shopName: new FormControl('', [ Validators.required ]),
-      mobile: new FormControl('', [ Validators.required ])
+      mobile: new FormControl('', [ Validators.required ]),
+      reportType: new FormControl('price_capturing', [ Validators.required ]),
+      channel: new FormControl('formal_trade', [ Validators.required ])
     });
   }
 
@@ -61,7 +63,6 @@ export class AddCustomerInfoPage implements OnInit {
   }
 
   async onAddCustomerInfo () {
-    console.log('=================');
     await this.storageService.setToStorage('customerInfo', JSON.stringify(this.customerForm.value));
     this.navCtrl.push(PriceCapturingCategoryListPage);
   }

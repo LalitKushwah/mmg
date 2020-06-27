@@ -9,6 +9,23 @@
   <ion-list>
 
     <form [formGroup]="customerForm">
+      <ion-item class="select">
+        <ion-label>Select Report Type</ion-label>
+          <ion-select formControlName="reportType">
+              <ion-option value="price_capturing">Price Capturing</ion-option>
+              <ion-option value="stocking">Stocking</ion-option>
+          </ion-select> 
+        </ion-item>
+        <ion-item class="select">
+          <ion-label>Select Channel</ion-label>
+            <ion-select formControlName="channel">
+                <ion-option value="formal_trade">Formal Trade</ion-option>
+                <ion-option value="general_trade">General Trade</ion-option>
+                <ion-option value="super_market">Super Market</ion-option>
+                <ion-option value="wholesale">Wholesale</ion-option>
+                <ion-option value="semiwholesale">Semiwholesale</ion-option>
+            </ion-select> 
+          </ion-item>
       <ion-item>
         <ion-label floating>Shop Name</ion-label>
         <ion-input formControlName="shopName" type="text"></ion-input>
@@ -33,7 +50,6 @@
         <ion-label floating>Compound/Area</ion-label>
         <ion-input formControlName="area" type="text"></ion-input>
       </ion-item>
-
       <button ion-button color="secondary" full [disabled]="customerForm.invalid" (click)="onAddCustomerInfo()" class="add-cust-btn">Add Customer</button>
       <!-- <button ion-button color="secondary" round full (click)="onAddCustomerInfo()">Add Customer</button> -->
     </form>

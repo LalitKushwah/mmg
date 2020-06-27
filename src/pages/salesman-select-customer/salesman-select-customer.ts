@@ -26,17 +26,26 @@ export class SalesmanSelectCustomerPage {
                 public navParams: NavParams,
                 private apiService: ApiServiceProvider,
                 private widgetUtil: WidgetUtilService,
-                private storageService: StorageServiceProvider) {
+                private storageService: StorageServiceProvider,
+                private widgetService: WidgetUtilService) {
     this.skipValue = 0
     this.limit = CONSTANTS.PAGINATION_LIMIT
 
     // fix asked in release-1.5
-    this.storageService.clearCart().then(() => {
-      this.widgetUtil.showToast('Previous cart has been cleared successfully...');
-    }).catch(err => {
-        this.widgetUtil.showToast(`Error whlile clearing previous cart ${err}`);
-    })
+    this.clearCart();
     this.getUserList()
+  }
+
+  async clearCart () {
+    // fix asked in release-1.5
+    const agree = await this.widgetService.showConfirm('Cart Exists!', 'Do you want to clear existing cart?');
+    if (agree === 'Yes') {
+      this.storageService.clearCart().then(() => {
+        this.widgetUtil.showToast('Existing cart has been cleared successfully...');
+      }).catch(err => {
+          this.widgetUtil.showToast(`Error whlile clearing existing cart ${err}`);
+      })
+    }
   }
 
   async getUserList () {

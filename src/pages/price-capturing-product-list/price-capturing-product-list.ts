@@ -71,6 +71,8 @@ export class PriceCapturingProductListPage {
     const obj = {
       date: this.datePipe.transform(Date.now(), 'dd/MM/yyyy'),
       customerInfo: JSON.parse(<string> await this.storageService.getFromStorage('customerInfo')),
+      reportType: JSON.parse(<string> await this.storageService.getFromStorage('customerInfo')).reportType,
+      channel: JSON.parse(<string> await this.storageService.getFromStorage('customerInfo')).channel,
       capturedBy: await this.strorageService.getFromStorage('profile'),
       capturedProducts: this.productList,
       parentCategoryName: this.parentCatName,
