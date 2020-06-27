@@ -59,7 +59,6 @@ export class AddCustomerInfoPage implements OnInit {
 
   resetForm (form: FormGroup) {
     form.reset();
-    console.log('---form reset successfully--');
   }
 
   async onAddCustomerInfo () {
