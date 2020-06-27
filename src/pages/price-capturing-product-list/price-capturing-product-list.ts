@@ -5,7 +5,6 @@ import { NgForm } from '@angular/forms';
 import { StorageServiceProvider } from '../../providers/storage-service/storage-service';
 import { DatePipe } from '@angular/common';
 import { WidgetUtilService } from '../../utils/widget-utils';
-import { PriceCapturingCategoryListPage } from '../price-capturing-category-list/price-capturing-category-list';
 
 /**
  * Generated class for the PriceCapturingProductListPage page.
@@ -81,31 +80,13 @@ export class PriceCapturingProductListPage {
     }
     this.apiService.captureProduct(obj).subscribe(async res => {
       loader.dismiss();
-      // const agree = await this.widgetService.showConfirm('Uploaded Successfully!', `Continue with the same customer?`);
-      // if (agree === 'Yes') {
         this.navCtrl.remove(this.navCtrl.length() - 3, 3);
-      // } else {
-        // await this.storageService.removeFromStorage('customerInfo');
-        // this.navCtrl.popToRoot();
-      // }      
     }, err => {
       loader.dismiss();
+      this.widgetService.showToast('Error while uploading capturing....')
       console.log(err);
     });
   }
-
-  // searchItems (event: any) {
-  //   const val = event.target.value;
-  //   if (val && val.trim() != '') {
-  //     this.productList = this.allProductList.filter((item) => {
-  //       return (
-  //           item['Product Name'] && item['Product Name'].toLowerCase().indexOf(val.toLowerCase()) > -1
-  //       );
-  //     });
-  //   } else {
-  //     this.productList = [...this.allProductList];
-  //   }
-  // }
 
   ionViewDidLoad () {
     console.log('ionViewDidLoad PriceCapturingProductListPage');
