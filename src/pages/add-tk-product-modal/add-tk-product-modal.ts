@@ -1,15 +1,16 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { IonicPage, NavController, NavParams, ViewController, LoadingController } from 'ionic-angular';
 import { ApiServiceProvider } from '../../providers/api-service/api-service';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { WidgetUtilService } from '../../utils/widget-utils';
+import { CommonService } from '../../providers/common.service';
 
 @IonicPage()
 @Component({
   selector: 'page-add-tk-product-modal',
   templateUrl: 'add-tk-product-modal.html',
 })
-export class AddTkProductModalPage {
+export class AddTkProductModalPage implements OnInit {
   showLoader = false;
   title: string;
   context;
@@ -17,6 +18,7 @@ export class AddTkProductModalPage {
   productForm: FormGroup;
   childCategoryList = [];
   product;
+  isAuthorized = false;
   categoryIdMappingwithName = {
     'Confectionery':'5c169aa7f39393278ddce40b',
     'Laundry':'5c169a9df39393278ddce40a',
@@ -30,13 +32,18 @@ export class AddTkProductModalPage {
     public viewCtrl: ViewController,
     private loadCtrl: LoadingController,
     private widgetCtrl: WidgetUtilService,
-    private apiService: ApiServiceProvider) {
+    private apiService: ApiServiceProvider,
+    private commonService: CommonService) {
     
     this.title = navParams.get('title');
     this.context = navParams.get('context');
     this.masterCode = navParams.get('masterCode');
     this.product = navParams.get('product');
     this.createForm();
+  }
+  
+  async ngOnInit () {
+    this.isAuthorized = await this.commonService.isAuthorized();
   }
 
   createForm () {

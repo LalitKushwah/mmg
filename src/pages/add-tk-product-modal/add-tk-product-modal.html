@@ -59,7 +59,7 @@
         <ion-label floating>Unit Size</ion-label>
         <ion-input formControlName="unitSize" type="number" #unitSize></ion-input>
       </ion-item>
-      <button ion-button color="secondary" class="add-cust-btn" full [disabled]="productForm.invalid" class="mt-20" (click)="submit()">
+      <button ion-button color="secondary" class="add-cust-btn" full [disabled]="productForm.invalid && isAuthorized" class="mt-20" (click)="submit()">
         SAVE
       </button>
       <!-- <button ion-button color="secondary" round full (click)="onAddCustomerInfo()">Add Customer</button> -->

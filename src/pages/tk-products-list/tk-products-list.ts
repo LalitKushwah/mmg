@@ -44,9 +44,7 @@ export class TkProductsListPage  {
     this.apiService.getTKProducts().subscribe((res: any) => {
       this.tkProducts = res.body;
       this.productListAvailable = true;
-      this.filteredProductList = this.tkProducts;
-      console.log('===>', this.filteredProductList);
-      
+      this.filteredProductList = this.tkProducts;      
     }, err => {
       console.log(err);
     })
