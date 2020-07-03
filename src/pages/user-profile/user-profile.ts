@@ -9,6 +9,7 @@ import { Chart } from 'chart.js';
 import { ApiServiceProvider } from '../../providers/api-service/api-service';
 import { UserPaymentHistoryPage } from '../user-payment-history/user-payment-history';
 import { UserStatementsPage } from '../user-statements/user-statements';
+import { CustomerInvoiceReportPage } from '../customer-invoice-report/customer-invoice-report';
 
 @IonicPage({
   name: 'UserProfilePage'
@@ -194,7 +195,11 @@ ionViewWillUnload () {
 }
 
 moveToStatements () {
-  this.navCtrl.push(UserStatementsPage)
+  this.navCtrl.push(UserStatementsPage);
+}
+
+moveToCustomerPendingInvoice () {
+  this.navCtrl.push(CustomerInvoiceReportPage);
 }
 
 }
