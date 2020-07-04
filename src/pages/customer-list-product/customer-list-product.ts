@@ -262,7 +262,6 @@ export class CustomerListProductPage {
         })
         this.orderTotal = updatedTotal
         this.cartQuantity = updatedQuantity
-        console.log('============= 259 ===========', this.cart);
         
         this.storageService.setToStorage('cart', this.cart)
       } else {

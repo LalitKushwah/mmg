@@ -14,24 +14,6 @@
   <ion-refresher (ionRefresh)="doRefresh($event)" spinner="crescent">
     <ion-refresher-content></ion-refresher-content>
   </ion-refresher>
-  <!-- <ion-list *ngIf="salesmanListAvailable && (salesmanList.length > 0)">
-    <ion-item *ngFor="let salesman of filteredSalesmanList" (click)="editSalesman(salesman)">
-      <span>{{salesman.externalId}}</span><span>{{salesman.name}}</span>
-      <p class="salesmanType" [ngClass]=" salesman.userType == 'SALESMANAGER' ? 'item-visible': 'item-hidden'">Manager</p> -->
-      <!-- <button ion-button clear color="secondary" item-end><h1><ion-icon md="arrow-forward"></ion-icon></h1></button> -->
-      <!-- <button ion-button clear color="secondary" item-end>
-        <ion-icon name="create"></ion-icon>
-      </button>
-    </ion-item>
-  </ion-list>
-  <ion-card *ngIf="salesmanListAvailable && (salesmanList.length < 1)">
-    <ion-card-header text-center class="noDataView">
-        <ion-icon name="alert"></ion-icon>
-      <h4>No record found!</h4>
-    </ion-card-header>
-  </ion-card> -->
-
-  <!--- Test fdsfjsdkfjksdfdfd-->
     <ion-list *ngIf="salesmanListAvailable && (salesmanList.length > 0)">
         <ion-card class="user-card" *ngFor="let salesman of filteredSalesmanList">
             <ion-card-content>
