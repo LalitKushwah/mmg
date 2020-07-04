@@ -52,7 +52,7 @@ export class UserPaymentHistoryPage {
         if (res && res.body) {
           this.data = res.body
           if (this.data.length) {
-            this.data.map(item => {
+            this.data.forEach(item => {
               item.lastUpdatedAt = this.datePipe.transform(item.lastUpdatedAt, 'dd/MM/yyyy')
             })
           }

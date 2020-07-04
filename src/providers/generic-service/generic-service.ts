@@ -4,6 +4,7 @@ import { ApiServiceProvider } from "../api-service/api-service";
 @Injectable()
 export class GenericService {
     parentCategories = [];
+    paymentHistory = [];
 
     constructor (private apiService: ApiServiceProvider) { }
 

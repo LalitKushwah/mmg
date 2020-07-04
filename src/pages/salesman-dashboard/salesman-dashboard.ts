@@ -114,6 +114,7 @@ export class SalesmanDashboardPage {
           this.apiService.getParentCategoryList(0,20).subscribe((res:any) => {
             this.categoryList = res.body
             this.prepareData('Total')
+            this.genericService.parentCategories = this.categoryList;
             this.loader.dismiss()
           })
         }

@@ -82,6 +82,8 @@ export class CustomerHomePage {
   getList () {
     /** REFACTORED PART */
     const parentCategoryList = this.genericService.parentCategories;
+    console.log('============= 85 ========', parentCategoryList);
+    
     if (parentCategoryList.length) {
       this.parentCategoryList = parentCategoryList
       this.categoryListAvailable = true
