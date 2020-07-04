@@ -1,7 +1,5 @@
 import { NgModule } from '@angular/core';
 import { IonicPageModule } from 'ionic-angular';
-import { VirtualScrollerModule } from 'ngx-virtual-scroller';
-
 import { TkProductsListPage } from './tk-products-list';
 
 @NgModule({
@@ -9,8 +7,6 @@ import { TkProductsListPage } from './tk-products-list';
     TkProductsListPage
   ],
   imports: [
-    IonicPageModule.forChild(TkProductsListPage),
-    VirtualScrollerModule
-  ]
+    IonicPageModule.forChild(TkProductsListPage)  ]
 })
 export class TkProductsListPageModule {}
