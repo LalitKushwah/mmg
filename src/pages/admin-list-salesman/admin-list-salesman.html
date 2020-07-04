@@ -22,11 +22,8 @@
                     <span class="user-id">{{salesman.externalId}}</span>
                 </ion-col>
                 <ion-col size="9">
-                    <!-- <ion-row class="buttonWrapper"> -->
                         <ion-col text-center size="12" class="user-name-col">
                           <span class="user-name">{{salesman.name}}</span>
-                          <!-- to show manager badge in item -->
-                          <!-- <p class="salesmanType" [ngClass]=" salesman.userType == 'SALESMANAGER' ? 'item-visible': 'item-hidden'">Manager</p> -->
                         </ion-col>
                         <ion-col text-center size="12">
                           <button ion-button outline color="secondary" item-end class="edit-user-btn" (click)="editCustomer(salesman)"><ion-icon name="create"></ion-icon>EDIT SM</button>
@@ -34,7 +31,6 @@
                         <ion-col text-center size="12">
                           <button ion-button color="primary" class="rest-pass-btn" (click)="openCustomerDashboardModel(salesman)">View Dashboard</button>
                         </ion-col>
-                    <!-- </ion-row> -->
                 </ion-col>
               </ion-row>
             </ion-card-content>
@@ -47,8 +43,5 @@
         <h4>No record found!</h4>
       </ion-card-header>
   </ion-card>
-  <!-- <ion-infinite-scroll (ionInfinite)="doInfinite($event)">
-    <ion-infinite-scroll-content></ion-infinite-scroll-content>
-  </ion-infinite-scroll> -->
 </ion-content>
 

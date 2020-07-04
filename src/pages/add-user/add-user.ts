@@ -58,11 +58,6 @@ export class AddUserPage implements OnInit {
 
     // enable, disable CRUD button
     this.isUserAuthorized = await this.commonService.isAuthorized()
-    
-    // this.commonService.isAuthorized().then(res => {
-    //   this.isUserAuthorized = res
-    // }).catch(err => {
-    // })
 
   }
 
