@@ -266,6 +266,7 @@ export class UserStatementsPage {
 
       });
     } else {
+      this.loaderDownloading.dismiss();
       this.pdfObj.open();
     }
   }

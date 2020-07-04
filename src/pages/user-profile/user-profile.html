@@ -15,6 +15,7 @@
 <ion-content class="full-background">
   <ng-container *ngIf="loggedInUser && loggedInUser['userType'] !== 'CUSTOMER'">
     <button ion-button full (click)="moveToStatements()">View Statements</button>
+    <button ion-button full (click)="moveToCustomerPendingInvoice()">View Invoice</button>
   </ng-container>
 
   <ion-card class="tabs-wrapper">

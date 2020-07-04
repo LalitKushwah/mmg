@@ -119,13 +119,16 @@ import { PriceCapturingUnitSizeListPageModule } from '../pages/price-capturing-u
 import { PriceCapturingUnitSizeListPage } from '../pages/price-capturing-unit-size-list/price-capturing-unit-size-list';
 import { PriceCapturingProductListPageModule } from '../pages/price-capturing-product-list/price-capturing-product-list.module';
 import { PriceCapturingProductListPage } from '../pages/price-capturing-product-list/price-capturing-product-list';
+import { CustomerInvoiceReportPageModule } from '../pages/customer-invoice-report/customer-invoice-report.module';
+import { CustomerInvoiceReportPage } from '../pages/customer-invoice-report/customer-invoice-report';
 
 
 @NgModule({
   declarations: [
     MyApp,
     HomePage,
-    ListPage],
+    ListPage
+  ],
   imports: [
     BrowserModule,
     IonicModule.forRoot(MyApp),
@@ -186,7 +189,8 @@ import { PriceCapturingProductListPage } from '../pages/price-capturing-product-
     PriceCapturingCategoryListPageModule,
     PriceCapturingSubCategoryListPageModule,
     PriceCapturingUnitSizeListPageModule,
-    PriceCapturingProductListPageModule
+    PriceCapturingProductListPageModule,
+    CustomerInvoiceReportPageModule
   ],
   bootstrap: [IonicApp],
   entryComponents: [
@@ -239,7 +243,8 @@ import { PriceCapturingProductListPage } from '../pages/price-capturing-product-
     PriceCapturingCategoryListPage,
     PriceCapturingSubCategoryListPage,
     PriceCapturingUnitSizeListPage,
-    PriceCapturingProductListPage
+    PriceCapturingProductListPage,
+    CustomerInvoiceReportPage
   ],
   providers: [
     StatusBar,
