@@ -41,7 +41,7 @@ export class AdminHomePage {
     if(profile['userType']==='ADMINHO') {
       this.apiService.getOrderList(this.skipValue, this.limit).subscribe((result) => {
         this.orderList = result.body
-        this.orderList.map((value) => {
+        this.orderList.forEach((value) => {
           value.lastUpdatedAt = this.formatDate(value.lastUpdatedAt)
           value.orderTotal = parseFloat((Math.round(value.orderTotal * 100) / 100).toString()).toFixed(2)
           if((value.status === CONSTANTS.ORDER_STATUS_PROGRESS)) {
@@ -63,7 +63,7 @@ export class AdminHomePage {
     else{
       this.apiService.getProvinceOrderList(profile['province'], this.skipValue, this.limit).subscribe((result) => {
         this.orderList = result.body
-        this.orderList.map((value) => {
+        this.orderList.forEach((value) => {
           value.lastUpdatedAt = this.formatDate(value.lastUpdatedAt)
           value.orderTotal = parseFloat((Math.round(value.orderTotal * 100) / 100).toString()).toFixed(2)
           if((value.status === CONSTANTS.ORDER_STATUS_PROGRESS)) {
@@ -102,7 +102,7 @@ export class AdminHomePage {
         if(result.body.length > 0) {
           result.body.map( (value) => {
             this.orderList.push(value)
-            this.orderList.map((value) => {
+            this.orderList.forEach((value) => {
               value.lastUpdatedAt = this.formatDate(value.lastUpdatedAt)
               value.orderTotal = parseFloat((Math.round(value.orderTotal * 100) / 100).toString()).toFixed(2)
               if((value.status === CONSTANTS.ORDER_STATUS_PROGRESS)) {
@@ -129,9 +129,9 @@ export class AdminHomePage {
     this.apiService.getProvinceOrderList(profile['province'], this.skipValue, this.limit)
     .subscribe((result) => {
       if(result.body.length > 0) {
-        result.body.map( (value) => {
+        result.body.forEach( (value) => {
           this.orderList.push(value)
-          this.orderList.map((value) => {
+          this.orderList.forEach((value) => {
             value.lastUpdatedAt = this.formatDate(value.lastUpdatedAt)
             value.orderTotal = parseFloat((Math.round(value.orderTotal * 100) / 100).toString()).toFixed(2)
             if((value.status === CONSTANTS.ORDER_STATUS_PROGRESS)) {
@@ -259,9 +259,9 @@ export class AdminHomePage {
 
   exportToCsv (selectedStatus) {
     let csvList =  []
-    this.orderList.map((value) => {
+    this.orderList.forEach((value) => {
       if(selectedStatus.indexOf(value.status) >=0) {
-        value.productList.map((product, index) => {
+        value.productList.forEach((product, index) => {
           let lineItem = {}
           if(index === 0) {
             lineItem =  {
@@ -308,7 +308,7 @@ export class AdminHomePage {
           this.file.writeExistingFile(this.file.externalRootDirectory, fileName, csv).then(() => {
             this.widgetUtil.showToast(CONSTANTS.CSV_DOWNLOADED + '! FileName: ' + fileName)
           }).catch(err => {
-            this.widgetUtil.showToast(CONSTANTS.CSV_DOWNLOAD_FAIL)
+            this.widgetUtil.showToast(CONSTANTS.CSV_DOWNLOAD_FAIL + err)
           })
       })
     } else{
