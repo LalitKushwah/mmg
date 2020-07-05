@@ -119,8 +119,6 @@ import { PriceCapturingUnitSizeListPageModule } from '../pages/price-capturing-u
 import { PriceCapturingUnitSizeListPage } from '../pages/price-capturing-unit-size-list/price-capturing-unit-size-list';
 import { PriceCapturingProductListPageModule } from '../pages/price-capturing-product-list/price-capturing-product-list.module';
 import { PriceCapturingProductListPage } from '../pages/price-capturing-product-list/price-capturing-product-list';
-import { CustomerInvoiceReportPageModule } from '../pages/customer-invoice-report/customer-invoice-report.module';
-import { CustomerInvoiceReportPage } from '../pages/customer-invoice-report/customer-invoice-report';
 import { GenericService } from '../providers/generic-service/generic-service';
 
 
@@ -190,8 +188,7 @@ import { GenericService } from '../providers/generic-service/generic-service';
     PriceCapturingCategoryListPageModule,
     PriceCapturingSubCategoryListPageModule,
     PriceCapturingUnitSizeListPageModule,
-    PriceCapturingProductListPageModule,
-    CustomerInvoiceReportPageModule
+    PriceCapturingProductListPageModule
   ],
   bootstrap: [IonicApp],
   entryComponents: [
@@ -244,8 +241,7 @@ import { GenericService } from '../providers/generic-service/generic-service';
     PriceCapturingCategoryListPage,
     PriceCapturingSubCategoryListPage,
     PriceCapturingUnitSizeListPage,
-    PriceCapturingProductListPage,
-    CustomerInvoiceReportPage
+    PriceCapturingProductListPage
   ],
   providers: [
     StatusBar,
