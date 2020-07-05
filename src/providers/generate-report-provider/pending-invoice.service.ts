@@ -106,7 +106,7 @@ export class PendingInvoiceService {
                 return [
                     {
                         text: `Page ${currentPage} of ${pageCount}`,
-                        fontSize: 12,
+                        fontSize: 10,
                         color: 'grey',
                         margin: [0, 10, 40, 0],
                         alignment: 'right'
@@ -115,15 +115,16 @@ export class PendingInvoiceService {
             },
             pageSize: 'A4',
             content: [
-                { text: `Date ${new DatePipe('en_ZM').transform(new Date(), 'dd/M/yy')}`, fontSize: 11, alignment: 'right', color: 'black' },
+                { text: `Date ${new DatePipe('en_ZM').transform(new Date(), 'dd/M/yy')}`, fontSize: 10, alignment: 'right', color: 'black', margin: [0, -10, 0, 0] },
+                { text: 'Trade Kings Limited Zambia', fontSize: 11, bold: true, alignment: 'center', color: 'black', decoration: 'underline', margin: [0, 0, 0, 0] },
                 { text: 'Customer Wise Invoice/Payment Pending Report', fontSize: 13, bold: true, alignment: 'center', color: 'black', decoration: 'underline', margin: [0, 10, 0, 0] },
-                { text: `Due Period ${new DatePipe('en_ZM').transform(new Date(new Date().getFullYear(), 0, 1), 'dd/M/yy')} to ${new DatePipe('en_ZM').transform(new Date(), 'dd/M/yy')}`, fontSize: 13, bold: true, alignment: 'center', color: 'black', margin: [0, 10, 0, 0] },
+                { text: `Due Period ${new DatePipe('en_ZM').transform(new Date(new Date().getFullYear(), 0, 1), 'dd/M/yy')} to ${new DatePipe('en_ZM').transform(new Date(), 'dd/M/yy')}`, fontSize: 12, bold: true, alignment: 'center', color: 'black', margin: [0, 10, 0, 0] },
                 {
                     absolutePosition: { x: 20, y: this.height += 110 },
                     table: {
                         headerRows: 1,
                         // widths: ['auto','auto','auto','auto','auto','auto'],
-                        widths: [100, 70, 70, 40, 30, 70, 60, 40],
+                        widths: [70, 70, 70, 40, 30, 80, 80, 40],
                         body: this.prepareTableData()
                     },
                     layout: { hLineColor: 'black', vLineColor: 'black' }
@@ -217,27 +218,27 @@ export class PendingInvoiceService {
 
         body.push(
             [
-                { text: 'Customer Name:--', fontSize: 10, bold: true, border: [true, true, false, false] },
-                { text: `${this.data['customerName']}`, noWrap: true, color: 'blue', fontSize: 8, border: [false, true, false, false] },
+                { text: 'Customer Name:', fontSize: 9, bold: true, border: [true, true, false, false] },
+                { text: `${this.data['customerName']}`, noWrap: true, color: 'blue', fontSize: 9, border: [false, true, false, false] },
                 { text: '', border: [false, true, false, false] },
-                { text: 'Add:--', fontSize: 10, bold: true, border: [false, true, false, false] },
-                { text: `${this.userInfo['customerAddress']}`, noWrap: true, color: 'blue', fontSize: 8, border: [false, true, false, true] },
+                { text: 'Add:', fontSize: 9, bold: true, border: [false, true, false, false] },
+                { text: `${this.userInfo['customerAddress']}`, noWrap: true, color: 'blue', fontSize: 9, border: [false, true, false, true] },
                 { text: '', border: [false, true, false, false] },
-                { text: 'Tel:-- ', fontSize: 10, bold: true, border: [false, true, false, false] },
-                { text: `${this.tel}`, noWrap: true, color: 'blue', fontSize: 8, border: [false, true, true, false] },
+                { text: 'Tel:', fontSize: 9, bold: true, border: [false, true, false, false] },
+                { text: `${this.tel}`, noWrap: true, color: 'blue', fontSize: 9, border: [false, true, true, false] },
             ]
         );
 
         body.push(
             [
-                { text: 'System Voucher', color: headingColor, fontSize: 10, margin: [0, 6, 0, 6], bold: true, border: [true, true, false, true] },
-                { text: 'Document Date', color: headingColor, fontSize: 10, margin: [0, 6, 0, 6], bold: true, border: [false, true, false, true] },
-                { text: 'Document No', color: headingColor, fontSize: 10, margin: [0, 6, 0, 6], bold: true, border: [false, true, false, true] },
-                { text: 'Type', color: headingColor, fontSize: 10, margin: [0, 6, 0, 6], bold: true, border: [false, true, false, true] },
-                { text: 'Period', color: headingColor, fontSize: 10, margin: [0, 6, 0, 6], bold: true, border: [false, true, false, true] },
-                { text: 'Document Amt', color: headingColor, fontSize: 10, margin: [0, 6, 0, 6], alignment: 'right', bold: true, border: [false, true, false, true] },
-                { text: 'Balance', color: headingColor, fontSize: 10, margin: [0, 6, 0, 6], alignment: 'right', bold: true, border: [false, true, false, true] },
-                { text: 'Ex Rate', color: headingColor, fontSize: 10, margin: [0, 6, 0, 6], alignment: 'right', bold: true, border: [false, true, true, true] },
+                { text: 'System Voucher', color: headingColor, fontSize: 8, margin: [0, 6, 0, 6], bold: true, border: [true, true, false, true] },
+                { text: 'Document Date', color: headingColor, fontSize: 8, margin: [0, 6, 0, 6], bold: true, border: [false, true, false, true] },
+                { text: 'Document No', color: headingColor, fontSize: 8, margin: [0, 6, 0, 6], bold: true, border: [false, true, false, true] },
+                { text: 'Type', color: headingColor, fontSize: 8, margin: [0, 6, 0, 6], bold: true, border: [false, true, false, true] },
+                { text: 'Period (Days)', color: headingColor, fontSize: 8, margin: [0, 6, 0, 6], bold: true, border: [false, true, false, true] },
+                { text: 'Document Amt', color: headingColor, fontSize: 8, margin: [0, 6, 0, 6], alignment: 'right', bold: true, border: [false, true, false, true] },
+                { text: 'Balance\n(ZMW)', color: headingColor, fontSize: 8, margin: [0, 6, 0, 6], alignment: 'right', bold: true, border: [false, true, false, true] },
+                { text: 'Ex Rate', color: headingColor, fontSize: 8, margin: [0, 6, 0, 6], alignment: 'right', bold: true, border: [false, true, true, true] },
             ]
         );
         let i = 0
@@ -276,7 +277,7 @@ export class PendingInvoiceService {
                     border: i === 0 ? [false, true, false, false] : [false, false, false, false]
                 },
                 {
-                    text: `${item.days} Days`,
+                    text: `${item.days}`,
                     color: textColorSecondary,
                     fontSize: 8,
                     margin: [0, 6, 0, 6],
@@ -293,7 +294,7 @@ export class PendingInvoiceService {
                     alignment: 'right'
                 },
                 {
-                    text: `${this.decimalPipe.transform(item.pendingAmt, '.2')} ZMW`,
+                    text: `${this.decimalPipe.transform(item.pendingAmt, '.2')}`,
                     color: textColorSecondary,
                     fontSize: 8,
                     margin: [0, 6, 0, 6],
@@ -321,7 +322,7 @@ export class PendingInvoiceService {
                 { text: `${this.decimalPipe.transform(this.getInvoicePendingTotalBalance(), '.2')}`, color: 'brown', fontSize: 10, margin: [0, 6, 0, 6], bold: true, border: [false, true, false, true] },
                 { text: 'C Limit', color: 'brown', fontSize: 10, margin: [0, 6, 0, 6], bold: true, border: [false, true, false, true] },
                 { text: `NA`, noWrap: true, color: 'brown', fontSize: 10, margin: [0, 6, 0, 6], bold: true, border: [false, true, false, true] },
-                { text: '', border: [false, true, false, true] },
+                { text: 'Current Total:', fontSize: 8, border: [false, true, false, true] },
                 { text: `${this.decimalPipe.transform(this.getInvoiceTotalAmount(), '.2')}`, color: headingColor, fontSize: 10, margin: [0, 6, 0, 6], alignment: 'right', bold: true, border: [false, true, false, true] },
                 { text: `${this.decimalPipe.transform(this.getInvoicePendingTotalBalance(), '.2')}`, color: headingColor, fontSize: 10, margin: [0, 6, 0, 6], alignment: 'right', bold: true, border: [false, true, false, true] },
                 { text: '', border: [false, true, true, true] },

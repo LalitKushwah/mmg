@@ -224,4 +224,15 @@ page-user-profile {
       box-shadow: none;
     }
   }
+
+  .invoice-btn-wrapper{
+    text-align: center;
+    padding-top: 10px;
+    button{
+      width: 48%;
+      &:nth-child(2){
+        background-color: #229BD0;
+      }
+    }
+  }
 }
