@@ -30,10 +30,10 @@ export class SalesmanSelectCustomerPage {
     this.skipValue = 0
     this.limit = CONSTANTS.PAGINATION_LIMIT
 
+    // fix asked in release-1.5
     this.clearCart();
     this.getUserList()
   }
-
 
   async clearCart () {
     // fix asked in release-1.5

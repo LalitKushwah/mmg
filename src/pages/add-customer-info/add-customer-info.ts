@@ -62,7 +62,6 @@ export class AddCustomerInfoPage implements OnInit {
   }
 
   async onAddCustomerInfo () {
-    console.log('=================');
     await this.storageService.setToStorage('customerInfo', JSON.stringify(this.customerForm.value));
     this.navCtrl.push(PriceCapturingCategoryListPage);
   }

@@ -65,7 +65,7 @@ export class CustomerListProductPage {
     this.apiService.getAllProductsByCategory(this.categoryId).subscribe((result) => {
       if (result.body && result.body.length) {
         this.allProducts = result.body
-        this.allProducts.map((product: any) => {
+        this.allProducts.forEach((product: any) => {
           product['quantity'] = 1
         })
       }
@@ -90,7 +90,7 @@ export class CustomerListProductPage {
     if(!this.isSearch) {
       this.apiService.getProductListByCategory(this.categoryId, this.skipValue, this.limit).subscribe((result) => {
         this.productList = result.body
-        this.productList.map(value => {
+        this.productList.forEach(value => {
           value.quantity = 1
           value.price = (parseFloat((Math.round(value.price * 100) / 100).toString()).toFixed(2))
           value.currentCaseSize=Number(value.currentCaseSize).toFixed(2);
@@ -108,7 +108,7 @@ export class CustomerListProductPage {
     } else {
       this.apiService.searchProductInParentCategory(this.skipValue, this.limit, this.parentCategoryId, this.keyword).subscribe((result) => {
         this.productList = result.body
-        this.productList.map(value => {
+        this.productList.forEach(value => {
           value.quantity = 1
           value.price = (parseFloat((Math.round(value.price * 100) / 100).toString()).toFixed(2))
         })
@@ -262,7 +262,6 @@ export class CustomerListProductPage {
         })
         this.orderTotal = updatedTotal
         this.cartQuantity = updatedQuantity
-        console.log('============= 259 ===========', this.cart);
         
         this.storageService.setToStorage('cart', this.cart)
       } else {

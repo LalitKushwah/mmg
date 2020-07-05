@@ -5,6 +5,7 @@ import { CONSTANTS } from '../../utils/constants';
 import { ApiServiceProvider } from '../../providers/api-service/api-service';
 import { WidgetUtilService } from '../../utils/widget-utils';
 import { CommonService } from '../../providers/common.service';
+import { GenericService } from '../../providers/generic-service/generic-service';
 
 @IonicPage({
   name: 'AddCategoryPage'
@@ -32,26 +33,35 @@ export class AddCategoryPage implements OnInit {
                public navParams: NavParams, 
                private apiService: ApiServiceProvider, 
                private widgetUtil: WidgetUtilService,
-               private commonService: CommonService) {
+               private commonService: CommonService,
+               private genericService: GenericService) {
     this.showParentList = false
     this.categoryListAvailable = false
     this.getCategoryList()
   }
-
+  
   getCategoryList () {
-    this.apiService.getParentCategoryList(0 , 50).subscribe((result: any) => {
-      this.categoryList = result.body
-      this.selectedCategory = result.body[0]
+    /** REFACTORED PART */
+    const parentCategoryList = this.genericService.parentCategories;
+    if (parentCategoryList.length) {
+      this.categoryList = parentCategoryList
+      this.selectedCategory = parentCategoryList[0]
       this.categoryListAvailable = true
-    }, (error) => {
-      this.showLoader = false;
-      if (error.statusText === 'Unknown Error'){
-        this.widgetUtil.showToast(CONSTANTS.INTERNET_ISSUE)
-      } else {
-        this.widgetUtil.showToast(CONSTANTS.SERVER_ERROR)
-      }
-      this.categoryListAvailable = true
-    })
+    } else {
+      this.apiService.getParentCategoryList(0 , 50).subscribe((result: any) => {
+        this.categoryList = result.body
+        this.selectedCategory = result.body[0]
+        this.categoryListAvailable = true
+      }, (error) => {
+        this.showLoader = false;
+        if (error.statusText === 'Unknown Error'){
+          this.widgetUtil.showToast(CONSTANTS.INTERNET_ISSUE)
+        } else {
+          this.widgetUtil.showToast(CONSTANTS.SERVER_ERROR)
+        }
+        this.categoryListAvailable = true
+      })
+    }
   }
 
   async ngOnInit () {

@@ -8,6 +8,7 @@ import { CustomerCategoryListPage } from '../customer-category-list/customer-cat
 import { StorageServiceProvider } from '../../providers/storage-service/storage-service';
 import { CustomerReviewSubmitOrderPage } from '../customer-review-submit-order/customer-review-submit-order';
 import { SmEditOrderPage } from '../sm-edit-order/sm-edit-order';
+import { GenericService } from '../../providers/generic-service/generic-service';
 
 
 @IonicPage({
@@ -33,7 +34,8 @@ export class CustomerHomePage {
               private widgetUtil: WidgetUtilService,
               private apiService: ApiServiceProvider,
               private storageService: StorageServiceProvider,
-              private alertCtrl: AlertController) {
+              private alertCtrl: AlertController,
+              private genericService: GenericService) {
 
     this.categoryListAvailable = false
     this.parentCategoryList = []
@@ -78,17 +80,26 @@ export class CustomerHomePage {
   }
 
   getList () {
-    this.apiService.getParentCategoryList(this.skipValue, this.limit).subscribe((result) => {
-      this.parentCategoryList = result.body
+    /** REFACTORED PART */
+    const parentCategoryList = this.genericService.parentCategories;
+    console.log('============= 85 ========', parentCategoryList);
+    
+    if (parentCategoryList.length) {
+      this.parentCategoryList = parentCategoryList
       this.categoryListAvailable = true
-    }, (error) => {
-      if (error.statusText === 'Unknown Error') {
-        this.widgetUtil.showToast(CONSTANTS.INTERNET_ISSUE)
-      } else {
-        this.widgetUtil.showToast(CONSTANTS.SERVER_ERROR)
-      }
-      this.categoryListAvailable = true
-    })
+    } else {
+      this.apiService.getParentCategoryList(this.skipValue, this.limit).subscribe((result) => {
+        this.parentCategoryList = result.body
+        this.categoryListAvailable = true
+      }, (error) => {
+        if (error.statusText === 'Unknown Error') {
+          this.widgetUtil.showToast(CONSTANTS.INTERNET_ISSUE)
+        } else {
+          this.widgetUtil.showToast(CONSTANTS.SERVER_ERROR)
+        }
+        this.categoryListAvailable = true
+      })
+    }
   }
 
   getChildCategory (category) {

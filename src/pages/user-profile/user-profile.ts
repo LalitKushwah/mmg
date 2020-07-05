@@ -9,8 +9,8 @@ import { Chart } from 'chart.js';
 import { ApiServiceProvider } from '../../providers/api-service/api-service';
 import { UserPaymentHistoryPage } from '../user-payment-history/user-payment-history';
 import { UserStatementsPage } from '../user-statements/user-statements';
-import { CustomerInvoiceReportPage } from '../customer-invoice-report/customer-invoice-report';
 import { PendingInvoiceService } from '../../providers/generate-report-provider/pending-invoice.service';
+import { GenericService } from '../../providers/generic-service/generic-service';
 
 @IonicPage({
   name: 'UserProfilePage'
@@ -58,7 +58,8 @@ export class UserProfilePage {
               private storageService: StorageServiceProvider,
               private apiService: ApiServiceProvider,
               private loadingCtrl: LoadingController,
-              private pendingInvoiceService: PendingInvoiceService) { 
+              private pendingInvoiceService: PendingInvoiceService,
+              private genericService: GenericService) { 
   }
 
   displayChart () {
@@ -121,12 +122,20 @@ export class UserProfilePage {
         this.colorType = 'customerColor'
       }
       this.apiService.getDashboardData(this.externalId).subscribe((res: any) => {
-        this.dashboardData = res.body[0]
-        this.apiService.getParentCategoryList(0,20).subscribe((res:any) => {
-          this.categoryList = res.body
+        this.dashboardData = res.body[0];
+        /** REFACTORED PART */
+        const parentCategoryList = this.genericService.parentCategories;
+        if (parentCategoryList.length) { 
+          this.categoryList = parentCategoryList
           this.prepareData('Total')
           this.loader.dismiss()
-        })
+        } else {
+          this.apiService.getParentCategoryList(0,20).subscribe((res:any) => {
+            this.categoryList = res.body
+            this.prepareData('Total')
+            this.loader.dismiss()
+          })
+        }        
       })
     }
     catch (err) {
@@ -203,7 +212,6 @@ moveToStatements () {
 
 moveToCustomerPendingInvoice () {
   this.pendingInvoiceService.generatePDF();
-  // this.navCtrl.push(CustomerInvoiceReportPage);
 }
 
 }

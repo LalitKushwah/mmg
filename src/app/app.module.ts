@@ -121,6 +121,7 @@ import { PriceCapturingProductListPageModule } from '../pages/price-capturing-pr
 import { PriceCapturingProductListPage } from '../pages/price-capturing-product-list/price-capturing-product-list';
 import { CustomerInvoiceReportPageModule } from '../pages/customer-invoice-report/customer-invoice-report.module';
 import { CustomerInvoiceReportPage } from '../pages/customer-invoice-report/customer-invoice-report';
+import { GenericService } from '../providers/generic-service/generic-service';
 
 
 @NgModule({
@@ -265,7 +266,8 @@ import { CustomerInvoiceReportPage } from '../pages/customer-invoice-report/cust
     FileOpener,
     DatePipe,
     DecimalPipe,
-    CommonService
+    CommonService,
+    GenericService
   ]
 })
 export class AppModule {}

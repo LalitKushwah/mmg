@@ -1,8 +1,5 @@
 <ion-header>
   <ion-navbar>
-    <!-- <button ion-button menuToggle>
-      <ion-icon name="menu"></ion-icon>
-    </button> -->
     <ion-title>Orders List</ion-title>
     <ion-buttons end>
       <button ion-button icon-only (click)="presentPopover($event)">
@@ -18,31 +15,6 @@
   <ion-refresher (ionRefresh)="doRefresh($event)" spinner="crescent">
     <ion-refresher-content></ion-refresher-content>
   </ion-refresher>
-  <!-- <ion-card *ngIf="orderListAvailable && (orderList.length > 0)" style="overflow-x:auto;">
-    <table>
-      <thead>
-        <tr>
-          <th>Cust.Name</th>
-          <th>Date</th>
-          <th>Total (ZMW)</th>
-          <th>Status</th>
-          <th>Detail</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr *ngFor="let order of orderList; let i = index">
-          <td>{{order.userDetail.name}} [{{order.userDetail.externalId}}]</td>
-          <td>{{order.lastUpdatedAt}}</td>
-          <td>{{order.orderTotal}}</td>
-          <td>{{order.status}}</td>
-          <td><button ion-button clear color="secondary" item-end (click)="getOrderDetial(order)">view</button></td>
-        </tr>
-      </tbody>
-    </table>
-    <ion-infinite-scroll (ionInfinite)="doInfinite($event)">
-      <ion-infinite-scroll-content></ion-infinite-scroll-content>
-    </ion-infinite-scroll>
-  </ion-card> --> 
   <ion-card *ngFor="let order of orderList">
     <ion-card-content>
       <ion-row>

@@ -5,6 +5,7 @@ import { CONSTANTS } from '../../utils/constants';
 import { WidgetUtilService } from '../../utils/widget-utils';
 import { ApiServiceProvider } from '../../providers/api-service/api-service';
 import { PopoverHomePage } from '../popover-home/popover-home';
+import { GenericService } from '../../providers/generic-service/generic-service';
 
 @IonicPage({
   name: 'AdminListCategoryPage'
@@ -20,7 +21,12 @@ export class AdminListCategoryPage {
   limit: number = CONSTANTS.PAGINATION_LIMIT
 
 
-  constructor (public navCtrl: NavController, public navParams: NavParams, private widgetUtil: WidgetUtilService, private apiService: ApiServiceProvider) {
+  constructor (
+      public navCtrl: NavController, 
+      public navParams: NavParams, 
+      private widgetUtil: WidgetUtilService,
+      private apiService: ApiServiceProvider,
+      private genericService: GenericService) {
     this.categoryListAvailable = false
     this.parentCategoryList = []
     this.skipValue = 0
@@ -29,17 +35,24 @@ export class AdminListCategoryPage {
   }
 
   getList () {
-    this.apiService.getParentCategoryList(this.skipValue, this.limit).subscribe((result) => {
-      this.parentCategoryList = result.body
-      this.categoryListAvailable = true
-    }, (error) => {
-      if (error.statusText === 'Unknown Error') {
-        this.widgetUtil.showToast(CONSTANTS.INTERNET_ISSUE)
-      } else {
-        this.widgetUtil.showToast(CONSTANTS.SERVER_ERROR)
-      }
-      this.categoryListAvailable = true
-    })
+    /** REFACTORED PART */
+    const parentCategoryList = this.genericService.parentCategories;
+    if (parentCategoryList.length) {
+      this.parentCategoryList = parentCategoryList
+      this.categoryListAvailable = true      
+    } else {
+      this.apiService.getParentCategoryList(this.skipValue, this.limit).subscribe((result) => {
+        this.parentCategoryList = result.body
+        this.categoryListAvailable = true
+      }, (error) => {
+        if (error.statusText === 'Unknown Error') {
+          this.widgetUtil.showToast(CONSTANTS.INTERNET_ISSUE)
+        } else {
+          this.widgetUtil.showToast(CONSTANTS.SERVER_ERROR)
+        }
+        this.categoryListAvailable = true
+      })
+    }
   }
 
   getChildCategory (category) {

@@ -1,8 +1,5 @@
 <ion-header>
   <ion-navbar>
-    <!-- <button ion-button menuToggle>
-      <ion-icon name="menu"></ion-icon>
-    </button> -->
     <ion-title>Customer List</ion-title>
   </ion-navbar>
   <ion-toolbar>
@@ -17,19 +14,6 @@
   <ion-refresher (ionRefresh)="doRefresh($event)" spinner="crescent">
     <ion-refresher-content></ion-refresher-content>
   </ion-refresher>
-  
-  <!-- <ion-list *ngIf="userListAvailable && (userList.length > 0)">
-    <ion-item *ngFor="let user of filteredUserList" (click)="editCustomer(user)">
-      <span>{{user.externalId}}</span><span>{{user.name}}</span>
-
-      <button ion-button clear color="secondary" item-end><h1><ion-icon md="arrow-forward"></ion-icon></h1></button>
-
-      <button ion-button clear color="secondary" item-end>
-        <ion-icon name="create"></ion-icon>
-      </button>
-    </ion-item>
-  </ion-list> -->
-
   <ion-list *ngIf="userListAvailable && (userList.length > 0)">
         <ion-card class="user-card" *ngFor="let user of filteredUserList">
             <ion-card-content>
@@ -38,7 +22,6 @@
                     <span class="user-id">{{user.externalId}}</span>
                 </ion-col>
                 <ion-col size="9">
-                    <!-- <ion-row class="buttonWrapper"> -->
                         <ion-col text-center size="12" class="user-name-col">
                           <span class="user-name">{{user.name}}</span>
                         </ion-col>
@@ -48,7 +31,6 @@
                         <ion-col text-center size="12">
                           <button ion-button color="primary" class="rest-pass-btn" (click)="openCustomerDashboardModel(user)">View Dashboard</button>
                         </ion-col>
-                    <!-- </ion-row> -->
                 </ion-col>
               </ion-row>
             </ion-card-content>
