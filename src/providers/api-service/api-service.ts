@@ -153,6 +153,10 @@ export class ApiServiceProvider {
     return this.http.get(CONSTANTS.BASE_URL + 'api/user/customer/statements/?customerCode=' + customerCode)
   }
 
+  getPendingInvoiceData (customerCode): any {
+    return this.http.get(CONSTANTS.BASE_URL + 'api/user/customer/pendinginvoice/?customerCode=' + customerCode)
+  }
+
   updateProduct (updateDetails: Object): any {
     return this.http.post(CONSTANTS.BASE_URL + 'api/product/update', updateDetails)
   }

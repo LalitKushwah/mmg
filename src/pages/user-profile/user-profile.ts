@@ -10,13 +10,15 @@ import { ApiServiceProvider } from '../../providers/api-service/api-service';
 import { UserPaymentHistoryPage } from '../user-payment-history/user-payment-history';
 import { UserStatementsPage } from '../user-statements/user-statements';
 import { CustomerInvoiceReportPage } from '../customer-invoice-report/customer-invoice-report';
+import { PendingInvoiceService } from '../../providers/generate-report-provider/pending-invoice.service';
 
 @IonicPage({
   name: 'UserProfilePage'
 })
 @Component({
   selector: 'page-user-profile',
-  templateUrl: 'user-profile.html'
+  templateUrl: 'user-profile.html',
+  providers: [PendingInvoiceService]
 })
 export class UserProfilePage {
   
@@ -55,7 +57,8 @@ export class UserProfilePage {
               private modal:ModalController,
               private storageService: StorageServiceProvider,
               private apiService: ApiServiceProvider,
-              private loadingCtrl: LoadingController) { 
+              private loadingCtrl: LoadingController,
+              private pendingInvoiceService: PendingInvoiceService) { 
   }
 
   displayChart () {
@@ -199,7 +202,8 @@ moveToStatements () {
 }
 
 moveToCustomerPendingInvoice () {
-  this.navCtrl.push(CustomerInvoiceReportPage);
+  this.pendingInvoiceService.generatePDF();
+  // this.navCtrl.push(CustomerInvoiceReportPage);
 }
 
 }
