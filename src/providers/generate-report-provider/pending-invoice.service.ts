@@ -74,7 +74,7 @@ export class PendingInvoiceService {
             this.userInfo['customerAddress'] = selectedCustomerprofile['province'];
             this.userInfo['externalId'] = selectedCustomerprofile['externalId'];
         }
-        
+
         this.loaderDownloading = this.loadingCtrl.create({
             content: "Please wait while downloading...",
         });
@@ -116,7 +116,6 @@ export class PendingInvoiceService {
             pageSize: 'A4',
             content: [
                 { text: `Date ${new DatePipe('en_ZM').transform(new Date(), 'dd/M/yy')}`, fontSize: 10, alignment: 'right', color: 'black', margin: [0, -10, 0, 0] },
-                { text: 'Trade Kings Limited Zambia', fontSize: 11, bold: true, alignment: 'center', color: 'black', decoration: 'underline', margin: [0, 0, 0, 0] },
                 { text: 'Customer Wise Invoice/Payment Pending Report', fontSize: 13, bold: true, alignment: 'center', color: 'black', decoration: 'underline', margin: [0, 10, 0, 0] },
                 { text: `Due Period ${new DatePipe('en_ZM').transform(new Date(new Date().getFullYear(), 0, 1), 'dd/M/yy')} to ${new DatePipe('en_ZM').transform(new Date(), 'dd/M/yy')}`, fontSize: 12, bold: true, alignment: 'center', color: 'black', margin: [0, 10, 0, 0] },
                 {
@@ -349,7 +348,7 @@ export class PendingInvoiceService {
         let sum = 0;
         this.data.data.forEach(item => {
             sum = sum + item.invoiceAmt;
-        })     
+        })
         return sum;
     }
 
