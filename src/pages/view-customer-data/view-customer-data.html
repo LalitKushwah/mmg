@@ -8,6 +8,9 @@
 </ion-header>
 
 <ion-content class="full-background">
+  <ng-container *ngIf="customerDashboard">
+    <button ion-button full (click)="moveToCustomerPendingInvoice()">Pending Invoice</button>
+  </ng-container>
   <ion-card class="tabs-wrapper">
       <ion-card-header class="card-title">
         <!-- TARGET vs ACHIEVEMENT -->
@@ -155,6 +158,8 @@
   <ng-container *ngIf="customerDashboard">
     <button ion-button full (click)="moveToStatements()">View Statements</button>
   </ng-container>
+ 
+    
 
 
   <!-- <ion-card class="tabs-wrapper" *ngIf="customerDashboard==true">

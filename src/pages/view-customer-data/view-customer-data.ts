@@ -8,6 +8,7 @@ import { Chart } from 'chart.js';
 import { ApiServiceProvider } from '../../providers/api-service/api-service';
 import { UserStatementsPage } from '../user-statements/user-statements';
 import { GenericService } from '../../providers/generic-service/generic-service';
+import { PendingInvoiceService } from '../../providers/generate-report-provider/pending-invoice.service';
 
 @IonicPage({
   name: 'ViewCustomerDataPage'
@@ -15,6 +16,7 @@ import { GenericService } from '../../providers/generic-service/generic-service'
 @Component({
   selector: 'page-view-customer-data',
   templateUrl: 'view-customer-data.html',
+  providers: [PendingInvoiceService]
 })
 export class ViewCustomerDataPage {
   @ViewChild('pieCanvas') pieCanvas;
@@ -39,7 +41,9 @@ export class ViewCustomerDataPage {
               private storageService: StorageServiceProvider,
               private apiService: ApiServiceProvider,
               private loadingCtrl: LoadingController,
-              private genericService: GenericService) {
+              private genericService: GenericService,
+              private pendingInvoiceService: PendingInvoiceService,
+              ) {
                 console.log('==========40 ========');
     
   }
@@ -216,6 +220,10 @@ moveToStatements () {
 
 ionViewWillUnload () {
   this.loader.dismiss()
+}
+
+moveToCustomerPendingInvoice () {
+  this.pendingInvoiceService.generatePDF();
 }
 
 }
