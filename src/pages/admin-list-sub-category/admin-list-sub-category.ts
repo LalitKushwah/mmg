@@ -23,8 +23,7 @@ export class AdminListSubCategoryPage {
   constructor (public navCtrl: NavController,
               public navParams: NavParams,
               private apiService: ApiServiceProvider,
-              private widgetUtil: WidgetUtilService,
-              private storageService: StorageServiceProvider) {
+              private widgetUtil: WidgetUtilService) {
     this.parentCategoryId = this.navParams.get("parentCategoryId")
     this.categoryObj = this.navParams.get("category")
     this.categoryListAvailable = false

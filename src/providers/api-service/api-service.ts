@@ -245,6 +245,10 @@ export class ApiServiceProvider {
     return this.http.get(CONSTANTS.BASE_URL + 'api/erp/create/customer/statements')
   }
 
+  createCustomerPendingInvoice () {
+    return this.http.get(CONSTANTS.BASE_URL + 'api/erp/create/customer/pendinginvoice')
+  }
+
   getCaturingUnitSizeList (parentCatName, childCatName) {
     return this.http.get(CONSTANTS.BASE_URL + `api/product/list/unitsize?parent=${parentCatName}&child=${childCatName}`);
   }

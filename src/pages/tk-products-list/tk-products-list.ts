@@ -1,14 +1,10 @@
-import { Component, OnDestroy } from '@angular/core';
+import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams, AlertController, LoadingController, ModalController } from 'ionic-angular';
-import { NgForm } from '@angular/forms';
 
 import { ApiServiceProvider } from '../../providers/api-service/api-service';
-import { StorageServiceProvider } from '../../providers/storage-service/storage-service';
 import { AddTkProductModalPage } from '../add-tk-product-modal/add-tk-product-modal';
 import { DatePipe } from '@angular/common';
-import { WidgetUtilService } from '../../utils/widget-utils';
 
-import * as uuid from 'uuid';
 
 @IonicPage()
 @Component({
@@ -30,12 +26,8 @@ export class TkProductsListPage  {
   filteredProductList = []
   constructor (public navCtrl: NavController,
     public navParams: NavParams,
-    private alertCtrl: AlertController,
     private apiService: ApiServiceProvider,
-    private loadingController: LoadingController,
-    private storageService: StorageServiceProvider,
     public modalCtrl: ModalController,
-    private widgetService: WidgetUtilService,
     public datePipe: DatePipe) {
     this.getTKProducts();
   }

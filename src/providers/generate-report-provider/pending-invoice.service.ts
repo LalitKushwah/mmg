@@ -99,7 +99,7 @@ export class PendingInvoiceService {
     createPdf () {
         this.height = 0;
         this.width = 0;
-        let textColorPrimary = '#000000';
+        // let textColorPrimary = '#000000';
 
         this.documentDefinition = {
             header: function (currentPage, pageCount, pageSize) {

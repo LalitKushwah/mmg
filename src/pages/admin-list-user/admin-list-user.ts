@@ -7,6 +7,7 @@ import { EditUserPage } from '../edit-user/edit-user';
 import { StorageServiceProvider } from '../../providers/storage-service/storage-service';
 import { AdminDashboardPage } from '../admin-dashboard/admin-dashboard';
 import { SalesmanDashboardPage } from '../salesman-dashboard/salesman-dashboard';
+import { UserProfilePage } from '../user-profile/user-profile';
 
 @IonicPage({
   name: 'AdminListUserPage'
@@ -178,7 +179,8 @@ export class AdminListUserPage {
 
 async openCustomerDashboardModel (user) {
     const res = await this.storageService.setToStorage('editCustomerInfo', user)
-    const payModal = this.modal.create('ViewCustomerDataPage')
-    payModal.present();
+    this.navCtrl.push(UserProfilePage);
+    // const payModal = this.modal.create('ViewCustomerDataPage')
+    // payModal.present();
   }
 }

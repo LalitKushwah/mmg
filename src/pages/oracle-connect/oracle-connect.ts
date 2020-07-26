@@ -32,7 +32,7 @@ export class OracleConnectPage {
     loader.present();
     this.apiService.updateProductInMongo().subscribe(res => {
       loader.dismiss()
-      this.widgetUtil.showToast('Schedular completed successfully...')
+      this.widgetUtil.showToast('Schedular Triggered successfully...')
     }, error => {
       this.widgetUtil.showToast(`Error while running schedular:  ${error}`)
       loader.dismiss()
@@ -46,7 +46,7 @@ export class OracleConnectPage {
     loader.present();
     this.apiService.updateProductStatInERP().subscribe(res => {
       loader.dismiss()
-      this.widgetUtil.showToast('Schedular completed successfully...')
+      this.widgetUtil.showToast('Schedular Triggered successfully...')
     }, error => {
       this.widgetUtil.showToast(`Error while running schedular:  ${error}`)
       loader.dismiss()
@@ -60,7 +60,7 @@ export class OracleConnectPage {
     loader.present();
     this.apiService.updateCustomerInMongo().subscribe(res => {
       loader.dismiss()
-      this.widgetUtil.showToast('Schedular completed successfully...')
+      this.widgetUtil.showToast('Schedular Triggered successfully...')
     }, error => {
       this.widgetUtil.showToast(`Error while running schedular:  ${error}`)
       loader.dismiss()
@@ -74,7 +74,7 @@ export class OracleConnectPage {
     loader.present();
     this.apiService.updateCustomerStatInERP().subscribe(res => {
       loader.dismiss()
-      this.widgetUtil.showToast('Schedular completed successfully...')
+      this.widgetUtil.showToast('Schedular Triggered successfully...')
     }, error => {
       this.widgetUtil.showToast(`Error while running schedular:  ${error}`)
       loader.dismiss()
@@ -88,7 +88,7 @@ export class OracleConnectPage {
     loader.present();
     this.apiService.createNewCustomerInMongo().subscribe(res => {
       loader.dismiss()
-      this.widgetUtil.showToast('Schedular completed successfully...')
+      this.widgetUtil.showToast('Schedular Triggered successfully...')
     }, error => {
       this.widgetUtil.showToast(`Error while running schedular:  ${error}`)
       loader.dismiss()
@@ -102,7 +102,7 @@ export class OracleConnectPage {
     loader.present();
     this.apiService.createNewProductInMongo().subscribe(res => {
       loader.dismiss()
-      this.widgetUtil.showToast('Schedular completed successfully...')
+      this.widgetUtil.showToast('Schedular Triggered successfully...')
     }, error => {
       this.widgetUtil.showToast(`Error while running schedular:  ${error}`)
       loader.dismiss()
@@ -116,7 +116,7 @@ export class OracleConnectPage {
     loader.present();
     this.apiService.updateParentIdInUserDoc().subscribe(res => {
       loader.dismiss()
-      this.widgetUtil.showToast('Schedular completed successfully...')
+      this.widgetUtil.showToast('Schedular Triggered successfully...')
     }, error => {
       this.widgetUtil.showToast(`Error while running schedular:  ${error}`)
       loader.dismiss()
@@ -131,7 +131,7 @@ export class OracleConnectPage {
     loader.present();
     this.apiService.updateUserDashboardData().subscribe(res => {
       loader.dismiss()
-      this.widgetUtil.showToast('Schedular completed successfully...')
+      this.widgetUtil.showToast('Schedular Triggered successfully...')
     }, error => {
       this.widgetUtil.showToast(`Error while running schedular:  ${error}`)
       loader.dismiss()
@@ -145,7 +145,7 @@ export class OracleConnectPage {
     loader.present();
     this.apiService.updateNonCustomerDashboardData().subscribe(res => {
       loader.dismiss()
-      this.widgetUtil.showToast('Schedular completed successfully...')
+      this.widgetUtil.showToast('Schedular Triggered successfully...')
     }, error => {
       this.widgetUtil.showToast(`Error while running schedular:  ${error}`)
       loader.dismiss()
@@ -159,7 +159,7 @@ export class OracleConnectPage {
     loader.present();
     this.apiService.updateAssociatedSMListToMongo().subscribe(res => {
       loader.dismiss()
-      this.widgetUtil.showToast('Schedular completed successfully...')
+      this.widgetUtil.showToast('Schedular Triggered successfully...')
     }, error => {
       this.widgetUtil.showToast(`Error while running schedular:  ${error}`)
       loader.dismiss()
@@ -173,7 +173,7 @@ export class OracleConnectPage {
     loader.present();
     this.apiService.storeInProgressOrderInErp().subscribe(res => {
       loader.dismiss()
-      this.widgetUtil.showToast('Schedular completed successfully...')
+      this.widgetUtil.showToast('Schedular Triggered successfully...')
     }, error => {
       this.widgetUtil.showToast(`Error while running schedular:  ${error}`)
       loader.dismiss()
@@ -187,7 +187,7 @@ export class OracleConnectPage {
     loader.present();
     this.apiService.updateOrderStatusToBilled().subscribe(res => {
       loader.dismiss()
-      this.widgetUtil.showToast('Schedular completed successfully...')
+      this.widgetUtil.showToast('Schedular Triggered successfully...')
     }, error => {
       this.widgetUtil.showToast(`Error while running schedular:  ${error}`)
       loader.dismiss()
@@ -201,7 +201,21 @@ export class OracleConnectPage {
     loader.present();
     this.apiService.createCustomerStatements().subscribe(res => {
       loader.dismiss()
-      this.widgetUtil.showToast('Schedular completed successfully...')
+      this.widgetUtil.showToast('Schedular Triggered successfully...')
+    }, error => {
+      this.widgetUtil.showToast(`Error while running schedular:  ${error}`)
+      loader.dismiss()
+    })
+  }
+
+  createCustomerPendingInvoice () {
+    const loader = this.loadingCtrl.create({
+      content: "Schedular is Running...",
+    });
+    loader.present();
+    this.apiService.createCustomerPendingInvoice().subscribe(res => {
+      loader.dismiss()
+      this.widgetUtil.showToast('Schedular Triggered successfully...')
     }, error => {
       this.widgetUtil.showToast(`Error while running schedular:  ${error}`)
       loader.dismiss()

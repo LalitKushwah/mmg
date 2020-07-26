@@ -52,12 +52,13 @@
             Net Weight: <span>{{product.netWeight | number: '.2-2'}} Kg</span>
           </ion-col>
         </ion-row>
-        <div *ngIf="loggedInUserStore.length">
+        <hr>
+        <div *ngIf="loggedInUserStore.length" class="warehouse">
           <ion-row *ngFor="let assocStores of loggedInUserStore">
-            <div *ngFor="let store of product.inventoryDetails">
+            <ng-container *ngFor="let store of product.inventoryDetails">
               <ion-col col-8 *ngIf="assocStores === store.storeName" class="store-name">{{assocStores}}</ion-col>
-              <ion-col col-4 *ngIf="assocStores === store.storeName">{{store.inventory}}</ion-col>
-            </div>
+              <ion-col col-4 *ngIf="assocStores === store.storeName">{{store.inventory}}<span class="in-transit">({{store.inTransit}})</span></ion-col>
+            </ng-container>
           </ion-row>
         </div>
         <ion-row>
