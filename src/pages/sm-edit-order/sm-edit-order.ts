@@ -8,6 +8,7 @@ import { SalesmanDashboardPage } from '../salesman-dashboard/salesman-dashboard'
 import { ApiServiceProvider } from '../../providers/api-service/api-service';
 import { CONSTANTS } from '../../utils/constants';
 import { CommonService } from '../../providers/common.service';
+import { GenericService } from '../../providers/generic-service/generic-service';
 
 @IonicPage({
   name: 'SmEditOrderPage'
@@ -34,6 +35,7 @@ export class SmEditOrderPage {
                 public widgetUtil: WidgetUtilService,
                 public modalController: ModalController,
                 public apiService: ApiServiceProvider,
+                public genericService: GenericService,
                 public commonService: CommonService) {
   }
 
@@ -58,8 +60,8 @@ export class SmEditOrderPage {
 
   confirmSubmitOrder () {
     const alert = this.alertController.create({
-      title: 'Information',
-      subTitle: 'TK points will convert into TK currency post target achievement of QTR',
+      title: 'Confirmation',
+      subTitle: 'Are you sure to place order?',
       buttons: [
         {
           text : 'Okay',
@@ -109,17 +111,16 @@ export class SmEditOrderPage {
         }
       });
       this.orderDetail.productList = this.cartItems
-      this.orderDetail.totalTkPoints = this.orderDetail.totalTkPoints - product.tkPoint;
+      const temp = this.genericService.calculateTotalNetWeightAndTotalTk(this.cartItems);
+      this.orderDetail.totalTkPoints = temp.totalTKPoint;
+      this.orderDetail.totalNetWeight = temp.totalNetWeight;
 
-      // this.storageService.getTkPointsFromStorage().then(async (tkpoints: any) => {
-      //   let tkpoint = tkpoints - (product.quantity * product.tkPoint);
-      //   this.orderDetail.totalTkPoints = tkpoint;
-      //   // await this.storageService.setToStorage('tkpoint', tkpoint);
-      // });
-      this.orderDetail.totalNetWeight = this.orderDetail.totalNetWeight - product.netWeight
+      // if there is any problem with total TK point calculation then visit history
+
       this.storageService.setToStorage('order', this.orderDetail);
       // this.getCartItems()
       this.calculateOrderTotal()
+
     }
   }
 
@@ -132,18 +133,9 @@ export class SmEditOrderPage {
         return (qty)
       }
     });
-    let sum = 0;
-    let totalNetWeight: any = 0;
-    this.cartItems.map(item => {
-      if (item.tkPoint) {
-        sum = sum + (parseFloat(item.tkPoint) * parseInt(item.quantity))
-      }
-      if (item.netWeight) {
-        totalNetWeight = totalNetWeight + (parseFloat(item.netWeight) * parseInt(item.quantity))
-      }
-    });
-    this.orderDetail.totalTkPoints = sum;
-    this.orderDetail.totalNetWeight = (totalNetWeight/1000).toFixed(3)
+    const temp = this.genericService.calculateTotalNetWeightAndTotalTk(this.cartItems);
+    this.orderDetail.totalTkPoints = temp.totalTKPoint;
+    this.orderDetail.totalNetWeight = temp.totalNetWeight;
     this.orderDetail.productList = this.cartItems
     await this.storageService.setToStorage('order', this.orderDetail)
     this.calculateOrderTotal();

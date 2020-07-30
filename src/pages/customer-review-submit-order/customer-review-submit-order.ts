@@ -7,6 +7,7 @@ import { Component } from '@angular/core';
 import {IonicPage, NavController, NavParams, ModalController, AlertController} from 'ionic-angular';
 import { CONSTANTS } from '../../utils/constants';
 import { SalesmanDashboardPage } from '../salesman-dashboard/salesman-dashboard';
+import { GenericService } from '../../providers/generic-service/generic-service';
 
 @IonicPage({
   name: 'CustomerReviewSubmitOrderPage'
@@ -40,6 +41,7 @@ export class CustomerReviewSubmitOrderPage {
                 private apiService: ApiServiceProvider,
                 private widgetUtil: WidgetUtilService,
                 private modalController: ModalController,
+                private genericService: GenericService,
                 private alertController: AlertController) {
 
     this.showLoader = false
@@ -51,7 +53,6 @@ export class CustomerReviewSubmitOrderPage {
   }
 
   ionViewDidEnter () {
-    this.calculateOrderTotal()
     this.storageService.getTkPointsFromStorage().then((res: any) => {
       this.totalTK = res
     })
@@ -90,8 +91,8 @@ export class CustomerReviewSubmitOrderPage {
 
   confirmSubmitOrder () {
     const alert = this.alertController.create({
-      title: 'Information',
-      subTitle: 'TK points will convert into TK currency post target achievement of QTR',
+      title: 'Confirmation',
+      subTitle: 'Are you sure to place order?',
       buttons: [
         {
           text : 'Okay',
@@ -197,66 +198,8 @@ export class CustomerReviewSubmitOrderPage {
       });
       this.storageService.setToStorage('cart', this.cartItems);
       this.getCartItems()
-      this.calculateOrderTotal()
+      this.calculateTotal();
     }
-  }
-
-  decrementQty (product) {
-    this.cartItems.map((value) => {
-      if (value['_id'] === product['_id']) {
-        let qty = parseInt(value.quantity) - 1
-        if (qty >= 0) {
-          value.quantity = qty
-          value['subTotal'] = (parseFloat((Math.round((value.quantity * parseFloat(value.price) * 100) / 100)).toString()).toFixed(2))
-        }
-        return (qty)
-      }
-    })
-    let sum = 0
-    let totalNetWeight = 0
-    this.cartItems.map(item => {
-      if (item.tkPoint) {
-        sum = sum + (parseFloat(item.tkPoint) * parseInt(item.quantity))
-      }
-      if (item.netWeight) {
-        totalNetWeight = totalNetWeight + (parseFloat(item.netWeight) * parseInt(item.quantity))
-      }
-    })
-    this.totalTK = sum
-    this.totalNetWeight = totalNetWeight/1000
-    this.storageService.setToStorage('tkpoint', sum)
-    this.storageService.setToStorage('totalNetWeight', this.totalNetWeight.toFixed(3))
-    this.calculateOrderTotal()
-    this.storageService.setToStorage('cart', this.cartItems)
-    return (product.quantity)
-  }
-
-  incrementQty (product) {
-    this.cartItems.map((value) => {
-      if (value['_id'] === product['_id']) {
-        let qty = parseInt(value.quantity) + 1
-        value.quantity = qty
-        value['subTotal'] = (parseFloat((Math.round((value.quantity * parseFloat(value.price) * 100) / 100)).toString()).toFixed(2))
-        return (qty)
-      }
-    })
-    let sum = 0
-    let totalNetWeight = 0
-    this.cartItems.map(item => {
-      if (item.tkPoint) {
-        sum = sum + (parseFloat(item.tkPoint) * parseInt(item.quantity))
-      }
-      if (item.netWeight) {
-        totalNetWeight = totalNetWeight + (parseFloat(item.netWeight) * parseInt(item.quantity))
-      }
-    })
-    this.totalTK = sum
-    this.totalNetWeight = totalNetWeight/1000
-    this.storageService.setToStorage('tkpoint', sum)
-    this.storageService.setToStorage('totalNetWeight', this.totalNetWeight.toFixed(3))
-    this.calculateOrderTotal()
-    this.storageService.setToStorage('cart', this.cartItems)
-    return (product.quantity)
   }
 
   updateCart (product) {
@@ -268,37 +211,22 @@ export class CustomerReviewSubmitOrderPage {
         return (qty)
       }
     });
-    let sum = 0;
-    let totalNetWeight = 0;
-    this.cartItems.map(item => {
-      if (item.tkPoint) {
-        sum = sum + (parseFloat(item.tkPoint) * parseInt(item.quantity))
-      }
-      if (item.netWeight) {
-        totalNetWeight = totalNetWeight + (parseFloat(item.netWeight) * parseInt(item.quantity))
-      }
-    });
-    this.totalTK = sum;
-    this.totalNetWeight = totalNetWeight/1000
-    this.storageService.setToStorage('tkpoint', sum);
-    this.storageService.setToStorage('totalNetWeight', this.totalNetWeight.toFixed(3));
-    this.calculateOrderTotal();
+
+    this.calculateTotal();
     this.storageService.setToStorage('cart', this.cartItems)
     return (product.quantity)
   }
 
 
-  async calculateOrderTotal () {
-    if (this.cartItems.length > 0) {
-      let updatedTotal = 0
-      this.cartItems.map((value) => {
-        updatedTotal = updatedTotal + (parseFloat(value.price) * parseInt(value.quantity))
-      })
-      this.orderTotal = parseFloat((Math.round(updatedTotal * 100) / 100).toString()).toFixed(2)
-    } else {
-      this.orderTotal = 0
-    }
+  async calculateTotal () {
+    const obj = this.genericService.calculateTotalNetWeightAndTotalTk(this.cartItems);
+    this.totalNetWeight = obj.totalNetWeight;
+    this.totalTK = obj.totalTKPoint
+    this.orderTotal = obj.orderTotal;
+
     await this.storageService.setToStorage('orderTotal', this.orderTotal)
+    await this.storageService.setToStorage('tkpoint', this.totalTK);
+    await this.storageService.setToStorage('totalNetWeight', this.totalNetWeight.toFixed(3)) 
   }
 
   openCategoryTotalModal () {

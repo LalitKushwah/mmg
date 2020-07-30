@@ -8,6 +8,7 @@ import { CONSTANTS } from '../../utils/constants';
 import { PopoverHomePage } from '../popover-home/popover-home';
 import { SmEditOrderPage } from '../sm-edit-order/sm-edit-order';
 import { CommonService } from '../../providers/common.service';
+import { GenericService } from '../../providers/generic-service/generic-service';
 
 @IonicPage({
   name: 'CustomerListProductPage'
@@ -44,7 +45,8 @@ export class CustomerListProductPage {
                private apiService: ApiServiceProvider,
                private widgetUtil: WidgetUtilService, 
                private storageService: StorageServiceProvider,
-               private commonService: CommonService) {
+               private commonService: CommonService,
+               private genericService: GenericService) {
 
     this.skipValue = 0
     this.limit = CONSTANTS.PAGINATION_LIMIT
@@ -196,23 +198,13 @@ export class CustomerListProductPage {
         order.productList = productsInCart
       }
 
-      let sum = 0
-      let totalNetWeight = 0
-      let orderTotal = 0
-      order.productList.map(item => {
-          if (item.tkPoint) {
-            sum = sum + (parseFloat(item.tkPoint) * parseInt(item.quantity))
-          }
-          if (item.netWeight) {
-            totalNetWeight = totalNetWeight + (parseFloat(item.netWeight) * parseInt(item.quantity))
-          }
-          orderTotal = orderTotal + (parseFloat(item.price) * parseInt(item.quantity))
-      })
-      order.totalTkPoints = sum
-      this.tkPoint = sum
-      order.totalNetWeight = (totalNetWeight/1000).toFixed(3)
+      const obj = this.genericService.calculateTotalNetWeightAndTotalTk(order.productList);
+
+      order.totalTkPoints = obj.totalTKPoint
+      this.tkPoint = obj.totalTKPoint
+      order.totalNetWeight = obj.totalNetWeight
       
-      order.orderTotal = orderTotal
+      order.orderTotal = obj.orderTotal
 
       await this.storageService.setToStorage('order', order)
       this.widgetUtil.showToast(`${product.name} added to cart!`)
@@ -239,29 +231,16 @@ export class CustomerListProductPage {
         } else {
           this.cart = productsInCart
         }
-        let sum = 0
-        let totalNetWeight = 0
-        this.cart.map(item => {
-            if (item.tkPoint) {
-              sum = sum + (parseFloat(item.tkPoint) * parseInt(item.quantity))
-            }
-            if (item.netWeight) {
-              totalNetWeight = totalNetWeight + (parseFloat(item.netWeight) * parseInt(item.quantity))
-            }
-        })
-        this.tkPoint = sum
-        this.totalNetWeight = totalNetWeight/1000
-        this.storageService.setToStorage('tkpoint', sum)
-        this.storageService.setToStorage('totalNetWeight', this.totalNetWeight.toFixed(3))
+        const obj = this.genericService.calculateTotalNetWeightAndTotalTk(this.cart);
+
+        this.tkPoint = obj.totalTKPoint
+        this.totalNetWeight = obj.totalNetWeight
+        this.storageService.setToStorage('tkpoint', this.tkPoint)
+        this.storageService.setToStorage('totalNetWeight', this.totalNetWeight)
   
         this.cartDetail = await this.storageService.setToStorage('cart', this.cart)
-        let updatedTotal = 0, updatedQuantity = 0;
-        this.cartDetail.map((value) => {
-          updatedTotal = updatedTotal + (parseFloat(value.price) * parseInt(value.quantity))
-          updatedQuantity = updatedQuantity + parseInt(value.quantity)
-        })
-        this.orderTotal = updatedTotal
-        this.cartQuantity = updatedQuantity
+        this.orderTotal = obj.orderTotal
+        this.cartQuantity = obj.totalQuantity
         
         this.storageService.setToStorage('cart', this.cart)
       } else {
