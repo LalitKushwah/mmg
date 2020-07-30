@@ -5,6 +5,7 @@ import { WidgetUtilService } from '../../utils/widget-utils';
 import { CONSTANTS } from '../../utils/constants';
 import { StorageServiceProvider } from './../../providers/storage-service/storage-service';
 import { UserProfilePage } from '../user-profile/user-profile';
+import { CommonService } from '../../providers/common.service';
 
 @IonicPage()
 @Component({
@@ -26,6 +27,7 @@ export class SalesmanSelectCustomerPage {
                 public navParams: NavParams,
                 private apiService: ApiServiceProvider,
                 private widgetUtil: WidgetUtilService,
+                private commonService: CommonService,
                 private storageService: StorageServiceProvider) {
     this.skipValue = 0
     this.limit = CONSTANTS.PAGINATION_LIMIT
@@ -48,21 +50,32 @@ export class SalesmanSelectCustomerPage {
   }
 
   async getUserList () {
-    let profile: any = await this.storageService.getFromStorage('profile')
-    this.apiService.getAssociatedCustomersListBySalesman(profile.externalId).subscribe((result: any) => {
-      this.userList = result.body
-      this.allCustomers = this.userList
-      this.filteredUserList = this.userList
-      this.userListAvailable = true
-    }, (error) => {
-      if (error.statusText === 'Unknown Error') {
-        this.widgetUtil.showToast(CONSTANTS.INTERNET_ISSUE)
-      } else {
-        this.widgetUtil.showToast(CONSTANTS.SERVER_ERROR)
-      }
-      this.userListAvailable = true
-    })
+    const cachedCustomerList = this.commonService.getCustomerAssociatedSMList();
+    if (cachedCustomerList.length) {
+      this.setValues(cachedCustomerList);
+    } else {
+      let profile: any = await this.storageService.getFromStorage('profile')
+      this.apiService.getAssociatedCustomersListBySalesman(profile.externalId).subscribe((result: any) => {
+        this.setValues(result.body);
+        this.commonService.setCustomerAssociatedSMList(this.allCustomers);
+      }, (error) => {
+        if (error.statusText === 'Unknown Error') {
+          this.widgetUtil.showToast(CONSTANTS.INTERNET_ISSUE)
+        } else {
+          this.widgetUtil.showToast(CONSTANTS.SERVER_ERROR)
+        }
+        this.userListAvailable = true
+      })
+    }
   }
+
+  setValues (list) {
+    this.userList = list;
+    this.allCustomers = this.userList;
+    this.filteredUserList = this.userList;
+    this.userListAvailable = true
+  }
+
 
   doRefresh (refresher) : void {
     this.getUserList()

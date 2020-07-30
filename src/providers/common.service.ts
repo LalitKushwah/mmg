@@ -3,6 +3,8 @@ import { StorageServiceProvider } from "./storage-service/storage-service";
 @Injectable()
 export class CommonService {
 
+    customerAssociatedWithSMList = []
+
     constructor (private strorageService: StorageServiceProvider) {}
 
     async isAuthorized () {
@@ -17,5 +19,13 @@ export class CommonService {
     async getLoggedInUser () {
         const loggedInUser = await this.strorageService.getFromStorage('profile')
         return loggedInUser
+    }
+
+    setCustomerAssociatedSMList (list) {
+        this.customerAssociatedWithSMList = list;
+    }
+
+    getCustomerAssociatedSMList () {
+        return this.customerAssociatedWithSMList;
     }
 }
