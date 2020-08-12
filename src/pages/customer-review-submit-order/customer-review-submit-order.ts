@@ -34,6 +34,9 @@ export class CustomerReviewSubmitOrderPage {
   showSalesmanLabel: boolean = false;
   customerName: any;
   salesmanData: any = {};
+  selectedCustomer: any;
+  profile: any;
+  isSalesman = false;
 
   constructor (public navCtrl: NavController,
                 public navParams: NavParams,
@@ -47,39 +50,49 @@ export class CustomerReviewSubmitOrderPage {
     this.showLoader = false
     this.orderTotal = (parseFloat((Math.round(this.navParams.get("orderTotal") * 100) / 100).toString()).toFixed(2))
     this.getCartItems()
-
-    //Function to show Salesman Name in Review Order Page
-    this.showSalesman()
   }
 
   ionViewDidEnter () {
-    this.storageService.getTkPointsFromStorage().then((res: any) => {
-      this.totalTK = res
-    })
-    this.storageService.getFromStorage('totalNetWeight').then((res: any) => {
-      this.totalNetWeight = res
-    })
+    if (this.isSalesman) {
+      this.totalNetWeight = this.selectedCustomer.totalNetWeight;
+      this.totalTK = this.selectedCustomer.tkPoint;
+    } else {
+      this.storageService.getFromStorage('totalNetWeight').then((res: any) => {
+        this.totalNetWeight = res
+      });
+      this.storageService.getTkPointsFromStorage().then((res: any) => {
+        this.totalTK = res
+      });
+    }
   }
 
-  async showSalesman () {
-    let profile = await this.storageService.getFromStorage('profile')
-    if ((profile['userType'] === 'SALESMAN') || (profile['userType'] === 'SALESMANAGER')) {
-
-      let customerProfile = await this.storageService.getFromStorage('selectedCustomer')
-      this.salesmanProfile = profile
+  showSalesman () {
+    if (this.isSalesman) {
+      // let customerProfile = await this.storageService.getFromStorage('selectedCustomer');
+      // let customerProfile = this.selectedCustomer;
+      this.salesmanProfile = this.profile
       this.salesmanName = this.salesmanProfile['name']
       this.salesmanCode = this.salesmanProfile['externalId'],
       this.showSalesmanLabel = true
-      this.customerName = customerProfile['name']
+      this.customerName = this.selectedCustomer['name']
     }
   }
 
   async getCartItems () {
-    this.cartItems = await this.storageService.getCartFromStorage()
+    this.profile = await this.storageService.getFromStorage('profile');
+    if ((this.profile['userType'] === 'SALESMAN') || (this.profile['userType'] === 'SALESMANAGER')) {
+      this.isSalesman = true;
+      this.selectedCustomer = await this.storageService.getSelectedCustomer();
+      this.cartItems = await this.storageService.getSelectedCartFromStorage(this.selectedCustomer._id);
+    } else {
+      this.cartItems = await this.storageService.getCartFromStorage()
+    }
     this.cartItems.map((value) => {
       value.price = (parseFloat((Math.round(value.price * 100) / 100).toString()).toFixed(2))
       value['subTotal'] = (parseFloat((Math.round((value.quantity * parseFloat(value.price) * 100) / 100)).toString()).toFixed(2))
     })
+    //Function to show Salesman Name in Review Order Page
+    this.showSalesman();
   }
 
   doRefresh (refresher): void {
@@ -112,14 +125,20 @@ export class CustomerReviewSubmitOrderPage {
   }
 
   async submitOrder () {
-    let profile = await this.storageService.getFromStorage('profile')
-    let totalTkPoints = await this.storageService.getTkPointsFromStorage()
-    let totalNetWeight = await this.storageService.getFromStorage('totalNetWeight')
+    let totalTkPoints;
+    let totalNetWeight;
+    if (this.isSalesman) {
+      totalTkPoints = this.selectedCustomer.tkPoint;
+      totalNetWeight = this.selectedCustomer.totalNetWeight;
+    } else {
+      totalTkPoints = await this.storageService.getTkPointsFromStorage()
+      totalNetWeight = await this.storageService.getFromStorage('totalNetWeight')
+    }
     this.showLoader = true
 
     //Replacing the Profile with Selected Customer Profile if userType = SALESMAN
-    if ((profile['userType'] === 'SALESMAN') || (profile['userType'] === 'SALESMANAGER')) {
-      profile = await this.storageService.getFromStorage('selectedCustomer')
+    if (this.isSalesman) {
+      this.profile = await this.storageService.getSelectedCustomer();
     }
 
 
@@ -135,7 +154,7 @@ export class CustomerReviewSubmitOrderPage {
           productSysCode: value['productSysCode']
         }
       }),
-      userId: profile['_id'],
+      userId: this.profile['_id'],
       salesmanName: this.salesmanName ? this.salesmanName : undefined,
       salesmanCode: this.salesmanCode ? this.salesmanCode : undefined,
       orderId: 'ORD' + Math.floor(Math.random() * 90000) + Math.floor(Math.random() * 90000),
@@ -143,25 +162,28 @@ export class CustomerReviewSubmitOrderPage {
       totalNetWeight: parseFloat(totalNetWeight.toString()),
       totalTkPoints: parseFloat(totalTkPoints.toString()),
       status: CONSTANTS.ORDER_STATUS_PROGRESS,
-      province: profile['province'],
+      province: this.profile['province'],
       lastUpdatedAt: Date.now()
     }
 
-    this.apiService.submitOrder(orderObj).subscribe((result) => {
-      this.showLoader = false
-      this.storageService.setToStorage('cart', [])
-      this.storageService.removeFromStorage('tkpoint')
-      this.storageService.setToStorage('totalNetWeight', 0);
-      
+    this.apiService.submitOrder(orderObj).subscribe(async (result) => {
+      this.showLoader = false;
       //Removing the key-value after the order has been placed
-      this.storageService.removeFromStorage('selectedCustomer')
-      
-      this.widgetUtil.showToast(CONSTANTS.ORDER_PLACED)
-      if((profile['userType'] === 'SALESMAN') || (profile['userType'] === 'SALESMANAGER')) {
+      if (this.isSalesman) {
+        await this.storageService.clearSelectedCartFromStorage(this.selectedCustomer._id);
+        let selectedCustomers: any = await this.storageService.getFromStorage('selectedCustomers');
+        selectedCustomers = selectedCustomers.filter(customer => {
+          return customer._id !== this.profile['_id'];
+        });
+        await this.storageService.setToStorage('selectedCustomers', selectedCustomers);
         this.navCtrl.setRoot(SalesmanDashboardPage)
       } else {
+        await this.storageService.setToStorage('cart', []);
+        await this.storageService.removeFromStorage('selectedCustomer');
         this.navCtrl.setRoot(HomePage)
       }
+      
+      this.widgetUtil.showToast(CONSTANTS.ORDER_PLACED)
     }, (error) => {
       this.showLoader = false
       if (error.statusText === 'Unknown Error') {
@@ -173,7 +195,11 @@ export class CustomerReviewSubmitOrderPage {
   }
 
   async clearCart () {
-    await this.storageService.clearCart();
+    if (this.isSalesman) {
+      await this.storageService.clearSelectedCartFromStorage(this.selectedCustomer._id);
+    } else {
+      await this.storageService.clearCart();
+    }
     this.showClearCartLoader = true
     this.totalNetWeight = 0;
     this.orderTotal = 0
@@ -183,7 +209,7 @@ export class CustomerReviewSubmitOrderPage {
     this.widgetUtil.showToast('All items removed from cart')
   }
 
-  removeFromCart (product) {
+  async removeFromCart (product) {
     this.widgetUtil.showToast(`${product.name} removed from cart`)
     if (this.cartItems.length > 0) {
       this.cartItems.map((value, index) => {
@@ -191,13 +217,21 @@ export class CustomerReviewSubmitOrderPage {
           this.cartItems.splice(index, 1)
         }
       });
-      this.storageService.getTkPointsFromStorage().then(async (tkpoints: any) => {
-        let tkpoint = tkpoints - (product.quantity * product.tkPoint);
+      let tkpoint: any;
+      if (this.isSalesman) {
+        await this.storageService.updateCartForSelectedCustomer(this.selectedCustomer._id, this.cartItems);
+        tkpoint = this.selectedCustomer.tkPoint - (product.quantity * product.tkPoint);
         this.totalTK = tkpoint;
-        await this.storageService.setToStorage('tkpoint', tkpoint);
-      });
-      this.storageService.setToStorage('cart', this.cartItems);
-      this.getCartItems()
+        await this.storageService.updateSelectedCustomers(this.selectedCustomer._id, -1, -1, tkpoint);
+      } else {
+        await this.storageService.setToStorage('cart', this.cartItems);
+        this.storageService.getTkPointsFromStorage().then(async (tkpoints: any) => {
+          tkpoint = tkpoints - (product.quantity * product.tkPoint);
+          this.totalTK = tkpoint;
+          await this.storageService.setToStorage('tkpoint', tkpoint);
+        });
+      }
+      this.getCartItems();
       this.calculateTotal();
     }
   }
@@ -213,7 +247,11 @@ export class CustomerReviewSubmitOrderPage {
     });
 
     this.calculateTotal();
-    this.storageService.setToStorage('cart', this.cartItems)
+    if (this.isSalesman) {
+      this.storageService.updateCartForSelectedCustomer(this.selectedCustomer._id, this.cartItems);
+    } else {
+      this.storageService.setToStorage('cart', this.cartItems)
+    }
     return (product.quantity)
   }
 
@@ -224,9 +262,14 @@ export class CustomerReviewSubmitOrderPage {
     this.totalTK = obj.totalTKPoint
     this.orderTotal = obj.orderTotal;
 
-    await this.storageService.setToStorage('orderTotal', this.orderTotal)
-    await this.storageService.setToStorage('tkpoint', this.totalTK);
-    await this.storageService.setToStorage('totalNetWeight', this.totalNetWeight.toFixed(3)) 
+    if (this.isSalesman) {
+      await this.storageService.updateSelectedCustomers(this.selectedCustomer._id, this.orderTotal, this.totalNetWeight.toFixed(3), this.totalTK);
+    } else {
+      await this.storageService.setToStorage('orderTotal', this.orderTotal)
+      await this.storageService.setToStorage('totalNetWeight', this.totalNetWeight.toFixed(3)) 
+      await this.storageService.setToStorage('tkpoint', this.totalTK);
+    }
+
   }
 
   openCategoryTotalModal () {

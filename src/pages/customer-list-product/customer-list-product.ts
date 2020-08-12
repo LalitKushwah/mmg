@@ -29,7 +29,7 @@ export class CustomerListProductPage {
   filteredProductList: Array<any> = [];
   cartQuantity: any = 0;
   orderTotal: any = 0;
-  cartDetail:any = []
+  multiCartDetail = {};
   cart: any = []
   tkPoint: any = 0
   skipValue: number = 0
@@ -39,14 +39,18 @@ export class CustomerListProductPage {
   totalNetWeight: number = 0
   isEditOrderFlow = false
   loggedInUserStore = []
+  selectedCart: any = [];
+  customerCartExists: boolean = false;
+  selectedCustomer: any;
+  isSalesman = false;
 
   constructor (public navCtrl: NavController,
-               public navParams: NavParams,
-               private apiService: ApiServiceProvider,
-               private widgetUtil: WidgetUtilService, 
-               private storageService: StorageServiceProvider,
-               private commonService: CommonService,
-               private genericService: GenericService) {
+    public navParams: NavParams,
+    private apiService: ApiServiceProvider,
+    private widgetUtil: WidgetUtilService,
+    private storageService: StorageServiceProvider,
+    private commonService: CommonService,
+    private genericService: GenericService) {
 
     this.skipValue = 0
     this.limit = CONSTANTS.PAGINATION_LIMIT
@@ -56,7 +60,7 @@ export class CustomerListProductPage {
     this.isSearch = this.navParams.get("isSearch")
     this.keyword = this.navParams.get("keyword")
     this.isEditOrderFlow = this.navParams.get("isEdit")
-    
+
     this.productListAvailable = false
     this.productList = []
     this.getList()
@@ -72,15 +76,19 @@ export class CustomerListProductPage {
         })
       }
     }, error => {
-          if (error.statusText === 'Unknown Error') {
-            this.widgetUtil.showToast(CONSTANTS.INTERNET_ISSUE)
-          } else {
-            this.widgetUtil.showToast(CONSTANTS.SERVER_ERROR)
-          }
+      if (error.statusText === 'Unknown Error') {
+        this.widgetUtil.showToast(CONSTANTS.INTERNET_ISSUE)
+      } else {
+        this.widgetUtil.showToast(CONSTANTS.SERVER_ERROR)
+      }
     })
   }
 
-  async ionViewDidEnter (){
+  async ionViewDidEnter () {
+    const profile = await this.storageService.getFromStorage('profile');
+    if ((profile['userType'] === 'SALESMAN') || (profile['userType'] === 'SALESMANAGER')) {
+      this.isSalesman = true;
+    } 
     this.getCartItems()
     const res: any = await this.commonService.getLoggedInUser()
     if (res.associatedStore && res.associatedStore.length) {
@@ -89,13 +97,13 @@ export class CustomerListProductPage {
   }
 
   getList () {
-    if(!this.isSearch) {
+    if (!this.isSearch) {
       this.apiService.getProductListByCategory(this.categoryId, this.skipValue, this.limit).subscribe((result) => {
         this.productList = result.body
         this.productList.forEach(value => {
           value.quantity = 1
           value.price = (parseFloat((Math.round(value.price * 100) / 100).toString()).toFixed(2))
-          value.currentCaseSize=Number(value.currentCaseSize).toFixed(2);
+          value.currentCaseSize = Number(value.currentCaseSize).toFixed(2);
         })
         this.filteredProductList = this.productList
         this.productListAvailable = true
@@ -128,17 +136,31 @@ export class CustomerListProductPage {
   }
 
   async getCartItems () {
-    this.cart = await this.storageService.getCartFromStorage()
-    if (this.isEditOrderFlow) {
-        const storedEditedOrder: any = await this.storageService.getFromStorage('order')
-        // update cart count badge when edit order flow is in active state
-        this.tkPoint = storedEditedOrder.totalTkPoints ? storedEditedOrder.totalTkPoints : 0
+    if (this.isSalesman) {
+      this.selectedCustomer = await this.storageService.getSelectedCustomer();
+      this.selectedCart = await this.storageService.getSelectedCartFromStorage(this.selectedCustomer._id);
+      if (this.selectedCart.length !== 0) {
+        this.customerCartExists = true;
+      }
     } else {
-        this.tkPoint = await this.storageService.getTkPointsFromStorage()
+      this.selectedCart = await this.storageService.getCartFromStorage();
     }
-    if(this.cart.length > 0) {
+
+    if (this.isEditOrderFlow) {
+      const storedEditedOrder: any = await this.storageService.getFromStorage('order')
+      // update cart count badge when edit order flow is in active state
+      this.tkPoint = storedEditedOrder.totalTkPoints ? storedEditedOrder.totalTkPoints : 0
+    } else {
+      if (this.isSalesman) {
+        this.tkPoint = this.selectedCustomer.tkPoint;
+      } else {
+        this.tkPoint = await this.storageService.getTkPointsFromStorage()
+      }
+    }
+
+    if (this.selectedCart.length > 0) {
       let updatedTotal = 0, updatedQuantity = 0;
-      this.cart.map((value) => {
+      this.selectedCart.map((value) => {
         updatedTotal = updatedTotal + (value.price * parseInt(value.quantity))
         updatedQuantity = updatedQuantity + parseInt(value.quantity)
       })
@@ -148,101 +170,111 @@ export class CustomerListProductPage {
       this.cartQuantity = 0
       this.orderTotal = 0
     }
-    await this.storageService.setToStorage('orderTotal', this.orderTotal)
+
+    if (this.isSalesman) {
+      await this.storageService.updateSelectedCustomers(this.selectedCustomer._id, this.orderTotal, -1, -1);
+    } else {
+      await this.storageService.setToStorage('orderTotal', this.orderTotal)
+    }
   }
 
   reviewAndSubmitOrder () {
-    if (this.cart.length <= 0) {
+    if (this.selectedCart.length <= 0) {
       this.widgetUtil.showToast(CONSTANTS.CART_EMPTY)
-    }else {
+    } else {
       this.navCtrl.push(CustomerReviewSubmitOrderPage, {
-        'orderTotal' : this.orderTotal
+        'orderTotal': this.orderTotal
       })
     }
   }
 
   async addToCart (product, qty) {
-   if (this.isEditOrderFlow) {
-    if(parseInt(qty) > 0) {
-      let prepareProduct = {
-        productId: product._id,
-        netWeight: product.netWeight,
-        price: product.price,
-        productDetail: {
-          _id: product._id,
-          name: product.name,
+    if (this.isEditOrderFlow) {
+      if (parseInt(qty) > 0) {
+        let prepareProduct = {
+          productId: product._id,
+          netWeight: product.netWeight,
           price: product.price,
-          productCode: product.productCode
-        },
-        quantity: product.quantity,
-        tkPoint: product.tkPoint,
-        parentCategoryId: product.parentCategoryId,
-        productSysCode: product.productSysCode
-      }
-      let order: any = await this.storageService.getFromStorage('order')
-
-      let presentInCart = false;
-      const productsInCart = order.productList.map((value)=> {
-        if (value['productSysCode'] === product['productSysCode']) {
-          presentInCart = true
-          value.quantity = value.quantity + parseInt(product.quantity)
+          productDetail: {
+            _id: product._id,
+            name: product.name,
+            price: product.price,
+            productCode: product.productCode
+          },
+          quantity: product.quantity,
+          tkPoint: product.tkPoint,
+          parentCategoryId: product.parentCategoryId,
+          productSysCode: product.productSysCode
         }
-        return value
-      })
-      if(!presentInCart) {
-        let obj ={}
-        Object.assign(obj, prepareProduct)
-        obj['quantity'] = parseInt(qty)
-        order.productList.push(obj)
-      } else {
-        order.productList = productsInCart
+        let order: any = await this.storageService.getFromStorage('order')
+
+        let presentInCart = false;
+        const productsInCart = order.productList.map((value) => {
+          if (value['productSysCode'] === product['productSysCode']) {
+            presentInCart = true
+            value.quantity = value.quantity + parseInt(product.quantity)
+          }
+          return value
+        })
+        if (!presentInCart) {
+          let obj = {}
+          Object.assign(obj, prepareProduct)
+          obj['quantity'] = parseInt(qty)
+          order.productList.push(obj)
+        } else {
+          order.productList = productsInCart
+        }
+
+        const obj = this.genericService.calculateTotalNetWeightAndTotalTk(order.productList);
+
+        order.totalTkPoints = obj.totalTKPoint
+        this.tkPoint = obj.totalTKPoint
+        order.totalNetWeight = obj.totalNetWeight
+
+        order.orderTotal = obj.orderTotal
+
+        await this.storageService.setToStorage('order', order)
+        this.widgetUtil.showToast(`${product.name} added to cart!`)
       }
-
-      const obj = this.genericService.calculateTotalNetWeightAndTotalTk(order.productList);
-
-      order.totalTkPoints = obj.totalTKPoint
-      this.tkPoint = obj.totalTKPoint
-      order.totalNetWeight = obj.totalNetWeight
-      
-      order.orderTotal = obj.orderTotal
-
-      await this.storageService.setToStorage('order', order)
-      this.widgetUtil.showToast(`${product.name} added to cart!`)
-    }
-   } else {
-      if(parseInt(qty) > 0) {
+    } else {
+      if (parseInt(qty) > 0) {
         this.widgetUtil.showToast(`${product.name} added to cart!`)
         delete product['categoryId']
         delete product['productCode']
         /* product['quantity'] = parseInt(qty) */
         let presentInCart = false;
-        const productsInCart = this.cart.map((value)=> {
+        const productsInCart = this.selectedCart.map((value) => {
           if (value['_id'] === product['_id']) {
             presentInCart = true
             value.quantity = value.quantity + parseInt(product.quantity)
           }
           return value
         })
-        if(!presentInCart) {
-          let obj ={}
+        if (!presentInCart) {
+          let obj = {}
           Object.assign(obj, product)
           obj['quantity'] = parseInt(qty)
-          this.cart.push(obj)
+          this.selectedCart.push(obj)
         } else {
-          this.cart = productsInCart
+          this.selectedCart = productsInCart
         }
-        const obj = this.genericService.calculateTotalNetWeightAndTotalTk(this.cart);
+        const obj = this.genericService.calculateTotalNetWeightAndTotalTk(this.selectedCart);
 
         this.tkPoint = obj.totalTKPoint
         this.totalNetWeight = obj.totalNetWeight
-        this.storageService.setToStorage('tkpoint', this.tkPoint)
-        this.storageService.setToStorage('totalNetWeight', this.totalNetWeight)
-  
-        this.cartDetail = await this.storageService.setToStorage('cart', this.cart)
         this.orderTotal = obj.orderTotal
         this.cartQuantity = obj.totalQuantity
         
-        this.storageService.setToStorage('cart', this.cart)
+        if (this.isSalesman) {
+          this.storageService.updateCartForSelectedCustomer(this.selectedCustomer._id, this.selectedCart);
+          this.storageService.updateSelectedCustomers(this.selectedCustomer._id, this.orderTotal, this.totalNetWeight, this.tkPoint);
+        } else {
+          this.storageService.setToStorage('cart', this.selectedCart);
+          this.storageService.setToStorage('tkpoint', this.tkPoint)
+          this.storageService.setToStorage('totalNetWeight', this.tkPoint);
+          this.storageService.setToStorage('orderTotal', this.tkPoint);
+        }
+
       } else {
         this.widgetUtil.showToast(`Atleast 1 quantity is required!`)
       }
@@ -258,20 +290,20 @@ export class CustomerListProductPage {
   }
 
 
-/*   async removeFromCart (product) {
-    this.widgetUtil.showToast(`${product.name} removed from cart`)
-    if (this.cart.length > 0) {
-      this.cart.map((value, index) => {
-        if(value['_id'] === product['_id']) {
-          this.cart.splice(index, 1)
-        }
-      })
-      this.getCartItems()
-    }
-  } */
+  /*   async removeFromCart (product) {
+      this.widgetUtil.showToast(`${product.name} removed from cart`)
+      if (this.cart.length > 0) {
+        this.cart.map((value, index) => {
+          if(value['_id'] === product['_id']) {
+            this.cart.splice(index, 1)
+          }
+        })
+        this.getCartItems()
+      }
+    } */
 
   decrementQty (qty) {
-    if(parseInt(qty) > 1) {
+    if (parseInt(qty) > 1) {
       return (parseInt(qty) - 1)
     }
     return parseInt(qty)
@@ -283,15 +315,15 @@ export class CustomerListProductPage {
 
   doInfinite (infiniteScroll) {
     this.skipValue = this.skipValue + this.limit
-    if(!this.isSearch) {
+    if (!this.isSearch) {
       this.apiService.getProductListByCategory(this.categoryId, this.skipValue, this.limit).subscribe((result) => {
-        if(result.body.length > 0) {
-          result.body.map( (value) => {
+        if (result.body.length > 0) {
+          result.body.map((value) => {
             value.quantity = 1
             this.productList.push(value)
           })
         } else {
-            this.skipValue = this.limit
+          this.skipValue = this.limit
         }
         infiniteScroll.complete();
       }, (error) => {
@@ -304,13 +336,13 @@ export class CustomerListProductPage {
       })
     } else {
       this.apiService.searchProductInParentCategory(this.skipValue, this.limit, this.parentCategoryId, this.keyword).subscribe((result) => {
-        if(result.body.length > 0) {
-          result.body.map( (value) => {
+        if (result.body.length > 0) {
+          result.body.map((value) => {
             value.quantity = 0
             this.productList.push(value)
           })
         } else {
-            this.skipValue = this.limit
+          this.skipValue = this.limit
         }
         infiniteScroll.complete();
       }, (error) => {
@@ -325,7 +357,7 @@ export class CustomerListProductPage {
     // this.searchProducts()
   }
 
-  doRefresh (refresher) : void {
+  doRefresh (refresher): void {
     this.getList()
     this.getCartItems()
     setTimeout(() => {
@@ -340,7 +372,8 @@ export class CustomerListProductPage {
   searchProducts (searchQuery) {
     this.filteredProductList = this.allProducts.filter(product =>
       product.name.toLowerCase().includes(searchQuery.toLowerCase())
-  )}
+    )
+  }
 
   showTkToast () {
     this.widgetUtil.showToast('TK points will convert into TK currency post target achievement of QTR')

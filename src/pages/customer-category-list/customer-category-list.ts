@@ -29,7 +29,9 @@ export class CustomerCategoryListPage {
   cart: any = []
   tkPoint: any = 0
   searchQuery: string = '' 
-  isEditFlow = false 
+  isEditFlow = false
+  selectedCustomer: any;
+  isSalesman = false;
 
   constructor (public navCtrl: NavController, public navParams: NavParams, private apiService: ApiServiceProvider, private widgetUtil: WidgetUtilService
   , private storageService: StorageServiceProvider) {
@@ -72,7 +74,12 @@ export class CustomerCategoryListPage {
     }
   }
 
-  ionViewDidEnter (){
+  async ionViewDidEnter (){
+    const profile = await this.storageService.getFromStorage('profile');
+    if ((profile['userType'] === 'SALESMAN') || (profile['userType'] === 'SALESMANAGER')) {
+      this.isSalesman = true;
+      this.selectedCustomer = await this.storageService.getSelectedCustomer();
+    }
     this.getCardItems()
   }
 
@@ -83,10 +90,15 @@ export class CustomerCategoryListPage {
       this.cart = storedEditedOrder.productList ? storedEditedOrder.productList : []
       this.tkPoint = storedEditedOrder.totalTkPoints ? storedEditedOrder.totalTkPoints : 0
     } else {
-      this.cart = await this.storageService.getCartFromStorage()
-      this.storageService.getTkPointsFromStorage().then(res => {
-        this.tkPoint = res
-      })
+      if (this.isSalesman) {
+        this.cart = await this.storageService.getSelectedCartFromStorage(this.selectedCustomer._id);
+        this.tkPoint = this.selectedCustomer.tkPoint;
+      } else {
+        this.cart = await this.storageService.getCartFromStorage();
+        this.storageService.getTkPointsFromStorage().then(res => {
+          this.tkPoint = res
+        });
+      }
     }
   }
 
@@ -95,7 +107,13 @@ export class CustomerCategoryListPage {
       if (this.cart.length <= 0) {
         this.widgetUtil.showToast(CONSTANTS.CART_EMPTY)
       }else {
-        let orderTotal = await this.storageService.getFromStorage('orderTotal')
+        // let orderTotal = await th
+        let orderTotal: any;
+        if (this.isSalesman) {
+          orderTotal = this.selectedCustomer.orderTotal;
+        } else {
+          orderTotal = await this.storageService.getFromStorage('orderTotal');
+        }
         this.navCtrl.push(CustomerReviewSubmitOrderPage, {
           'orderTotal' : orderTotal
         })

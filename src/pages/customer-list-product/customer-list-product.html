@@ -5,7 +5,7 @@
       <ion-buttons end>
         <button *ngIf="!isEditOrderFlow" class="cart-btn" ion-button icon-only (click)="reviewAndSubmitOrder()">
           <ion-icon name="cart"></ion-icon>
-          <ion-badge class="cart-badge">{{cart.length}}</ion-badge>
+          <ion-badge class="cart-badge">{{selectedCart.length}}</ion-badge>
         </button>
         <button *ngIf="isEditOrderFlow" class="cart-btn" ion-button icon-only (click)="moveToEditOrderPage()">
             <ion-icon name="create"></ion-icon>
@@ -21,7 +21,7 @@
       </ion-buttons>
     </ion-navbar>
     <ion-toolbar>
-        <ion-searchbar *ngIf="keyword == undefind && keyword != ''" #q (ionChange)="searchProducts(q.value)" placeholder="Search any product in {{categoryObj.name}}"></ion-searchbar>
+        <ion-searchbar *ngIf="keyword == undefined && keyword != ''" #q (ionChange)="searchProducts(q.value)" placeholder="Search any product in {{categoryObj.name}}"></ion-searchbar>
         <ion-label *ngIf="keyword && keyword != ''" class="search-result">Matching Results For : <b>&nbsp;{{ keyword }}</b></ion-label>
     </ion-toolbar>
   </ion-header>

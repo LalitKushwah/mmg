@@ -107,7 +107,6 @@ export class UserProfilePage {
     try {
       let profile = await this.storageService.getFromStorage('profile')
       this.loggedInUser = profile;
-      console.log(this.loggedInUser);
       if ((profile['userType'] === 'ADMIN') || (profile['userType'] === 'ADMINHO')) {
         let selectedCustomerprofile = await this.storageService.getFromStorage('editCustomerInfo')
         if (selectedCustomerprofile['userType'] === 'CUSTOMER') {
@@ -117,7 +116,8 @@ export class UserProfilePage {
         this.externalId = selectedCustomerprofile['externalId']
       }
       else if ((profile['userType'] === 'SALESMAN') || (profile['userType'] === 'SALESMANAGER')) {
-        let selectedCustomerprofile = await this.storageService.getFromStorage('selectedCustomer')
+        // let selectedCustomerprofile = await this.storageService.getFromStorage('selectedCustomer')
+        let selectedCustomerprofile = await this.storageService.getSelectedCustomer();
         this.partyName = selectedCustomerprofile['name']
         this.externalId = selectedCustomerprofile['externalId']
         this.colorType = 'salesmanColor'
@@ -210,7 +210,6 @@ export class UserProfilePage {
       //Preparing Data for Graph
       if (!(this.data.achievement && this.data.balanceToDo)) {
         this.target = 0.1
-        console.log(this.target)
       }
       else {
         this.target = this.data.balanceToDo

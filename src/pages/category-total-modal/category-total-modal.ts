@@ -62,6 +62,9 @@ export class CategoryTotalModalPage {
   }
 
   calculateTotal () {
+    this.parentCategoryList.map(parentCategoryObj => {
+        parentCategoryObj.subTotal = 0;
+    });
     this.cartItems.map(cartItem => {
       this.parentCategoryList.map(parentCategoryObj => {
         if (cartItem['parentCategoryId'] === parentCategoryObj['_id']) {
@@ -72,14 +75,14 @@ export class CategoryTotalModalPage {
           }
         }
       })
-    })
+    });
     this.parentCategoryList.map(parentCategoryObj => {
       if ((parentCategoryObj.subTotal) && (parseFloat(parentCategoryObj.subTotal) > 0)) {
         parentCategoryObj.subTotal = parseFloat((Math.round(parentCategoryObj.subTotal * 100) / 100).toString()).toFixed(2)
       } else {
         parentCategoryObj.subTotal = 0
       }
-    })
+    });
   }
 
 }
