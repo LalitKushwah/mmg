@@ -65,7 +65,7 @@ page-admin-dashboard {
         }
         .toggleView{
             font-size: 0.9em;
-            color: #225F93;
+            color: color($colors, primary);
             margin-left: 10%;
             position: fixed;
             right: 8%;

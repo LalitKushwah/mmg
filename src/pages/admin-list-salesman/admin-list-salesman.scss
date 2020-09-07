@@ -49,7 +49,7 @@ page-admin-list-salesman {
         padding: 20px;
         margin-top: 30%;
         font-size: 60px;
-        color: #225f93;
+        color: color($colors, primary);
 
         h4{
             font-size: 2rem
@@ -106,7 +106,6 @@ page-admin-list-salesman {
         font-size: 20px;
         text-transform: capitalize;
         word-break: break-word;
-        // display: block;
     }
 
     .user-id-col{

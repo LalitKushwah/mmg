@@ -23,7 +23,7 @@ page-edit-user {
             padding: 6px;
 
             .pill-close-icon{
-                color: rgb(255, 61, 61);
+                color: color($colors, danger);
             }
         }
     }

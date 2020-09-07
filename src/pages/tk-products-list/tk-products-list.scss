@@ -18,7 +18,6 @@ page-tk-products-list {
      padding: 0;
      ion-list{
             .tk-item-wrapper{
-                // padding: 10px;
                 padding: 5px 25px;
                 width: 100%;
             }
@@ -32,7 +31,6 @@ page-tk-products-list {
                         color: #000000;
                      }
                      ion-col{
-                        //  font-size: 0.9em;
                          color: grey;
                          span{
                             color: #000000;
@@ -41,7 +39,7 @@ page-tk-products-list {
                 }
             }
             .main-grid.highlight{
-                border: 1px solid rgba(0, 211, 81, 0.75);
+                border: 1px solid color($colors, success);
             }
             .competitive-section{
                 border-top: 1px solid rgba(0,0,0,0.1);
@@ -55,7 +53,6 @@ page-tk-products-list {
                     margin-bottom: 2px;
                 }
                 ion-row{
-                    // border-bottom: 1px solid rgba(0,0,0,0.1);
                     padding: 0px;
                     ion-col{
                         padding-bottom: 0;
@@ -88,33 +85,12 @@ page-tk-products-list {
 .expandable-content.collapsed{
     height: 0 !important;
 }
-  
-
-// Accordion Styles
-// .accordion {
-//     background-color: #eee;
-//     color: #444;
-//     cursor: pointer;
-//     padding: 18px;
-//     width: 100%;
-//     border: none;
-//     text-align: left;
-//     outline: none;
-//     font-size: 15px;
-//     transition: 0.4s;
-//   }
-  
-//   .active, .accordion:hover {
-//     background-color: #ccc; 
-//   }
-  
-  .panel {
-    display: none;
-    // overflow: hidden;
-  }
-  .panel.expanded {
-    display: block;
-  }
-  .panel.collapsed {
-    display: none;
-  }
+.panel {
+display: none;
+}
+.panel.expanded {
+display: block;
+}
+.panel.collapsed {
+display: none;
+}

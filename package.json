@@ -74,7 +74,9 @@
             "cordova-plugin-whitelist": {},
             "cordova-plugin-device": {},
             "cordova-plugin-splashscreen": {},
-            "cordova-plugin-ionic-webview": {},
+            "cordova-plugin-ionic-webview": {
+                "ANDROID_SUPPORT_ANNOTATIONS_VERSION": "27.+"
+            },
             "cordova-plugin-ionic-keyboard": {},
             "cordova-plugin-navigationbar": {},
             "cordova-plugin-statusbar": {},
@@ -83,7 +85,9 @@
             "cordova-plugin-file-transfer": {},
             "com.wmjalak.cordova.fileopener": {},
             "cordova-sqlite-storage": {},
-            "cordova-plugin-file-opener2": {}
+            "cordova-plugin-file-opener2": {
+                "ANDROID_SUPPORT_V4_VERSION": "27.+"
+            }
         },
         "platforms": [
             "browser",

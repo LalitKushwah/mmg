@@ -6,7 +6,7 @@
 
 }
 .full-background {
-  background-color: #fff;
+  background-color: color($colors, full-background);
 }
 
 ion-card.card{
@@ -19,13 +19,13 @@ ion-card.card{
 
 ion-spinner {
   * {
-    stroke: #ffeb3b;
+    stroke: color($colors, accent);
   }
 
   &.spinner-circles circle,
   &.spinner-bubbles circle,
   &.spinner-dots circle {
-    fill: #ffeb3b;
+    fill: color($colors, accent);
   }
 }
 
@@ -74,7 +74,7 @@ table thead tr {
 
 tbody tr {
   font-size: 15px;
-  color: #000;
+  color: color($colors, dark);
   line-height: 3;
   font-weight: unset;
 }
@@ -82,15 +82,15 @@ tbody tr {
 //
 
 .recieved {
-  color: green
+  color: color($colors, success);
 }
 
 .in-progress {
-  color: color($colors, primary)
+  color: color($colors, primary);
 }
 
 .cancel {
-  color: red
+  color: color($colors, danger);
 }
 
 
@@ -98,16 +98,16 @@ tbody tr {
 ion-toolbar.toolbar,
 ion-navbar.toolbar {
   .toolbar-background{
-    background: #225F93;
+    background: color($colors, primary);
   }
   .searchbar .searchbar-input {
-    background: #fff;
+    background: color($colors, full-background);
   }
 }
 
 //ios header
 .toolbar-content .toolbar-title {
-  color: #fff;
+  color: color($colors, full-background);
 }
 //header
 ion-toolbar.toolbar {
@@ -117,7 +117,7 @@ ion-toolbar.toolbar {
     padding: 0;
     .toolbar-title {
       font-size: 12px;
-      color: #fff;
+      color: color($colors, full-background);
       text-align: center
     }
     span {
@@ -130,7 +130,7 @@ ion-toolbar.toolbar {
   > div {
     text-align: center;
     &.toolbar-content {
-      border-bottom: 1px solid #fff;
+      border-bottom: 1px solid color($colors, full-background);
       padding-bottom: 20px;
     }
   }
@@ -144,12 +144,12 @@ ion-toolbar.toolbar {
 .item.item-input.ng-valid.input-has-value:not(.input-has-focus):not(.item-input-has-focus) .item-inner,
 .item.item-input.item-input-has-focus .item-inner,
 .item.item-input.input-has-focus .item-inner {
-  box-shadow: 0 -1px 0 0 #225F93;
-  border-bottom-color: #225F93;
+  box-shadow: 0 -1px 0 0 color($colors, primary);
+  border-bottom-color: color($colors, primary);
 }
 
 .item.item-input.ng-invalid.ng-touched:not(.input-has-focus):not(.item-input-has-focus) .item-inner{
-  box-shadow: 0 -1px 0 0 #f53d3d;
+  box-shadow: 0 -1px 0 0 color($colors, danger);
 }
 
 .list-ios > .item-block:first-child,
@@ -240,10 +240,10 @@ ion-menu {
     background: #fff;
     margin: 10px 0;
     img {    
-      width: 60px;
+      width: 76%;
       position: relative;
-      top: -6px;
-      left: 14px;
+      top: 4px;
+      left: 12px;
     }
   }
   .item.item-block .item-inner {

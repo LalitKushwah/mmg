@@ -21,10 +21,10 @@ page-user-statements {
             font-weight: 500 !important;
         }
         .credit{
-            color: green;
+            color: color($colors, success);
         }
         .debit{
-            color: #f53d3d;
+            color: color($colors, danger);
         }
         .balance{
             font-size: 0.9em;
@@ -33,8 +33,8 @@ page-user-statements {
         }
     }
     ion-footer{
-        box-shadow: 0 0 10px rgba(34, 95, 147, 0.5);
-        background: #225f93;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.25);
+        background: color($colors, primary);
         button{
             margin: 0 !important;
         }

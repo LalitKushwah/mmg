@@ -8,7 +8,7 @@ page-salesman-dashboard {
             }
         }
       .salesmanDashboardBtn{
-          background-color: #225F93;
+          background-color: color($colors, primary);
           border-radius: 0;
           // margin-top: 16px;
           font-size: 1em;
@@ -91,14 +91,14 @@ page-salesman-dashboard {
         }
         .toggleView{
             font-size: 0.9em;
-            color: #225F93;
+            color: color($colors, primary);
             margin-left: 10%;
             position: fixed;
             right: 8%;
         }
       }
       ion-footer{
-        box-shadow: 0 0px 10px rgba(34, 95, 147, 0.5);
-        background: #225f93;
+        box-shadow: 0 0px 10px rgba(0, 0, 0, 0.25);
+        background: color($colors, primary);
       }
 }

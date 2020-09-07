@@ -1,72 +1,5 @@
 page-user-profile {
-    /* Style the buttons that are used to open and close the accordion panel */
-// .accordion {
-//     background-color: #fff;
-//     color: #444;
-//     cursor: pointer;
-//     padding: 18px;
-//     width: 100%;
-//     text-align: left;
-//     border: none;
-//     outline: none;
-//     transition: 0.4s;
-//   }
-  
-//   /* Add a background color to the button if it is clicked on (add the .active class with JS), and when you move the mouse over it (hover) */
-//   .active, .accordion:hover {
-//     background-color: #d2eaff;
-//   }
-  
-//   /* Style the accordion panel. Note: hidden by default */
-//   .panel {
-//     padding: 0 18px;
-//     background-color: white;
-//     display: none;
-//     overflow: hidden;
 
-//     ion-list{
-//         ion-grid{
-//             padding-top: 30px !important;
-//             padding-bottom: 30px !important;
-//             ion-row{
-//                 ion-col{
-//                     border: 1px solid rgb(94, 156, 211);
-//                 }       
-//             }
-            
-//             .header, .footer{
-//                 background: #225F93;
-//                 color: #fff;
-//                 font-size: 12px;
-//                 // font-weight: bold;
-//             }
-//             .table-content{
-//                 font-size: 12px;
-//             }
-    
-//             .footnote{
-//                 margin-top: 10px;
-//                 color: rgb(92, 92, 92);
-//                 ion-col{
-//                     border: none !important;
-//                 }
-//             }
-
-//         }
-//     }
-
-//   }
-  
-//   .panel.active {
-//     padding: 0 18px;
-//     background-color: white;
-//     display: block;
-//     overflow: visible;
-//   }
-
-//   .expand-icon{
-//     float: right;
-//   }
   ion-title{
     text-transform: capitalize;
   }
@@ -76,17 +9,15 @@ page-user-profile {
         }
     }
   .salesmanDashboardBtn{
-      background-color: #225f93;
+      background-color: color($colors, primary);
       border-radius: 3px;
       margin-top: 16px;
       font-size: 1em;
   }
   .customerdashboardBtn{
-    background-color: #225F93;
+    background-color: color($colors, primary);
     border-radius: 0;
-    // margin-top: 16px;
     font-size: 1em;
-    // width: calc(50% - 8px);
     width: 47%;
     box-shadow: none;
   }
@@ -95,14 +26,6 @@ page-user-profile {
     box-shadow: 1px 0 0 rgba(225, 241, 255, 0.5);
     width: 49%;
   }
-
-  // .item-in-salesman{
-  //   width: 100%;
-  // }
-
-  // .item-in-customer{
-  //   width: calc(50% - 8px);
-  // }
 
   .item-visible{
     display: inline-block;
@@ -166,7 +89,7 @@ page-user-profile {
     }
     .toggleView{
         font-size: 0.9em;
-        color: #225F93;
+        color: color($colors, primary);
         margin-left: 10%;
         position: fixed;
         right: 8%;
@@ -174,48 +97,16 @@ page-user-profile {
   }
   ion-footer{
     box-shadow: 0 0px 10px rgba(34, 95, 147, 0.5);
-    background: #225f93;
+    background: color($colors, primary);
   }
 
-  // .toolbar-background {
-  //   background-color: rgb(0, 140, 255) !important; 
-  // }
-  // .toggleColor{
-  //   background-color: rgb(0, 140, 255) !important;
-  // }
-
-  // .customerColor{
-  //   background: #225f93;
-    
-  //   .toolbar-background{
-  //     background-color: #225F93;
-  //   }
-
-  //   .salesmanDashboardBtn{
-  //     background-color: #3d9ef0;
-  //     border-radius: 3px;
-  //     margin-top: 16px;
-  //     font-size: 1em;
-  // }
-  // .customerdashboardBtn{
-  //   background-color: #225F93;
-  //   border-radius: 0;
-  //   // margin-top: 16px;
-  //   font-size: 1em;
-  //   // width: calc(50% - 8px);
-  //   width: 47%;
-  //   box-shadow: none;
-  // }
-
-  // }
-
   .salesmanColor{
-    background: #229BD0;
+    background: color($colors, secondary);
     .toolbar-background{
-      background-color: #229BD0;
+      background-color: color($colors, secondary);
     }
     .customerdashboardBtn{
-      background-color: #229BD0;
+      background-color: color($colors, secondary);
       border-radius: 0;
       // margin-top: 16px;
       font-size: 1em;
@@ -231,7 +122,7 @@ page-user-profile {
     button{
       width: 48%;
       &:nth-child(2){
-        background-color: #229BD0;
+        background-color: color($colors, secondary);
       }
     }
   }

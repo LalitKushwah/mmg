@@ -69,8 +69,8 @@ export class UserProfilePage {
         datasets: [{
           data: [this.mtdAchieved, this.target],
           backgroundColor: [
-            '#225F93',
-            '#E7ECFF'
+            '#DC0B28',
+            '#ffd5db'
           ]
         }],
         labels: [
