@@ -129,42 +129,47 @@ export class SalesmanSelectCustomerPage {
 
   async customerSelected (user) {
     this.storageService.setToStorage('selectedCustomer', user)
-    const customers: any = await this.storageService.getFromStorage('selectedCustomers');
-
-    let customerAlreadySelected = false;
-    for (let i = 0; i < customers.length; i++) {
-      if (customers[i]._id === user._id) {
-        customerAlreadySelected = true;
-        break;
+    let customers: any = await this.storageService.getFromStorage('selectedCustomers');
+    if (customers) {
+      let customerAlreadySelected = false;
+      for (let i = 0; i < customers.length; i++) {
+        if (customers[i]._id === user._id) {
+          customerAlreadySelected = true;
+          break;
+        }
       }
+      if (!customerAlreadySelected) {
+        if (customers && customers.length === 5) {
+          this.widgetUtil.showToast('Can not select a new customer, kindly place the order first for any created cart');
+          return;
+        }
+        customers.push(user);
+      }
+  
+      customers.map(customer => {
+        if (customer._id === user._id) {
+          customer.isSelected = true;
+          if (!customer.orderTotal) {
+            customer.orderTotal = 0;
+          }
+          if (!customer.totalNetWeight) {
+            customer.totalNetWeight = 0;
+          }
+          if (!customer.tkPoint) {
+            customer.tkPoint = 0;
+          }
+        } else {
+          customer.isSelected = false;
+        }
+        return customer;
+      })
+      this.storageService.setToStorage('selectedCustomers', customers);
+    } else {
+      user.isSelected = true;
+      customers = [user];
+      await this.storageService.setToStorage('selectedCustomers', customers);
     }
-    if (!customerAlreadySelected) {
-      if (customers.length === 5) {
-        this.widgetUtil.showToast('Can not select a new customer, kindly place the order first for any created cart');
-        return;
-      }
-      customers.push(user);
-    }
 
-    customers.map(customer => {
-      if (customer._id === user._id) {
-        customer.isSelected = true;
-        if (!customer.orderTotal) {
-          customer.orderTotal = 0;
-        }
-        if (!customer.totalNetWeight) {
-          customer.totalNetWeight = 0;
-        }
-        if (!customer.tkPoint) {
-          customer.tkPoint = 0;
-        }
-      } else {
-        customer.isSelected = false;
-      }
-      return customer;
-    })
-
-    this.storageService.setToStorage('selectedCustomers', customers);
     this.navCtrl.push(UserProfilePage)
   }
 

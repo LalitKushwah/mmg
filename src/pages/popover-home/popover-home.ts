@@ -42,14 +42,14 @@ export class PopoverHomePage {
           name: 'Add Product',
           icon: 'add-circle',
         },
-        {
-          name: 'Add TK Product',
-          icon: 'add-circle',
-        },
-        {
-          name: 'Add Competitive Product',
-          icon: 'add-circle',
-        },
+        // {
+        //   name: 'Add TK Product',
+        //   icon: 'add-circle',
+        // },
+        // {
+        //   name: 'Add Competitive Product',
+        //   icon: 'add-circle',
+        // },
         {
           name: 'Change Password',
           icon: 'key',

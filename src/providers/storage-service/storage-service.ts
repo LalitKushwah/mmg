@@ -7,7 +7,7 @@ export class StorageServiceProvider {
   private _giftProductCart = []
   private editCustomer: any = {}
 
-  async getEditCustomerData() {
+  async getEditCustomerData () {
     const response = await this.getFromStorage('salesmanList')
     if (response) {
       this.editCustomer.salesmanList = response
@@ -17,22 +17,22 @@ export class StorageServiceProvider {
     return this.editCustomer
   }
 
-  setEditCustomerData(data) {
+  setEditCustomerData (data) {
     this.editCustomer = data
   }
 
-  getGiftProductCart(): any[] {
+  getGiftProductCart (): any[] {
     return this._giftProductCart;
   }
 
-  setGiftProductCart(value: any[]) {
+  setGiftProductCart (value: any[]) {
     this._giftProductCart = value;
   }
 
-  constructor(public storage: Storage) {
+  constructor (public storage: Storage) {
   }
 
-  getFromStorage(key) {
+  getFromStorage (key) {
     return new Promise((resolve, reject) => {
       this.storage.get(key)
         .then((result) => {
@@ -43,7 +43,7 @@ export class StorageServiceProvider {
     })
   }
 
-  getCartFromStorage() {
+  getCartFromStorage () {
     return new Promise((resolve, reject) => {
       this.storage.get('cart')
         .then(result => {
@@ -60,7 +60,7 @@ export class StorageServiceProvider {
     })
   }
 
-  getSelectedCartFromStorage(id: string) {
+  getSelectedCartFromStorage (id: string) {
     return new Promise((resolve, reject) => {
       let selectedCart = [];
       this.getFromStorage('multiCart').then((multiCart: any) => {
@@ -74,7 +74,7 @@ export class StorageServiceProvider {
     });
   }
 
-  getTkPointsFromStorage() {
+  getTkPointsFromStorage () {
     return new Promise((resolve, reject) => {
       this.storage.get('tkpoint')
         .then(result => {
@@ -92,11 +92,11 @@ export class StorageServiceProvider {
   }
 
 
-  setToStorage(key, value) {
+  setToStorage (key, value) {
     return this.storage.set(key, value)
   }
 
-  removeFromStorage(key) {
+  removeFromStorage (key) {
     return new Promise((resolve, reject) => {
       this.storage.remove(key)
         .then((result) => {
@@ -107,17 +107,17 @@ export class StorageServiceProvider {
     })
   }
 
-  clearStorage() {
+  clearStorage () {
     this.storage.clear()
   }
 
-  async clearCart() {
+  async clearCart () {
     await this.setToStorage('cart', [])
     await this.removeFromStorage('tkpoint')
     await this.setToStorage('totalNetWeight', 0)
   }
 
-  async clearSelectedCartFromStorage(id: string) {
+  async clearSelectedCartFromStorage (id: string) {
     const multiCart = await this.getFromStorage('multiCart');
     delete multiCart[id];
     this.setToStorage('multiCart', multiCart);
@@ -125,14 +125,14 @@ export class StorageServiceProvider {
     this.setToStorage('totalNetWeight', 0);
   }
 
-  async updateCartForSelectedCustomer(id: string, cartItems: any) {
+  async updateCartForSelectedCustomer (id: string, cartItems: any) {
     let multiCart = await this.getFromStorage('multiCart');
     if (!multiCart) { multiCart = {}; }
     multiCart[id] = cartItems;
     await this.setToStorage('multiCart', multiCart);
   }
 
-  async updateSelectedCustomers(id: string, orderTotal: any, totalNetWeight: any, tkPoint: any) {
+  async updateSelectedCustomers (id: string, orderTotal: any, totalNetWeight: any, tkPoint: any) {
     const selectedCustomers: any = await this.getFromStorage('selectedCustomers');
     selectedCustomers.map(customer => {
       if (customer._id === id) {
@@ -151,12 +151,12 @@ export class StorageServiceProvider {
     await this.setToStorage('selectedCustomers', selectedCustomers);
   }
 
-  async getSelectedCustomer() {
+  async getSelectedCustomer () {
     const customers: any = await this.getFromStorage('selectedCustomers');
-    return customers.find(customer => {
-      if (customer.isSelected) {
-        return true;
-      }
-    })
+      return customers.find(customer => {
+        if (customer.isSelected) {
+          return true;
+        }
+      })
   }
 }
